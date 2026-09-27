@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 3.6  |  Updated: 2026-09-27
+  Version: 3.7  |  Updated: 2026-09-27
   Pañcāṅgam is calculated in the browser for the chosen date and city (local
   sunrise, Lahiri ayanāṁśa, low-precision Sun/Moon theory). Calendars: Tamil
   (solar, sauramāna) and Telugu / Kannada (lunar amānta, cāndramāna, with
@@ -47,6 +47,8 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(138,59,18,.25);bo
 .deva{font-family:var(--deva)}
 .ro{background:#f6f1ea}
 .hint{font-size:.8rem;color:var(--soft);margin:5px 0 0}
+.namecheck{background:#fff8e1;border:2px solid var(--gold);border-radius:10px;padding:10px 14px;margin:12px 0 0;font-size:.9rem}
+.nbig{font-size:1.6rem;font-weight:700;color:#8b1a1a;margin:0 6px}.nbig2{font-size:1.15rem;color:#6d2d0c}
 .note{background:var(--tint);border:1px solid #f0d9b8;border-left:4px solid var(--gold);border-radius:8px;padding:9px 12px;font-size:.87rem;margin:0 0 14px}
 .sub{font-size:.9rem;font-weight:700;color:var(--kum-d);margin:14px 0 8px}
 .item-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px}
@@ -179,6 +181,10 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <div><label for="pada">Pāda</label><select id="pada"><option value="0" selected>Don't know</option><option value="1">Pāda 1</option><option value="2">Pāda 2</option><option value="3">Pāda 3</option><option value="4">Pāda 4</option></select></div>
     <div><label for="rashi">Birth Rāśi</label><select id="rashi" class="deva ro" disabled></select></div>
   </div>
+  <div id="nameCheck" class="namecheck hide">
+    <div>Your name as it will be recited: <span id="nameBig" class="deva nbig"></span> <span id="nameBigS" class="nbig2"></span></div>
+    <div class="hint" style="color:var(--ink)">⚠️ <strong>Please check this spelling.</strong> If it is not right, correct it in the <em>Name (Devanagari)</em> box – for long vowels type double letters in English (e.g. <em>shreenivaasa</em> → श्रीनिवास), or ask your vādhyār.</div>
+  </div>
   <div id="rashiNote" class="note hide" style="margin:12px 0 0">⚠️ <strong>Please check your Rāśi.</strong> <span id="rashiNoteText"></span></div>
   <div class="sub">Family members (optional)</div>
   <p class="hint" style="margin:0 0 8px">Add the people included in this saṅkalpam. They take your gotra, except a married daughter, sister or granddaughter and a son-in-law, who belong to their own gotra (a Gotra box appears for them). The rāśi fills in from the star and pāda.</p>
@@ -192,12 +198,12 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <h2><span class="step">3</span>Śrī Rudram</h2>
   <p class="lead">P = full pārāyaṇam · G = ghanam of one anuvāka · P + G = pārāyaṇam (full or one anuvāka) and ghanam of an anuvāka.</p>
   <div class="grid">
-    <div><label for="namaka-option">Namakam</label><select id="namaka-option"><option value="skip">Skip</option><option value="P" selected>P – Pārāyaṇam (full)</option><option value="G">G – Ghanam</option><option value="PG">P + G – Both</option></select></div>
+    <div><label for="namaka-option">Namakam</label><select id="namaka-option"><option value="skip" selected>Skip</option><option value="P">P – Pārāyaṇam (full)</option><option value="G">G – Ghanam</option><option value="PG">P + G – Both</option></select></div>
     <div id="namaka-p-field"><label for="namaka-p-anuvaka">Namakam – Pārāyaṇam</label><select id="namaka-p-anuvaka"></select></div>
     <div id="namaka-g-field"><label for="namaka-g-anuvaka">Namakam – Ghanam anuvāka</label><select id="namaka-g-anuvaka"></select></div>
   </div>
   <div class="grid" style="margin-top:12px">
-    <div><label for="chamaka-option">Chamakam</label><select id="chamaka-option"><option value="skip">Skip</option><option value="P" selected>P – Pārāyaṇam (full)</option><option value="G">G – Ghanam</option><option value="PG">P + G – Both</option></select></div>
+    <div><label for="chamaka-option">Chamakam</label><select id="chamaka-option"><option value="skip" selected>Skip</option><option value="P">P – Pārāyaṇam (full)</option><option value="G">G – Ghanam</option><option value="PG">P + G – Both</option></select></div>
     <div id="chamaka-p-field"><label for="chamaka-p-anuvaka">Chamakam – Pārāyaṇam</label><select id="chamaka-p-anuvaka"></select></div>
     <div id="chamaka-g-field"><label for="chamaka-g-anuvaka">Chamakam – Ghanam anuvāka</label><select id="chamaka-g-anuvaka"></select></div>
   </div>
@@ -241,6 +247,26 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   </div>
   <p class="hint">In "Detailed", Vedic closings (आभिर्गीर्भिः…, शं नो मित्रः…) are added when Namakam, Chamakam or any Vedic Sūkta is selected.</p>
 </div>
+
+<!-- 7. Daily email -->
+<div class="card hide" id="subCard">
+  <h2><span class="step">7</span>📧 Daily saṅkalpam by email <span class="hint" style="font-weight:400">(optional)</span></h2>
+  <p class="lead">Each morning you receive the saṅkalpam for that day – with the day's pañcāṅgam for your city – using the details you entered above (steps 1–6). Fill in at least your name and gotra first.</p>
+  <div class="grid">
+    <div><label for="subEmail">Your email</label><input type="email" id="subEmail" autocomplete="email" placeholder="name@example.com"></div>
+    <div><label for="subMode">When</label><select id="subMode"><option value="sunrise" selected>5 minutes after sunrise</option><option value="time">At a time I choose</option></select></div>
+    <div id="subTimeBox" class="hide"><label for="subTime">Time (your city's local time)</label><input type="time" id="subTime" value="06:00"></div>
+  </div>
+  <input type="text" id="subWebsite" tabindex="-1" autocomplete="off" style="position:absolute;left:-5000px" aria-hidden="true">
+  <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:.86rem;color:var(--ink);margin:12px 0 4px;cursor:pointer">
+    <input type="checkbox" id="subConsent" style="width:auto;margin-top:4px">
+    <span>I agree that the details I entered (name, gotra, stars, family members, city) and my email are stored by <span id="subOwner"></span> only to send me this daily email. I can unsubscribe at any time from the link in every email. Contact: <span id="subContact"></span>.</span></label>
+  <label id="famConsentBox" class="hide" style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:.86rem;color:var(--ink);margin:6px 0 4px;cursor:pointer">
+    <input type="checkbox" id="subFamConsent" style="width:auto;margin-top:4px">
+    <span>The family members I added (step 3) know and agree that their names and birth stars are included in this email.</span></label>
+  <div class="actions"><button class="btn" id="subBtn" type="button">Subscribe</button><span class="okmsg" id="subStatus"></span></div>
+  <p class="hint">You will first receive a confirmation email – the daily emails start only after you click the link in it. To change your details later, edit them above and subscribe again with the same email.</p>
+</div>
 </div>
 
 <div id="output" class="tab-content">
@@ -248,21 +274,6 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <div id="resultContainer" class="hide">
     <div class="actions"><button class="btn" onclick="copySankalpam()">Copy text</button><button class="btn ghost" onclick="window.print()">Print / Save as PDF</button><button class="btn ghost" onclick="switchTab('form')">← Edit</button><span class="okmsg" id="copyStatus"></span></div>
     <div id="result" class="doc"></div>
-    <div class="card hide" id="subCard" style="margin-top:16px">
-      <h2>📧 Get your saṅkalpam by email every day <span class="hint" style="font-weight:400">(optional)</span></h2>
-      <p class="lead">Each morning you receive the saṅkalpam for that day – with the day's pañcāṅgam for your city – using the details you entered above.</p>
-      <div class="grid">
-        <div><label for="subEmail">Your email</label><input type="email" id="subEmail" autocomplete="email" placeholder="name@example.com"></div>
-        <div><label for="subMode">When</label><select id="subMode"><option value="sunrise" selected>5 minutes after sunrise</option><option value="time">At a time I choose</option></select></div>
-        <div id="subTimeBox" class="hide"><label for="subTime">Time (your city's local time)</label><input type="time" id="subTime" value="06:00"></div>
-      </div>
-      <input type="text" id="subWebsite" tabindex="-1" autocomplete="off" style="position:absolute;left:-5000px" aria-hidden="true">
-      <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:.86rem;color:var(--ink);margin:12px 0 4px;cursor:pointer">
-        <input type="checkbox" id="subConsent" style="width:auto;margin-top:4px">
-        <span>I agree that the details I entered (name, gotra, stars, family members, city) and my email are stored by <span id="subOwner"></span> only to send me this daily email. I can unsubscribe at any time from the link in every email. Contact: <span id="subContact"></span>.</span></label>
-      <div class="actions"><button class="btn" id="subBtn" type="button">Subscribe</button><span class="okmsg" id="subStatus"></span></div>
-      <p class="hint">You will first receive a confirmation email – the daily emails start only after you click the link in it. To change your details later, edit them above and subscribe again with the same email.</p>
-    </div>
   </div>
 </div>
 <div id="feedback" class="tab-content">
@@ -270,14 +281,10 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <h2>Share Your Feedback</h2>
     <p class="lead">Your opinion and suggestions are most welcome. 🙏</p>
     <label for="fbText">Your message</label>
-    <textarea id="fbText" maxlength="100" style="min-height:80px" placeholder="What did you like? What can be improved? (max 100 characters)"></textarea>
-    <p class="hint" style="text-align:right;margin-top:2px"><span id="fbCount">0</span> / 100</p>
-    <div class="actions">
-      <a id="fbGmail" class="btn" target="_blank" rel="noopener" style="text-decoration:none">Send via Gmail</a>
-      <a id="fbMail" class="btn ghost" style="text-decoration:none">Use my email app</a>
-      <button class="btn ghost" onclick="copyFeedback()">Copy message</button>
-    </div>
-    <p class="hint" id="fbHint">"Send via Gmail" opens Gmail in a new tab with the message ready – just press Send. If neither button works, press "Copy message" and paste it into any email.</p>
+    <textarea id="fbText" maxlength="120" style="min-height:80px" placeholder="What did you like? What can be improved? (max 120 characters)"></textarea>
+    <p class="hint" style="text-align:right;margin-top:2px"><span id="fbCount">0</span> / 120</p>
+    <div class="actions"><button class="btn" id="fbSend" type="button">Send feedback</button><span class="okmsg" id="fbStatus"></span></div>
+    <p class="hint" id="fbHint">Your message is sent anonymously – no email or sign-in is needed. If you would like a reply, include your email in the message.</p>
   </div>
 </div>
 </div>
@@ -659,6 +666,29 @@ function iastToDevanagari(text) {
   return out;
 }
 
+const NAME_MAP = {murthy:'moorti',murthi:'moorti',murty:'moorti',moorthy:'moorti',anuradha:'anuraadhaa',radhakrishnan:'raadhaakṛṣṇan',kasturi:'kastooree',kumar:'kumaar',kumaar:'kumaar',kumari:'kumaaree',arvind:'aravind',aravind:'aravind',anand:'aanand',ram:'raam',rama:'raama',sriram:'shreeraam',srinivas:'shreenivaas',srinivasa:'shreenivaasa',srinivasan:'shreenivaasan',rajesh:'raajesh',raj:'raaj',raja:'raaja',rajan:'raajan',balaji:'baalaajee',narayan:'naaraayaṇ',narayana:'naaraayaṇa',narayanan:'naaraayaṇan',gopal:'gopaal',gopalan:'gopaalan',prasad:'prasaad',prakash:'prakaash',karthik:'kaartik',karthikeyan:'kaartikeyan',venkat:'veṅkaṭ',venkatesh:'veṅkaṭesh',venkatesan:'veṅkaṭesan',venkataraman:'veṅkaṭaraaman',venkatraman:'veṅkaṭaraaman',ganesh:'gaṇesh',ganesan:'gaṇesan',ganapathi:'gaṇapati',ganapathy:'gaṇapati',subramanian:'subrahmaṇyan',subramaniam:'subrahmaṇyam',subramanya:'subrahmaṇya',krishna:'kṛṣṇa',krishnan:'kṛṣṇan',murali:'muralee',harish:'hareesh',girish:'gireesh',satish:'sateesh',sathish:'sateesh',jagadish:'jagadeesh',vasudevan:'vaasudevan',vasudev:'vaasudev',vishnu:'viṣṇu',shankar:'shaṅkar',sankar:'shaṅkar',sankaran:'shaṅkaran',siva:'shiva',sivakumar:'shivakumaar',arun:'aruṇ',raghavan:'raaghavan',madhavan:'maadhavan',swaminathan:'svaaminaathan',viswanathan:'vishvanaathan',viswanath:'vishvanaath',natarajan:'naṭaraajan',nataraj:'naṭaraaj',sridhar:'shreedhar',sridharan:'shreedharan',aditya:'aaditya',adithya:'aaditya',abhishek:'abhiṣek',akash:'aakaash',aakash:'aakaash',anirudh:'aniruddh',balu:'baalu',bharath:'bharat',chandrasekhar:'chandrashekhar',chandrasekaran:'chandrashekharan',gowtham:'gautam',gautham:'gautam',jayaram:'jayaraam',kalyan:'kalyaaṇ',kishore:'kishor',kiran:'kiraṇ',mahadevan:'mahaadevan',nagarajan:'naagaraajan',nagaraj:'naagaraaj',praveen:'praveeṇ',parthasarathy:'paarthhasaarathhi',parthasarathi:'paarthhasaarathhi',padmanabhan:'padmanaabhan',raghunathan:'raghunaathan',ramakrishnan:'raamakṛṣṇan',ramachandran:'raamachandran',ramanathan:'raamanaathan',ramanujam:'raamaanujam',ranganathan:'raṅganaathan',santhosh:'santoṣ',santosh:'santoṣ',sanjay:'sañjay',sanjeev:'sañjeev',sekar:'shekhar',sekhar:'shekhar',seshadri:'sheshaadri',shyam:'shyaam',srikanth:'shreekaant',srikant:'shreekaant',suraj:'sooraj',surya:'soorya',thyagarajan:'tyaagaraajan',vaidyanathan:'vaidyanaathan',varadarajan:'varadaraajan',vignesh:'vighnesh',vigneshwaran:'vighneshvaran',lakshmi:'lakshmee',devi:'devee',sita:'seetaa',seetha:'seetaa',geetha:'geetaa',gita:'geetaa',geeta:'geetaa',radha:'raadhaa',meena:'meenaa',kamala:'kamalaa',saraswathi:'sarasvatee',saraswati:'sarasvatee',parvathi:'paarvatee',parvati:'paarvatee',uma:'umaa',usha:'uṣaa',padma:'padmaa',latha:'lataa',lata:'lataa',vani:'vaaṇee',lalitha:'lalitaa',lalita:'lalitaa',sudha:'sudhaa',sumathi:'sumatee',anitha:'anitaa',anita:'anitaa',kavitha:'kavitaa',kavita:'kavitaa',savitha:'savitaa',sarada:'shaaradaa',sharada:'shaaradaa',janaki:'jaanakee',rukmini:'rukmiṇee',bhavani:'bhavaanee',kalyani:'kalyaaṇee',gayathri:'gaayatree',gayatri:'gaayatree',jayalakshmi:'jayalakshmee',mahalakshmi:'mahaalakshmee',vijayalakshmi:'vijayalakshmee',rajalakshmi:'raajalakshmee',bhagyalakshmi:'bhaagyalakshmee',annapurna:'annapoorṇaa',visalakshi:'vishaalaakshee',meenakshi:'meenaakshee',kamakshi:'kaamaakshee',nandini:'nandinee',deepa:'deepaa',rekha:'rekhaa',shanthi:'shaantee',shanti:'shaantee',revathi:'revatee',hema:'hemaa',indira:'indiraa',ramya:'ramyaa',divya:'divyaa',sowmya:'saumyaa',soumya:'saumyaa',sandhya:'sandhyaa',harini:'hariṇee',bhargavi:'bhaargavee',kaveri:'kaaveree',ganga:'gaṅgaa',yamuna:'yamunaa',sarala:'saralaa',vimala:'vimalaa',nirmala:'nirmalaa',sujatha:'sujaataa',mythili:'maithilee',maithili:'maithilee',vaidehi:'vaidehee',anjali:'añjalee',aruna:'aruṇaa'};
+// Name (English) → Devanagari: common spellings first, then simple rules (female names: final -a → -ā, -i → -ī).
+function nameToDevanagari(text, fem) {
+  if (!text) return '';
+  const w = text.split(/(\s+|[.\-])/).map(part => {
+    if (!/^[A-Za-z]+$/.test(part)) return part;
+    let s = part.toLowerCase();
+    const km = s.match(/^([a-z]{2,})kumar$/);                    // Arunkumar → अरुणकुमार
+    if (NAME_MAP[s]) s = NAME_MAP[s];
+    else if (km) { const pre = NAME_MAP[km[1]] || km[1]; return pre + (/[aeiouāīū]$/.test(pre) ? '' : 'a') + 'kumaar'; }
+    else s = s.replace(/nathan$/, 'naathan').replace(/nath$/, 'naath').replace(/rajan$/, 'raajan')
+              .replace(/raj$/, 'raaj').replace(/swam[iy]$/, 'svaamee').replace(/lakshmi$/, 'lakshmee');
+    if (fem && s.length > 2) s = s.replace(/([^a])a$/, '$1aa').replace(/([^e])[iy]$/, '$1ee');
+    else s = s.replace(/([^aeiou])y$/, '$1i');
+    return s;
+  }).join('');
+  return iastToDevanagari(w);
+}
+// Re-derive a Devanagari name when the gender changes, but only if the user has not edited it by hand.
+function nameRegender(en, dvEl, fem) {
+  if (en && dvEl.value === nameToDevanagari(en, !fem)) dvEl.value = nameToDevanagari(en, fem);
+}
+
 // ---------- Devanagari → other scripts (output) ----------
 const TA_CONS = {'क':['க',''],'ख':['க','²'],'ग':['க','³'],'घ':['க','⁴'],'ङ':['ங',''],'च':['ச',''],'छ':['ச','²'],'ज':['ஜ',''],'झ':['ஜ','²'],'ञ':['ஞ',''],
   'ट':['ட',''],'ठ':['ட','²'],'ड':['ட','³'],'ढ':['ட','⁴'],'ण':['ண',''],'त':['த',''],'थ':['த','²'],'द':['த','³'],'ध':['த','⁴'],'न':['ந',''],
@@ -830,9 +860,10 @@ function famRow(m) {
     q('.f-rashi').disabled = list.length === 1; q('.f-rashi').classList.toggle('ro', list.length === 1);
   };
   sync(m.rashi != null ? +m.rashi : null);
-  q('.f-name').addEventListener('input', e => { q('.f-nameD').value = iastToDevanagari(e.target.value); famChanged(); });
+  const relFem = () => (relById(q('.f-rel').value) || [])[3] === 'f';
+  q('.f-name').addEventListener('input', e => { q('.f-nameD').value = nameToDevanagari(e.target.value, relFem()); famChanged(); });
   q('.f-nameD').addEventListener('input', famChanged);
-  q('.f-rel').addEventListener('change', () => { gSel(); famChanged(); });
+  q('.f-rel').addEventListener('change', () => { nameRegender(q('.f-name').value, q('.f-nameD'), relFem()); gSel(); famChanged(); });
   q('.f-gotra').addEventListener('change', () => { gSel(); famChanged(); });
   q('.f-gother').addEventListener('input', famChanged);
   q('.f-nak').addEventListener('change', () => { delete q('.f-rashi').dataset.set; sync(); famChanged(); });
@@ -850,7 +881,16 @@ function famData() {
             gotra: OWN_GOTRA[q('.f-rel').value] ? q('.f-gotra').value : '', gother: q('.f-gother').value.trim()};
   });
 }
-function famChanged() { updatePurposePreview(); saveDetails(); }
+function famChanged() {
+  updatePurposePreview(); saveDetails();
+  if (typeof document !== 'undefined' && $('famConsentBox')) $('famConsentBox').classList.toggle('hide', !famData().some(m => m.nameD));
+}
+function updateNameCheck() {
+  const dv = $('nameD').value.trim(), sc = $('script').value;
+  $('nameCheck').classList.toggle('hide', !dv);
+  $('nameBig').textContent = dv;
+  $('nameBigS').textContent = dv && sc !== 'sa' ? '(' + devaTo(dv, sc) + ')' : '';
+}
 // Rebuild rows when the kartā's gender changes (wife ↔ husband).
 function famRebuild() { const d = famData(); $('famList').innerHTML = ''; d.forEach(famRow); }
 // "मम, धर्मपत्न्याः … जातायाः लक्ष्मीनाम्न्याः, पुत्रस्य … जातस्य रघुनाम्नः" (only members with a name)
@@ -1061,10 +1101,20 @@ function calcPanchang(dateStr, city, cal) {
     const yr = (m < 4 || (m === 4 && solarRashi === 11)) ? y - 1 : y;   // year begins at Meṣa saṅkrānti
     r.samv = ((yr - 1987) % 60 + 60) % 60;
   } else {                                                     // amānta lunar month
-    const nm0 = newMoonNear(rise, -1), nm1 = newMoonNear(rise + 1, 1), nmPrev = newMoonNear(nm0 - 2, -1);
+    const nm0 = newMoonNear(rise, -1), nm1 = newMoonNear(rise, 1), nmPrev = newMoonNear(nm0 - 2, -1);
     const r0 = Math.floor(sunSid(nm0) / 30), r1 = Math.floor(sunSid(nm1) / 30), rP = Math.floor(sunSid(nmPrev) / 30);
-    const idx = (r0 + 1) % 12;                                 // month named from the rāśi the Sun is in at the starting new moon
+    let idx = (r0 + 1) % 12;                                   // month named from the rāśi the Sun is in at the starting new moon
     r.adhika = r0 === r1 ? 1 : (rP === r0 ? 2 : 0);            // no saṅkrānti in this month → adhika; month after an adhika → nija
+    const nd = new Date(Date.UTC(y, m - 1, d + 1));
+    const nextRise = sunEvent(nd.getUTCFullYear(), nd.getUTCMonth() + 1, nd.getUTCDate(), lat, lon, tz, true);
+    if (nm1 < nextRise) {                                      // the new moon falls today, after sunrise: the lunar month changes today
+      r.nmToday = nm1;
+      const pEnd = crossing(elong, nm1 + 0.01, 12, 12.19), nm2 = newMoonNear(nm1 + 1, 1), r2 = Math.floor(sunSid(nm2) / 30);
+      const nIdx = (r1 + 1) % 12, nAdh = r1 === r2 ? 1 : (r0 === r1 ? 2 : 0);
+      r.pEnd = pEnd;
+      // Ugādi rule: when the pratipadā of Caitra begins and ends between two sunrises (kṣaya), Ugādi is kept on this day.
+      if (nIdx === 0 && nAdh !== 1 && pEnd < nextRise) { r.ugadi = true; idx = 0; r.adhika = nAdh; r.tithi = 0; }
+    }
     r.masa = idx; r.rtu = Math.floor(idx / 2);
     const yr = (idx >= 8 && m <= 4) ? y - 1 : y;               // year begins at Ugādi (start of Caitra)
     r.samv = ((yr - 1987) % 60 + 60) % 60;
@@ -1134,6 +1184,15 @@ function panchangInfo(v, c, cal) {
     warn.push('The Sun enters ' + cap(sign) + ' at ' + when(sk) + ', within ' + CLOSE_SUN_MIN + ' minutes of ' + (cal === 'ta' ? 'sunset (' + fmtTime(p.set, tz) + ')' : 'sunrise') + '.');
     if (cal === 'ta') ['p-masa', 'p-rtu', 'p-ayana', 'p-samv'].forEach(x => mark.add(x)); else mark.add('p-ayana');
   }
+  if (p.ugadi) {
+    warn.push('<strong>Ugādi today.</strong> The new moon is at ' + when(p.nmToday) + ' and Caitra Śukla Prathamā (pratipadā) ends at ' + when(p.pEnd) +
+      ', before the next sunrise, so by the Ugādi rule today is taken as Caitra Śukla Prathamā and the new year ' + SAMV[p.samv][0] + ' begins today. Please confirm with your vādhyār.');
+    ['p-samv', 'p-masa', 'p-adhika', 'p-tithi', 'p-rtu'].forEach(x => mark.add(x));
+  } else if (p.nmToday && cal !== 'ta') {
+    warn.push('The new moon is today at ' + when(p.nmToday) + ' (after sunrise), so the lunar month changes today' +
+      (p.masa === 11 && p.adhika !== 1 ? ' and the new year (Ugādi) follows tomorrow' : '') + '. The saṅkalpam uses the month and tithi at sunrise.');
+    ['p-masa', 'p-tithi'].forEach(x => mark.add(x));
+  }
   const info = 'Sunrise at ' + c[0] + ': ' + fmtTime(p.rise, tz) + ', sunset ' + fmtTime(p.set, tz) + ' (local time). ' +
     tithiLabel(p.tithi).split(' · ')[0] + ': ' + when(tStart) + ' → ' + when(tEnd) + '. ' + nkName(p.nak) + ': ' + when(nStart) + ' → ' + when(nEnd) + '. ' +
     'Tithi and nakṣatra are those prevailing at sunrise' +
@@ -1148,7 +1207,7 @@ function applyPanchang() {
   setVal('p-tithi', p.tithi); setVal('p-vara', p.vara); setVal('p-nak', p.nak);
   P_IDS.forEach(id => $(id).classList.toggle('close', mark.has(id)));
   $('p-warn').classList.toggle('hide', !warn.length);
-  $('p-warn').innerHTML = warn.length ? '⚠️ <strong>Close call – please confirm with your pañcāṅgam.</strong> ' + warn.join(' ') +
+  $('p-warn').innerHTML = warn.length ? '⚠️ <strong>Please confirm with your pañcāṅgam.</strong> ' + warn.join(' ') +
     ' Published pañcāṅgams can differ by a few minutes. If yours differs, tick the box below and correct the highlighted fields.' : '';
   $('p-info').textContent = info;
 }
@@ -1319,7 +1378,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · Developed by ' + DEVELOPER + ' · ' + stamp + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v3.6';
+const APP_VERSION = 'v3.7';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -1343,9 +1402,12 @@ async function subscribe() {
   out.style.color = '#a33';
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { out.textContent = 'Please enter a valid email address.'; return; }
   if (!$('subConsent').checked) { out.textContent = 'Please tick the consent box.'; return; }
+  if (!$('name').value.trim() || !$('nameD').value.trim() || !$('gotraD').value.trim()) { out.textContent = 'Please fill in your name and gotra in step 2 first.'; return; }
+  const famOn = famData().some(m => m.nameD);
+  if (famOn && !$('subFamConsent').checked) { out.textContent = 'Please confirm that your family members agree (tick the second box), or remove them in step 3.'; return; }
   const mode = $('subMode').value, time = $('subTime').value;
   if (mode === 'time' && !/^\d\d:\d\d$/.test(time)) { out.textContent = 'Please choose a time.'; return; }
-  const payload = {action: 'subscribe', email, mode, time, website: $('subWebsite').value, state: readState()};
+  const payload = {action: 'subscribe', email, mode, time, website: $('subWebsite').value, familyConsent: famOn, state: readState()};
   $('subBtn').disabled = true; out.style.color = 'var(--soft)'; out.textContent = 'Sending…';
   try {
     const r = await fetch(SUBSCRIBE_URL, {method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(payload)});
@@ -1359,18 +1421,16 @@ async function subscribe() {
 }
 const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
 function GOTHRAS_EN() { const v = V('gotra'); return v === 'other' ? V('gotraOther') : (v === '' ? '' : GOTHRAS[+v][0]); }
-const FB_TO = String.fromCharCode(115,110,118,97,115,49,51,50,64,103,109,97,105,108,46,99,111,109);
-const FB_SUBJ = 'Saṅkalpam Generator – Feedback';
-function updateFeedbackLinks() {
-  const body = $('fbText').value.trim();
-  $('fbGmail').href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(FB_TO) +
-                      '&su=' + encodeURIComponent(FB_SUBJ) + '&body=' + encodeURIComponent(body);
-  $('fbMail').href = 'mailto:' + FB_TO + '?subject=' + encodeURIComponent(FB_SUBJ) + '&body=' + encodeURIComponent(body);
-}
-function copyFeedback() {
-  const txt = 'To: ' + FB_TO + '\nSubject: ' + FB_SUBJ + '\n\n' + $('fbText').value.trim();
-  navigator.clipboard.writeText(txt).then(() => { $('fbHint').textContent = 'Copied – paste it into a new email to ' + FB_TO + '.'; },
-    () => { $('fbHint').textContent = 'Please email your message to ' + FB_TO; });
+const FEEDBACK_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfF1itaPZuT-jSxsO4xp2AQDPGspGA0v1Kz20-J5JqROTIaQA/formResponse';
+async function sendFeedback() {
+  const txt = $('fbText').value.trim(), out = $('fbStatus');
+  if (!txt) { out.style.color = '#a33'; out.textContent = 'Please type a message first.'; return; }
+  $('fbSend').disabled = true; out.style.color = 'var(--soft)'; out.textContent = 'Sending…';
+  try {
+    await fetch(FEEDBACK_URL, {method: 'POST', mode: 'no-cors', body: new URLSearchParams({'entry.1320409022': txt.slice(0, 120) + ' [' + APP_VERSION + ']'})});
+    out.style.color = '#2e6b2e'; out.textContent = '🙏 Thank you – your feedback has been sent.'; $('fbText').value = ''; $('fbCount').textContent = '0';
+  } catch (e) { out.style.color = '#a33'; out.textContent = 'Could not send – please check your connection and try again.'; }
+  $('fbSend').disabled = false;
 }
 function copySankalpam() {
   const s = $('copyStatus');
@@ -1429,7 +1489,8 @@ function init() {
   $('p-unlock').addEventListener('change', e => lockPanchang(!e.target.checked));
   $('nak').addEventListener('change', syncRashi); $('pada').addEventListener('change', syncRashi); syncRashi();
   $('gotra').addEventListener('change', updateGotra); $('gotraOther').addEventListener('input', updateGotra);
-  $('name').addEventListener('input', e => { $('nameD').value = iastToDevanagari(e.target.value); });
+  $('name').addEventListener('input', e => { $('nameD').value = nameToDevanagari(e.target.value, $('gender').value === 'f'); updateNameCheck(); });
+  $('nameD').addEventListener('input', updateNameCheck);
   $('purpList').innerHTML = PURPOSES.map(([g, items]) => '<div class="sub">' + g + '</div><div class="checks">' +
     items.map(([id, en, sa]) => '<label><input type="checkbox" id="pp-' + id + '"><span>' + en + ' <span class="dv">' + sa + '</span></span></label>').join('') + '</div>').join('');
   $('famAdd').addEventListener('click', () => { famRow().querySelector('.f-name').focus(); famChanged(); });
@@ -1437,12 +1498,13 @@ function init() {
   $('otherD').addEventListener('input', updatePurposePreview);
   $('purpList').addEventListener('change', updatePurposePreview);
   const gSync = () => { $('suffixBox').classList.toggle('hide', $('gender').value === 'f'); updatePurposePreview(); };
-  $('gender').addEventListener('change', () => { famRebuild(); gSync(); saveDetails(); });
+  $('gender').addEventListener('change', () => { nameRegender($('name').value, $('nameD'), $('gender').value === 'f'); updateNameCheck(); famRebuild(); gSync(); saveDetails(); });
   $('forget').addEventListener('click', () => { try { localStorage.removeItem('sankalpam.v3'); } catch (e) {} saveBlocked = true; $('forget').textContent = 'Forgotten ✓ (reload to clear the form)'; });
-  loadDetails(); gSync();
-  $('script').addEventListener('change', () => { if ($('output').classList.contains('active') && !$('resultContainer').classList.contains('hide')) generateSankalpam(); });
+  loadDetails(); gSync(); updateNameCheck(); $('famConsentBox').classList.toggle('hide', !famData().some(m => m.nameD));
+  $('script').addEventListener('change', () => { updateNameCheck(); if ($('output').classList.contains('active') && !$('resultContainer').classList.contains('hide')) generateSankalpam(); });
   $('form').addEventListener('change', updateSummary); updateSummary();
-  $('fbText').addEventListener('input', () => { $('fbCount').textContent = $('fbText').value.length; updateFeedbackLinks(); }); updateFeedbackLinks();
+  $('fbText').addEventListener('input', () => { $('fbCount').textContent = $('fbText').value.length; $('fbStatus').textContent = ''; });
+  $('fbSend').addEventListener('click', sendFeedback);
 }
 if (typeof document !== 'undefined') init();
 </script>
