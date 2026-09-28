@@ -12,6 +12,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 - **Your details and family** – name (with a clear "check your name" box and common-name spellings, e.g. Kumar → कुमार, Priya → प्रिया), gotra, birth star and pāda (rāśi fills in automatically), male and female wording, family members with their stars; a married daughter's or son-in-law's own gotra.
 - **What you chant** – Śrī Rudram (Namakam, Chamakam; pārāyaṇam or ghanam – off unless you choose it), Vedic sūktas, sahasranāmams and aṣṭottaras, with closing verses to match.
 - **Purposes** – choose from common prayers; the Sanskrit wording is produced for you.
+- **Mahālaya tarpaṇam (new)** – the complete tarpaṇam for Kṛṣṇa Yajur Veda (1 kūrcham), from ācamanam to samarpaṇam, with the day's yoga and karaṇa, your ancestors' names on both sides, and the right lines when your mother is alive. Please have your vādhyār check the text.
 - **Your script** – Sanskrit (Devanagari), Tamil (Grantha), Telugu, Kannada or English letters (IAST).
 - **Easy to read** – today's details, your details and your purposes are highlighted in different colours.
 - **Copy, print or save as PDF.** Your details are remembered on your own device.
@@ -19,7 +20,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 ## Privacy
 
 - The app runs in your browser. No sign-in is needed.
-- Your details are saved only on your own device, unless you choose the optional daily email.
+- Your details are saved only on your own device, unless you choose the optional daily email. Ancestors' names entered for tarpaṇam stay only on your device and are never sent anywhere.
 - **Feedback** is sent anonymously through a Google Form; no email address is shown or needed.
 - **Optional daily email:** if you subscribe, your email address and the details you entered are stored in a private Google Sheet, used only to send you the daily saṅkalpam. You confirm by email first, and every email has an **Unsubscribe** link that deletes your details. If you add family members, you confirm that they agree. Expired or cancelled sign-ups are deleted automatically.
 
