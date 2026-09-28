@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 4.0  |  Updated: 2026-09-28
+  Version: 4.3  |  Updated: 2026-09-28
   Pañcāṅgam is calculated in the browser for the chosen date and city (local
   sunrise, Lahiri ayanāṁśa, low-precision Sun/Moon theory). Calendars: Tamil
   (solar, sauramāna) and Telugu / Kannada (lunar amānta, cāndramāna, with
@@ -45,6 +45,10 @@ body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 var(--lat)}
 .card h2{display:flex;align-items:center;gap:10px;margin:0 0 4px;font-size:1.1rem;color:var(--kum)}
 .step{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--kum);color:#fff;font-size:.85rem;flex:none}
 .lead{margin:0 0 14px;color:var(--soft);font-size:.88rem}
+label.req::after,.reqkey::before{content:" *";color:#c0392b;font-weight:700}
+.reqkey{font-size:.8rem;color:var(--soft);margin:-8px 0 12px}.reqkey::before{content:"* "}
+.invalid{border-color:#c0392b!important;background:#fdecea!important;box-shadow:0 0 0 3px rgba(192,57,43,.18)!important}
+label.invalid{border-radius:6px;padding:4px 6px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
 label{display:block;font-size:.8rem;font-weight:600;color:var(--soft);margin:0 0 4px;text-transform:uppercase;letter-spacing:.4px}
 input,select,textarea{width:100%;font:inherit;font-size:.97rem;padding:9px 10px;border:1px solid #cfc3b3;border-radius:8px;background:#fff;color:var(--ink)}
@@ -81,6 +85,7 @@ select.chosen{border:2px solid var(--kum);background:var(--tint);font-weight:600
 .doc p{font-family:var(--deva);font-size:1.12rem;line-height:2;margin:6px 0;color:#111}
 .doc b{color:var(--kum-d)}
 .doc .ins{font-family:var(--lat);font-size:.86rem;font-style:italic;color:var(--soft);line-height:1.5;margin:10px 0 2px}
+.doc p.tl b{font-weight:700;color:#111}
 .doc .x3{font-family:var(--lat);font-size:.78rem;color:var(--soft);white-space:nowrap}
 .tgrid{display:grid;grid-template-columns:1fr;gap:10px}
 .trow{display:grid;grid-template-columns:minmax(140px,1.1fr) 1fr 1fr auto;gap:8px;align-items:end;margin:0 0 8px}
@@ -187,7 +192,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <h2><span class="step">1</span>Date &amp; Pañcāṅgam</h2>
   <p class="lead">Choose the date, your calendar and your city. The pañcāṅgam is calculated for sunrise at that city; correct any field if your pañcāṅgam differs.</p>
   <div class="grid">
-    <div><label for="date">Date</label><input type="date" id="date"></div>
+    <div><label class="req" for="date">Date</label><input type="date" id="date"></div>
     <div><label for="cal">Calendar</label><select id="cal">
       <option value="ta" selected>Tamil (solar · sauramāna)</option>
       <option value="te">Telugu (lunar · cāndramāna)</option>
@@ -214,17 +219,18 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <div class="card">
   <h2><span class="step">2</span>Kartā (Person Doing the Saṅkalpam)</h2>
   <p class="lead">Type the name in English; the Devanagari fills in automatically and can be corrected. For long vowels type double letters (e.g. <em>shreenivaasa</em> → श्रीनिवास).</p>
+  <p class="reqkey">marks a field that must be filled.</p>
   <div class="grid">
     <div><label for="gender">Gender</label><select id="gender"><option value="m" selected>Male</option><option value="f">Female</option></select></div>
     <div id="suffixBox"><label for="suffix">Name ending</label><select id="suffix">
       <option value="sharma" selected>Śarmā · शर्मणः</option><option value="varma">Varmā · वर्मणः</option>
       <option value="gupta">Gupta · गुप्तस्य</option><option value="dasa">Dāsa · दासस्य</option>
       <option value="none">None · नाम्नः</option></select></div>
-    <div><label for="name">Name (English)</label><input type="text" id="name" placeholder="e.g. raama daasa"></div>
-    <div><label for="nameD">Name (Devanagari)</label><input type="text" id="nameD" class="deva" placeholder="राम दास"></div>
-    <div><label for="gotra">Gotra</label><select id="gotra"></select></div>
-    <div id="gotraOtherBox" class="hide"><label for="gotraOther">Your Gotra (English)</label><input type="text" id="gotraOther" placeholder="e.g. kaapi"></div>
-    <div><label for="gotraD">Gotra (Devanagari)</label><input type="text" id="gotraD" class="deva" placeholder="गोत्र"></div>
+    <div><label class="req" for="name">Name (English)</label><input type="text" id="name" placeholder="e.g. raama daasa"></div>
+    <div><label class="req" for="nameD">Name (Devanagari)</label><input type="text" id="nameD" class="deva" placeholder="राम दास"></div>
+    <div><label class="req" for="gotra">Gotra</label><select id="gotra"></select></div>
+    <div id="gotraOtherBox" class="hide"><label class="req" for="gotraOther">Your Gotra (English)</label><input type="text" id="gotraOther" placeholder="e.g. kaapi"></div>
+    <div><label class="req" for="gotraD">Gotra (Devanagari)</label><input type="text" id="gotraD" class="deva" placeholder="गोत्र"></div>
     <div><label for="nak">Birth Nakṣatra</label><select id="nak" class="deva"></select></div>
     <div><label for="pada">Pāda</label><select id="pada"><option value="0" selected>Don't know</option><option value="1">Pāda 1</option><option value="2">Pāda 2</option><option value="3">Pāda 3</option><option value="4">Pāda 4</option></select></div>
     <div><label for="rashi">Birth Rāśi</label><select id="rashi" class="deva ro" disabled></select></div>
@@ -300,7 +306,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <h2><span class="step">6</span>📧 Daily saṅkalpam by email <span class="hint" style="font-weight:400">(optional)</span></h2>
   <p class="lead">Each morning you receive the saṅkalpam for that day – with the day's pañcāṅgam for your city – using the details you entered above (steps 1–5). Fill in at least your name and gotra first.</p>
   <div class="grid">
-    <div><label for="subEmail">Your email</label><input type="email" id="subEmail" autocomplete="email" placeholder="name@example.com"></div>
+    <div><label class="req" for="subEmail">Your email</label><input type="email" id="subEmail" autocomplete="email" placeholder="name@example.com"></div>
     <div><label for="subMode">When</label><select id="subMode"><option value="sunrise" selected>5 minutes after sunrise</option><option value="time">At a time I choose</option></select></div>
     <div id="subTimeBox" class="hide"><label for="subTime">Time (your city's local time)</label><input type="time" id="subTime" value="06:00"></div>
   </div>
@@ -327,20 +333,25 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <div class="card tform">
   <h2><span class="step">T</span>Tarpaṇam</h2>
   <p class="lead">Uses the <b>date, city and calendar from step 1</b> and your <b>gotra from step 2</b> of the Generator tab. The text appears in the language chosen at the top.</p>
-  <div class="grid"><div><label for="t-date">Date of tarpaṇam</label><input type="date" id="t-date"></div></div>
+  <div class="grid"><div><label class="req" for="t-date">Date of tarpaṇam</label><input type="date" id="t-date"></div></div>
   <p class="note" id="tFor" style="margin-top:10px"></p>
   <div id="tFemNote" class="note hide">ℹ️ Tarpaṇam is traditionally performed by men. Please ask your vādhyār.</div>
   <div class="grid">
     <div><label for="t-type">Tarpaṇam</label><select id="t-type">
       <option value="mahalaya" selected>Mahālaya pakṣa tarpaṇam</option>
-      <option value="amavasya" disabled>Amāvāsyā tarpaṇam (coming next)</option>
-      <option value="masa" disabled>Māsa pirappu / saṅkrānti tarpaṇam (coming next)</option>
-      <option value="grahana" disabled>Sūrya / Candra grahaṇa tarpaṇam (coming next)</option>
+      <option value="amavasya">Amāvāsyā tarpaṇam</option>
+      <option value="masa">Māsa pirappu (saṅkramaṇa) tarpaṇam</option>
+      <option value="surya">Sūrya grahaṇa (solar eclipse) tarpaṇam</option>
+      <option value="chandra">Candra grahaṇa (lunar eclipse) tarpaṇam</option>
       <option value="shannavati" disabled>Other ṣaṇṇavati tarpaṇams (coming next)</option></select></div>
+    <div id="t-rasiBox" class="hide"><label for="t-rasi">Month – Sun entering</label><select id="t-rasi"></select></div>
     <div><label for="t-veda">Veda</label><select id="t-veda">
       <option value="yajur" selected>Yajur Veda (Kṛṣṇa)</option>
       <option value="rig" disabled>Ṛg Veda (after your vādhyār's text)</option>
       <option value="sama" disabled>Sāma Veda (after your vādhyār's text)</option></select></div>
+    <div><label for="t-sutra">Sūtra</label><select id="t-sutra">
+      <option value="apastamba" selected>Āpastamba</option>
+      <option value="bodhayana" disabled>Bodhāyana (coming soon)</option></select></div>
     <div><label for="t-kurcha">Kūrcham</label><select id="t-kurcha">
       <option value="1" selected>1 kūrcham</option><option value="2">2 kūrchams</option></select></div>
     <div><label for="t-father">Father</label><select id="t-father">
@@ -358,7 +369,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <p class="note">💡 <b>If you don't know your grandparents' details:</b> ask elders or relatives, or see old family records (horoscopes, wedding invitations, śrāddha notes). If a name cannot be found, tick <i>Not known</i>. If your mother's gotra is not known, tick <i>Not known</i> – Kāśyapa gotra is then used, as the Dharmasindhu advises when a gotra is unknown.</p>
   <div id="tLines"></div>
   <div class="grid" style="margin-top:14px">
-    <div><label for="t-mgotra">Mother's gotra (by birth)</label><select id="t-mgotra"></select></div>
+    <div><label class="req" for="t-mgotra">Mother's gotra (by birth)</label><select id="t-mgotra"></select></div>
     <div id="t-mgotraOtherBox" class="hide"><label for="t-mgotraOther">Her gotra (English)</label><input type="text" id="t-mgotraOther" placeholder="e.g. kaushika"></div>
     <div><label style="display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-weight:400;margin-top:26px"><input type="checkbox" id="t-mgotraNK" style="width:auto"> Not known (use Kāśyapa)</label></div>
   </div>
@@ -1456,11 +1467,15 @@ function generateSankalpam() {
   const st = $('status'); st.textContent = '';
   const date = $('date').value, name = $('name').value.trim(), nameD = esc($('nameD').value.trim()), gotraD = esc($('gotraD').value.trim());
   const script = $('script').value;
-  if (!date) { st.textContent = 'Please choose a date.'; return; }
-  if (!name || !nameD) { st.textContent = 'Please enter the name.'; return; }
-  if (!gotraD) { st.textContent = 'Please choose a gotra.'; return; }
-  const famBad = famData().find(m => m.nameD && ((OWN_GOTRA[m.rel] === 'req' && m.gotra === '') || (m.gotra === 'other' && !m.gother)));
-  if (famBad) { st.textContent = 'Please choose the gotra for ' + (famBad.name || relById(famBad.rel)[1]) + '.'; return; }
+  const miss = [];
+  if (!date) miss.push($('date'));
+  if (!name) miss.push($('name'));
+  if (!nameD) miss.push($('nameD'));
+  if (!gotraD) miss.push($('gotra').value === 'other' ? $('gotraOther') : $('gotra'), $('gotraD'));
+  if (miss.length) { st.textContent = 'Please fill in the fields marked in red (' + (!date ? 'date' : !name || !nameD ? 'name' : 'gotra') + ').'; flagInvalid(miss); return; }
+  const famAll = famData(), famBad = famAll.find(m => m.nameD && ((OWN_GOTRA[m.rel] === 'req' && m.gotra === '') || (m.gotra === 'other' && !m.gother)));
+  if (famBad) { st.textContent = 'Please choose the gotra for ' + (famBad.name || relById(famBad.rel)[1]) + '.';
+    const row = document.querySelectorAll('#famList .fam')[famAll.indexOf(famBad)]; flagInvalid([row && row.querySelector(famBad.gotra === 'other' ? '.f-gother' : '.f-gotra')]); return; }
 
   const cal = $('cal').value;
   const P = {samv: +$('p-samv').value, ayana: +$('p-ayana').value, rtu: +$('p-rtu').value, masa: +$('p-masa').value, adhika: cal === 'ta' ? 0 : +$('p-adhika').value,
@@ -1472,6 +1487,14 @@ function generateSankalpam() {
   saveDetails();
   $('resultContainer').classList.remove('hide'); $('noResult').classList.add('hide');
   switchTab('output');
+}
+// Outline the missing fields in red, open their group / tab, scroll to the first one and focus it.
+function flagInvalid(els) {
+  document.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
+  els = els.filter(Boolean); if (!els.length) return;
+  els.forEach(e => (e.type === 'checkbox' ? e.parentElement : e).classList.add('invalid'));
+  const f = els[0], d = f.closest('details'); if (d) d.open = true;
+  f.scrollIntoView({behavior: 'smooth', block: 'center'}); try { f.focus({preventScroll: true}); } catch (e) {}
 }
 function genStamp() { const q = localParts(Date.now(), 'Asia/Kolkata'); return q.d + ' ' + MONTHS_EN[q.m - 1].slice(0, 3) + ' ' + q.y + ', ' + pad2(q.H) + ':' + pad2(q.M) + ' IST'; }
 // Builds the complete saṅkalpam HTML (already in the chosen script) from the inputs (form or saved state)
@@ -1512,7 +1535,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · Developed by ' + DEVELOPER + ' · ' + stamp + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v4.0';
+const APP_VERSION = 'v4.3';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -1534,11 +1557,12 @@ function readState() {
 async function subscribe() {
   const out = $('subStatus'), email = $('subEmail').value.trim();
   out.style.color = '#a33';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { out.textContent = 'Please enter a valid email address.'; return; }
-  if (!$('subConsent').checked) { out.textContent = 'Please tick the consent box.'; return; }
-  if (!$('name').value.trim() || !$('nameD').value.trim() || !$('gotraD').value.trim()) { out.textContent = 'Please fill in your name and gotra in step 2 first.'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { out.textContent = 'Please enter a valid email address.'; flagInvalid([$('subEmail')]); return; }
+  if (!$('subConsent').checked) { out.textContent = 'Please tick the consent box.'; flagInvalid([$('subConsent')]); return; }
+  if (!$('name').value.trim() || !$('nameD').value.trim() || !$('gotraD').value.trim()) { out.textContent = 'Please fill in your name and gotra in step 2 first.';
+    flagInvalid([!$('name').value.trim() && $('name'), !$('nameD').value.trim() && $('nameD'), !$('gotraD').value.trim() && $('gotra'), !$('gotraD').value.trim() && $('gotraD')]); return; }
   const famOn = famData().some(m => m.nameD);
-  if (famOn && !$('subFamConsent').checked) { out.textContent = 'Please confirm that your family members agree (tick the second box), or remove them in step 2.'; return; }
+  if (famOn && !$('subFamConsent').checked) { out.textContent = 'Please confirm that your family members agree (tick the second box), or remove them in step 2.'; flagInvalid([$('subFamConsent')]); return; }
   const mode = $('subMode').value, time = $('subTime').value;
   if (mode === 'time' && !/^\d\d:\d\d$/.test(time)) { out.textContent = 'Please choose a time.'; return; }
   const payload = {action: 'subscribe', email, mode, time, website: $('subWebsite').value, familyConsent: famOn, state: readState()};
@@ -1573,7 +1597,7 @@ function pdfName(kind) {
   const ascii = t => t.replace(/ṛ/g, 'ri').replace(/[ṣś]/g, 'sh').replace(/[Śṣ]/g, 'Sh').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                        .replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const tl = tithiLabel(+$('p-tithi').value).split(' · ')[0];
-  const head = kind === 'tarp' ? {mahalaya: 'Mahalaya-Tarpanam'}[$('t-type').value] || 'Tarpanam' : 'Sankalpam';
+  const tt = $('t-type').value, head = kind === 'tarp' ? (TP_TYPES[tt] ? TP_TYPES[tt].file : 'Tarpanam') + (tt === 'masa' ? '-' + ascii(cap(RS[+$('t-rasi').value][0])) : '') : 'Sankalpam';
   return head + '_' + pad2(d) + '-' + MONTHS_EN[m - 1].slice(0, 3) + '-' + y + '_' + ascii(tl);
 }
 function printDoc(kind, compact) {
@@ -1620,6 +1644,63 @@ function yogaKarana(dateStr, c) {
   const rise = sunEvent(y, m, d, c[1], c[2], c[3], true), T = TofJD(rise), s = sunLongitude(T), mo = moonLongitude(T), a = ayanamsa(rise);
   const yoga = Math.floor(norm(s + mo - 2 * a) / (360 / 27)), k = Math.floor(norm(mo - s) / 6);
   return {yoga, karana: KARANA_FIX[k] || KARANA_MOV[(k - 1) % 7]};
+}
+// Māsa pirappu (saṅkramaṇa) tarpaṇam: puṇyakāla name for the rāśi the Sun enters (Meṣa … Mīna), as in the Yajur Veda tarpaṇam booklet.
+const SANKRAMANA = [['चैत्र विषु', 'मेष'], ['विष्णुपति', 'ऋषभ'], ['षडशीति', 'मिथुन'], ['दक्षिणायन', 'कर्कटक'], ['विष्णुपति', 'सिंह'], ['षडशीति', 'कन्या'],
+                    ['तुलाविषु', 'तुला'], ['विष्णुपति', 'वृश्चिक'], ['षडशीति', 'चाप'], ['उत्तरायण', 'मकर'], ['विष्णुपति', 'कुम्भ'], ['षडशीति', 'मीन']];
+const TP_TYPES = {
+  mahalaya: {title: 'महालयपक्ष तिलतर्पणम्', file: 'Mahalaya-Tarpanam', en: 'Mahālaya'},
+  amavasya: {title: 'अमावास्या तिलतर्पणम्', file: 'Amavasya-Tarpanam', en: 'Amāvāsyā'},
+  masa:     {title: 'रविसंक्रमण तिलतर्पणम्', file: 'Masa-Pirappu-Tarpanam', en: 'Māsa pirappu'},
+  surya:    {title: 'सूर्योपराग तिलतर्पणम्', file: 'Surya-Grahana-Tarpanam', en: 'Sūrya grahaṇa'},
+  chandra:  {title: 'सोमोपराग तिलतर्पणम्', file: 'Chandra-Grahana-Tarpanam', en: 'Candra grahaṇa'}};
+// The words that make each tarpaṇam different, placed at the end of the saṅkalpam.
+function tpPurpose(type, rasi) {
+  if (type === 'amavasya') return 'अमावास्या पुण्यकाले दर्शश्राद्धं तिलतर्पणरूपेण अद्य करिष्ये ॥';
+  if (type === 'masa') { const r = SANKRAMANA[rasi] || SANKRAMANA[0]; return r[0] + ' पुण्यकाले ' + r[1] + ' रवि संक्रमण श्राद्धं तिलतर्पणरूपेण अद्य करिष्ये ॥'; }
+  if (type === 'surya') return 'सूर्य उपराग श्राद्धं तिलतर्पणरूपेण अद्य करिष्ये ॥';
+  if (type === 'chandra') return 'सोम उपराग श्राद्धं तिलतर्पणरूपेण अद्य करिष्ये ॥';
+  return 'कन्यागते सवितरि आषाढ्यादिपञ्चमापरपक्षप्रयुक्त महालयपक्षपुण्यकाले अद्य दिनपक्षीयमहालयश्राद्धं तिलतर्पणरूपेण अद्य करिष्ये ॥';
+}
+// Rāśi the Sun is in at sunset (Tamil month) – and whether it changed since the previous sunset (first day of the month).
+function sunRasiAt(dateStr, c) {
+  const [y, m, d] = dateStr.split('-').map(Number), pv = new Date(Date.UTC(y, m - 1, d - 1));
+  const now = Math.floor(sunSid(sunEvent(y, m, d, c[1], c[2], c[3], false)) / 30);
+  const prev = Math.floor(sunSid(sunEvent(pv.getUTCFullYear(), pv.getUTCMonth() + 1, pv.getUTCDate(), c[1], c[2], c[3], false)) / 30);
+  return {rasi: now, first: now !== prev};
+}
+// Does the amāvāsyā tithi touch this day (between sunrise and the next sunrise)?
+function isAmavasyaDay(dateStr, c) {
+  const [y, m, d] = dateStr.split('-').map(Number), nd = new Date(Date.UTC(y, m - 1, d + 1));
+  const r1 = sunEvent(y, m, d, c[1], c[2], c[3], true), r2 = sunEvent(nd.getUTCFullYear(), nd.getUTCMonth() + 1, nd.getUTCDate(), c[1], c[2], c[3], true);
+  const nm = newMoonNear(r1, 1), start = crossing(elong, nm - 1.2, 348, 12.19);
+  return start < r2 && nm > r1;
+}
+// Amāvāsyā that touches this day: {start, end} (JD) or null.
+function amavasyaSpan(dateStr, c) {
+  const [y, m, d] = dateStr.split('-').map(Number), nd = new Date(Date.UTC(y, m - 1, d + 1));
+  const r1 = sunEvent(y, m, d, c[1], c[2], c[3], true), r2 = sunEvent(nd.getUTCFullYear(), nd.getUTCMonth() + 1, nd.getUTCDate(), c[1], c[2], c[3], true);
+  const nm = newMoonNear(r1, 1), start = crossing(elong, nm - 1.2, 348, 12.19);
+  return start < r2 && nm > r1 ? {start, end: nm} : null;
+}
+// Eclipse on this local date? Solar: visible from the city; lunar: peak on this date.
+function eclipseOn(dateStr, c, kind) {
+  try {
+    const [y, m, d] = dateStr.split('-').map(Number), t0 = Date.UTC(y, m - 1, d) - tzOffsetH(c[3], Date.UTC(y, m - 1, d, 12)) * 36e5, t1 = t0 + 864e5;
+    if (kind === 'surya') {
+      const e = Astronomy.SearchLocalSolarEclipse(new Date(t0 - 864e5), new Astronomy.Observer(c[1], c[2], 0)), pk = e.peak.time.date.getTime();
+      return pk >= t0 && pk < t1 && e.peak.altitude > 0;
+    }
+    // visible if the Moon is above the horizon at some time during the (partial, else penumbral) eclipse, on this local date
+    const e = Astronomy.SearchLunarEclipse(new Date(t0 - 864e5)), ob = new Astronomy.Observer(c[1], c[2], 0);
+    const sd = (e.sd_partial > 0 ? e.sd_partial : e.sd_penum) * 6e4, pk = e.peak.date.getTime();
+    for (let t = pk - sd; t <= pk + sd; t += Math.max(sd / 6, 6e4)) {
+      if (t < t0 || t >= t1) continue;
+      const eq = Astronomy.Equator('Moon', new Date(t), ob, true, true);
+      if (Astronomy.Horizon(new Date(t), ob, eq.ra, eq.dec, 'normal').altitude > 0) return true;
+    }
+    return false;
+  } catch (err) { return true; }
 }
 // Mahālaya pakṣa = kṛṣṇa pakṣa of (amānta) Bhādrapada.
 function isMahalaya(dateStr, c) { const L = calcPanchang(dateStr, c, 'te'); return L.masa === 5 && L.adhika !== 1 && L.tithi >= 15; }
@@ -1704,8 +1785,10 @@ function composeTarpanam(P, o, stamp) {
   const blank = '……', G = Pp(o.gotraD || blank), MG = Pp(o.mgotraD || blank);
   const MSUF = {sharma: 'शर्मणः', varma: 'वर्मणः', gupta: 'गुप्तान्', dasa: 'दासान्', none: 'नाम्नः'}, msuf = MSUF[o.suffix] || MSUF.sharma;
   const nameSeg = (id, suf) => (o.unknown && o.unknown[id]) ? '' : Pp(o.names && o.names[id] ? esc(o.names[id]) : blank) + suf + ' ';
-  const ins = t => '<p class="ins">' + t + '</p>', x3 = ' <span class="x3">(3×)</span>';
+  const ins = t => '<p class="ins">' + t + '</p>', x3 = ' <span class="x3"><b>(3×)</b></span>';
   const two = String(o.kurcha) === '2', RUPA = ['वसुरूप', 'रुद्ररूप', 'आदित्यरूप'];
+  const type = TP_TYPES[o.type] ? o.type : 'mahalaya', ML = type === 'mahalaya', SK = ML ? 'सकारुणिक ' : '';
+  if (type === 'amavasya' && P.tithi === 28 && amavasyaSpan(o.date, o.city)) P = Object.assign({}, P, {tithi: 29});   // booklet: say अमावास्यायां on Amāvāsyā day
   const tl = tithiLoc(P.tithi), paksha = P.tithi < 15 ? 'शुक्ल' : 'कृष्ण';
   const kala = T(SAMV[P.samv][1]) + ' नाम संवत्सरे ' + T(AYANA[P.ayana][1]) + ' ' + T(RTU[P.rtu][1]) + ' ऋतौ ' + T(masaLoc(o.cal, P.masa, P.adhika)) + ' ' + T(paksha) +
     ' पक्षे ' + T(tl) + ' पुण्यतिथौ ' + T(VARA[P.vara][1]) + ' वासरयुक्तायां ' + T(NK[P.nak][1]) + ' नक्षत्रयुक्तायां ' + T(YOGA[yk.yoga][1]) + ' नाम योग ' +
@@ -1715,17 +1798,18 @@ function composeTarpanam(P, o, stamp) {
   // compound forms: genitive (…ानां / …नां) and accusative (…ान् / …ः)
   const pGen = 'अस्मत्' + stems('pm') + 'ानां ' + stems('pw') + 'नां';
   const mGen = mNormal ? 'अस्मत्सपत्नीकमातामहमातुःपितामहमातुःप्रपितामहानाम्' : 'अस्मत्' + stems('mm') + 'ानां ' + stems('mw') + 'नाम्';
-  const k1 = 'सकारुणिक ' + stems('pm') + 'ान् ' + stems('pw') + 'ः', k1g = 'सकारुणिक ' + stems('pm') + 'ानां ' + stems('pw') + 'नां';
+  const k1 = SK + stems('pm') + 'ान् ' + stems('pw') + 'ः', k1g = SK + stems('pm') + 'ानां ' + stems('pw') + 'नां';
   const k2 = mNormal ? 'सपत्नीकमातामहमातुःपितामहमातुःप्रपितामहान्' : stems('mm') + 'ान् ' + stems('mw') + 'ः';
   const k2g = mNormal ? 'सपत्नीकमातामहमातुःपितामहमातुःप्रपितामहानाम्' : stems('mm') + 'ानां ' + stems('mw') + 'नाम्';
-  const male = (g, x, i) => '<p>' + g + 'गोत्रान् ' + nameSeg(x.id, msuf) + RUPA[i] + 'ान् ' + x.acc + ' स्वधा नमस्तर्पयामि ॥</p>';
-  const fem = (g, x, i) => '<p>' + g + 'गोत्राः ' + nameSeg(x.id, 'नाम्नीः') + RUPA[i] + 'ाः ' + x.acc + ' स्वधा नमस्तर्पयामि ॥' + x3 + '</p>';
+  const male = (g, x, i) => '<p class="tl"><b>' + g + 'गोत्रान् ' + nameSeg(x.id, msuf) + RUPA[i] + 'ान् ' + x.acc + ' स्वधा नमस्तर्पयामि ॥</b></p>';
+  const fem = (g, x, i) => '<p class="tl"><b>' + g + 'गोत्राः ' + nameSeg(x.id, 'नाम्नीः') + RUPA[i] + 'ाः ' + x.acc + ' स्वधा नमस्तर्पयामि ॥</b>' + x3 + '</p>';
   const MANTRA3 = [TD.pitr, TD.pitamaha, TD.prapitamaha];
   const withMantras = (g, k) => pick[k].map((x, i) => MANTRA3[i].map(m => '<p>' + m + '</p>' + male(g, x, i)).join('')).join('');
   const row = (a, b, c, d) => '<tr><td>' + a + '</td><td>' + b + '</td><td>' + c + '</td><td>' + d + '</td></tr>';
   const calName = {ta: 'Tamil calendar', te: 'Telugu calendar', kn: 'Kannada calendar'}[o.cal];
   const living = TP_ALL.filter(id => alive[id]);
-  let h = '<h3>॥ महालयपक्ष तिलतर्पणम् ॥</h3><div class="meta">' + longDate(o.date) + ' · ' + esc(o.city[0]) + ' · ' + calName + ' · Yajur Veda · ' +
+  const title = type === 'masa' ? SANKRAMANA[o.rasi || 0][1] + ' ' + TP_TYPES.masa.title : TP_TYPES[type].title;
+  let h = '<h3>॥ ' + title + ' ॥</h3><div class="meta">' + TP_TYPES[type].en + ' · ' + longDate(o.date) + ' · ' + esc(o.city[0]) + ' · ' + calName + ' · Yajur Veda · ' +
     (two ? '2 kūrchams' : '1 kūrcham') + (living.length ? ' · alive: ' + living.map(id => TP_LINES[Object.keys(TP_LINES).find(k => TP_LINES[k].gens.some(g => g[0] === id))].gens.find(g => g[0] === id)[1].toLowerCase()).join(', ') : '') + '</div>';
   h += '<p class="ins" style="text-align:center;color:#8a3b12;font-style:normal;font-weight:600">🙏 Please have your vādhyār check this text before use.</p>';
   h += '<table class="ptable">' + row('Saṁvatsara', SAMV[P.samv][0], 'Māsa', masaLabel(o.cal, P.masa, P.adhika)) +
@@ -1739,16 +1823,16 @@ function composeTarpanam(P, o, stamp) {
   h += '<h4>Saṅkalpam</h4><p>' + MANTRAS_D.mamopath + ' ' + TD.apavitra + ' ' + TD.adya + ' ' + MANTRAS_D.shubhe.replace(/^.*?आद्यब्रह्मणः /, '') + ' ' + kala + '</p>';
   h += ins('Prācīnāvītī – sacred thread over the right shoulder.');
   h += '<p>' + G + 'गोत्राणां वसुरुद्रादित्यस्वरूपाणाम् ' + pGen + ' ' + MG + 'गोत्राणां वसुरुद्रादित्यस्वरूपाणाम् ' + mGen +
-    ' उभयवंशपितॄणाम् अक्षय्यतृप्त्यर्थं तत्तद्गोत्राणां तत्तच्छर्मणां वसुवसुस्वरूपाणां पितृव्यमातुलादिवर्गद्वयावशिष्टानां सर्वेषां कारुणिकपितॄणाम् अक्षय्यतृप्त्यर्थं ' +
-    'कन्यागते सवितरि आषाढ्यादिपञ्चमापरपक्षप्रयुक्त महालयपक्षपुण्यकाले अद्य दिनपक्षीयमहालयश्राद्धं तिलतर्पणरूपेण अद्य करिष्ये ॥</p>';
-  h += ins('Drop only the darbhas held with the pavitram. Change to upavītī, wipe the hand with water, and change back to prācīnāvītī.');
+    ' उभयवंशपितॄणाम् अक्षय्यतृप्त्यर्थं ' + (ML ? 'तत्तद्गोत्राणां तत्तच्छर्मणां वसुवसुस्वरूपाणां पितृव्यमातुलादिवर्गद्वयावशिष्टानां सर्वेषां कारुणिकपितॄणाम् अक्षय्यतृप्त्यर्थं ' : '') +
+    hl('u', tpPurpose(type, o.rasi)) + '</p>';
+  h += ins('Drop only the darbhas held with the pavitram, <b>to the south</b>. Change to upavītī, wipe the hand with water, and change back to prācīnāvītī.');
   h += '<h4>Āvāhanam</h4>' + ins((two ? 'Two kūrchams in the middle of the plate, tips to the south – the first for the pitṛ vargam, the second for the mātāmaha vargam.'
        : 'Kūrcham in the middle of the plate, tip to the south.') + ' Saying this, put sesame at the tip of the kūrcham.') +
     (two ? '<p>' + TD.ayata + ' अस्मिन् कूर्चे ' + k1 + ' आवाहयामि ॥</p>' + ins('At the second kūrcham:') + '<p>' + TD.ayata + ' अस्मिन् कूर्चे ' + k2 + ' आवाहयामि ॥</p>'
-         : '<p>' + TD.ayata + ' अस्मिन् कूर्चे सकारुणिक वर्गद्वयपितॄन् आवाहयामि ॥</p>');
+         : '<p>' + TD.ayata + ' अस्मिन् कूर्चे ' + SK + 'वर्गद्वयपितॄन् आवाहयामि ॥</p>');
   h += '<h4>Āsanam</h4>' + ins('Saying this, place the darbhas on the kūrcham.') +
     (two ? '<p>' + TD.asana + ' ' + k1g + ' इदमासनम् ॥</p>' + ins('At the second kūrcham:') + '<p>' + TD.asana + ' ' + k2g + ' इदमासनम् ॥</p>'
-         : '<p>' + TD.asana + ' सकारुणिक वर्गद्वयपितॄणाम् इदमासनम् ॥</p>');
+         : '<p>' + TD.asana + ' ' + SK + 'वर्गद्वयपितॄणाम् इदमासनम् ॥</p>');
   h += ins('Put sesame on the kūrcham.') + '<p>सकलाराधनैः स्वर्चितम् ॥</p>';
   h += '<h4>Tarpaṇam – pitṛ vargam</h4>' + ins('After each line, offer water with sesame.') + withMantras(G, 'pm');
   h += ins(alive.matr ? 'Mother alive – the women of the family are offered from the grandmother up:' : 'Women of the family:');
@@ -1757,9 +1841,9 @@ function composeTarpanam(P, o, stamp) {
   h += two ? ins('At the second kūrcham, with the same mantras.') + withMantras(MG, 'mm')
            : pick.mm.map((x, i) => male(MG, x, i).replace('</p>', x3 + '</p>')).join('');
   h += pick.mw.map((x, i) => fem(MG, x, i)).join('');
-  h += '<h4>Kāruṇika pitṛs</h4>' + (two ? ins('At the first kūrcham.') : '') +
-    '<p>तत्तद्गोत्रान् तत्तच्छर्मणः वसुवसुस्वरूपान् पितृव्यमातुलादिवर्गद्वयावशिष्टान् सर्वान् कारुणिकपितॄन् स्वधा नमस्तर्पयामि ॥' + x3 + '</p>';
-  h += ins('Saying this, pour sesame and water around inside the plate, anticlockwise.') + '<p>' + TD.urjam + '</p>';
+  if (ML) h += '<h4>Kāruṇika pitṛs</h4>' + (two ? ins('At the first kūrcham.') : '') +
+    '<p class="tl"><b>तत्तद्गोत्रान् तत्तच्छर्मणः वसुवसुस्वरूपान् पितृव्यमातुलादिवर्गद्वयावशिष्टान् सर्वान् कारुणिकपितॄन् स्वधा नमस्तर्पयामि ॥</b>' + x3 + '</p>';
+  h += ins('Saying this, pour sesame and water around inside the plate, anticlockwise.') + '<p>' + (ML ? TD.urjam : TD.urjam.replace('सकारुणिकपितॄन्', 'पितॄन्')) + '</p>';
   const av = abhivadaye(o.abhi);
   h += '<h4>Pradakṣiṇam</h4>' + ins('Upavītī.') + '<p>' + TD.pradakshina + '</p>' + (av ? ins('Abhivādaye and namaskāram:') + '<p>' + av + '</p>' : ins('Abhivādaye (your pravara) … namaskāram.'));
   h += '<h4>Yathāsthānam</h4>' + ins('Prācīnāvītī. Saying this, put sesame at the tip of the kūrcham.') +
@@ -1768,12 +1852,12 @@ function composeTarpanam(P, o, stamp) {
          : '<p>' + TD.ayata + ' अस्मात् कूर्चात् वर्गद्वयपितॄन् यथास्थानं प्रतिष्ठापयामि ॥</p>');
   h += ins('Untie the kūrcham' + (two ? 's' : '') + ', hold the darbhas tips down between the right thumb and forefinger, and pour water saying:') + '<p>' + TD.yesham + '</p>';
   h += '<h4>Samāpanam</h4>' + ins('Upavītī. Ācamanam. Take water in the hand, say this, and let it go.') +
-    '<p>' + C.kayena + ' अद्य दिनपक्षीय महालयतिलतर्पणाख्यं कर्म ॐ तत्सत् ब्रह्मार्पणमस्तु ॥</p>';
+    '<p>' + C.kayena + (ML ? ' अद्य दिनपक्षीय महालयतिलतर्पणाख्यं कर्म' : '') + ' ॐ तत्सत् ब्रह्मार्पणमस्तु ॥</p>';
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · Developed by ' + DEVELOPER + ' · ' + stamp + ' · Please have your vādhyār check this text.</div>';
   return devaTo(h, o.script);
 }
 // ---------- Tarpaṇam page ----------
-const T_IDS = ['t-type', 't-veda', 't-kurcha', 't-father', 't-mother', 't-mgotra', 't-mgotraOther', 'ab-pravaraEn', 'ab-pravara', 'ab-sutra', 'ab-shakha'];
+const T_IDS = ['t-type', 't-rasi', 't-veda', 't-sutra', 't-kurcha', 't-father', 't-mother', 't-mgotra', 't-mgotraOther', 'ab-pravaraEn', 'ab-pravara', 'ab-sutra', 'ab-shakha'];
 const T_CHK = ['t-mgotraNK'];
 function tMgotraD() {
   if ($('t-mgotraNK').checked) return 'काश्यप';
@@ -1802,11 +1886,23 @@ function tSync() {
   $('tSameGotra').classList.toggle('hide', !same);
   const calName = {ta: 'Tamil', te: 'Telugu', kn: 'Kannada'}[$('cal').value];
   $('tFor').innerHTML = '📅 <b>' + (v ? longDate(v) : '–') + '</b> · ' + esc(c[0]) + ' · ' + calName + ' calendar · gotra: <b>' + (esc($('gotraD').value) || '–') + '</b>' +
-    (v && !isMahalaya(v, c) ? '<br>⚠️ This date is not in Mahālaya pakṣa.' : '') + '<br><span class="hint">City and calendar: step 1 of the Generator tab.</span>';
+    (v ? tDateWarn(v, c) : '') + '<br><span class="hint">City and calendar: step 1 of the Generator tab.</span>';
+  $('t-rasiBox').classList.toggle('hide', $('t-type').value !== 'masa');
+  if (v && $('t-rasi').dataset.auto !== v) { $('t-rasi').value = String(sunRasiAt(v, c).rasi); $('t-rasi').dataset.auto = v; }
   const g = GOTHRAS_EN(), sug = PRAVARA_SUGGEST[g];
   $('abHint').innerHTML = sug ? 'Suggested for ' + esc(g) + ' gotra: <b class="deva">' + sug + '</b> <a class="a2hs-link" id="abUse">use this</a> (check with your elders).'
                               : 'Type your pravara ṛṣis in the order your family says them (1, 3 or 5 names).';
   if (sug) $('abUse').onclick = () => { $('ab-pravara').value = sug; $('ab-pravaraEn').value = ''; tSave(); };
+}
+function tDateWarn(v, c) {
+  const t = $('t-type').value, w = m => '<br>⚠️ ' + m + ' Please check the date with your pañcāṅgam.';
+  if (t === 'mahalaya') return isMahalaya(v, c) ? '' : w('This date is not in Mahālaya pakṣa.');
+  if (t === 'amavasya') { const a = amavasyaSpan(v, c), at = jd => { const q = localParts((jd - 2440587.5) * 864e5, c[3]); return q.d + ' ' + MONTHS_EN[q.m - 1].slice(0, 3) + ' ' + pad2(q.H) + ':' + pad2(q.M); };
+    return a ? '<br>🌑 Amāvāsyā: ' + at(a.start) + ' → ' + at(a.end) + '. Please use the day your pañcāṅgam marks as <b>Sarva Amāvāsyā</b> (Āpastamba).' : w('Amāvāsyā does not fall on this date.'); }
+  if (t === 'masa') return sunRasiAt(v, c).first ? '' : w('This is not the first day of a Tamil month (the Sun does not enter a new rāśi on this day).');
+  if (t === 'surya') return eclipseOn(v, c, 'surya') ? '' : w('No solar eclipse is visible from ' + esc(c[0]) + ' on this date.');
+  if (t === 'chandra') return eclipseOn(v, c, 'chandra') ? '' : w('No lunar eclipse is visible from ' + esc(c[0]) + ' on this date.');
+  return '';
 }
 function tAbhi() {
   const SUF = {sharma: 'शर्मा', varma: 'वर्मा', gupta: 'गुप्तः', dasa: 'दासः', none: ''};
@@ -1835,13 +1931,14 @@ function tApplyConfirm() {
 }
 function tSetup() {
   const row = (g, fem, i) => '<div class="trow" id="tr-' + g[0] + '"><div class="tl">' + g[1] + '<small>' + g[2] + '</small></div>' +
-    '<div><label for="tn-' + g[0] + '">Name (English)</label><input type="text" id="tn-' + g[0] + '" data-fem="' + fem + '"></div>' +
+    '<div><label class="req" for="tn-' + g[0] + '">Name (English)</label><input type="text" id="tn-' + g[0] + '" data-fem="' + fem + '"></div>' +
     '<div><label for="tnd-' + g[0] + '">Devanagari</label><input type="text" class="deva" id="tnd-' + g[0] + '"></div>' +
     '<div class="tchk">' + (g[0] === 'pitr' || g[0] === 'matr' || i === 3 ? '' : '<label><input type="checkbox" id="ta-' + g[0] + '"> Alive</label>') +
     '<label><input type="checkbox" id="tu-' + g[0] + '"> Not known</label></div></div>';
   $('tLines').innerHTML = Object.keys(TP_LINES).map(k => '<div class="tline">' + TP_LINES[k].en + (TP_LINES[k].side === 'p' ? ' · your gotra' : ' · mother\'s gotra') + '</div>' +
     TP_LINES[k].gens.map((g, i) => row(g, TP_LINES[k].fem, i)).join('')).join('');
   $('t-mgotra').innerHTML = '<option value="">– Select gotra –</option>' + GOTHRAS.map((g, i) => '<option value="' + i + '">' + g[0] + ' · ' + g[1] + '</option>').join('') + '<option value="other">Other (type)</option>';
+  $('t-rasi').innerHTML = SANKRAMANA.map((r, i) => '<option value="' + i + '">' + cap(RS[i][0]) + ' (' + MASA_TA[i] + ') · ' + r[1] + '</option>').join('');
   $('ab-sutra').innerHTML = SUTRAS.map(x => '<option value="' + x[0] + '">' + x[1] + ' · ' + x[2] + '</option>').join('');
   $('ab-shakha').innerHTML = SHAKHAS.map(x => '<option value="' + x[0] + '">' + x[1] + ' · ' + x[2] + '</option>').join('');
   tLoad();
@@ -1867,30 +1964,30 @@ function showAbhivadaye() {
   out.dataset.script = sc; out.classList.remove('hide');
 }
 // Checks before generating; returns an error message or ''.
-function tProblems() {
-  const alive = tAlive(), miss = [];
+function tProblems() {        // returns [message, fields to outline] or ['', []]
+  const alive = tAlive(), miss = [], els = [];
   for (const k of Object.keys(TP_LINES)) {
     const pk = tpPick(k, alive);
-    if (!pk) return 'More than one person in "' + TP_LINES[k].en + '" is marked alive – please ask your vādhyār for the wording.';
-    pk.forEach(x => { if (!$('tnd-' + x.id).value.trim() && !$('tu-' + x.id).checked) miss.push(TP_LINES[k].gens.find(g => g[0] === x.id)[1]); });
+    if (!pk) return ['More than one person in "' + TP_LINES[k].en + '" is marked alive – please ask your vādhyār for the wording.', []];
+    pk.forEach(x => { if (!$('tnd-' + x.id).value.trim() && !$('tu-' + x.id).checked) { miss.push(TP_LINES[k].gens.find(g => g[0] === x.id)[1]); els.push($('tn-' + x.id)); } });
   }
-  if (!tMgotraD()) return 'Please choose your mother\'s gotra, or tick "Not known".';
-  if (miss.length) return 'Please enter these names or tick "Not known": ' + miss.join(', ') + '.';
-  return '';
+  if (!tMgotraD()) return ['Please choose your mother\'s gotra, or tick "Not known".', [$('t-mgotra').value === 'other' ? $('t-mgotraOther') : $('t-mgotra')]];
+  if (miss.length) return ['Please enter the names marked in red, or tick "Not known": ' + miss.join(', ') + '.', els];
+  return ['', []];
 }
 function generateTarpanam(quiet) {
   const st = $('tStatus'); st.textContent = '';
-  if (!$('date').value) { st.textContent = 'Please choose a date in step 1 (Generator tab).'; return; }
-  if (!$('gotraD').value.trim()) { st.textContent = 'Please choose your gotra in step 2 (Generator tab).'; return; }
+  if (!$('date').value) { st.textContent = 'Please choose the date of tarpaṇam.'; flagInvalid([$('t-date')]); return; }
+  if (!$('gotraD').value.trim()) { st.textContent = 'Please choose your gotra in step 2 of the Generator tab (marked in red).'; switchTab('form'); flagInvalid([$('gotra'), $('gotraD')]); return; }
   if ($('t-father').value === 'alive') return;
   if (!TP_CONFIRM.suffixes && $('suffix').value !== 'sharma' && $('gender').value !== 'f') { st.textContent = 'Your name ending in step 2 is not Śarmā – the tarpaṇam wording for this is awaiting confirmation.'; return; }
-  const pr = tProblems(); if (pr) { st.textContent = pr; return; }
+  const [pr, prEls] = tProblems(); if (pr) { st.textContent = pr; flagInvalid(prEls); return; }
   const cal = $('cal').value;
   const P = {samv: +$('p-samv').value, ayana: +$('p-ayana').value, rtu: +$('p-rtu').value, masa: +$('p-masa').value, adhika: cal === 'ta' ? 0 : +$('p-adhika').value,
              tithi: +$('p-tithi').value, vara: +$('p-vara').value, nak: +$('p-nak').value, yoga: +$('p-yoga').value, karana: +$('p-karana').value};
   const names = {}, unknown = {};
   TP_ALL.forEach(id => { names[id] = $('tnd-' + id).value.trim(); if ($('tu-' + id).checked) unknown[id] = true; });
-  const o = {script: $('script').value, cal, city: curCity(), date: $('date').value, gotraD: $('gotraD').value.trim(), mgotraD: tMgotraD().trim(),
+  const o = {type: $('t-type').value, rasi: +$('t-rasi').value, script: $('script').value, cal, city: curCity(), date: $('date').value, gotraD: $('gotraD').value.trim(), mgotraD: tMgotraD().trim(),
              alive: tAlive(), kurcha: $('t-kurcha').value, names, unknown, suffix: $('suffix').value, abhi: ABHI_ENABLED && $('ab-pravara').value.trim() ? tAbhi() : null};
   const r = $('tResult'); r.innerHTML = composeTarpanam(P, o, 'Generated ' + genStamp()); r.dataset.script = o.script; r.lang = o.script === 'en' ? 'sa-Latn' : 'sa';
   $('tCopyStatus').textContent = ''; $('tOut').classList.remove('hide'); tSave();
@@ -1911,6 +2008,12 @@ function a2hsSetup() {
   $('a2hsShow').addEventListener('click', () => { $('a2hs').classList.remove('hide'); $('a2hs').scrollIntoView({behavior: 'smooth', block: 'center'}); });
 }
 function init() {
+  const LINKED = {name: 'nameD', gotra: 'gotraD', gotraOther: 'gotraD'};
+  ['input', 'change'].forEach(ev => document.addEventListener(ev, e => { const t = e.target; if (!t || !t.classList) return;
+    t.classList.remove('invalid'); if (LINKED[t.id] && $(LINKED[t.id]).value.trim()) $(LINKED[t.id]).classList.remove('invalid');
+    if (t.id === 'gotra' && t.value === 'other') $('gotraOther').classList.remove('invalid');
+    if (/^tn-/.test(t.id)) $('tnd-' + t.id.slice(3)).classList.remove('invalid'); if (/^tu-/.test(t.id)) $('tn-' + t.id.slice(3)).classList.remove('invalid');
+    if (t.id === 't-mgotraNK' || t.id === 't-mgotra') $('t-mgotra').classList.remove('invalid'); if (t.type === 'checkbox' && t.parentElement) t.parentElement.classList.remove('invalid'); }));
   a2hsSetup();
   if (SUBSCRIBE_URL) {
     $('subCard').classList.remove('hide'); $('subOwner').textContent = DATA_OWNER; $('subContact').textContent = DATA_CONTACT;
