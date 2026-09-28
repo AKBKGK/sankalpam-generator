@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 3.9  |  Updated: 2026-09-28
+  Version: 4.0  |  Updated: 2026-09-28
   Pañcāṅgam is calculated in the browser for the chosen date and city (local
   sunrise, Lahiri ayanāṁśa, low-precision Sun/Moon theory). Calendars: Tamil
   (solar, sauramāna) and Telugu / Kannada (lunar amānta, cāndramāna, with
@@ -102,6 +102,18 @@ select.chosen{border:2px solid var(--kum);background:var(--tint);font-weight:600
 .checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:4px 12px;margin:0 0 6px}
 .checks label{display:flex;gap:7px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:.88rem;color:var(--ink);margin:0;padding:3px 0;cursor:pointer}
 .checks input{width:auto;margin-top:5px}
+details.chant{border:1px solid var(--line);border-radius:9px;padding:9px 12px;margin:10px 0;background:#fdfbf8}
+details.chant summary{cursor:pointer;font-weight:700;color:var(--kum-d);font-size:.98rem}
+details.chant .gcount{font-weight:600;color:#2e6b2e;font-size:.85rem}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 14px;margin-top:10px}
+.crow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.cchk{display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-size:.92rem;font-weight:600;color:var(--ink);margin:0;cursor:pointer;flex:1 1 180px}
+.cchk input{width:auto;margin:0;transform:scale(1.15)}
+.cchk .dv{font-family:var(--deva);font-weight:400;color:var(--soft);font-size:.84rem}
+.crow select{width:auto;flex:0 0 auto;padding:5px 8px;font-size:.88rem}
+.cfields{margin:6px 0 8px 26px;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end}
+.cfields>div:first-child{grid-column:1}.cfields .cf-p{grid-column:2}.cfields .cf-g{grid-column:3}
+@media (max-width:600px){.cfields{grid-template-columns:1fr;margin-left:0}.cfields>div:first-child,.cfields .cf-p,.cfields .cf-g{grid-column:auto}}
 details.purp{border:1px solid var(--line);border-radius:9px;padding:8px 12px;margin:12px 0;background:#fdfbf8}
 details.purp summary{cursor:pointer;font-weight:600;color:var(--kum-d)}
 .chips{font-size:.85rem;margin:6px 0 0}
@@ -168,7 +180,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 
 <div id="form" class="tab-content active">
 
-<p class="note">▼ Most fields on this page are <strong>drop-down boxes</strong> – tap a box and choose. Items left on <em>Skip</em> are not included. Boxes you change are highlighted, and your choices are listed in the bar at the bottom.</p>
+<p class="note">▼ Most fields on this page are <strong>drop-down boxes</strong> – tap a box and choose. In step 3, <strong>tick</strong> what you will chant; anything not ticked is left out. Boxes you change are highlighted, and your choices are listed in the bar at the bottom.</p>
 
 <!-- 1. Date & Pañcāṅgam -->
 <div class="card">
@@ -229,37 +241,36 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <p class="hint">Your details and family members are remembered on this device for next time. <button type="button" class="link" id="forget">Forget my details</button></p>
 </div>
 
-<!-- 3. Rudram -->
-<div class="card">
-  <h2><span class="step">3</span>Śrī Rudram</h2>
-  <p class="lead">P = full pārāyaṇam · G = ghanam of one anuvāka · P + G = pārāyaṇam (full or one anuvāka) and ghanam of an anuvāka.</p>
-  <div class="grid">
-    <div><label for="namaka-option">Namakam</label><select id="namaka-option"><option value="skip" selected>Skip</option><option value="P">P – Pārāyaṇam (full)</option><option value="G">G – Ghanam</option><option value="PG">P + G – Both</option></select></div>
-    <div id="namaka-p-field"><label for="namaka-p-anuvaka">Namakam – Pārāyaṇam</label><select id="namaka-p-anuvaka"></select></div>
-    <div id="namaka-g-field"><label for="namaka-g-anuvaka">Namakam – Ghanam anuvāka</label><select id="namaka-g-anuvaka"></select></div>
-  </div>
-  <div class="grid" style="margin-top:12px">
-    <div><label for="chamaka-option">Chamakam</label><select id="chamaka-option"><option value="skip" selected>Skip</option><option value="P">P – Pārāyaṇam (full)</option><option value="G">G – Ghanam</option><option value="PG">P + G – Both</option></select></div>
-    <div id="chamaka-p-field"><label for="chamaka-p-anuvaka">Chamakam – Pārāyaṇam</label><select id="chamaka-p-anuvaka"></select></div>
-    <div id="chamaka-g-field"><label for="chamaka-g-anuvaka">Chamakam – Ghanam anuvāka</label><select id="chamaka-g-anuvaka"></select></div>
-  </div>
+<!-- 3. What you will chant -->
+<div class="card" id="chantCard">
+  <h2><span class="step">3</span>What you will chant <span class="hint" style="font-weight:400">(optional)</span></h2>
+  <p class="lead">Tap a group and tick what you will chant. Leave everything unticked for a simple daily saṅkalpam.</p>
+  <details class="chant" id="grp-rudram"><summary>Śrī Rudram – Namakam &amp; Chamakam <span class="gcount"></span></summary>
+    <div class="crow"><label class="cchk"><input type="checkbox" data-sel="namaka-option"> <span>Namakam <span class="dv">नमक</span></span></label></div>
+    <div class="grid cfields" data-for="namaka-option">
+    <div><label for="namaka-option">How</label><select id="namaka-option"><option value="skip" selected hidden>Skip</option><option value="P">P – Pārāyaṇam (full)</option><option value="G">G – Ghanam</option><option value="PG">P + G – Both</option></select></div>
+    <div id="namaka-p-field" class="cf-p"><label for="namaka-p-anuvaka">Pārāyaṇam</label><select id="namaka-p-anuvaka"></select></div>
+    <div id="namaka-g-field" class="cf-g"><label for="namaka-g-anuvaka">Ghanam</label><select id="namaka-g-anuvaka"></select></div>
+    </div>
+    <div class="crow"><label class="cchk"><input type="checkbox" data-sel="chamaka-option"> <span>Chamakam <span class="dv">चमक</span></span></label></div>
+    <div class="grid cfields" data-for="chamaka-option">
+    <div><label for="chamaka-option">How</label><select id="chamaka-option"><option value="skip" selected hidden>Skip</option><option value="P">P – Pārāyaṇam (full)</option><option value="G">G – Ghanam</option><option value="PG">P + G – Both</option></select></div>
+    <div id="chamaka-p-field" class="cf-p"><label for="chamaka-p-anuvaka">Pārāyaṇam</label><select id="chamaka-p-anuvaka"></select></div>
+    <div id="chamaka-g-field" class="cf-g"><label for="chamaka-g-anuvaka">Ghanam</label><select id="chamaka-g-anuvaka"></select></div>
+    </div>
+    <p class="hint">P = pārāyaṇam · G = ghanam · P + G = both. For each, choose all anuvākas (full) or one anuvāka.</p>
+  </details>
+  <details class="chant" id="grp-sukta"><summary>Sūktams <span class="gcount"></span></summary><div class="cgrid" id="grid-sukta"></div>
+    <p class="hint">After ticking, choose Pārāyaṇam, Ghanam or both.</p></details>
+  <details class="chant" id="grp-sahasra"><summary>Sahasranāmams <span class="hint">(1000 names)</span> <span class="gcount"></span></summary><div class="cgrid" id="grid-sahasra"></div>
+    <p class="hint">After ticking, choose Pārāyaṇam (stotram) or Arcana (nāmāvali).</p></details>
+  <details class="chant" id="grp-ashto"><summary>Aṣṭottarams <span class="hint">(108 names)</span> <span class="gcount"></span></summary><div class="cgrid" id="grid-ashto"></div>
+    <p class="hint">After ticking, choose Pārāyaṇam (stotram) or Arcana (nāmāvali).</p></details>
 </div>
 
-<!-- 4. Other pārāyaṇams -->
+<!-- 4. Purpose -->
 <div class="card">
-  <h2><span class="step">4</span>Sūktas, Sahasranāmams &amp; Aṣṭottaras</h2>
-  <p class="lead">Leave everything on <em>Skip</em> for a simple daily saṅkalpam.</p>
-  <div class="sub">Vedic Sūktas <span class="hint">– Skip / P (Pārāyaṇam) / G (Ghanam) / P + G</span></div>
-  <div class="item-grid" id="grid-sukta"></div>
-  <div class="sub">Sahasranāmams – 1000 names <span class="hint">– Skip / Pārāyaṇam / Arcana (no anuvākas, no ghanam)</span></div>
-  <div class="item-grid" id="grid-sahasra"></div>
-  <div class="sub">Aṣṭottaras – 108 names <span class="hint">– Skip / Pārāyaṇam / Arcana</span></div>
-  <div class="item-grid" id="grid-ashto"></div>
-</div>
-
-<!-- 5. Purpose -->
-<div class="card">
-  <h2><span class="step">5</span>Purpose / Prayers (optional)</h2>
+  <h2><span class="step">4</span>Purpose / Prayers (optional)</h2>
   <p class="lead">Tick the purposes. The correct Sanskrit wording is produced for you, in the script chosen at the top. If nothing is ticked, the standard wording (kṣema, sthairya, vīrya, vijaya, āyus, ārogya, aiśvarya) is used. The purposes apply to you and the family members added in step 2.</p>
   <details class="purp" id="purpBox"><summary>Choose purposes (<span id="purpCount">0</span> selected)</summary><div id="purpList"></div></details>
   <div class="grid">
@@ -269,9 +280,9 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <p class="hint">"Other purpose" is not translated – it is only converted letter by letter, so please check it.</p>
   <div class="pv" id="purposePv"></div>
 </div>
-<!-- 6. Completion -->
+<!-- 5. Completion -->
 <div class="card">
-  <h2><span class="step">6</span>Samāpanam (Completion)</h2>
+  <h2><span class="step">5</span>Samāpanam (Completion)</h2>
   <p class="lead">Choose how the saṅkalpam should close.</p>
   <div class="grid">
     <div><label for="comp-mode">Completion style</label>
@@ -284,10 +295,10 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <p class="hint">In "Detailed", Vedic closings (आभिर्गीर्भिः…, शं नो मित्रः…) are added when Namakam, Chamakam or any Vedic Sūkta is selected.</p>
 </div>
 
-<!-- 7. Daily email -->
+<!-- 6. Daily email -->
 <div class="card hide" id="subCard">
-  <h2><span class="step">7</span>📧 Daily saṅkalpam by email <span class="hint" style="font-weight:400">(optional)</span></h2>
-  <p class="lead">Each morning you receive the saṅkalpam for that day – with the day's pañcāṅgam for your city – using the details you entered above (steps 1–6). Fill in at least your name and gotra first.</p>
+  <h2><span class="step">6</span>📧 Daily saṅkalpam by email <span class="hint" style="font-weight:400">(optional)</span></h2>
+  <p class="lead">Each morning you receive the saṅkalpam for that day – with the day's pañcāṅgam for your city – using the details you entered above (steps 1–5). Fill in at least your name and gotra first.</p>
   <div class="grid">
     <div><label for="subEmail">Your email</label><input type="email" id="subEmail" autocomplete="email" placeholder="name@example.com"></div>
     <div><label for="subMode">When</label><select id="subMode"><option value="sunrise" selected>5 minutes after sunrise</option><option value="time">At a time I choose</option></select></div>
@@ -299,7 +310,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <span>I agree that the details I entered (name, gotra, stars, family members, city) and my email are stored by <span id="subOwner"></span> only to send me this daily email. I can unsubscribe at any time from the link in every email. Contact: <span id="subContact"></span>.</span></label>
   <label id="famConsentBox" class="hide" style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:.86rem;color:var(--ink);margin:6px 0 4px;cursor:pointer">
     <input type="checkbox" id="subFamConsent" style="width:auto;margin-top:4px">
-    <span>The family members I added (step 3) know and agree that their names and birth stars are included in this email.</span></label>
+    <span>The family members I added (step 2) know and agree that their names and birth stars are included in this email.</span></label>
   <div class="actions"><button class="btn" id="subBtn" type="button">Subscribe</button><span class="okmsg" id="subStatus"></span></div>
   <p class="hint">You will first receive a confirmation email – the daily emails start only after you click the link in it. To change your details later, edit them above and subscribe again with the same email.</p>
 </div>
@@ -379,8 +390,8 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <h2>Share Your Feedback</h2>
     <p class="lead">Your opinion and suggestions are most welcome. 🙏</p>
     <label for="fbText">Your message</label>
-    <textarea id="fbText" maxlength="120" style="min-height:80px" placeholder="What did you like? What can be improved? (max 120 characters)"></textarea>
-    <p class="hint" style="text-align:right;margin-top:2px"><span id="fbCount">0</span> / 120</p>
+    <textarea id="fbText" maxlength="500" style="min-height:110px" placeholder="What did you like? What can be improved? (max 500 characters)"></textarea>
+    <p class="hint" style="text-align:right;margin-top:2px"><span id="fbCount">0</span> / 500</p>
     <div class="actions"><button class="btn" id="fbSend" type="button">Send feedback</button><span class="okmsg" id="fbStatus"></span></div>
     <p class="hint" id="fbHint">Your message is sent anonymously – no email or sign-in is needed. If you would like a reply, include your email in the message.</p>
   </div>
@@ -1354,10 +1365,32 @@ function switchTab(tab) {
   window.scrollTo(0, 0);
   if (tab === 'tarpanam') tSync();
 }
-function renderItems(gridId, list, prefix, opts, suffix) {
-  $(gridId).innerHTML = list.map(it => '<div class="item"><label for="' + prefix + it.id + '">' + it.en + suffix +
-    ' <span class="dv">' + it.d + '</span></label><select id="' + prefix + it.id + '">' +
-    opts.map(o => '<option value="' + o[0] + '">' + o[1] + '</option>').join('') + '</select></div>').join('');
+function renderItems(gridId, list, prefix, opts) {
+  $(gridId).innerHTML = list.map(it => '<div class="crow"><label class="cchk"><input type="checkbox" data-sel="' + prefix + it.id + '"> <span>' + it.en +
+    ' <span class="dv">' + it.d + '</span></span></label><select id="' + prefix + it.id + '" class="hide" aria-label="' + it.en + '">' +
+    opts.map(o => '<option value="' + o[0] + '"' + (o[0] === 'skip' ? ' hidden' : '') + '>' + o[1] + '</option>').join('') + '</select></div>').join('');
+}
+// Tick boxes in step 3 drive the (hidden) selects that the saṅkalpam reads.
+function chantSync() {
+  document.querySelectorAll('#chantCard input[data-sel]').forEach(c => {
+    const sel = $(c.dataset.sel), on = sel.value !== 'skip';
+    c.checked = on;
+    const box = document.querySelector('.cfields[data-for="' + c.dataset.sel + '"]');
+    if (box) box.classList.toggle('hide', !on); else sel.classList.toggle('hide', !on);
+  });
+  document.querySelectorAll('#chantCard details.chant').forEach(d => {
+    const n = [...d.querySelectorAll('input[data-sel]')].filter(c => c.checked).length;
+    d.querySelector('.gcount').textContent = n ? '✓ ' + n + ' selected' : '';
+  });
+}
+function chantSetup() {
+  document.querySelectorAll('#chantCard input[data-sel]').forEach(c => c.addEventListener('change', () => {
+    const sel = $(c.dataset.sel);
+    sel.value = c.checked ? 'P' : 'skip';
+    sel.dispatchEvent(new Event('change', {bubbles: true}));
+  }));
+  $('chantCard').addEventListener('change', chantSync);
+  chantSync();
 }
 const OPT_VEDIC  = [['skip','Skip'],['P','P – Pārāyaṇam'],['G','G – Ghanam'],['PG','P + G – Both']];
 const OPT_STOTRA = [['skip','Skip'],['P','Pārāyaṇam (stotram)'],['A','Arcana (nāmāvali)']];
@@ -1366,10 +1399,11 @@ function rudramLines(k, dev) {  // k = 'namaka' | 'chamaka'
   const o = V(k + '-option') || 'skip', out = [];
   if (o === 'skip') return out;
   const full = k === 'namaka' ? 'श्रीरुद्र नमक सम्पूर्ण पारायणं' : 'चमक सम्पूर्ण पारायणं';
-  const p = V(k + '-p-anuvaka') || 'full', g = +(V(k + '-g-anuvaka') || 8);
+  const p = V(k + '-p-anuvaka') || 'full', gv = V(k + '-g-anuvaka') || '8', g = +gv;
+  const fullG = k === 'namaka' ? 'श्रीरुद्र नमक सम्पूर्ण घनपारायणं' : 'चमक सम्पूर्ण घनपारायणं';
   if (o === 'P') out.push(full);
   if (o === 'PG') out.push(p === 'full' ? full : dev + ' ' + ORD[+p - 1] + 'ानुवाक पारायणं');
-  if (o === 'G' || o === 'PG') out.push(dev + ' ' + ORD[g - 1] + 'ानुवाक घनपारायणं');
+  if (o === 'G' || o === 'PG') out.push(gv === 'full' ? fullG : dev + ' ' + ORD[g - 1] + 'ानुवाक घनपारायणं');
   return out;
 }
 function collectSelections() {
@@ -1478,7 +1512,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · Developed by ' + DEVELOPER + ' · ' + stamp + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v3.9';
+const APP_VERSION = 'v4.0';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -1504,7 +1538,7 @@ async function subscribe() {
   if (!$('subConsent').checked) { out.textContent = 'Please tick the consent box.'; return; }
   if (!$('name').value.trim() || !$('nameD').value.trim() || !$('gotraD').value.trim()) { out.textContent = 'Please fill in your name and gotra in step 2 first.'; return; }
   const famOn = famData().some(m => m.nameD);
-  if (famOn && !$('subFamConsent').checked) { out.textContent = 'Please confirm that your family members agree (tick the second box), or remove them in step 3.'; return; }
+  if (famOn && !$('subFamConsent').checked) { out.textContent = 'Please confirm that your family members agree (tick the second box), or remove them in step 2.'; return; }
   const mode = $('subMode').value, time = $('subTime').value;
   if (mode === 'time' && !/^\d\d:\d\d$/.test(time)) { out.textContent = 'Please choose a time.'; return; }
   const payload = {action: 'subscribe', email, mode, time, website: $('subWebsite').value, familyConsent: famOn, state: readState()};
@@ -1527,7 +1561,7 @@ async function sendFeedback() {
   if (!txt) { out.style.color = '#a33'; out.textContent = 'Please type a message first.'; return; }
   $('fbSend').disabled = true; out.style.color = 'var(--soft)'; out.textContent = 'Sending…';
   try {
-    await fetch(FEEDBACK_URL, {method: 'POST', mode: 'no-cors', body: new URLSearchParams({'entry.1320409022': txt.slice(0, 120) + ' [' + APP_VERSION + ']'})});
+    await fetch(FEEDBACK_URL, {method: 'POST', mode: 'no-cors', body: new URLSearchParams({'entry.1320409022': txt.slice(0, 500) + ' [' + APP_VERSION + ']'})});
     out.style.color = '#2e6b2e'; out.textContent = '🙏 Thank you – your feedback has been sent.'; $('fbText').value = ''; $('fbCount').textContent = '0';
   } catch (e) { out.style.color = '#a33'; out.textContent = 'Could not send – please check your connection and try again.'; }
   $('fbSend').disabled = false;
@@ -1895,12 +1929,13 @@ function init() {
   ['namaka', 'chamaka'].forEach(k => {
     const n = 11;
     $(k + '-p-anuvaka').innerHTML = '<option value="full">Full (all anuvākas)</option>' + anu(n);
-    $(k + '-g-anuvaka').innerHTML = anu(n); $(k + '-g-anuvaka').value = '8';
+    $(k + '-g-anuvaka').innerHTML = '<option value="full">Full (all anuvākas)</option>' + anu(n); $(k + '-g-anuvaka').value = '8';
     $(k + '-option').addEventListener('change', () => rudramFields(k)); rudramFields(k);
   });
-  renderItems('grid-sukta', SUKTAS, 'suk-', OPT_VEDIC, '');
-  renderItems('grid-sahasra', SAHASRA, 'sah-', OPT_STOTRA, '');
-  renderItems('grid-ashto', ASHTO, 'ash-', OPT_STOTRA, ' Aṣṭottaram');
+  renderItems('grid-sukta', SUKTAS, 'suk-', OPT_VEDIC);
+  renderItems('grid-sahasra', SAHASRA, 'sah-', OPT_STOTRA);
+  renderItems('grid-ashto', ASHTO, 'ash-', OPT_STOTRA);
+  chantSetup();
 
   $('date').value = localDateStr(Date.now(), 'Asia/Kolkata');
   $('city').innerHTML = CITIES.map(([g, list]) => '<optgroup label="' + g + '">' +
