@@ -37,7 +37,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 
 ## Accuracy
 
-The pañcāṅgam uses precise Sun and Moon positions (Astronomy Engine) and the Lahiri ayanāṁśa, calculated for local sunrise. Published pañcāṅgams can differ by a few minutes, so please confirm with your family pañcāṅgam on important days.
+The pañcāṅgam is calculated by the **dṛk-gaṇita (Tirukkaṇita)** method – precise Sun and Moon positions (Astronomy Engine) with the Lahiri ayanāṁśa, for local sunrise. **Vākya pañcāṅgams may differ on some days; follow your family's pañcāṅgam where they differ.** This note is also printed at the foot of every saṅkalpam and tarpaṇam.
 
 ## Copyright
 

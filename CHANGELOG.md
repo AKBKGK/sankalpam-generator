@@ -1,4 +1,4 @@
-# Saṅkalpam Generator – Change Log (v1.1 to v4.4.2)
+# Saṅkalpam Generator – Change Log (v1.1 to v4.4.3)
 
 **App:** https://akbkgk.github.io/sankalpam-generator/ · **Maintained by:** Arvind · **© 2026 Arvikalpa (Arvind). All rights reserved.**
 **Sources:** GitHub commit history, the saved app files and this project's conversation notes.
@@ -24,6 +24,7 @@ Rows marked *(not recorded)* in the "Requested" column come from before the conv
 | v4.4 | 29 Sep 2026 | One-day Mahālaya; ancestors' names in the saṅkalpam; "upto" times; the vādhyār's answers; नानासूक्तपाठेन and स्वरवर्णशुद्धि; grey out other name endings. | "Doing it on: all days / one day" for Mahālaya (सकृन्महालयश्राद्धं हिरण्यरूपेण …); men's names in the tarpaṇam saṅkalpam, women's names only in their own tarpaṇa lines; tithi and nakṣatra "upto (time), then (next)"; याग्ंश्च; Krishnan → कृष्ण (Tamil -n dropped); -nāthan names spelt नाथ; kāruṇika pitṛs at the last kūrcham; 2 kūrchams switched on; "Alive" on both sides (one person per line), dropping सपत्नीक when needed; Viṣṇu / Lakṣmī for an unknown name; Kāśyapa option hidden (mother's gotra now required); each tarpaṇam has its own closing line; grahaṇa note "whenever it happens – even at night"; नानासूक्तपाठेन when a sūktam is chosen; स्वरवर्णशुद्धिसिद्ध्यर्थं in every saṅkalpam; Varmā / Gupta / Dāsa endings greyed "coming soon". |
 | v4.4.1 | 29 Sep 2026 | Text running past the border on the iPhone. | Long Sanskrit words now wrap inside the border on narrow phones (all scripts, saṅkalpam and tarpaṇam). |
 | v4.4.2 | 29 Sep 2026 | Protect the app: brand name Arvikalpa and "All rights reserved". | "© 2026 Arvikalpa (Arvind). All rights reserved." in the app footer, on every saṅkalpam and tarpaṇam (screen, print and PDF), and in the page details; new LICENSE file; Copyright section in the README; Astronomy Engine MIT credit kept. |
+| v4.4.3 | 29 Sep 2026 | Footnote on how the pañcāṅgam is calculated. | Every saṅkalpam and tarpaṇam (screen, print, PDF, daily email) now ends with: "Pañcāṅgam calculated by the dṛk-gaṇita (Tirukkaṇita) method with Lahiri ayanāṁśa, for local sunrise. Vākya pañcāṅgams may differ on some days; follow your family's pañcāṅgam where they differ." README Accuracy section updated. |
 
 ## Still to do
 

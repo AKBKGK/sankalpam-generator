@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 4.4.2  |  Updated: 2026-09-29
+  Version: 4.4.3  |  Updated: 2026-09-29
   © 2026 Arvikalpa (Arvind). All rights reserved.
   This app and its code may not be copied, modified or republished without written permission.
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
@@ -1564,10 +1564,10 @@ function composeSankalpam(P, date, stamp) {
   if (sel.lines.length) h += '<p>' + (sel.sukta ? hl('u', 'नानासूक्तपाठेन') + ' ' : '') + sel.lines.map(x => hl('u', x)).join(' च ') + ' करिष्ये ॥</p>';
   else h += '<p>' + hl('u', 'यथाशक्ति नित्यकर्म') + ' करिष्ये ॥</p>';
   h += '<h4>Samāpanam</h4>' + completionFor(sel).map(m => '<p>' + m + '</p>').join('');
-  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '</div>';
+  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '<br>' + PANCHANGA_NOTE + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v4.4.2';
+const APP_VERSION = 'v4.4.3';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -1576,6 +1576,7 @@ const DATA_OWNER = 'the Saṅkalpam Generator app';
 const DATA_CONTACT = String.fromCharCode(115,110,118,97,115,49,51,50,64,103,109,97,105,108,46,99,111,109);   // snvas132@gmail.com
 const DEVELOPER = 'Arvind';
 const COPYRIGHT = '© 2026 Arvikalpa (Arvind). All rights reserved.';
+const PANCHANGA_NOTE = 'Pañcāṅgam calculated by the dṛk-gaṇita (Tirukkaṇita) method with Lahiri ayanāṁśa, for local sunrise. Vākya pañcāṅgams may differ on some days; follow your family\'s pañcāṅgam where they differ.';
 // Everything the saṅkalpam depends on, as a plain object (the same shape V()/CHK() read on the server).
 function readState() {
   const st = {v: 1};
@@ -1897,7 +1898,7 @@ function composeTarpanam(P, o, stamp) {
   h += ins('Untie the kūrcham' + (two ? 's' : '') + ', hold the darbhas tips down between the right thumb and forefinger, and pour water saying:') + '<p>' + TD.yesham + '</p>';
   h += '<h4>Samāpanam</h4>' + ins('Upavītī. Ācamanam. Take water in the hand, say this, and let it go.') +
     '<p>' + C.kayena + (ML ? (o.mlday === 'once' ? ' अद्य महालयतिलतर्पणाख्यं कर्म' : ' अद्य दिनपक्षीय महालयतिलतर्पणाख्यं कर्म') : ' अद्य ' + TP_CLOSE[type] + 'तिलतर्पणाख्यं कर्म') + ' ॐ तत्सत् ब्रह्मार्पणमस्तु ॥</p>';
-  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + ' · Please have your vādhyār check this text.</div>';
+  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + ' · Please have your vādhyār check this text.<br>' + PANCHANGA_NOTE + '</div>';
   return devaTo(h, o.script);
 }
 // ---------- Tarpaṇam page ----------
