@@ -1,0 +1,37 @@
+# Saṅkalpam Generator – Change Log (v1.1 to v4.4.2)
+
+**App:** https://akbkgk.github.io/sankalpam-generator/ · **Maintained by:** Arvind · **© 2026 Arvikalpa (Arvind). All rights reserved.**
+**Sources:** GitHub commit history, the saved app files and this project's conversation notes.
+Rows marked *(not recorded)* in the "Requested" column come from before the conversation notes start; they describe what the files show was added.
+
+| Version | Date (IST) | Requested | Changes made |
+|---|---|---|---|
+| v1.1 | 27 Sep 2026 | *(not recorded)* | First upload as a zip file (later deleted from GitHub). |
+| v1.2 | 27 Sep 2026 | *(not recorded)* | Single-page saṅkalpam: date and pañcāṅgam (Tamil solar month), name, gotra, birth star, pāda and rāśi, Namakam and Chamakam (pārāyaṇam or ghanam anuvāka), a purpose typed in English, output in Devanagari and English letters (IAST). |
+| v3.2 | 27 Sep 2026 | *(not recorded)* | City list with local sunrise; Telugu and Kannada lunar calendars with adhika māsa; family members; male and female wording; Tamil, Telugu and Kannada scripts; ready-made list of purposes; details remembered on the device. |
+| v3.3 | 27 Sep 2026 | *(not recorded)* | Precise Sun and Moon positions (Astronomy Engine, Lahiri ayanāṁśa). |
+| v3.4 | 27 Sep 2026 | *(not recorded)* | Optional daily saṅkalpam by email; warnings when a tithi, nakṣatra or month changes near sunrise or sunset. |
+| v3.5 | 27 Sep 2026 | *(not recorded)* | Colour highlights: today's details, your details and your purposes. |
+| v3.6 | 27 Sep 2026 | *(not recorded)* | Contact field for the email sign-up; published with the new README. |
+| v3.7 | 27 Sep 2026 | Correct Ugādi day; name spellings; feedback without showing an email address; privacy for the email service. | Ugādi rule for a kṣaya pratipadā; common-name spellings and a "check your name" box; feedback through a Google Form; family consent for the email; email service v5 (at most 80 subscribers, sign-ups deleted automatically, sent only from snvas132@gmail.com). |
+| v3.7.1 | 27 Sep 2026 | App icon and help to add it to the phone's home screen. | App icon (a Brahmin doing saṅkalpam), "Add to Home Screen" help, language label. |
+| v3.8 | 28 Sep 2026 | Mahālaya tarpaṇam. | *(Not published on its own; included in v3.9.)* New Tarpaṇam tab; yoga and karaṇa; PDF file names. |
+| v3.9 | 28 Sep 2026 | Mahālaya tarpaṇam with the booklet's wording; a border; a smaller PDF for WhatsApp; keep unconfirmed options off. | Mahālaya tarpaṇam, Kṛṣṇa Yajur Veda, 1 kūrcham: 4 ancestor lines × 4 generations with "Alive" and "Not known"; mother's gotra; border in the output and PDF; compact PDF for WhatsApp; automatic PDF names; "safe mode" – 2 kūrchams, living grandparents and non-Śarmā endings switched off; abhivādaye hidden. |
+| v4.0 | 28 Sep 2026 | Full ghanam in the list; line up the Namakam and Chamakam ghanam boxes; feedback limit 120 → 500. | Step 3 "What you will chant" with tick boxes in groups (Rudram, sūktams, sahasranāmams, aṣṭottarams); full-ghanam option; Rudram boxes aligned; feedback limit 500 characters. |
+| v4.1 | 28 Sep 2026 | Mark the required fields. | *(Not published on its own.)* Red * on required fields; anything missing is outlined in red and the page scrolls to it. |
+| v4.2 | 28 Sep 2026 | Monthly tarpaṇams from the booklet photos; darbhas to the south; bold tarpaṇa lines. | *(Not published on its own.)* Amāvāsyā, Māsa pirappu (12 saṅkramaṇa lines) and Sūrya / Candra grahaṇa tarpaṇams (no kāruṇika pitṛs); darbhas dropped to the south; tarpaṇa lines in bold; date warnings, including whether an eclipse is visible from the city. |
+| v4.3 | 28 Sep 2026 | Check the Amāvāsyā day rules; Āpastamba by default, Bodhāyana later. | Sūtra box (Āpastamba by default, Bodhāyana "coming soon"); "अमावास्यायां" whenever amāvāsyā touches the day (booklet p.12); amāvāsyā start and end times, with a note to use the day the pañcāṅgam marks as Sarva Amāvāsyā; README updated. |
+| v4.4 | 29 Sep 2026 | One-day Mahālaya; ancestors' names in the saṅkalpam; "upto" times; the vādhyār's answers; नानासूक्तपाठेन and स्वरवर्णशुद्धि; grey out other name endings. | "Doing it on: all days / one day" for Mahālaya (सकृन्महालयश्राद्धं हिरण्यरूपेण …); men's names in the tarpaṇam saṅkalpam, women's names only in their own tarpaṇa lines; tithi and nakṣatra "upto (time), then (next)"; याग्ंश्च; Krishnan → कृष्ण (Tamil -n dropped); -nāthan names spelt नाथ; kāruṇika pitṛs at the last kūrcham; 2 kūrchams switched on; "Alive" on both sides (one person per line), dropping सपत्नीक when needed; Viṣṇu / Lakṣmī for an unknown name; Kāśyapa option hidden (mother's gotra now required); each tarpaṇam has its own closing line; grahaṇa note "whenever it happens – even at night"; नानासूक्तपाठेन when a sūktam is chosen; स्वरवर्णशुद्धिसिद्ध्यर्थं in every saṅkalpam; Varmā / Gupta / Dāsa endings greyed "coming soon". |
+| v4.4.1 | 29 Sep 2026 | Text running past the border on the iPhone. | Long Sanskrit words now wrap inside the border on narrow phones (all scripts, saṅkalpam and tarpaṇam). |
+| v4.4.2 | 29 Sep 2026 | Protect the app: brand name Arvikalpa and "All rights reserved". | "© 2026 Arvikalpa (Arvind). All rights reserved." in the app footer, on every saṅkalpam and tarpaṇam (screen, print and PDF), and in the page details; new LICENSE file; Copyright section in the README; Astronomy Engine MIT credit kept. |
+
+## Still to do
+
+| Item | Status |
+|---|---|
+| Name endings other than Śarmā (Varmā, Gupta, Dāsa) | Greyed out until the wording is confirmed |
+| Mother's gotra when it is not known | Hidden until Arvind decides |
+| Bodhāyana sūtra tarpaṇam | Waiting for the text |
+| Ṛg and Sāma Veda tarpaṇam texts | Waiting for the text |
+| Pravara list (abhivādaye), "गणानां त्वा" ghanam | Later |
+| Two people alive in the same line (5th generation) | Not supported yet |

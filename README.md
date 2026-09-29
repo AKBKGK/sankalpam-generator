@@ -39,6 +39,15 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 
 The pañcāṅgam uses precise Sun and Moon positions (Astronomy Engine) and the Lahiri ayanāṁśa, calculated for local sunrise. Published pañcāṅgams can differ by a few minutes, so please confirm with your family pañcāṅgam on important days.
 
+## Copyright
+
+© 2026 Arvikalpa (Arvind). All rights reserved.
+
+You are welcome to **use** the app for your own pūjā and pārāyaṇam, and to share the saṅkalpams and tarpaṇams it makes for you.
+The app's code, design and text may **not** be copied, changed, republished or sold, in whole or in part, without written permission from Arvind. See [LICENSE](LICENSE).
+
+The mantras themselves come from the Vedic tradition and belong to everyone; this notice covers the app and the way it puts them together.
+
 ## Credits
 
-Astronomical calculations: [Astronomy Engine](https://github.com/cosinekitty/astronomy) by Don Cross (MIT License).
+Astronomical calculations: [Astronomy Engine](https://github.com/cosinekitty/astronomy) by Don Cross (MIT License) – used under its licence, which is kept in the app's code.
