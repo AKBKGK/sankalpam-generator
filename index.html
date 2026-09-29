@@ -84,6 +84,7 @@ select.chosen{border:2px solid var(--kum);background:var(--tint);font-weight:600
 .ptable td:nth-child(odd){background:#faf5ee;font-weight:600;color:var(--soft);width:18%}
 .doc h4{font-family:var(--lat);font-size:.8rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin:22px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
 .doc p{font-family:var(--deva);font-size:1.12rem;line-height:2;margin:6px 0;color:#111}
+.doc p,.doc td,.doc .meta{overflow-wrap:anywhere;word-break:break-word}   /* long Sanskrit compounds wrap on narrow phones instead of running past the border */
 .doc b{color:var(--kum-d)}
 .doc .ins{font-family:var(--lat);font-size:.86rem;font-style:italic;color:var(--soft);line-height:1.5;margin:10px 0 2px}
 .doc p.tl b{font-weight:700;color:#111}
@@ -1561,7 +1562,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · Developed by ' + DEVELOPER + ' · ' + stamp + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v4.4';
+const APP_VERSION = 'v4.4.1';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
