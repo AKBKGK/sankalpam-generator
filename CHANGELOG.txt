@@ -1,0 +1,122 @@
+================================================================================
+SAṄKALPAM GENERATOR - VERSION 4.6
+Updated: 2026-09-30
+================================================================================
+
+NEW FEATURES ADDED:
+──────────────────
+
+1. EMAIL THIS PDF ONCE (One-time Email Feature)
+   ✓ New button: "📧 Email This PDF Once" on both Saṅkalpam and Tarpaṇam tabs
+   ✓ User enters email → PDF sends immediately (no subscription/confirmation needed)
+   ✓ Logging: Only tracked if user is NOT a daily subscriber
+   ✓ Non-subscribers: logged to OneTimeEmails sheet (for usage analytics)
+   ✓ Daily subscribers: PDF sent, no logging (already tracked in Subscribers sheet)
+
+2. PDF DOWNLOAD TRACKING (Anonymous Analytics)
+   ✓ Automatic tracking when users click "Print / Save as PDF"
+   ✓ Automatic tracking when users click "📱 Compact PDF (WhatsApp)"
+   ✓ Anonymous logging (no email required, doesn't interrupt UX)
+   ✓ Logged to OneTimeEmails sheet with: Date | [blank] | Type | Action
+   ✓ Action types: PrintPDF or CompactPDF
+   ✓ Helps analyze which format users prefer
+
+================================================================================
+FILES UPDATED:
+──────────────
+
+CODE.GS (Backend - Google Apps Script)
+──────────────────────────────────────
+✓ New function: emailPdfOnce_(req)
+  - Validates email address
+  - Decodes Base64 PDF and sends via GmailApp
+  - Checks if email is in Subscribers sheet
+  - Only logs non-subscribers to OneTimeEmails
+
+✓ New function: logPdfDownload_(docType, action)
+  - Logs PDF downloads anonymously
+  - Records: timestamp, doc type (sank/tarp), action (PrintPDF/CompactPDF)
+  - Creates OneTimeEmails sheet if needed
+
+✓ Updated doPost() routing:
+  - if (req.action === 'emailPdfOnce') → calls emailPdfOnce_(req)
+  - if (req.action === 'logPdfDownload') → calls logPdfDownload_()
+
+INDEX.HTML (Frontend - Web App)
+──────────────────────────────
+✓ New constant: PDF_LIB_URL
+  - Loads html2pdf.js library from CDN
+
+✓ New function: emailPdfOnce(docType)
+  - Prompts user for email address
+  - Validates email format
+  - Calls generateAndSendPdf()
+
+✓ New function: generateAndSendPdf(docType, email, statusEl)
+  - Converts displayed doc to PDF using html2pdf.js
+  - Encodes PDF as Base64
+  - Sends to backend via fetch() POST
+  - Shows success/error message to user
+
+✓ Updated printDoc() function
+  - Added automatic tracking calls when PDF is downloaded
+  - Tracks both Print and Compact PDF separately
+  - Anonymous (no email prompt)
+
+✓ New buttons added:
+  - Line 341 (Saṅkalpam tab): "📧 Email This PDF Once"
+  - Line 412 (Tarpaṇam tab): "📧 Email This PDF Once"
+
+✓ Updated button HTML:
+  - Saṅkalpam: onclick="emailPdfOnce('sank')"
+  - Tarpaṇam: onclick="emailPdfOnce('tarp')"
+
+================================================================================
+SHEET STRUCTURE (OneTimeEmails):
+────────────────────────────────
+
+Column Headers: Date | Email | Type | Status
+
+One-time Email Logs:
+  Date: ISO timestamp
+  Email: user's email address
+  Type: 'sank' (Saṅkalpam) or 'tarp' (Tarpaṇam)
+  Status: 'Sent' (only logged if NOT a daily subscriber)
+
+PDF Download Logs:
+  Date: ISO timestamp
+  Email: [blank/empty]
+  Type: 'sank' (Saṅkalpam) or 'tarp' (Tarpaṇam)
+  Status: 'PrintPDF' or 'CompactPDF'
+
+================================================================================
+DEPLOYMENT STEPS:
+─────────────────
+
+1. Backend (Code.gs):
+   - Open Google Apps Script editor
+   - Replace entire Code.gs with Code_v4.6.gs
+   - Save (Ctrl+S)
+   - Verify Deploy → Manage deployments → web app URL is active
+
+2. Frontend (index.html):
+   - Go to GitHub repository
+   - Replace index.html with index_v4.6.html
+   - Commit: "v4.6: Add Email PDF Once and PDF download tracking"
+   - Push to main branch
+   - App updates automatically within seconds
+
+3. Test:
+   - Refresh app (Ctrl+Shift+R)
+   - Generate Saṅkalpam
+   - Test "Email This PDF Once" button
+   - Test "Print / Save as PDF" button
+   - Check OneTimeEmails sheet for logs
+
+================================================================================
+VERSION HISTORY:
+────────────────
+v4.5: Update bar, version display
+v4.6: Email PDF Once (one-time feature), PDF download tracking (30 Sep 2026)
+
+================================================================================

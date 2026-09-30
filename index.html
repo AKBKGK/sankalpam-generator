@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 4.5  |  Updated: 2026-09-29
+  Version: 4.6  |  Updated: 2026-09-30
   © 2026 Arvikalpa (Arvind). All rights reserved.
   This app and its code may not be copied, modified or republished without written permission.
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
@@ -338,7 +338,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <div id="output" class="tab-content">
   <div id="noResult" class="card" style="text-align:center;color:var(--soft)">Fill in the Generator tab and press <strong>Generate Saṅkalpam</strong>.</div>
   <div id="resultContainer" class="hide">
-    <div class="actions"><button class="btn" onclick="copySankalpam()">Copy text</button><button class="btn ghost" onclick="printDoc('sank', false)">Print / Save as PDF</button><button class="btn ghost" onclick="printDoc('sank', true)">📱 Compact PDF (WhatsApp)</button><button class="btn ghost" onclick="switchTab('form')">← Edit</button><span class="okmsg" id="copyStatus"></span></div>
+    <div class="actions"><button class="btn" onclick="copySankalpam()">Copy text</button><button class="btn ghost" onclick="printDoc('sank', false)">Print / Save as PDF</button><button class="btn ghost" onclick="printDoc('sank', true)">📱 Compact PDF (WhatsApp)</button><button class="btn ghost" onclick="emailPdfOnce(\'sank\')">📧 Email This PDF Once</button><button class="btn ghost" onclick="switchTab('form')">← Edit</button><span class="okmsg" id="copyStatus"></span></div>
     <div id="result" class="doc"></div>
   </div>
 </div>
@@ -409,7 +409,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 </div>
 <div class="actions tform"><button class="btn" id="tGen" type="button">Generate Tarpaṇam</button><span class="okmsg" id="tStatus" style="color:#a33"></span></div>
 <div id="tOut" class="hide">
-  <div class="actions"><button class="btn" id="tCopy" type="button">Copy text</button><button class="btn ghost" onclick="printDoc('tarp', false)">Print / Save as PDF</button><button class="btn ghost" onclick="printDoc('tarp', true)">📱 Compact PDF (WhatsApp)</button><button class="btn ghost" type="button" id="tEdit">↑ Edit details</button><span class="okmsg" id="tCopyStatus"></span></div>
+  <div class="actions"><button class="btn" id="tCopy" type="button">Copy text</button><button class="btn ghost" onclick="printDoc('tarp', false)">Print / Save as PDF</button><button class="btn ghost" onclick="printDoc('tarp', true)">📱 Compact PDF (WhatsApp)</button><button class="btn ghost" onclick="emailPdfOnce(\'tarp\')">📧 Email This PDF Once</button><button class="btn ghost" type="button" id="tEdit">↑ Edit details</button><span class="okmsg" id="tCopyStatus"></span></div>
   <div id="tResult" class="doc"></div>
 </div>
 </div>
@@ -1579,6 +1579,7 @@ const APP_VERSION = 'v4.5';
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
 const SUBSCRIBE_URL = 'https://script.google.com/macros/s/AKfycby3ezeiOXiQ-U37nWhhNd3m-s4BLLgiZ6gXzaofBucYlfsODc5yZcp5Erfr-E9LciOB/exec';
+const PDF_LIB_URL = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
 const DATA_OWNER = 'the Saṅkalpam Generator app';
 const DATA_CONTACT = String.fromCharCode(115,110,118,97,115,49,51,50,64,103,109,97,105,108,46,99,111,109);   // snvas132@gmail.com
 const DEVELOPER = 'Arvind';
@@ -1618,6 +1619,90 @@ async function subscribe() {
   }
   $('subBtn').disabled = false;
 }
+// ===== Email This PDF Once (one-time email, not subscription) =====
+async function emailPdfOnce(docType) {
+  const email = prompt('Enter your email address to receive the PDF:', '').trim();
+  if (!email) return;
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!emailRegex.test(email) || email.length > 254) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  
+  const container = docType === 'sank' ? $('result') : $('tResult');
+  if (!container || !container.textContent.trim()) {
+    alert('Nothing to send. Generate the document first.');
+    return;
+  }
+  
+  const statusEl = docType === 'sank' ? $('copyStatus') : $('tCopyStatus');
+  statusEl.textContent = '📧 Converting to PDF...';
+  statusEl.style.color = '#0066cc';
+  
+  await generateAndSendPdf(docType, email, statusEl);
+}
+
+async function generateAndSendPdf(docType, email, statusEl) {
+  try {
+    if (!window.html2pdf) {
+      statusEl.textContent = '⏳ Loading PDF library...';
+      await new Promise(resolve => {
+        const script = document.createElement('script');
+        script.src = PDF_LIB_URL;
+        script.onload = resolve;
+        document.head.appendChild(script);
+      });
+    }
+    
+    const container = docType === 'sank' ? $('result') : $('tResult');
+    const fileName = pdfName(docType === 'sank' ? 'sank' : 'tarp');
+    
+    // Create a clone to avoid modifying the original
+    const clone = container.cloneNode(true);
+    
+    // Generate PDF as Base64
+    const pdf = await html2pdf().set({
+      margin: 5,
+      filename: fileName + '.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+    }).from(clone).outputPdf('datauristring');
+    
+    // Extract Base64 string (remove "data:application/pdf;base64," prefix)
+    const pdfBase64 = pdf.split(',')[1];
+    
+    // Send to backend
+    const response = await fetch(SUBSCRIBE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'emailPdfOnce',
+        email: email,
+        pdfBase64: pdfBase64,
+        docType: docType === 'sank' ? 'sank' : 'tarp',
+        fileName: fileName + '.pdf'
+      })
+    });
+    
+    const result = await response.json();
+    
+    if (result.ok) {
+      statusEl.textContent = '✓ PDF sent to ' + email;
+      statusEl.style.color = '#2e6b2e';
+      setTimeout(() => { statusEl.textContent = ''; }, 4000);
+    } else {
+      statusEl.textContent = '✗ ' + (result.message || 'Failed to send');
+      statusEl.style.color = '#a33';
+    }
+  } catch (err) {
+    console.error('PDF generation error:', err);
+    statusEl.textContent = '✗ Error: ' + err.message.slice(0, 50);
+    statusEl.style.color = '#a33';
+  }
+}
+
 const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
 function GOTHRAS_EN() { const v = V('gotra'); return v === 'other' ? V('gotraOther') : (v === '' ? '' : GOTHRAS[+v][0]); }
 const FEEDBACK_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfF1itaPZuT-jSxsO4xp2AQDPGspGA0v1Kz20-J5JqROTIaQA/formResponse';
@@ -1642,6 +1727,14 @@ function pdfName(kind) {
   return head + '_' + pad2(d) + '-' + MONTHS_EN[m - 1].slice(0, 3) + '-' + y + '_' + ascii(tl);
 }
 function printDoc(kind, compact) {
+  // Track PDF download for analytics
+  const action = compact ? 'CompactPDF' : 'PrintPDF';
+  fetch(SUBSCRIBE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'logPdfDownload', docType: kind, downloadAction: action })
+  }).catch(e => console.warn('Could not log download: ' + e));
+  
   const old = document.title;
   document.title = pdfName(kind);
   document.body.classList.toggle('compact', !!compact);
