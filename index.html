@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 4.4.3  |  Updated: 2026-09-29
+  Version: 4.5  |  Updated: 2026-09-29
   © 2026 Arvikalpa (Arvind). All rights reserved.
   This app and its code may not be copied, modified or republished without written permission.
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
@@ -62,6 +62,11 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(138,59,18,.25);bo
 .deva{font-family:var(--deva)}
 .ro{background:#f6f1ea}
 .hint{font-size:.8rem;color:var(--soft);margin:5px 0 0}
+.upd{position:sticky;top:0;z-index:50;background:#d9480f;color:#fff;text-align:center;padding:10px 14px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.upd button{margin-left:10px;background:#fff;color:#d9480f;border:0;border-radius:6px;padding:6px 14px;font-weight:700;cursor:pointer}
+.ttip{margin:10px 0 0;font-size:.9rem;background:#fff8e6;border:1px solid #f0d9b8;border-radius:8px;padding:8px 12px}
+.twarn{background:#fff4dc;border-left:4px solid #d98b00;padding:8px 12px;margin:0 0 12px;font-family:var(--lat);font-size:.9rem;color:#5b3a00}
+@media print{.upd{display:none!important}}
 .namecheck{background:#fff8e1;border:2px solid var(--gold);border-radius:10px;padding:10px 14px;margin:12px 0 0;font-size:.9rem}
 .nbig{font-size:1.6rem;font-weight:700;color:#8b1a1a;margin:0 6px}.nbig2{font-size:1.15rem;color:#6d2d0c}
 .note{background:var(--tint);border:1px solid #f0d9b8;border-left:4px solid var(--gold);border-radius:8px;padding:9px 12px;font-size:.87rem;margin:0 0 14px}
@@ -163,6 +168,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 </style>
 </head>
 <body>
+<div id="updBar" class="upd hide" role="alert">🔄 A new version of the app is available. <button type="button" id="updBtn">Update now</button></div>
 <div class="top"><div class="in">
   <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="A Brahmin doing saṅkalpam"> <defs> <linearGradient id="hbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6d2d0c"/><stop offset="1" stop-color="#9a4515"/></linearGradient> <radialGradient id="hsun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffcf6b"/><stop offset="1" stop-color="#e8871e"/></radialGradient> </defs> <rect width="512" height="512" fill="url(#hbg)"/> <circle cx="256" cy="240" r="170" fill="url(#hsun)" opacity=".9"/> <rect x="0" y="440" width="512" height="94" fill="#5a240a"/> <g transform="translate(256 300) scale(1.18) translate(-256 -300)"> <g fill="#e0a96d" stroke="#5a240a" stroke-width="6" stroke-linejoin="round"> <path fill="#fffaf0" d="M118 420 Q120 352 200 345 L312 345 Q392 352 394 420 Z"/> <path d="M196 232 Q256 214 316 232 Q332 238 334 262 L320 350 L192 350 L178 262 Q180 238 196 232 Z"/> <g fill="none" stroke-linecap="round" stroke-linejoin="round"> <path d="M322 256 Q344 312 318 346 Q280 374 226 372" stroke="#5a240a" stroke-width="36"/> <path d="M322 256 Q344 312 318 346 Q280 374 226 372" stroke="#e0a96d" stroke-width="24"/> <path d="M190 256 Q164 312 176 346 Q186 362 204 362" stroke="#5a240a" stroke-width="36"/> <path d="M190 256 Q164 312 176 346 Q186 362 204 362" stroke="#e0a96d" stroke-width="24"/> </g> <ellipse cx="206" cy="378" rx="34" ry="14"/> <ellipse cx="200" cy="366" rx="32" ry="14"/> <path d="M178 366 h40 M180 372 h34" stroke="#5a240a" stroke-width="3" fill="none"/> <rect x="240" y="196" width="32" height="34" rx="8"/> <circle cx="256" cy="158" r="50"/> <circle cx="256" cy="100" r="15" fill="#2b1206"/> </g> <g stroke="#fbfbf5" stroke-width="6" stroke-linecap="round"> <line x1="230" y1="134" x2="282" y2="134"/><line x1="228" y1="144" x2="284" y2="144"/><line x1="230" y1="154" x2="282" y2="154"/> </g> <circle cx="256" cy="165" r="5.5" fill="#c0221a"/> <g stroke="#5a240a" stroke-width="4" fill="none" stroke-linecap="round"> <path d="M232 176 q8 5 16 0"/><path d="M264 176 q8 5 16 0"/> </g> <path d="M306 234 Q270 300 206 346" stroke="#fffaf0" stroke-width="6" fill="none"/> </g> <g stroke="#5a240a" stroke-width="5" fill="#f3c969"> <path d="M400 392 L452 392 L445 440 L407 440 Z"/> <line x1="440" y1="398" x2="464" y2="356" stroke-linecap="round"/> </g> </svg></div>
   <div><h1>Saṅkalpam Generator</h1><p>Prepare a complete saṅkalpam with today's pañcāṅgam, your details and the pārāyaṇams you intend to chant.</p></div>
@@ -311,10 +317,10 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <!-- 6. Daily email -->
 <div class="card hide" id="subCard">
   <h2><span class="step">6</span>📧 Daily saṅkalpam by email <span class="hint" style="font-weight:400">(optional)</span></h2>
-  <p class="lead">Each morning you receive the saṅkalpam for that day – with the day's pañcāṅgam for your city – using the details you entered above (steps 1–5). Fill in at least your name and gotra first.</p>
+  <p class="lead">Every day you receive the saṅkalpam – with the pañcāṅgam for your city – using the details you entered above (steps 1–5). By default it comes at <b>9 pm the evening before</b>, so it is ready for the next morning's sandhyā and pūjā; on tarpaṇam days it also reminds you and links to your tarpaṇam. Fill in at least your name and gotra first.</p>
   <div class="grid">
     <div><label class="req" for="subEmail">Your email</label><input type="email" id="subEmail" autocomplete="email" placeholder="name@example.com"></div>
-    <div><label for="subMode">When</label><select id="subMode"><option value="sunrise" selected>5 minutes after sunrise</option><option value="time">At a time I choose</option></select></div>
+    <div><label for="subMode">When</label><select id="subMode"><option value="eve" selected>9 pm the evening before (next day's saṅkalpam)</option><option value="sunrise">5 minutes after sunrise</option><option value="time">At a time I choose</option></select></div>
     <div id="subTimeBox" class="hide"><label for="subTime">Time (your city's local time)</label><input type="time" id="subTime" value="06:00"></div>
   </div>
   <input type="text" id="subWebsite" tabindex="-1" autocomplete="off" style="position:absolute;left:-5000px" aria-hidden="true">
@@ -369,13 +375,14 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <div><label for="t-mother">Mother</label><select id="t-mother">
       <option value="dead" selected>Has passed away</option><option value="alive">Is alive</option></select></div>
   </div>
+  <p id="tTypeTip" class="ttip"></p>
   <div id="tConfirmNote" class="note hide" style="margin:12px 0 0">🕉 Name endings other than <b>Śarmā</b> will be added once the wording is confirmed by a vādhyār.</div>
   <div id="tFatherAlive" class="note hide" style="margin:12px 0 0">ℹ️ Tarpaṇam is usually done only by those whose father has passed away. Please confirm with your vādhyār.</div>
 </div>
 <div id="tNames" class="tform">
 <div class="card">
   <h2>Ancestors' names</h2>
-  <p class="lead">Fill in every name. If you do not know a name, tick <b>Not known</b> – Viṣṇu (for women, Lakṣmī) is then said in its place. Tick <b>Alive</b> for anyone who is living: that line then moves up one generation, and a box for the next generation appears. Check each Devanagari spelling.</p>
+  <p class="lead">Fill in every name. If you do not know a name, tick <b>Not known</b> – Viṣṇu (for women, Lakṣmī) is then said in its place. <span id="tIosNote" class="hide"><b>On iPhone:</b> first add the app to your Home Screen and enter the names there – Safari may clear them if the site is not opened for a week. </span>Tick <b>Alive</b> for anyone who is living: that line then moves up one generation, and a box for the next generation appears. Check each Devanagari spelling.</p>
   <p class="note">💡 <b>If you don't know your grandparents' details:</b> ask elders or relatives, or see old family records (horoscopes, wedding invitations, śrāddha notes). If a name cannot be found, tick <i>Not known</i>.</p>
   <div id="tLines"></div>
   <div class="grid" style="margin-top:14px">
@@ -1567,7 +1574,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '<br>' + PANCHANGA_NOTE + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v4.4.3';
+const APP_VERSION = 'v4.5';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -1939,10 +1946,33 @@ function tSync() {
   $('t-rasiBox').classList.toggle('hide', $('t-type').value !== 'masa');
   $('t-mldayBox').classList.toggle('hide', $('t-type').value !== 'mahalaya');
   if (v && $('t-rasi').dataset.auto !== v) { $('t-rasi').value = String(sunRasiAt(v, c).rasi); $('t-rasi').dataset.auto = v; }
+  // when the date (or city) changes: keep the chosen tarpaṇam if it suits the date, otherwise switch to the one that falls on it
+  const sugKey = v + '|' + c[0], ty = $('t-type');
+  if (v && ty.dataset.autoFor !== sugKey) { ty.dataset.autoFor = sugKey; ty.dataset.sug = tSuggest(v, c); if (ty.dataset.sug && !tFits(ty.value, v, c)) ty.value = ty.dataset.sug;
+    $('t-rasiBox').classList.toggle('hide', ty.value !== 'masa'); $('t-mldayBox').classList.toggle('hide', ty.value !== 'mahalaya'); }
+  const tsug = ty.dataset.sug || '';
+  $('tTypeTip').innerHTML = !v ? '' : tsug
+    ? (tFits(ty.value, v, c) ? '💡 <b>' + TP_TYPES[ty.value].en + '</b> falls on this date' + (ty.value !== tsug ? ' (so does ' + TP_TYPES[tsug].en + ')' : '') + '.'
+       : '💡 Suggested for this date: <b>' + TP_TYPES[tsug].en + '</b> – you have chosen <b>' + TP_TYPES[ty.value].en + '</b>, which does not fall on it.') + ' Please check that this is the tarpaṇam you are doing.'
+    : '💡 No tarpaṇam falls on this date in ' + esc(c[0]) + ' – please check the date and the tarpaṇam chosen.';
   const g = GOTHRAS_EN(), sug = PRAVARA_SUGGEST[g];
   $('abHint').innerHTML = sug ? 'Suggested for ' + esc(g) + ' gotra: <b class="deva">' + sug + '</b> <a class="a2hs-link" id="abUse">use this</a> (check with your elders).'
                               : 'Type your pravara ṛṣis in the order your family says them (1, 3 or 5 names).';
   if (sug) $('abUse').onclick = () => { $('ab-pravara').value = sug; $('ab-pravaraEn').value = ''; tSave(); };
+}
+// Which tarpaṇam falls on this date in this city ('' if none). Eclipse first, then Mahālaya pakṣa, Amāvāsyā, Māsa pirappu.
+function tSuggest(v, c) {
+  if (eclipseOn(v, c, 'surya')) return 'surya';
+  if (eclipseOn(v, c, 'chandra')) return 'chandra';
+  if (isMahalaya(v, c)) return 'mahalaya';
+  if (isAmavasyaDay(v, c)) return 'amavasya';
+  if (sunRasiAt(v, c).first) return 'masa';
+  return '';
+}
+// Does the chosen tarpaṇam suit this date?
+function tFits(t, v, c) {
+  return t === 'mahalaya' ? isMahalaya(v, c) : t === 'amavasya' ? !!isAmavasyaDay(v, c) : t === 'masa' ? sunRasiAt(v, c).first
+       : t === 'surya' || t === 'chandra' ? !!eclipseOn(v, c, t) : false;
 }
 function tDateWarn(v, c) {
   const t = $('t-type').value, w = m => '<br>⚠️ ' + m + ' Please check the date with your pañcāṅgam.';
@@ -2041,7 +2071,8 @@ function generateTarpanam(quiet) {
   TP_ALL.forEach(id => { names[id] = $('tnd-' + id).value.trim(); if ($('tu-' + id).checked) unknown[id] = true; });
   const o = {type: $('t-type').value, mlday: $('t-mlday').value, rasi: +$('t-rasi').value, script: $('script').value, cal, city: curCity(), date: $('date').value, gotraD: $('gotraD').value.trim(), mgotraD: tMgotraD().trim(),
              alive: tAlive(), kurcha: $('t-kurcha').value, names, unknown, suffix: $('suffix').value, abhi: ABHI_ENABLED && $('ab-pravara').value.trim() ? tAbhi() : null};
-  const r = $('tResult'); r.innerHTML = composeTarpanam(P, o, 'Generated ' + genStamp()); r.dataset.script = o.script; r.lang = o.script === 'en' ? 'sa-Latn' : 'sa';
+  const dw = tDateWarn(o.date, o.city).split('<br>').filter(x => x.indexOf('⚠️') === 0).join(' ');
+  const r = $('tResult'); r.innerHTML = (dw ? '<div class="twarn">' + dw + '</div>' : '') + composeTarpanam(P, o, 'Generated ' + genStamp()); r.dataset.script = o.script; r.lang = o.script === 'en' ? 'sa-Latn' : 'sa';
   $('tCopyStatus').textContent = ''; $('tOut').classList.remove('hide'); tSave();
   if (quiet !== true) $('tOut').scrollIntoView({behavior: 'smooth'});
 }
@@ -2118,6 +2149,31 @@ function init() {
   $('form').addEventListener('change', updateSummary); updateSummary();
   $('fbText').addEventListener('input', () => { $('fbCount').textContent = $('fbText').value.length; $('fbStatus').textContent = ''; });
   $('fbSend').addEventListener('click', sendFeedback);
+  const ua = navigator.userAgent || '';
+  $('tIosNote').classList.toggle('hide', !(/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)));
+  openFromLink();
+  updateSetup();
+}
+// Links from the daily email: ?date=YYYY-MM-DD opens that date; &tp=<type> opens that tarpaṇam (names come from this device).
+function openFromLink() {
+  let q; try { q = new URLSearchParams(location.search); } catch (e) { return; }
+  const d = q.get('date'), tp = q.get('tp');
+  if (d && /^\d{4}-\d{2}-\d{2}$/.test(d)) { $('date').value = d; $('date').dispatchEvent(new Event('change')); }
+  if (tp && TP_TYPES[tp]) { switchTab('tarpanam'); tSync(); $('t-type').value = tp; $('t-type').dispatchEvent(new Event('change', {bubbles: true})); }
+  if (location.search) try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+}
+// "Update now": checks the live page for a newer version (on opening, on returning to the app, and hourly).
+let updLast = 0;
+function updateSetup() {
+  $('updBtn').addEventListener('click', () => { location.replace(location.pathname + '?u=' + Date.now()); });
+  const check = () => {
+    if (Date.now() - updLast < 30 * 60e3 || !/^https?:/.test(location.protocol)) return; updLast = Date.now();
+    fetch(location.pathname + '?v=' + Date.now(), {cache: 'no-store'}).then(r => r.ok ? r.text() : '').then(t => {
+      const m = t.match(/APP_VERSION = '([^']+)'/); if (m && m[1] !== APP_VERSION) $('updBar').classList.remove('hide');
+    }).catch(() => {});
+  };
+  setTimeout(check, 4000); setInterval(check, 60 * 60e3);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
 }
 if (typeof document !== 'undefined') init();
 </script>

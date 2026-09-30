@@ -1,4 +1,4 @@
-# Saṅkalpam Generator – Change Log (v1.1 to v4.4.3)
+# Saṅkalpam Generator – Change Log (v1.1 to v4.5)
 
 **App:** https://akbkgk.github.io/sankalpam-generator/ · **Maintained by:** Arvind · **© 2026 Arvikalpa (Arvind). All rights reserved.**
 **Sources:** GitHub commit history, the saved app files and this project's conversation notes.
@@ -25,6 +25,7 @@ Rows marked *(not recorded)* in the "Requested" column come from before the conv
 | v4.4.1 | 29 Sep 2026 | Text running past the border on the iPhone. | Long Sanskrit words now wrap inside the border on narrow phones (all scripts, saṅkalpam and tarpaṇam). |
 | v4.4.2 | 29 Sep 2026 | Protect the app: brand name Arvikalpa and "All rights reserved". | "© 2026 Arvikalpa (Arvind). All rights reserved." in the app footer, on every saṅkalpam and tarpaṇam (screen, print and PDF), and in the page details; new LICENSE file; Copyright section in the README; Astronomy Engine MIT credit kept. |
 | v4.4.3 | 29 Sep 2026 | Footnote on how the pañcāṅgam is calculated. | Every saṅkalpam and tarpaṇam (screen, print, PDF, daily email) now ends with: "Pañcāṅgam calculated by the dṛk-gaṇita (Tirukkaṇita) method with Lahiri ayanāṁśa, for local sunrise. Vākya pañcāṅgams may differ on some days; follow your family's pañcāṅgam where they differ." README Accuracy section updated. |
+| v4.5 | 29 Sep 2026 | Avoid the wrong tarpaṇam being chosen; email in time for sandhyā (9 pm the evening before, "Saṅkalpam for Wednesday, 30 Sep"); link to change the day's chanting; tarpaṇam reminder with the ancestors' names kept private; "Update" button after each new version. | Tarpaṇam type follows the date (kept if the user's choice suits it), tip under the box, ⚠️ at the top of the printed text on a wrong date; email service v6: 9 pm evening-before mode (default for new sign-ups), subject and heading "Saṅkalpam for …", tarpaṇam-day reminder with an app link (names stay on the phone), change-chanting link; app opens from those links; highlighted "Update now" bar when a newer version is live; iPhone Home Screen note for ancestors' names. |
 
 ## Still to do
 

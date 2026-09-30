@@ -8,6 +8,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 
 - **Pañcāṅgam for your city** – saṁvatsara, ayana, ṛtu, māsa, pakṣa, tithi, vāsara and nakṣatra at local sunrise (70+ cities in India and abroad).
 - **Upto times** – the tithi and nakṣatra show until when they last and what comes next (e.g. Revatī upto 10:16, then Aśvinī). The saṅkalpam itself uses the ones at sunrise.
+- **Always the latest version** – when a new version is published, a highlighted **Update now** bar appears; one tap loads it (your details are kept).
 - **Your calendar** – Tamil (solar) or Telugu / Kannada (lunar, with adhika and nija māsa).
 - **Alerts** – a warning when a tithi, nakṣatra or month changes near sunrise or sunset, and on new-moon days. Ugādi is applied correctly when the pratipadā is kṣaya (e.g. 19 March 2026).
 - **Your details and family** – name (with a clear "check your name" box and common-name spellings, e.g. Kumar → कुमार, Priya → प्रिया), gotra, birth star and pāda (rāśi fills in automatically), male and female wording, family members with their stars; a married daughter's or son-in-law's own gotra.
@@ -21,6 +22,8 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
   - The men's names are said in the saṅkalpam (…śarmaṇāṁ); the women's names in the lines where tarpaṇa is offered to them (…nāmnīḥ). If a name is not known, Viṣṇu (or Lakṣmī for women) is used.
   - 1 or 2 kūrchams, and the right lines when a grandparent on either side is alive. Each tarpaṇam ends with its own closing line.
   - Name endings other than Śarmā (Varmā, Gupta, Dāsa) are coming soon.
+  - The app suggests the tarpaṇam that falls on the chosen date and keeps your own choice when it suits the date; if the date does not suit the tarpaṇam, a ⚠️ warning appears on screen and at the top of the printed text.
+  - On iPhone, add the app to your Home Screen before entering ancestors' names (Safari may clear saved data after a week without use).
   - The tarpaṇa lines are in bold for easy reading, and you are warned if the date does not suit the tarpaṇam chosen.
   - Please have your vādhyār check the text. Bodhāyana sūtra is coming later.
 - **Clear form** – required fields are marked with a red *, and anything missing is outlined in red.
@@ -33,7 +36,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 - The app runs in your browser. No sign-in is needed.
 - Your details are saved only on your own device, unless you choose the optional daily email. Ancestors' names entered for tarpaṇam stay only on your device and are never sent anywhere.
 - **Feedback** is sent anonymously through a Google Form; no email address is shown or needed.
-- **Optional daily email:** if you subscribe, your email address and the details you entered are stored in a private Google Sheet, used only to send you the daily saṅkalpam. You confirm by email first, and every email has an **Unsubscribe** link that deletes your details. If you add family members, you confirm that they agree. Expired or cancelled sign-ups are deleted automatically.
+- **Optional daily email:** if you subscribe, your email address and the details you entered are stored in a private Google Sheet, used only to send you the daily saṅkalpam. You confirm by email first, and every email has an **Unsubscribe** link that deletes your details. If you add family members, you confirm that they agree. Expired or cancelled sign-ups are deleted automatically. By default it arrives at **9 pm the evening before** (subject "Saṅkalpam for Wednesday, 30 Sep"), so it is ready for the next morning; 5 minutes after sunrise or a time of your choice are also offered. On tarpaṇam days it adds a reminder with a link that opens your tarpaṇam in the app – ancestors' names are never sent by email.
 
 ## Accuracy
 
