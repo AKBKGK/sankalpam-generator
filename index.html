@@ -338,7 +338,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <div id="output" class="tab-content">
   <div id="noResult" class="card" style="text-align:center;color:var(--soft)">Fill in the Generator tab and press <strong>Generate Saṅkalpam</strong>.</div>
   <div id="resultContainer" class="hide">
-    <div class="actions"><button class="btn" onclick="copySankalpam()">Copy text</button><button class="btn ghost" onclick="printDoc('sank', false)">Print / Save as PDF</button><button class="btn ghost" onclick="printDoc('sank', true)">📱 Compact PDF (WhatsApp)</button><button class="btn ghost" onclick="emailPdfOnce(\'sank\')">📧 Email This PDF Once</button><button class="btn ghost" onclick="switchTab('form')">← Edit</button><span class="okmsg" id="copyStatus"></span></div>
+    <div class="actions"><button class="btn" onclick="copySankalpam()">Copy text</button><button class="btn ghost" onclick="printDoc('sank', false)">Print / Save as PDF</button><button class="btn ghost" onclick="printDoc('sank', true)">📱 Compact PDF (WhatsApp)</button><button class="btn ghost" onclick="emailPdfOnce('sank')">📧 Email This PDF Once</button><button class="btn ghost" onclick="switchTab('form')">← Edit</button><span class="okmsg" id="copyStatus"></span></div>
     <div id="result" class="doc"></div>
   </div>
 </div>
@@ -409,7 +409,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 </div>
 <div class="actions tform"><button class="btn" id="tGen" type="button">Generate Tarpaṇam</button><span class="okmsg" id="tStatus" style="color:#a33"></span></div>
 <div id="tOut" class="hide">
-  <div class="actions"><button class="btn" id="tCopy" type="button">Copy text</button><button class="btn ghost" onclick="printDoc('tarp', false)">Print / Save as PDF</button><button class="btn ghost" onclick="printDoc('tarp', true)">📱 Compact PDF (WhatsApp)</button><button class="btn ghost" onclick="emailPdfOnce(\'tarp\')">📧 Email This PDF Once</button><button class="btn ghost" type="button" id="tEdit">↑ Edit details</button><span class="okmsg" id="tCopyStatus"></span></div>
+  <div class="actions"><button class="btn" id="tCopy" type="button">Copy text</button><button class="btn ghost" onclick="printDoc('tarp', false)">Print / Save as PDF</button><button class="btn ghost" onclick="printDoc('tarp', true)">📱 Compact PDF (WhatsApp)</button><button class="btn ghost" onclick="emailPdfOnce('tarp')">📧 Email This PDF Once</button><button class="btn ghost" type="button" id="tEdit">↑ Edit details</button><span class="okmsg" id="tCopyStatus"></span></div>
   <div id="tResult" class="doc"></div>
 </div>
 </div>
