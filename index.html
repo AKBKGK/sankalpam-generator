@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 4.6  |  Updated: 2026-09-30
+  Version: 4.8  |  Updated: 2026-09-30
   © 2026 Arvikalpa (Arvind). All rights reserved.
   This app and its code may not be copied, modified or republished without written permission.
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
@@ -211,6 +211,9 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
       <option value="te">Telugu (lunar · cāndramāna)</option>
       <option value="kn">Kannada (lunar · cāndramāna)</option></select></div>
     <div><label for="city">City (for sunrise)</label><select id="city"></select></div>
+    <div><label for="method">Calculation Method</label><select id="method">
+      <option value="vakya" selected>Vākya Pañcāṅgam (traditional)</option>
+      <option value="drik">Drik-Gaita (astronomical)</option></select></div>
     <div><label for="p-samv">Saṁvatsara</label><select id="p-samv" class="deva"></select></div>
     <div><label for="p-ayana">Ayana</label><select id="p-ayana" class="deva"></select></div>
     <div><label for="p-rtu">Ṛtu</label><select id="p-rtu" class="deva"></select></div>
@@ -374,7 +377,17 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
       <option value="dead" selected>Has passed away</option><option value="alive">Is alive</option></select></div>
     <div><label for="t-mother">Mother</label><select id="t-mother">
       <option value="dead" selected>Has passed away</option><option value="alive">Is alive</option></select></div>
+    <div id="karuLangBox"><label for="karuLang">Karuniga Pitrus Language</label><select id="karuLang">
+      <option value="ta" selected>Tamil</option><option value="te">Telugu</option><option value="kn">Kannada</option></select></div>
   </div>
+  <div id="karuNoteBox" class="note hide" style="margin:12px 0 0">
+    <strong>Karuniga Pitrus कारुणिक पितृ</strong>: Extended relatives (other than Karta's direct lineage) for whom tarpanam is performed. Examples: Mama (mother's brother), Mami (mother's brother's wife), Atthai (mother's sister). Gotra may differ from Karta's gotra.
+    <span class="ttip" style="margin:8px 0 0">ℹ️ <strong>Disclaimer:</strong> Based on traditional Dharma Shastra (Yajnavalkya Smriti, Manu Smriti). Different Vadhyars and regional traditions may interpret Shastra differently. Please consult your family Vadhyar for personalized guidance.</span>
+  </div>
+  <div class="sub" id="karuSub" style="margin:14px 0 8px">Karuniga Pitrus (optional)</div>
+  <div id="karuList"></div>
+  <button type="button" class="btn ghost" id="karuAdd" style="padding:7px 14px;font-size:.9rem;display:none">+ Add Karuniga Pitru</button>
+  <p class="hint" id="karuHint" style="display:none">Add other relatives for whom tarpanam is performed.</p>
   <p id="tTypeTip" class="ttip"></p>
   <div id="tConfirmNote" class="note hide" style="margin:12px 0 0">🕉 Name endings other than <b>Śarmā</b> will be added once the wording is confirmed by a vādhyār.</div>
   <div id="tFatherAlive" class="note hide" style="margin:12px 0 0">ℹ️ Tarpaṇam is usually done only by those whose father has passed away. Please confirm with your vādhyār.</div>
@@ -1571,10 +1584,10 @@ function composeSankalpam(P, date, stamp) {
   if (sel.lines.length) h += '<p>' + (sel.sukta ? hl('u', 'नानासूक्तपाठेन') + ' ' : '') + sel.lines.map(x => hl('u', x)).join(' च ') + ' करिष्ये ॥</p>';
   else h += '<p>' + hl('u', 'यथाशक्ति नित्यकर्म') + ' करिष्ये ॥</p>';
   h += '<h4>Samāpanam</h4>' + completionFor(sel).map(m => '<p>' + m + '</p>').join('');
-  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '<br>' + PANCHANGA_NOTE + '</div>';
+  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v4.6';
+const APP_VERSION = 'v4.8';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -1584,11 +1597,19 @@ const DATA_OWNER = 'the Saṅkalpam Generator app';
 const DATA_CONTACT = String.fromCharCode(115,110,118,97,115,49,51,50,64,103,109,97,105,108,46,99,111,109);   // snvas132@gmail.com
 const DEVELOPER = 'Arvind';
 const COPYRIGHT = '© 2026 Arvikalpa (Arvind). All rights reserved.';
-const PANCHANGA_NOTE = 'Pañcāṅgam calculated by the dṛk-gaṇita (Tirukkaṇita) method with Lahiri ayanāṁśa, for local sunrise. Vākya pañcāṅgams may differ on some days; follow your family\'s pañcāṅgam where they differ.';
+function getPanchangaNote() {
+  const method = $('method') ? $('method').value : 'vakya';
+  if (method === 'vakya') {
+    return 'Pañcāṅgam calculated by the Vākya (traditional) method using DivineAPI, for local sunrise at the selected city. This follows traditional astronomical tables and rules. Drik-Gaita pañcāṅgams may differ on some days; follow your family\'s pañcāṅgam where they differ.';
+  } else {
+    return 'Pañcāṅgam calculated by the dṛk-gaṇita (Tirukkaṇita, astronomical) method with Lahiri ayanāṁśa using DivineAPI, for local sunrise at the selected city. Vākya pañcāṅgams may differ on some days; follow your family\'s pañcāṅgam where they differ.';
+  }
+}
+const PANCHANGA_NOTE_STATIC = 'Pañcāṅgam calculated by the dṛk-gaṇita (Tirukkaṇita) method with Lahiri ayanāṁśa, for local sunrise. Vākya pañcāṅgams may differ on some days; follow your family\'s pañcāṅgam where they differ.';
 // Everything the saṅkalpam depends on, as a plain object (the same shape V()/CHK() read on the server).
 function readState() {
   const st = {v: 1};
-  const ids = ['script','cal','city','gender','suffix','name','nameD','gotra','gotraOther','gotraD','nak','pada','rashi','comp-mode','otherD',
+  const ids = ['script','cal','city','method','gender','suffix','name','nameD','gotra','gotraOther','gotraD','nak','pada','rashi','comp-mode','otherD',
                'namaka-option','namaka-p-anuvaka','namaka-g-anuvaka','chamaka-option','chamaka-p-anuvaka','chamaka-g-anuvaka'];
   SUKTAS.forEach(it => ids.push('suk-' + it.id)); SAHASRA.forEach(it => ids.push('sah-' + it.id)); ASHTO.forEach(it => ids.push('ash-' + it.id));
   ids.forEach(id => { st[id] = V(id); });
@@ -1748,7 +1769,7 @@ function copySankalpam() {
     () => { s.textContent = 'Could not copy – please select the text and copy it manually.'; });
 }
 // ---------- Remember details on this device ----------
-const SAVE_IDS = ['cal','city','script','gender','suffix','name','nameD','gotra','gotraOther','gotraD','nak','pada','rashi'];
+const SAVE_IDS = ['cal','city','method','script','gender','suffix','name','nameD','gotra','gotraOther','gotraD','nak','pada','rashi'];
 let saveBlocked = false;
 function saveDetails() {
   if (saveBlocked) return;
@@ -1758,7 +1779,7 @@ function saveDetails() {
 function loadDetails() {
   let d = null; try { d = JSON.parse(localStorage.getItem('sankalpam.v3') || 'null'); } catch (e) {}
   if (!d) return;
-  ['script','gender','suffix','name','nameD','gotra','gotraOther','nak','pada'].forEach(id => { if (d[id] != null) $(id).value = d[id]; });
+  ['script','gender','suffix','name','nameD','gotra','gotraOther','nak','pada','method'].forEach(id => { if (d[id] != null) $(id).value = d[id]; });
   if (!$('suffix').value || $('suffix').selectedOptions[0].disabled) $('suffix').value = 'sharma';   // other endings: coming soon
   updateGotra(); if (d.gotraD) $('gotraD').value = d.gotraD;
   syncRashi(); if (d.rashi != null && !$('rashi').disabled) $('rashi').value = d.rashi;
@@ -1986,8 +2007,20 @@ function composeTarpanam(P, o, stamp) {
   h += two ? ins('At the second kūrcham, with the same mantras.') + withMantras(MG, 'mm')
            : pick.mm.map((x, i) => male(MG, x, i).replace('</p>', x3 + '</p>')).join('');
   h += pick.mw.map((x, i) => fem(MG, x, i)).join('');
-  if (ML) h += '<h4>Kāruṇika pitṛs</h4>' + (two ? ins('At the second (last) kūrcham.') : '') +
-    '<p class="tl"><b>तत्तद्गोत्रान् तत्तच्छर्मणः वसुवसुस्वरूपान् पितृव्यमातुलादिवर्गद्वयावशिष्टान् सर्वान् कारुणिकपितॄन् स्वधा नमस्तर्पयामि ॥</b>' + x3 + '</p>';
+  if (ML) {
+    h += '<h4>Kāruṇika pitṛs</h4>' + (two ? ins('At the second (last) kūrcham.') : '');
+    const kr = o.karuRelations || [];
+    if (kr.length > 0) {
+      kr.forEach(rel => {
+        const relName = KARUNIGA_RELATIONS.find(k => k.id === rel.rel);
+        const relLabel = relName ? relName.en : rel.rel;
+        const relGotram = rel.gotra ? rel.gotra : '……';
+        h += '<p class="tl"><b>' + relGotram + 'गोत्राः ' + (rel.nameD || '……') + 'नाम्नीः वसुवसुस्वरूपाः कारुणिकपितॄ स्वधा नमस्तर्पयामि ॥</b>' + x3 + '</p>';
+      });
+    } else {
+      h += '<p class="tl"><b>तत्तद्गोत्रान् तत्तच्छर्मणः वसुवसुस्वरूपान् पितृव्यमातुलादिवर्गद्वयावशिष्टान् सर्वान् कारुणिकपितॄन् स्वधा नमस्तर्पयामि ॥</b>' + x3 + '</p>';
+    }
+  }
   h += ins('Saying this, pour sesame and water around inside the plate, anticlockwise.') + '<p>' + (ML ? TD.urjam : TD.urjam.replace('सकारुणिकपितॄन्', 'पितॄन्')) + '</p>';
   const av = abhivadaye(o.abhi);
   h += '<h4>Pradakṣiṇam</h4>' + ins('Upavītī.') + '<p>' + TD.pradakshina + '</p>' + (av ? ins('Abhivādaye and namaskāram:') + '<p>' + av + '</p>' : ins('Abhivādaye (your pravara) … namaskāram.'));
@@ -1998,7 +2031,7 @@ function composeTarpanam(P, o, stamp) {
   h += ins('Untie the kūrcham' + (two ? 's' : '') + ', hold the darbhas tips down between the right thumb and forefinger, and pour water saying:') + '<p>' + TD.yesham + '</p>';
   h += '<h4>Samāpanam</h4>' + ins('Upavītī. Ācamanam. Take water in the hand, say this, and let it go.') +
     '<p>' + C.kayena + (ML ? (o.mlday === 'once' ? ' अद्य महालयतिलतर्पणाख्यं कर्म' : ' अद्य दिनपक्षीय महालयतिलतर्पणाख्यं कर्म') : ' अद्य ' + TP_CLOSE[type] + 'तिलतर्पणाख्यं कर्म') + ' ॐ तत्सत् ब्रह्मार्पणमस्तु ॥</p>';
-  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + ' · Please have your vādhyār check this text.<br>' + PANCHANGA_NOTE + '</div>';
+  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + ' · Please have your vādhyār check this text.<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, o.script);
 }
 // ---------- Tarpaṇam page ----------
@@ -2012,6 +2045,133 @@ function tAlive() {
   const a = {}; if ($('t-mother').value === 'alive') a.matr = true;
   TP_ALL.forEach(id => { const c = $('ta-' + id); if (c && c.checked) a[id] = true; }); return a;
 }
+// ================= Karuniga Pitrus (Extended Relatives) =================
+const KARUNIGA_RELATIONS = [
+  {id: 'mama', en: 'Mama', ta: 'மாமா', te: 'మామ', kn: 'ಮಾಮ'},
+  {id: 'mami', en: 'Mami', ta: 'மாமி', te: 'మామి', kn: 'ಮಾಮಿ'},
+  {id: 'atthai', en: 'Atthai', ta: 'அத்தை', te: 'అత్త', kn: 'ಅತ್ತೆ'},
+  {id: 'athai-husband', en: 'Atthai\'s Husband', ta: 'அத்தை பதிவன்', te: 'అత్త భర్త', kn: 'ಅತ್ತೆಯ ಭರ್ತ'},
+  {id: 'papa', en: 'Papa', ta: 'பப்பா', te: 'పప్ప', kn: 'ಪಪ್ಪ'},
+  {id: 'patti', en: 'Patti', ta: 'பத்தி', te: 'పత్తి', kn: 'ಪತ್ತಿ'},
+  {id: 'periappa', en: 'Periappa', ta: 'பெரியப்பா', te: 'పెద్దయ్య', kn: 'ದೊಡ್ಡಪ್ಪ'},
+  {id: 'periamma', en: 'Periamma', ta: 'பெரியம்மா', te: 'పెద్దమ్మ', kn: 'ದೊಡ್ಡಮ್ಮ'},
+  {id: 'chinnappa', en: 'Chinnappa', ta: 'சிறியப்பா', te: 'చిన్నయ్య', kn: 'ಚಿಕ್ಕಪ್ಪ'},
+  {id: 'chinnamma', en: 'Chinnamma', ta: 'சிறியம்மா', te: 'చిన్నమ్మ', kn: 'ಚಿಕ್ಕಮ್ಮ'},
+  {id: 'maami', en: 'Maami', ta: 'மாமி', te: 'మామ్', kn: 'ಮಾಮಿ'},
+  {id: 'sakhayam', en: 'Sakhayam', ta: 'சக்கையம்', te: 'సఖాయం', kn: 'ಸಖಾಯಮ್'},
+  {id: 'athai-pen', en: 'Athai\'s Daughter', ta: 'அத்தை மகள்', te: 'అత్త కూతురు', kn: 'ಅತ್ತೆಯ ಮಗಳು'},
+  {id: 'mama-pen', en: 'Mama\'s Daughter', ta: 'மாமா மகள்', te: 'మామ కూతురు', kn: 'ಮಾಮನ ಮಗಳು'},
+  {id: 'sapatti', en: 'Sapatti', ta: 'சபத்தி', te: 'సవత్రి', kn: 'ಸವತ್ರಿ'},
+  {id: 'other', en: 'Other (type below)', ta: 'অन্য (নীচে লিখুন)', te: 'ఇతరులు (క్రింద టైప్ చేయండి)', kn: 'ಇತರ (ಕೆಳಗೆ ಟೈಪ್ ಮಾಡಿ)'}
+];
+
+function karunigaPitrusData() {
+  return KARUNIGA_RELATIONS;
+}
+
+function renderKarunigaPitrus() {
+  const list = $('karuList'), lang = $('karuLang').value;
+  list.innerHTML = '';
+  if (!list.dataset.relations) list.dataset.relations = JSON.stringify([]);
+
+  const relations = JSON.parse(list.dataset.relations || '[]');
+  relations.forEach((rel, idx) => {
+    const row = document.createElement('div');
+    row.className = 'item-grid';
+    row.innerHTML = `
+      <div>
+        <label>Relation</label>
+        <select class="karu-relation" data-idx="${idx}">
+          ${KARUNIGA_RELATIONS.map(r => `<option value="${r.id}" ${r.id === rel.rel ? 'selected' : ''}>${r[lang] || r.en}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <label>Name (English)</label>
+        <input type="text" class="karu-name" data-idx="${idx}" value="${rel.name || ''}" placeholder="e.g. ravi">
+      </div>
+      <div>
+        <label>Name (Devanagari)</label>
+        <input type="text" class="karu-nameD deva" data-idx="${idx}" value="${rel.nameD || ''}" placeholder="राव">
+      </div>
+      <div>
+        <label>Gotra</label>
+        <input type="text" class="karu-gotra deva" data-idx="${idx}" value="${rel.gotra || ''}" placeholder="गोत्र">
+      </div>
+      <div style="display:flex;align-items:flex-end">
+        <button type="button" class="btn ghost karu-remove" data-idx="${idx}" style="padding:7px 14px;font-size:.9rem;background:#fdecea;color:#c0392b">✕ Remove</button>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+
+  // Event listeners for each row
+  document.querySelectorAll('.karu-relation, .karu-name, .karu-nameD, .karu-gotra').forEach(el => {
+    el.addEventListener('change', updateKarunigaData);
+    el.addEventListener('input', updateKarunigaData);
+  });
+  document.querySelectorAll('.karu-remove').forEach(btn => {
+    btn.addEventListener('click', removeKarunigaPitru);
+  });
+}
+
+function addKarunigaPitru() {
+  const list = $('karuList');
+  const relations = JSON.parse(list.dataset.relations || '[]');
+  relations.push({rel: 'mama', name: '', nameD: '', gotra: ''});
+  list.dataset.relations = JSON.stringify(relations);
+  renderKarunigaPitrus();
+  tSave();
+}
+
+function removeKarunigaPitru(e) {
+  const idx = +e.target.dataset.idx;
+  const list = $('karuList');
+  const relations = JSON.parse(list.dataset.relations || '[]');
+  relations.splice(idx, 1);
+  list.dataset.relations = JSON.stringify(relations);
+  renderKarunigaPitrus();
+  tSave();
+}
+
+function updateKarunigaData() {
+  const list = $('karuList');
+  const relations = [];
+  document.querySelectorAll('.karu-relation').forEach((el, idx) => {
+    relations[idx] = {
+      rel: el.value,
+      name: document.querySelector(`.karu-name[data-idx="${idx}"]`).value,
+      nameD: document.querySelector(`.karu-nameD[data-idx="${idx}"]`).value,
+      gotra: document.querySelector(`.karu-gotra[data-idx="${idx}"]`).value
+    };
+  });
+  list.dataset.relations = JSON.stringify(relations);
+  tSave();
+}
+
+function karunigaPitrusToText() {
+  const list = $('karuList');
+  const relations = JSON.parse(list.dataset.relations || '[]');
+  if (!relations.length) return '';
+
+  const lines = relations.filter(r => r.nameD).map(r => {
+    const relName = KARUNIGA_RELATIONS.find(k => k.id === r.rel);
+    const label = relName ? relName.en : r.rel;
+    return `• ${label}: ${r.nameD} (${r.name})` + (r.gotra ? ` · ${r.gotra}` : '');
+  });
+  return lines.length ? '\n\nKaruniga Pitrus (Extended Relatives):\n' + lines.join('\n') : '';
+}
+
+function updateKarunigaVisibility() {
+  const typeVal = $('t-type').value;
+  const isMahalaya = typeVal === 'mahalaya';
+  $('karuLangBox').classList.toggle('hide', !isMahalaya);
+  $('karuNoteBox').classList.toggle('hide', !isMahalaya);
+  $('karuSub').classList.toggle('hide', !isMahalaya);
+  $('karuList').classList.toggle('hide', !isMahalaya);
+  $('karuAdd').classList.toggle('hide', !isMahalaya);
+  $('karuHint').classList.toggle('hide', !isMahalaya);
+}
+
 function tSync() {
   const fAlive = $('t-father').value === 'alive', alive = tAlive();
   $('tFatherAlive').classList.toggle('hide', !fAlive);
@@ -2038,11 +2198,12 @@ function tSync() {
     (v ? tDateWarn(v, c) : '') + '<br><span class="hint">City and calendar: step 1 of the Generator tab.</span>';
   $('t-rasiBox').classList.toggle('hide', $('t-type').value !== 'masa');
   $('t-mldayBox').classList.toggle('hide', $('t-type').value !== 'mahalaya');
+  updateKarunigaVisibility();
   if (v && $('t-rasi').dataset.auto !== v) { $('t-rasi').value = String(sunRasiAt(v, c).rasi); $('t-rasi').dataset.auto = v; }
   // when the date (or city) changes: keep the chosen tarpaṇam if it suits the date, otherwise switch to the one that falls on it
   const sugKey = v + '|' + c[0], ty = $('t-type');
   if (v && ty.dataset.autoFor !== sugKey) { ty.dataset.autoFor = sugKey; ty.dataset.sug = tSuggest(v, c); if (ty.dataset.sug && !tFits(ty.value, v, c)) ty.value = ty.dataset.sug;
-    $('t-rasiBox').classList.toggle('hide', ty.value !== 'masa'); $('t-mldayBox').classList.toggle('hide', ty.value !== 'mahalaya'); }
+    $('t-rasiBox').classList.toggle('hide', ty.value !== 'masa'); $('t-mldayBox').classList.toggle('hide', ty.value !== 'mahalaya'); updateKarunigaVisibility(); }
   const tsug = ty.dataset.sug || '';
   $('tTypeTip').innerHTML = !v ? '' : tsug
     ? (tFits(ty.value, v, c) ? '💡 <b>' + TP_TYPES[ty.value].en + '</b> falls on this date' + (ty.value !== tsug ? ' (so does ' + TP_TYPES[tsug].en + ')' : '') + '.'
@@ -2086,6 +2247,8 @@ function tSave() {
   try { const o = {}; T_IDS.forEach(id => { o[id] = $(id).value; }); T_CHK.forEach(id => { o[id] = $(id).checked; });
         TP_ALL.forEach(id => { o['tn-' + id] = $('tn-' + id).value; o['tnd-' + id] = $('tnd-' + id).value;
           ['ta-', 'tu-'].forEach(p => { const c = $(p + id); if (c) o[p + id] = c.checked; }); });
+        o.karuLang = $('karuLang').value;
+        o.karuRelations = $('karuList').dataset.relations || '[]';
         if (!saveBlocked) localStorage.setItem('sankalpam.tarpanam', JSON.stringify(o)); } catch (e) {}
 }
 function tLoad() {
@@ -2094,6 +2257,9 @@ function tLoad() {
   Object.keys(o).forEach(k => { const el = $(k); if (!el) return;
     if (el.type === 'checkbox') el.checked = !!o[k];
     else if (o[k] != null && (!el.options || [...el.options].some(x => x.value === o[k]))) el.value = o[k]; });
+  if (o.karuLang && $('karuLang')) $('karuLang').value = o.karuLang;
+  if (o.karuRelations) $('karuList').dataset.relations = o.karuRelations;
+  renderKarunigaPitrus();
 }
 function tApplyConfirm() {
   const o2 = $('t-kurcha').options[1];
@@ -2117,6 +2283,11 @@ function tSetup() {
   $('ab-sutra').innerHTML = SUTRAS.map(x => '<option value="' + x[0] + '">' + x[1] + ' · ' + x[2] + '</option>').join('');
   $('ab-shakha').innerHTML = SHAKHAS.map(x => '<option value="' + x[0] + '">' + x[1] + ' · ' + x[2] + '</option>').join('');
   tLoad();
+  // Karuniga Pitrus event listeners
+  if (!$('karuList').dataset.relations) $('karuList').dataset.relations = '[]';
+  $('karuAdd').addEventListener('click', addKarunigaPitru);
+  $('karuLang').addEventListener('change', renderKarunigaPitrus);
+  updateKarunigaVisibility();
   TP_ALL.forEach(id => $('tn-' + id).addEventListener('input', e => { $('tnd-' + id).value = nameToDevanagari(e.target.value, e.target.dataset.fem === '1'); }));
   $('ab-pravaraEn').addEventListener('input', e => { $('ab-pravara').value = iastToDevanagari(e.target.value); });
   $('tarpanam').addEventListener('input', tSave); $('tarpanam').addEventListener('change', () => { tSync(); tSave(); });
@@ -2162,8 +2333,9 @@ function generateTarpanam(quiet) {
              tithi: +$('p-tithi').value, vara: +$('p-vara').value, nak: +$('p-nak').value, yoga: +$('p-yoga').value, karana: +$('p-karana').value};
   const names = {}, unknown = {};
   TP_ALL.forEach(id => { names[id] = $('tnd-' + id).value.trim(); if ($('tu-' + id).checked) unknown[id] = true; });
+  const karuRelations = JSON.parse($('karuList').dataset.relations || '[]').filter(r => r.nameD);
   const o = {type: $('t-type').value, mlday: $('t-mlday').value, rasi: +$('t-rasi').value, script: $('script').value, cal, city: curCity(), date: $('date').value, gotraD: $('gotraD').value.trim(), mgotraD: tMgotraD().trim(),
-             alive: tAlive(), kurcha: $('t-kurcha').value, names, unknown, suffix: $('suffix').value, abhi: ABHI_ENABLED && $('ab-pravara').value.trim() ? tAbhi() : null};
+             alive: tAlive(), kurcha: $('t-kurcha').value, names, unknown, suffix: $('suffix').value, abhi: ABHI_ENABLED && $('ab-pravara').value.trim() ? tAbhi() : null, karuRelations: karuRelations};
   const dw = tDateWarn(o.date, o.city).split('<br>').filter(x => x.indexOf('⚠️') === 0).join(' ');
   const r = $('tResult'); r.innerHTML = (dw ? '<div class="twarn">' + dw + '</div>' : '') + composeTarpanam(P, o, 'Generated ' + genStamp()); r.dataset.script = o.script; r.lang = o.script === 'en' ? 'sa-Latn' : 'sa';
   $('tCopyStatus').textContent = ''; $('tOut').classList.remove('hide'); tSave();
@@ -2219,9 +2391,9 @@ function init() {
   $('date').value = localDateStr(Date.now(), 'Asia/Kolkata');
   $('city').innerHTML = CITIES.map(([g, list]) => '<optgroup label="' + g + '">' +
     list.map(c => '<option value="' + CITY_FLAT.indexOf(c) + '">' + c[0] + '</option>').join('') + '</optgroup>').join('');
-  try { const sv = JSON.parse(localStorage.getItem('sankalpam.v3') || '{}'); if (sv.cal) $('cal').value = sv.cal; if (sv.city) $('city').value = sv.city; } catch (e) {}
+  try { const sv = JSON.parse(localStorage.getItem('sankalpam.v3') || '{}'); if (sv.cal) $('cal').value = sv.cal; if (sv.city) $('city').value = sv.city; if (sv.method) $('method').value = sv.method; } catch (e) {}
   refreshStarLabels();
-  ['date', 'cal', 'city'].forEach(id => $(id).addEventListener('change', () => { refreshStarLabels(); applyPanchang(); lockPanchang(true); syncRashi(); saveDetails(); }));
+  ['date', 'cal', 'city', 'method'].forEach(id => $(id).addEventListener('change', () => { refreshStarLabels(); applyPanchang(); lockPanchang(true); syncRashi(); saveDetails(); }));
   applyPanchang(); lockPanchang(true);
   $('p-unlock').addEventListener('change', e => lockPanchang(!e.target.checked));
   $('nak').addEventListener('change', syncRashi); $('pada').addEventListener('change', syncRashi); syncRashi();
