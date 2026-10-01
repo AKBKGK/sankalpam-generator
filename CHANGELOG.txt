@@ -1,122 +1,65 @@
 ================================================================================
-SAṄKALPAM GENERATOR - VERSION 4.6
-Updated: 2026-09-30
+SAṄKALPAM GENERATOR - VERSION 5.0
+Updated: 2026-10-01
 ================================================================================
 
-NEW FEATURES ADDED:
-──────────────────
+NEW IN 5.0
+──────────
 
-1. EMAIL THIS PDF ONCE (One-time Email Feature)
-   ✓ New button: "📧 Email This PDF Once" on both Saṅkalpam and Tarpaṇam tabs
-   ✓ User enters email → PDF sends immediately (no subscription/confirmation needed)
-   ✓ Logging: Only tracked if user is NOT a daily subscriber
-   ✓ Non-subscribers: logged to OneTimeEmails sheet (for usage analytics)
-   ✓ Daily subscribers: PDF sent, no logging (already tracked in Subscribers sheet)
+1. VĀKYA PAÑCĀṄGAM (traditional) – now really calculated
+   ✓ Step 1 "Calculation method": Vākya (traditional) or Tirukkaṇita (modern
+     astronomical). Before 5.0 both options used the astronomical calculation.
+   ✓ Vākyakaraṇa method: Vararuci's 248 candravākyas, Vākya Sun table and the
+     Vākyakaraṇa saṅkrānti formula; calibrated to printed Vākya pañcāṅgams
+     (true sunrise, about 11–13°N, Tamil Nadu).
+   ✓ Tithi, nakṣatra, yoga and karaṇa at sunrise, with "upto" times.
+     Clock times follow the printed convention: 6:00 AM + nāzhigai × 24 min.
+   ✓ The method used is highlighted under step 1 and in every footnote.
 
-2. PDF DOWNLOAD TRACKING (Anonymous Analytics)
-   ✓ Automatic tracking when users click "Print / Save as PDF"
-   ✓ Automatic tracking when users click "📱 Compact PDF (WhatsApp)"
-   ✓ Anonymous logging (no email required, doesn't interrupt UX)
-   ✓ Logged to OneTimeEmails sheet with: Date | [blank] | Type | Action
-   ✓ Action types: PrintPDF or CompactPDF
-   ✓ Helps analyze which format users prefer
+   Tests against print (2026):
+     Tithi (29 days)                average 2.2 min, worst 5.5 min
+     Nakṣatra (3 seasons, 79 days)  average 1.4–2.1 min, worst 7 min
+     Saṅkrānti                      within 1 minute
+     Tamil month starts             11 of 11 correct
+     Tirukkaṇita vs published Drik  within about 1 minute
 
-================================================================================
-FILES UPDATED:
-──────────────
+2. "WHICH DAY?" – Tarpaṇam tab
+   ✓ Amāvāsyā: next Amāvāsyā by the aparāhṇa (afternoon) rule, afternoon
+     window highlighted, "close call" warning.
+   ✓ Mahālaya pakṣam: dates and Mahālaya Amāvāsyā; each tithi on request.
+   ✓ Māsa pirappu: next saṅkrānti time, the day the month begins, next 12 months.
+   ✓ Compare Vākya and Tirukkaṇita. "Use" fills in the date (and month).
+   ✓ Only one Tarpaṇam box (at the top of the tab).
 
-CODE.GS (Backend - Google Apps Script)
-──────────────────────────────────────
-✓ New function: emailPdfOnce_(req)
-  - Validates email address
-  - Decodes Base64 PDF and sends via GmailApp
-  - Checks if email is in Subscribers sheet
-  - Only logs non-subscribers to OneTimeEmails
+3. KĀRUṆIKA PITṚS
+   ✓ The Add button now works; one relative per click.
+   ✓ Relationships grouped: father's side, mother's side, others.
+   ✓ Gotra filled from the relationship (your gotra / your mother's), or chosen.
+   ✓ Devanagari name fills in; lines grouped by gotra in the text.
+   ✓ Men: …गोत्रान् … शर्मणः वसुवसुस्वरूपान् कारुणिकपितॄन् …
+     Women: …गोत्राः … नाम्नीः वसुवसुस्वरूपाः कारुणिकपितॄः …
+   ✓ "Atthai" corrected to father's sister; language box removed.
 
-✓ New function: logPdfDownload_(docType, action)
-  - Logs PDF downloads anonymously
-  - Records: timestamp, doc type (sank/tarp), action (PrintPDF/CompactPDF)
-  - Creates OneTimeEmails sheet if needed
+4. OTHER
+   ✓ Tamil spellings → Sanskrit stems for men's names
+     (Chidambareshwaran → चिदम्बरेश्वर, Subramanian → सुब्रह्मण्य,
+      Kalyanaraman → कल्याणराम, Srinivasan → श्रीनिवास).
+   ✓ Abhivādaye Veda and Sūtra follow the tarpaṇam choices (no second entry).
+   ✓ The tarpaṇam suggested for a date no longer overrides your own choice.
+   ✓ One combined disclaimer; "independent of any publisher or maṭha".
+   ✓ Personal name removed; MIT License.
 
-✓ Updated doPost() routing:
-  - if (req.action === 'emailPdfOnce') → calls emailPdfOnce_(req)
-  - if (req.action === 'logPdfDownload') → calls logPdfDownload_()
+FILES CHANGED: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt,
+LICENSE. NOT CHANGED: Code.gs (Google Apps Script), manifest.webmanifest, icons.
 
-INDEX.HTML (Frontend - Web App)
-──────────────────────────────
-✓ New constant: PDF_LIB_URL
-  - Loads html2pdf.js library from CDN
-
-✓ New function: emailPdfOnce(docType)
-  - Prompts user for email address
-  - Validates email format
-  - Calls generateAndSendPdf()
-
-✓ New function: generateAndSendPdf(docType, email, statusEl)
-  - Converts displayed doc to PDF using html2pdf.js
-  - Encodes PDF as Base64
-  - Sends to backend via fetch() POST
-  - Shows success/error message to user
-
-✓ Updated printDoc() function
-  - Added automatic tracking calls when PDF is downloaded
-  - Tracks both Print and Compact PDF separately
-  - Anonymous (no email prompt)
-
-✓ New buttons added:
-  - Line 341 (Saṅkalpam tab): "📧 Email This PDF Once"
-  - Line 412 (Tarpaṇam tab): "📧 Email This PDF Once"
-
-✓ Updated button HTML:
-  - Saṅkalpam: onclick="emailPdfOnce('sank')"
-  - Tarpaṇam: onclick="emailPdfOnce('tarp')"
+PLEASE HAVE YOUR VĀDHYĀR CHECK before release: the Kāruṇika lines for men,
+the Tamil relationship labels, and the name endings.
 
 ================================================================================
-SHEET STRUCTURE (OneTimeEmails):
-────────────────────────────────
-
-Column Headers: Date | Email | Type | Status
-
-One-time Email Logs:
-  Date: ISO timestamp
-  Email: user's email address
-  Type: 'sank' (Saṅkalpam) or 'tarp' (Tarpaṇam)
-  Status: 'Sent' (only logged if NOT a daily subscriber)
-
-PDF Download Logs:
-  Date: ISO timestamp
-  Email: [blank/empty]
-  Type: 'sank' (Saṅkalpam) or 'tarp' (Tarpaṇam)
-  Status: 'PrintPDF' or 'CompactPDF'
-
-================================================================================
-DEPLOYMENT STEPS:
-─────────────────
-
-1. Backend (Code.gs):
-   - Open Google Apps Script editor
-   - Replace entire Code.gs with Code_v4.6.gs
-   - Save (Ctrl+S)
-   - Verify Deploy → Manage deployments → web app URL is active
-
-2. Frontend (index.html):
-   - Go to GitHub repository
-   - Replace index.html with index_v4.6.html
-   - Commit: "v4.6: Add Email PDF Once and PDF download tracking"
-   - Push to main branch
-   - App updates automatically within seconds
-
-3. Test:
-   - Refresh app (Ctrl+Shift+R)
-   - Generate Saṅkalpam
-   - Test "Email This PDF Once" button
-   - Test "Print / Save as PDF" button
-   - Check OneTimeEmails sheet for logs
-
-================================================================================
-VERSION HISTORY:
-────────────────
-v4.5: Update bar, version display
-v4.6: Email PDF Once (one-time feature), PDF download tracking (30 Sep 2026)
-
+VERSION HISTORY
+───────────────
+v4.5 (29 Sep 2026): Update bar, version display
+v4.6 (30 Sep 2026): Email PDF Once, PDF download tracking
+v4.7–4.8 (30 Sep 2026, not published): Kāruṇika pitṛs section, Calculation Method box
+v5.0 (1 Oct 2026): Vākya pañcāṅgam, "Which day?", Kāruṇika pitṛs, MIT License
 ================================================================================

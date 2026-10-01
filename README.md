@@ -1,56 +1,49 @@
 # Saṅkalpam Generator
 
-A free, single-page app that prepares a complete, correctly worded **saṅkalpam** for daily pūjā and pārāyaṇam — with the day's **pañcāṅgam** calculated for your city.
+A free, single-page app that prepares a complete, correctly worded **saṅkalpam** for daily pūjā and pārāyaṇam, and the full **tarpaṇam** text, with the day's **pañcāṅgam** calculated for your city.
 
-**Open the app:** https://akbkgk.github.io/sankalpam-generator/
+**Open the app:** https://akbkgk.github.io/sankalpam-generator/ (soon also at https://sankalpam.live/)
 
 ## What it does
 
-- **Pañcāṅgam for your city** – saṁvatsara, ayana, ṛtu, māsa, pakṣa, tithi, vāsara and nakṣatra at local sunrise (70+ cities in India and abroad).
-- **Upto times** – the tithi and nakṣatra show until when they last and what comes next (e.g. Revatī upto 10:16, then Aśvinī). The saṅkalpam itself uses the ones at sunrise.
-- **Always the latest version** – when a new version is published, a highlighted **Update now** bar appears; one tap loads it (your details are kept).
+- **Choose your pañcāṅgam** – **Vākya** (traditional) or **Tirukkaṇita** (modern astronomical). The choice is shown, highlighted, at the foot of every saṅkalpam and tarpaṇam.
+- **Pañcāṅgam for your city** – saṁvatsara, ayana, ṛtu, māsa, pakṣa, tithi, vāsara, nakṣatra, yoga and karaṇa at sunrise, with "upto" times (70+ cities in India and abroad).
+- **Which day? (new in 5.0)** – finds the right day for tarpaṇam by the aparāhṇa (afternoon) rule:
+  - **Amāvāsyā** – the next Amāvāsyā, with the afternoon window highlighted and a "close call" warning when the choice is tight.
+  - **Mahālaya pakṣam** – the dates of the pakṣam and Mahālaya Amāvāsyā; the day for each tithi on request.
+  - **Māsa pirappu** – the next month's saṅkrānti time, the day the Tamil month begins, and the next 12 months.
+  - **Compare** Vākya and Tirukkaṇita side by side; **Use** fills in the date (and month) for the tarpaṇam.
 - **Your calendar** – Tamil (solar) or Telugu / Kannada (lunar, with adhika and nija māsa).
-- **Alerts** – a warning when a tithi, nakṣatra or month changes near sunrise or sunset, and on new-moon days. Ugādi is applied correctly when the pratipadā is kṣaya (e.g. 19 March 2026).
-- **Your details and family** – name (with a clear "check your name" box and common-name spellings, e.g. Kumar → कुमार, Priya → प्रिया), gotra, birth star and pāda (rāśi fills in automatically), male and female wording, family members with their stars; a married daughter's or son-in-law's own gotra.
-- **What you will chant** – tick what you plan to chant, in simple groups you can open and close: Śrī Rudram (Namakam, Chamakam; pārāyaṇam, ghanam or full ghanam), Vedic sūktas, sahasranāmams and aṣṭottaras, with closing verses to match. When a sūktam is chosen, the saṅkalpam says “नानासूक्तपाठेन”; every saṅkalpam prays for “स्वरवर्णशुद्धि”.
-- **Purposes** – choose from common prayers; the Sanskrit wording is produced for you.
-- **Tarpaṇam** – the complete text for Kṛṣṇa Yajur Veda, Āpastamba sūtra, from ācamanam to samarpaṇam, with the day's yoga and karaṇa and your ancestors' names:
-  - **Mahālaya pakṣa** – both sides of the family, and the right lines when your mother is alive. Choose whether you do it on all days of the pakṣa or only one day; the saṅkalpam wording changes to match.
-  - **Amāvāsyā** – shows when amāvāsyā starts and ends; use the day your pañcāṅgam marks as Sarva Amāvāsyā.
-  - **Māsa pirappu (saṅkramaṇa)** – the correct line for each of the 12 months.
-  - **Sūrya and Candra grahaṇa** (solar and lunar eclipse) – with a note if the eclipse is not visible in your city.
-  - The men's names are said in the saṅkalpam (…śarmaṇāṁ); the women's names in the lines where tarpaṇa is offered to them (…nāmnīḥ). If a name is not known, Viṣṇu (or Lakṣmī for women) is used.
-  - 1 or 2 kūrchams, and the right lines when a grandparent on either side is alive. Each tarpaṇam ends with its own closing line.
-  - Name endings other than Śarmā (Varmā, Gupta, Dāsa) are coming soon.
-  - The app suggests the tarpaṇam that falls on the chosen date and keeps your own choice when it suits the date; if the date does not suit the tarpaṇam, a ⚠️ warning appears on screen and at the top of the printed text.
-  - On iPhone, add the app to your Home Screen before entering ancestors' names (Safari may clear saved data after a week without use).
-  - The tarpaṇa lines are in bold for easy reading, and you are warned if the date does not suit the tarpaṇam chosen.
-  - Please have your vādhyār check the text. Bodhāyana sūtra is coming later.
-- **Clear form** – required fields are marked with a red *, and anything missing is outlined in red.
+- **Your details and family** – name (Tamil spellings become Sanskrit stems, e.g. Chidambareshwaran → चिदम्बरेश्वर, Subramanian → सुब्रह्मण्य), gotra, birth star and pāda (rāśi fills in automatically), family members.
+- **What you will chant** – Śrī Rudram, Vedic sūktas, sahasranāmams and aṣṭottaras, with closing verses to match.
+- **Tarpaṇam** – the complete text (Kṛṣṇa Yajur Veda, Āpastamba sūtra) for Mahālaya, Amāvāsyā, Māsa pirappu and grahaṇa, with both sides of the family.
+  - **Kāruṇika pitṛs** – add relatives one at a time; the gotra fills in from the relationship (your gotra for Periyappā, Chithappā and their wives; your mother's for Māmā and Māmī); lines are grouped by gotra.
 - **Your script** – Sanskrit (Devanagari), Tamil (Grantha), Telugu, Kannada or English letters (IAST).
-- **Easy to read** – today's details, your details and your purposes are highlighted in different colours.
-- **Copy, print or save as PDF**, including a small PDF for sharing on WhatsApp. Your details are remembered on your own device.
+- **Copy, print or save as PDF**, including a small PDF for WhatsApp, or email the PDF once.
+
+## Vākya and Tirukkaṇita
+
+- **Tirukkaṇita (Drik)** calculates the Sun and Moon with modern astronomy ([Astronomy Engine](https://github.com/cosinekitty/astronomy), Lahiri ayanāṁśa) for the true sunrise at your city.
+- **Vākya** follows the traditional Vākyakaraṇa method (Vararuci's 248 candravākyas and the Vākya Sun table), used mainly in Tamil Nadu. It is computed, not copied, and calibrated to printed Vākya pañcāṅgams for Tamil Nadu (about 11–13°N). Clock times follow the printed convention: 6:00 AM + nāzhigai × 24 minutes.
+- **Tested against print (2026):** tithi and nakṣatra names all match; times within about 2–7 minutes; saṅkrānti within a minute; all Tamil month starts match.
+- Vākya and Tirukkaṇita can differ by 30–60 minutes or more, and occasionally by a day. **Follow the pañcāṅgam your family uses; if in doubt, ask your vādhyār.**
+- This app is independent and is not affiliated with or endorsed by any pañcāṅgam publisher or maṭha.
 
 ## Privacy
 
 - The app runs in your browser. No sign-in is needed.
-- Your details are saved only on your own device, unless you choose the optional daily email. Ancestors' names entered for tarpaṇam stay only on your device and are never sent anywhere.
-- **Feedback** is sent anonymously through a Google Form; no email address is shown or needed.
-- **Optional daily email:** if you subscribe, your email address and the details you entered are stored in a private Google Sheet, used only to send you the daily saṅkalpam. You confirm by email first, and every email has an **Unsubscribe** link that deletes your details. If you add family members, you confirm that they agree. Expired or cancelled sign-ups are deleted automatically. By default it arrives at **9 pm the evening before** (subject "Saṅkalpam for Wednesday, 30 Sep"), so it is ready for the next morning; 5 minutes after sunrise or a time of your choice are also offered. On tarpaṇam days it adds a reminder with a link that opens your tarpaṇam in the app – ancestors' names are never sent by email.
+- Your details are saved only on your own device. **Ancestors' names and Kāruṇika pitṛs stay only on your device and are never sent anywhere.**
+- **Feedback** is sent anonymously through a Google Form.
+- **Optional daily email:** if you subscribe, your email address and the details you entered are stored in a private Google Sheet, used only to send you the daily saṅkalpam. You confirm by email first, and every email has an **Unsubscribe** link that deletes your details.
 
-## Accuracy
+## Please note
 
-The pañcāṅgam is calculated by the **dṛk-gaṇita (Tirukkaṇita)** method – precise Sun and Moon positions (Astronomy Engine) with the Lahiri ayanāṁśa, for local sunrise. **Vākya pañcāṅgams may differ on some days; follow your family's pañcāṅgam where they differ.** This note is also printed at the foot of every saṅkalpam and tarpaṇam.
+The tarpaṇam text follows traditional Dharma Śāstra (Yājñavalkya and Manu Smṛti); vādhyārs and regional traditions may differ. Dates and timings are a guide. **Please have your vādhyār check the text before use.**
 
-## Copyright
+## Licence
 
-© 2026 Arvikalpa (Arvind). All rights reserved.
-
-You are welcome to **use** the app for your own pūjā and pārāyaṇam, and to share the saṅkalpams and tarpaṇams it makes for you.
-The app's code, design and text may **not** be copied, changed, republished or sold, in whole or in part, without written permission from Arvind. See [LICENSE](LICENSE).
-
-The mantras themselves come from the Vedic tradition and belong to everyone; this notice covers the app and the way it puts them together.
+Released under the [MIT License](LICENSE) – © 2026 Saṅkalpam Generator. You may use, copy, change and share the code, keeping the copyright and licence notice. The Vedic mantras belong to the Vedic tradition and are not claimed.
 
 ## Credits
 
-Astronomical calculations: [Astronomy Engine](https://github.com/cosinekitty/astronomy) by Don Cross (MIT License) – used under its licence, which is kept in the app's code.
+Astronomical calculations: [Astronomy Engine](https://github.com/cosinekitty/astronomy) by Don Cross (MIT License).

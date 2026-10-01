@@ -1,27 +1,31 @@
-Saṅkalpam Generator
-Copyright © 2026 Arvikalpa (Arvind). All rights reserved.
+MIT License
 
-1. What you may do
-   You may use the Saṅkalpam Generator website (https://akbkgk.github.io/sankalpam-generator/)
-   for your own personal, religious and non-commercial purposes, and you may print, save and
-   share the saṅkalpams and tarpaṇams it produces for you.
+Copyright (c) 2026 Saṅkalpam Generator
 
-2. What you may not do without written permission from Arvind
-   - copy, download for reuse, modify, translate or adapt the app's source code, design or text;
-   - publish, host, distribute or sell the app, or any part of it, or a work based on it;
-   - present the app, or any part of it, as your own.
-   The public visibility of this repository does not grant any of these rights.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-3. The Vedic mantras
-   The mantras and traditional texts belong to the Vedic tradition and are not claimed by this
-   notice. This notice covers the app: its code, design, arrangement and explanatory text.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-4. Third-party software
-   The app includes Astronomy Engine v2.1.19, © Don Cross, used under the MIT License. Its full
-   licence notice is kept inside index.html. That component remains under its own licence.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-5. No warranty
-   The app is provided "as is". Pañcāṅgam values and ritual texts are prepared with care but may
-   contain errors; please confirm important details with your vādhyār and family pañcāṅgam.
-
-For permission requests, contact Arvind through the Feedback tab of the app.
+-------------------------------------------------------------------------------
+Notes
+- The Vedic mantras and traditional texts belong to the Vedic tradition and are
+  not claimed by this licence.
+- Third-party code: Astronomy Engine v2.1.19, (c) Don Cross, MIT License. Its
+  full notice is kept inside index.html.
+- Pañcāṅgam values and ritual texts are prepared with care but may contain
+  errors; please confirm important details with your vādhyār and family
+  pañcāṅgam.
