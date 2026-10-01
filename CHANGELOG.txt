@@ -1,4 +1,20 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.0.2
+Updated: 2026-10-02
+================================================================================
+
+NEW IN 5.0.2 – MOVE TO sankalpam.live
+  ✓ The app is hosted at https://sankalpam.live (Hostinger, auto-deployed from
+    the GitHub repository's main branch).
+  ✓ The old address akbkgk.github.io/sankalpam-generator forwards to
+    sankalpam.live. Links from the daily email keep their date and tarpaṇam.
+  ✓ Details saved on the device (your details, tarpaṇam names, home-screen note)
+    are carried across once, privately: they travel after "#", which browsers
+    never send to a server, and never overwrite details already saved at
+    sankalpam.live.
+  FILES CHANGED: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.0.1
 Updated: 2026-10-01
 ================================================================================
@@ -75,4 +91,5 @@ v4.6 (30 Sep 2026): Email PDF Once, PDF download tracking
 v4.7–4.8 (30 Sep 2026, not published): Kāruṇika pitṛs section, Calculation Method box
 v5.0 (1 Oct 2026): Vākya pañcāṅgam, "Which day?", Kāruṇika pitṛs, MIT License
 v5.0.1 (1 Oct 2026): PDF tool error message, Cancel fix, footnote wording
+v5.0.2 (2 Oct 2026): Move to sankalpam.live, forwarding from the old address
 ================================================================================

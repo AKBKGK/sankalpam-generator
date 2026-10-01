@@ -2,7 +2,9 @@
 
 A free, single-page app that prepares a complete, correctly worded **saṅkalpam** for daily pūjā and pārāyaṇam, and the full **tarpaṇam** text, with the day's **pañcāṅgam** calculated for your city.
 
-**Open the app:** https://akbkgk.github.io/sankalpam-generator/ (soon also at https://sankalpam.live/)
+**Open the app:** https://sankalpam.live/
+
+(The old address, akbkgk.github.io/sankalpam-generator, now forwards to sankalpam.live and brings your saved details with it.)
 
 ## What it does
 

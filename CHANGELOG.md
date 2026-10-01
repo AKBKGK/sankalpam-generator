@@ -1,6 +1,6 @@
-# Saṅkalpam Generator – Change Log (v1.1 to v5.0.1)
+# Saṅkalpam Generator – Change Log (v1.1 to v5.0.2)
 
-**App:** https://akbkgk.github.io/sankalpam-generator/ · **© 2026 Saṅkalpam Generator · MIT License**
+**App:** https://sankalpam.live/ · **© 2026 Saṅkalpam Generator · MIT License**
 **Sources:** GitHub commit history, the saved app files and this project's conversation notes.
 Rows marked *(not recorded)* in the "Requested" column come from before the conversation notes start; they describe what the files show was added.
 
@@ -30,6 +30,7 @@ Rows marked *(not recorded)* in the "Requested" column come from before the conv
 | v4.7–v4.8 | 30 Sep 2026 | *(not recorded)* | Kāruṇika pitṛs section in the Tarpaṇam tab (the Add button was not yet visible); "Calculation Method" box (label only – both options used the astronomical calculation). *(Not published.)* |
 | **v5.0** | 1 Oct 2026 | Vākya pañcāṅgam as an option; find the right day for tarpaṇam; Kāruṇika pitṛs that work; Tamil names in Sanskrit form; MIT licence. | **Vākya (traditional)** calculation added – Vākyakaraṇa method, calibrated and tested against printed Vākya pañcāṅgams (tithi/nakṣatra within minutes, saṅkrānti within a minute, all Tamil month starts); **Tirukkaṇita** name for the astronomical method; the method used is highlighted under step 1 and in every footnote. **"Which day?"** card in the Tarpaṇam tab: next Amāvāsyā by the aparāhṇa rule (afternoon window highlighted, close-call warning), Mahālaya pakṣam dates (each tithi on request), next Māsa pirappu with saṅkrānti time and the next 12 months, Vākya vs Tirukkaṇita comparison, "Use" fills the date and month; one Tarpaṇam box only. **Kāruṇika pitṛs:** Add button works, one relative per click, relationships grouped (father's side / mother's side / others), gotra filled from the relationship, Devanagari name fills in, lines grouped by gotra, masculine wording for men (…गोत्रान् … शर्मणः … कारुणिकपितॄन्); "Atthai" corrected to father's sister; language box removed (follows the calendar). Abhivādaye Veda and Sūtra follow the tarpaṇam choices. Tamil spellings → Sanskrit stems (Chidambareshwaran → चिदम्बरेश्वर, Subramanian → सुब्रह्मण्य, Kalyanaraman → कल्याणराम, Srinivasan → श्रीनिवास, Venkatesan → वेङ्कटेश). One combined disclaimer. Personal name removed; **MIT License**. |
 | v5.0.1 | 1 Oct 2026 | Small fixes after release. | "📧 Email This PDF Once": a clear message if the PDF tool cannot load (e.g. blocked by an ad blocker) instead of waiting forever; pressing Cancel in the email box no longer causes an error; footnote latitude wording "about 11–13°N". |
+| v5.0.2 | 2 Oct 2026 | Move to sankalpam.live. | The app is hosted at https://sankalpam.live (Hostinger, auto-deployed from GitHub). Visitors to the old address akbkgk.github.io/sankalpam-generator are forwarded to sankalpam.live; links from the daily email keep their date; details saved on the device (your details, tarpaṇam names) are carried across once, privately (after "#", never sent to a server), without overwriting anything already saved at sankalpam.live. |
 
 ## Still to do
 

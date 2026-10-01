@@ -1,6 +1,6 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.0.1
-Updated: 2026-10-01
+SAṄKALPAM GENERATOR v5.0.2
+Updated: 2026-10-02
 ================================================================================
 
 FILES IN THIS FOLDER
@@ -29,22 +29,25 @@ BEFORE YOU UPLOAD
      relationship labels and the name endings.
 
 ================================================================================
-OPTION A – GITHUB PAGES
+OPTION A – GITHUB (updates sankalpam.live automatically)
   1. Open the repository → Add file → Upload files.
-  2. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt,
-     LICENSE. (Same names as before, so they replace the old ones.)
-  3. Commit message: "v5.0.1: PDF error message, Cancel fix".
-  4. Commit changes. The site updates in about a minute.
+  2. Drag in ONLY the files that changed in this version (see CHANGELOG.txt,
+     "FILES CHANGED"). Same names as before, so they replace the old ones.
+  3. Commit message: "v5.0.2: move to sankalpam.live".
+  4. Commit changes. GitHub Pages and Hostinger (auto-deployment) update in
+     about a minute. If sankalpam.live still shows the old version, flush the
+     Hostinger CDN cache.
 
-OPTION B – HOSTINGER
+OPTION B – HOSTINGER BY HAND (only if auto-deployment is switched off)
   1. hPanel → Websites → your site → File Manager → public_html.
   2. Upload index.html, manifest.webmanifest and the three icon files
      (replace when asked). The .md/.txt/LICENSE files are optional here.
   3. Make sure the site has SSL (padlock) switched on.
 
 AFTER UPLOAD – TEST
-  1. Open the site; press Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows).
-  2. Footer/foot of output shows v5.0; anyone on v4.x sees "Update now".
+  1. Open https://sankalpam.live; press Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows).
+  2. The foot of a generated saṅkalpam shows the new version; anyone on an
+     older version sees "Update now".
   3. Generator → step 1 → Calculation method → Vākya: the highlighted line
      "Calculation used: Vākya (traditional)" appears under step 1.
   4. Tarpaṇam tab → Amāvāsyā → "Which day?" shows the next Amāvāsyā.
