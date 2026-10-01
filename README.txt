@@ -1,5 +1,5 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.0
+SAṄKALPAM GENERATOR v5.0.1
 Updated: 2026-10-01
 ================================================================================
 
@@ -33,7 +33,7 @@ OPTION A – GITHUB PAGES
   1. Open the repository → Add file → Upload files.
   2. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt,
      LICENSE. (Same names as before, so they replace the old ones.)
-  3. Commit message: "v5.0: Vākya pañcāṅgam, Which day?, Kāruṇika pitṛs, MIT".
+  3. Commit message: "v5.0.1: PDF error message, Cancel fix".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER

@@ -1,4 +1,16 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.0.1
+Updated: 2026-10-01
+================================================================================
+
+FIXES IN 5.0.1
+  ✓ "📧 Email This PDF Once": if the PDF tool cannot load (no internet, or blocked
+    by an ad blocker), a clear message now appears instead of waiting forever.
+  ✓ Pressing Cancel in the email box no longer causes an error.
+  ✓ Footnote wording: Vākya calculated for Tamil Nadu "about 11–13°N".
+  FILES CHANGED: index.html, CHANGELOG.md, CHANGELOG.txt, README.txt.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.0
 Updated: 2026-10-01
 ================================================================================
@@ -62,4 +74,5 @@ v4.5 (29 Sep 2026): Update bar, version display
 v4.6 (30 Sep 2026): Email PDF Once, PDF download tracking
 v4.7–4.8 (30 Sep 2026, not published): Kāruṇika pitṛs section, Calculation Method box
 v5.0 (1 Oct 2026): Vākya pañcāṅgam, "Which day?", Kāruṇika pitṛs, MIT License
+v5.0.1 (1 Oct 2026): PDF tool error message, Cancel fix, footnote wording
 ================================================================================
