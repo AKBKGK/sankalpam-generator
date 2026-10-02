@@ -1,5 +1,5 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.0.2
+SAṄKALPAM GENERATOR v5.0.3
 Updated: 2026-10-02
 ================================================================================
 
@@ -33,7 +33,7 @@ OPTION A – GITHUB (updates sankalpam.live automatically)
   1. Open the repository → Add file → Upload files.
   2. Drag in ONLY the files that changed in this version (see CHANGELOG.txt,
      "FILES CHANGED"). Same names as before, so they replace the old ones.
-  3. Commit message: "v5.0.2: move to sankalpam.live".
+  3. Commit message: "v5.0.3: wife in Kāruṇika pitṛs".
   4. Commit changes. GitHub Pages and Hostinger (auto-deployment) update in
      about a minute. If sankalpam.live still shows the old version, flush the
      Hostinger CDN cache.

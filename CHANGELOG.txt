@@ -1,4 +1,14 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.0.3
+Updated: 2026-10-02
+================================================================================
+
+NEW IN 5.0.3
+  ✓ Kāruṇika pitṛs: Wife (dharmapatnī) added; her gotra fills in as yours.
+  ✓ New group "Your own family": wife, brother, brother's wife, sister.
+  FILES CHANGED: index.html, CHANGELOG.md, CHANGELOG.txt, README.txt.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.0.2
 Updated: 2026-10-02
 ================================================================================
@@ -92,4 +102,5 @@ v4.7–4.8 (30 Sep 2026, not published): Kāruṇika pitṛs section, Calculatio
 v5.0 (1 Oct 2026): Vākya pañcāṅgam, "Which day?", Kāruṇika pitṛs, MIT License
 v5.0.1 (1 Oct 2026): PDF tool error message, Cancel fix, footnote wording
 v5.0.2 (2 Oct 2026): Move to sankalpam.live, forwarding from the old address
+v5.0.3 (2 Oct 2026): Wife added to the Kāruṇika pitṛs
 ================================================================================

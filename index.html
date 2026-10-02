@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.0.2  |  Updated: 2026-10-02
+  Version: 5.0.3  |  Updated: 2026-10-02
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -1641,7 +1641,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.0.2';
+const APP_VERSION = 'v5.0.3';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2876,9 +2876,10 @@ function tdfRender() {
     {id: 'atthai', fem: true, side: 'p', g: 'ask', en: 'Atthai', d: "father's sister", ta: 'அத்தை'},
     {id: 'athai-husband', side: 'p', g: 'ask', en: 'Atthimbēr', d: "father's sister's husband", ta: 'அத்திம்பேர்'},
     {id: 'athai-pen', fem: true, side: 'p', g: 'ask', en: "Atthai's daughter", d: "father's sister's daughter", ta: 'அத்தை மகள்'},
-    {id: 'sodara', side: 'p', g: 'karta', en: 'Brother', d: 'your brother', ta: 'சகோதரன்'},
-    {id: 'sodara-wife', fem: true, side: 'p', g: 'karta', en: "Brother's wife", d: "your brother's wife", ta: 'சகோதரன் மனைவி'},
-    {id: 'sodari', fem: true, side: 'p', g: 'ask', en: 'Sister', d: 'your sister (her married gotra)', ta: 'சகோதரி'},
+    {id: 'patni', fem: true, side: 'f', g: 'karta', en: 'Wife', d: 'your wife (dharmapatnī)', ta: 'மனைவி'},
+    {id: 'sodara', side: 'f', g: 'karta', en: 'Brother', d: 'your brother', ta: 'சகோதரன்'},
+    {id: 'sodara-wife', fem: true, side: 'f', g: 'karta', en: "Brother's wife", d: "your brother's wife", ta: 'சகோதரன் மனைவி'},
+    {id: 'sodari', fem: true, side: 'f', g: 'ask', en: 'Sister', d: 'your sister (her married gotra)', ta: 'சகோதரி'},
     {id: 'sapatti', fem: true, side: 'p', g: 'karta', en: 'Step-mother', d: "father's other wife", ta: 'சிற்றன்னை'},
     {id: 'mama', side: 'm', g: 'mother', en: 'Māmā', d: "mother's brother", ta: 'மாமா'},
     {id: 'mami', fem: true, side: 'm', g: 'mother', en: 'Māmī', d: "mother's brother's wife", ta: 'மாமி'},
@@ -2892,7 +2893,7 @@ function tdfRender() {
     {id: 'other', side: 'o', g: 'ask', en: 'Other', d: 'type the relationship in the name box', ta: 'மற்றவர்'}
   ];
   KARUNIGA_RELATIONS.length = 0; R.forEach(r => KARUNIGA_RELATIONS.push(r));     // the tarpaṇam text reads this list
-  const SIDES = {p: "Father's side", m: "Mother's side", o: 'Others'};
+  const SIDES = {f: 'Your own family', p: "Father's side", m: "Mother's side", o: 'Others'};
   const ruleGotra = g => g === 'karta' ? ($('gotraD').value || '').trim() : g === 'mother' ? (tMgotraD() || '') : '';
   const RULE_NOTE = {karta: 'Same as your gotra (filled automatically)', mother: "Same as your mother's birth gotra (filled automatically)", ask: 'Please choose: this relative may have a different gotra'};
   const gotraOpts = sel => '<option value="">– Select gotra –</option>' + GOTHRAS.map(g => '<option value="' + g[1] + '"' + (g[1] === sel ? ' selected' : '') + '>' + g[0] + ' · ' + g[1] + '</option>').join('') +
