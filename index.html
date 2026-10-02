@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.0.3  |  Updated: 2026-10-02
+  Version: 5.0.4  |  Updated: 2026-10-02
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -1641,7 +1641,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.0.3';
+const APP_VERSION = 'v5.0.4';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2075,8 +2075,9 @@ function composeTarpanam(P, o, stamp) {
         const relLabel = relName ? relName.en : rel.rel;
         const relGotram = rel.gotra ? rel.gotra : '……';
         const fem = relName && relName.fem, SUF1 = {sharma: 'शर्मणः', varma: 'वर्मणः', gupta: 'गुप्तान्', dasa: 'दासान्', none: 'नाम्नः'}[o.suffix] || 'शर्मणः';
-        h += fem ? '<p class="tl"><b>' + relGotram + 'गोत्राः ' + (rel.nameD || '……') + ' नाम्नीः वसुवसुस्वरूपाः कारुणिकपितॄः स्वधा नमस्तर्पयामि ॥</b>' + x3 + '</p>'
-                 : '<p class="tl"><b>' + relGotram + 'गोत्रान् ' + (rel.nameD || '……') + ' ' + SUF1 + ' वसुवसुस्वरूपान् कारुणिकपितॄन् स्वधा नमस्तर्पयामि ॥</b>' + x3 + '</p>';
+        const RW = relName && relName.rel ? Pp(relName.rel) + ' ' : '', NM = Pp(rel.nameD ? esc(rel.nameD) : '……');
+        h += fem ? '<p class="tl"><b>' + relGotram + 'गोत्राः ' + NM + ' नाम्नीः वसुवसुस्वरूपाः ' + RW + 'कारुणिकपितॄः स्वधा नमस्तर्पयामि ॥</b>' + x3 + '</p>'
+                 : '<p class="tl"><b>' + relGotram + 'गोत्रान् ' + NM + ' ' + SUF1 + ' वसुवसुस्वरूपान् ' + RW + 'कारुणिकपितॄन् स्वधा नमस्तर्पयामि ॥</b>' + x3 + '</p>';
       });
     } else {
       h += '<p class="tl"><b>तत्तद्गोत्रान् तत्तच्छर्मणः वसुवसुस्वरूपान् पितृव्यमातुलादिवर्गद्वयावशिष्टान् सर्वान् कारुणिकपितॄन् स्वधा नमस्तर्पयामि ॥</b>' + x3 + '</p>';
@@ -2869,28 +2870,30 @@ function tdfRender() {
 (function () {
   const R = [
     // side: p = father's side, m = mother's side, o = others ; g: karta = your gotra, mother = mother's birth gotra, ask = choose
-    {id: 'periappa', side: 'p', g: 'karta', en: 'Periyappā', d: "father's elder brother", ta: 'பெரியப்பா'},
-    {id: 'periamma', fem: true, side: 'p', g: 'karta', en: 'Periyammā', d: "father's elder brother's wife", ta: 'பெரியம்மா'},
-    {id: 'chinnappa', side: 'p', g: 'karta', en: 'Chithappā', d: "father's younger brother", ta: 'சித்தப்பா'},
-    {id: 'chinnamma', fem: true, side: 'p', g: 'karta', en: 'Chithi', d: "father's younger brother's wife", ta: 'சித்தி'},
-    {id: 'atthai', fem: true, side: 'p', g: 'ask', en: 'Atthai', d: "father's sister", ta: 'அத்தை'},
-    {id: 'athai-husband', side: 'p', g: 'ask', en: 'Atthimbēr', d: "father's sister's husband", ta: 'அத்திம்பேர்'},
-    {id: 'athai-pen', fem: true, side: 'p', g: 'ask', en: "Atthai's daughter", d: "father's sister's daughter", ta: 'அத்தை மகள்'},
-    {id: 'patni', fem: true, side: 'f', g: 'karta', en: 'Wife', d: 'your wife (dharmapatnī)', ta: 'மனைவி'},
-    {id: 'sodara', side: 'f', g: 'karta', en: 'Brother', d: 'your brother', ta: 'சகோதரன்'},
-    {id: 'sodara-wife', fem: true, side: 'f', g: 'karta', en: "Brother's wife", d: "your brother's wife", ta: 'சகோதரன் மனைவி'},
-    {id: 'sodari', fem: true, side: 'f', g: 'ask', en: 'Sister', d: 'your sister (her married gotra)', ta: 'சகோதரி'},
-    {id: 'sapatti', fem: true, side: 'p', g: 'karta', en: 'Step-mother', d: "father's other wife", ta: 'சிற்றன்னை'},
-    {id: 'mama', side: 'm', g: 'mother', en: 'Māmā', d: "mother's brother", ta: 'மாமா'},
-    {id: 'mami', fem: true, side: 'm', g: 'mother', en: 'Māmī', d: "mother's brother's wife", ta: 'மாமி'},
-    {id: 'mama-pen', fem: true, side: 'm', g: 'ask', en: "Māmā's daughter", d: "mother's brother's daughter", ta: 'மாமா மகள்'},
-    {id: 'mat-sister', fem: true, side: 'm', g: 'ask', en: 'Periyammā / Chithi (mother\'s side)', d: "mother's sister", ta: 'பெரியம்மா / சித்தி (அம்மா வழி)'},
-    {id: 'mat-sister-husband', side: 'm', g: 'ask', en: "Mother's sister's husband", d: "mother's sister's husband", ta: 'பெரியப்பா / சித்தப்பா (அம்மா வழி)'},
-    {id: 'svasura', side: 'o', g: 'ask', en: 'Father-in-law', d: "wife's father", ta: 'மாமனார்'},
-    {id: 'svasru', fem: true, side: 'o', g: 'ask', en: 'Mother-in-law', d: "wife's mother", ta: 'மாமியார்'},
-    {id: 'guru', side: 'o', g: 'ask', en: 'Guru', d: 'teacher', ta: 'குரு'},
-    {id: 'sakhayam', side: 'o', g: 'ask', en: 'Friend', d: 'sakhā', ta: 'நண்பர்'},
-    {id: 'other', side: 'o', g: 'ask', en: 'Other', d: 'type the relationship in the name box', ta: 'மற்றவர்'}
+    {id: 'periappa', rel: 'ज्येष्ठपितृव्यान्', side: 'p', g: 'karta', en: 'Periyappā', d: "father's elder brother", ta: 'பெரியப்பா'},
+    {id: 'periamma', rel: 'ज्येष्ठपितृव्यपत्नीः', fem: true, side: 'p', g: 'karta', en: 'Periyammā', d: "father's elder brother's wife", ta: 'பெரியம்மா'},
+    {id: 'chinnappa', rel: 'कनिष्ठपितृव्यान्', side: 'p', g: 'karta', en: 'Chithappā', d: "father's younger brother", ta: 'சித்தப்பா'},
+    {id: 'chinnamma', rel: 'कनिष्ठपितृव्यपत्नीः', fem: true, side: 'p', g: 'karta', en: 'Chithi', d: "father's younger brother's wife", ta: 'சித்தி'},
+    {id: 'atthai', rel: 'पितृष्वसॄः', fem: true, side: 'p', g: 'ask', en: 'Atthai', d: "father's sister", ta: 'அத்தை'},
+    {id: 'athai-husband', rel: 'पितृष्वसृभर्तॄन्', side: 'p', g: 'ask', en: 'Atthimbēr', d: "father's sister's husband", ta: 'அத்திம்பேர்'},
+    {id: 'athai-pen', rel: 'पितृष्वसृदुहितॄः', fem: true, side: 'p', g: 'ask', en: "Atthai's daughter", d: "father's sister's daughter", ta: 'அத்தை மகள்'},
+    {id: 'patni', rel: 'पत्नीः', fem: true, side: 'f', g: 'karta', en: 'Wife', d: 'your wife (dharmapatnī)', ta: 'மனைவி'},
+    {id: 'sodara', rel: 'ज्येष्ठभ्रातॄन्', side: 'f', g: 'karta', en: 'Elder brother', d: 'your elder brother', ta: 'அண்ணன்'},
+    {id: 'kanishtha-bhrata', rel: 'कनिष्ठभ्रातॄन्', side: 'f', g: 'karta', en: 'Younger brother', d: 'your younger brother', ta: 'தம்பி'},
+    {id: 'sodara-wife', rel: 'भ्रातृपत्नीः', fem: true, side: 'f', g: 'karta', en: "Brother's wife", d: "your brother's wife", ta: 'சகோதரன் மனைவி'},
+    {id: 'sodari', rel: 'ज्येष्ठभगिनीः', fem: true, side: 'f', g: 'ask', en: 'Elder sister', d: 'your elder sister (her married gotra; yours if unmarried)', ta: 'அக்கா'},
+    {id: 'kanishtha-bhagini', rel: 'कनिष्ठभगिनीः', fem: true, side: 'f', g: 'ask', en: 'Younger sister', d: 'your younger sister (her married gotra; yours if unmarried)', ta: 'தங்கை'},
+    {id: 'sapatti', rel: 'सपत्नीमातॄः', fem: true, side: 'p', g: 'karta', en: 'Step-mother', d: "father's other wife", ta: 'சிற்றன்னை'},
+    {id: 'mama', rel: 'मातुलान्', side: 'm', g: 'mother', en: 'Māmā', d: "mother's brother", ta: 'மாமா'},
+    {id: 'mami', rel: 'मातुलानीः', fem: true, side: 'm', g: 'mother', en: 'Māmī', d: "mother's brother's wife", ta: 'மாமி'},
+    {id: 'mama-pen', rel: 'मातुलदुहितॄः', fem: true, side: 'm', g: 'ask', en: "Māmā's daughter", d: "mother's brother's daughter", ta: 'மாமா மகள்'},
+    {id: 'mat-sister', rel: 'मातृष्वसॄः', fem: true, side: 'm', g: 'ask', en: 'Periyammā / Chithi (mother\'s side)', d: "mother's sister", ta: 'பெரியம்மா / சித்தி (அம்மா வழி)'},
+    {id: 'mat-sister-husband', rel: 'मातृष्वसृभर्तॄन्', side: 'm', g: 'ask', en: "Mother's sister's husband", d: "mother's sister's husband", ta: 'பெரியப்பா / சித்தப்பா (அம்மா வழி)'},
+    {id: 'svasura', rel: 'श्वशुरान्', side: 'o', g: 'ask', en: 'Father-in-law', d: "wife's father", ta: 'மாமனார்'},
+    {id: 'svasru', rel: 'श्वश्रूः', fem: true, side: 'o', g: 'ask', en: 'Mother-in-law', d: "wife's mother", ta: 'மாமியார்'},
+    {id: 'guru', rel: 'गुरून्', side: 'o', g: 'ask', en: 'Guru', d: 'teacher', ta: 'குரு'},
+    {id: 'sakhayam', rel: 'सखीन्', side: 'o', g: 'ask', en: 'Friend', d: 'sakhā', ta: 'நண்பர்'},
+    {id: 'other', rel: '', side: 'o', g: 'ask', en: 'Other', d: 'type the relationship in the name box', ta: 'மற்றவர்'}
   ];
   KARUNIGA_RELATIONS.length = 0; R.forEach(r => KARUNIGA_RELATIONS.push(r));     // the tarpaṇam text reads this list
   const SIDES = {f: 'Your own family', p: "Father's side", m: "Mother's side", o: 'Others'};

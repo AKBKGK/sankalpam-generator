@@ -1,4 +1,19 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.0.4
+Updated: 2026-10-02
+================================================================================
+
+NEW IN 5.0.4
+  ✓ Kāruṇika pitṛs: the relationship is said in each line, in the booklet's
+    honorific form, e.g.
+      … हेमलता नाम्नीः वसुवसुस्वरूपाः पत्नीः कारुणिकपितॄः स्वधा नमस्तर्पयामि ॥
+      … सुब्रह्मण्य शर्मणः वसुवसुस्वरूपान् मातुलान् कारुणिकपितॄन् स्वधा नमस्तर्पयामि ॥
+  ✓ Name and relationship are highlighted.
+  ✓ Elder / Younger brother and Elder / Younger sister.
+  ⚠ Relationship words to be confirmed by the vādhyār.
+  FILES CHANGED: index.html, CHANGELOG.md, CHANGELOG.txt, README.txt.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.0.3
 Updated: 2026-10-02
 ================================================================================
@@ -103,4 +118,5 @@ v5.0 (1 Oct 2026): Vākya pañcāṅgam, "Which day?", Kāruṇika pitṛs, MIT 
 v5.0.1 (1 Oct 2026): PDF tool error message, Cancel fix, footnote wording
 v5.0.2 (2 Oct 2026): Move to sankalpam.live, forwarding from the old address
 v5.0.3 (2 Oct 2026): Wife added to the Kāruṇika pitṛs
+v5.0.4 (2 Oct 2026): Relationship in each Kāruṇika line, highlighted; younger sister and brother
 ================================================================================

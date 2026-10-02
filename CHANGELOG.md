@@ -1,4 +1,4 @@
-# Saṅkalpam Generator – Change Log (v1.1 to v5.0.3)
+# Saṅkalpam Generator – Change Log (v1.1 to v5.0.4)
 
 **App:** https://sankalpam.live/ · **© 2026 Saṅkalpam Generator · MIT License**
 **Sources:** GitHub commit history, the saved app files and this project's conversation notes.
@@ -32,6 +32,7 @@ Rows marked *(not recorded)* in the "Requested" column come from before the conv
 | v5.0.1 | 1 Oct 2026 | Small fixes after release. | "📧 Email This PDF Once": a clear message if the PDF tool cannot load (e.g. blocked by an ad blocker) instead of waiting forever; pressing Cancel in the email box no longer causes an error; footnote latitude wording "about 11–13°N". |
 | v5.0.2 | 2 Oct 2026 | Move to sankalpam.live. | The app is hosted at https://sankalpam.live (Hostinger, auto-deployed from GitHub). Visitors to the old address akbkgk.github.io/sankalpam-generator are forwarded to sankalpam.live; links from the daily email keep their date; details saved on the device (your details, tarpaṇam names) are carried across once, privately (after "#", never sent to a server), without overwriting anything already saved at sankalpam.live. |
 | v5.0.3 | 2 Oct 2026 | Add wife to the Kāruṇika pitṛs. | Kāruṇika pitṛs: **Wife** (dharmapatnī) added, with her gotra filled in as the kartā's; new group **"Your own family"** (wife, brother, brother's wife, sister). |
+| v5.0.4 | 2 Oct 2026 | Say the relationship in each Kāruṇika line and highlight it with the name; add younger sister and younger brother. | Kāruṇika lines now include the relationship in the booklet's honorific form (e.g. …वसुवसुस्वरूपाः **पत्नीः** कारुणिकपितॄः…, …**मातुलान्** कारुणिकपितॄन्…); name and relationship highlighted; Elder / Younger brother and Elder / Younger sister in "Your own family". *(Relationship words to be confirmed by the vādhyār.)* |
 
 ## Still to do
 
