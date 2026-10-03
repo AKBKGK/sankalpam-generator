@@ -205,6 +205,14 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     </select><span class="langhint">Sanskrit · Tamil · Telugu · Kannada · English</span></div>
 </div></div>
 
+<section class="mobile-update-tools" aria-label="Mobile app updates">
+  <div class="mobile-update-row">
+    <span class="mobile-edition">Mobile edition <span id="mobileVersion"></span></span>
+    <button type="button" id="updCheck" aria-describedby="updStatus">Check for updates</button>
+  </div>
+  <p id="updStatus" role="status" aria-live="polite">Updates are checked automatically while you are online.</p>
+</section>
+
 <div class="wrap">
 <div id="a2hs" class="a2hs hide">
   <div class="a2hs-ic">📲</div>
@@ -1641,7 +1649,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.0.4';
+const APP_VERSION = 'v5.0.4-mobile.2';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2489,18 +2497,70 @@ function openFromLink() {
   if (tp && TP_TYPES[tp]) { switchTab('tarpanam'); tSync(); $('t-type').value = tp; $('t-type').dispatchEvent(new Event('change', {bubbles: true})); }
   if (location.search) try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
 }
-// "Update now": checks the live page for a newer version (on opening, on returning to the app, and hourly).
+// Check this mobile page on opening, every minute, on returning, and on request.
 let updLast = 0;
 function updateSetup() {
-  $('updBtn').addEventListener('click', () => { location.replace(location.pathname + '?u=' + Date.now()); });
-  const check = () => {
-    if (Date.now() - updLast < 30 * 60e3 || !/^https?:/.test(location.protocol)) return; updLast = Date.now();
-    fetch(location.pathname + '?v=' + Date.now(), {cache: 'no-store'}).then(r => r.ok ? r.text() : '').then(t => {
-      const m = t.match(/APP_VERSION = '([^']+)'/); if (m && m[1] !== APP_VERSION) $('updBar').classList.remove('hide');
-    }).catch(() => {});
+  const banner = $('updBar'), button = $('updCheck'), status = $('updStatus');
+  $('mobileVersion').textContent = APP_VERSION;
+  let checking = false, available = false;
+  const updateOffset = () => {
+    document.documentElement.style.setProperty('--mobile-update-height', banner.classList.contains('hide') ? '0px' : banner.offsetHeight + 'px');
   };
-  setTimeout(check, 4000); setInterval(check, 60 * 60e3);
+  const reloadApp = () => {
+    const next = new URL(location.href);
+    next.searchParams.set('u', Date.now());
+    location.replace(next.href);
+  };
+  const showUpdate = () => {
+    available = true;
+    banner.classList.remove('hide');
+    button.textContent = 'Update now';
+    button.classList.add('update-ready');
+    status.textContent = 'A new mobile version is available. Tap Update now to load it.';
+    status.dataset.state = 'available';
+    updateOffset();
+  };
+  const check = async (force = false) => {
+    if (checking) return;
+    if (!/^https?:/.test(location.protocol)) {
+      status.textContent = 'Open the online mobile page to check for updates.';
+      status.dataset.state = 'error';
+      return;
+    }
+    if (!force && Date.now() - updLast < 60e3) return;
+    checking = true;
+    updLast = Date.now();
+    button.disabled = true;
+    status.textContent = 'Checking for updates…';
+    status.dataset.state = 'checking';
+    try {
+      const next = new URL(location.href);
+      next.searchParams.set('v', Date.now());
+      const response = await fetch(next.href, {cache: 'no-store'});
+      if (!response.ok) throw new Error('Update check failed');
+      const text = await response.text();
+      const match = text.match(/\bconst\s+APP_VERSION\s*=\s*(['"])([^'"]+)\1/);
+      if (!match) throw new Error('Version missing');
+      if (match[2] !== APP_VERSION) showUpdate();
+      else if (!available) {
+        status.textContent = 'You have the latest mobile version.';
+        status.dataset.state = 'current';
+      }
+    } catch (e) {
+      status.textContent = 'Could not check. Please check your connection and try again.';
+      status.dataset.state = 'error';
+    } finally {
+      checking = false;
+      button.disabled = false;
+    }
+  };
+  $('updBtn').addEventListener('click', reloadApp);
+  button.addEventListener('click', () => available ? reloadApp() : check(true));
+  setTimeout(() => check(), 4000);
+  setInterval(() => check(), 60e3);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
+  window.addEventListener('online', () => check(true));
+  window.addEventListener('resize', updateOffset);
 }
 if (typeof document !== 'undefined') init();
 </script>
@@ -3024,7 +3084,7 @@ $('method').addEventListener('change', tdfMethodNow); tdfMethodNow();
   .langhint { font-size:.8rem; opacity:.92; }
   .wrap { max-width:740px; padding:0 max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px)); }
   body[data-mobile-tab="form"] .wrap { padding-bottom:165px; }
-  .tabs { position:sticky; top:0; z-index:70; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:4px; margin:0 -4px 18px; padding:12px 0 10px; border:0; background:var(--cream); background:rgba(245,241,236,.96); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); }
+  .tabs { position:sticky; top:var(--mobile-update-height,0px); z-index:70; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:4px; margin:0 -4px 18px; padding:12px 0 10px; border:0; background:var(--cream); background:rgba(245,241,236,.96); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); }
   .tab-btn { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-width:0; min-height:58px; border:1px solid transparent; border-radius:14px; padding:7px 2px; color:#6b6056; font:600 .875rem/1.3 var(--ui); }
   .tab-btn.active { color:var(--kum-d); border-color:#ead3bf; background:#fff; box-shadow:0 3px 12px #5c301509; }
   .m-icon { width:20px; height:20px; flex:none; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
@@ -3130,7 +3190,17 @@ $('method').addEventListener('change', tdfMethodNow); tdfMethodNow();
   .credit { margin:2px auto 36px; max-width:700px; padding:0 22px; font-size:.8rem; line-height:1.8; }
   body[data-mobile-tab="form"] .credit { display:none; }
   .credit .a2hs-link,.link { display:inline-flex; min-height:44px; align-items:center; font-size:.875rem; }
-  .upd { font-family:var(--ui); font-size:.9375rem; }
+  .mobile-update-tools { max-width:740px; margin:0 auto; padding:14px max(20px,env(safe-area-inset-right,0px)) 4px max(20px,env(safe-area-inset-left,0px)); }
+  .mobile-update-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:6px 12px; }
+  .mobile-edition { display:flex; flex-wrap:wrap; gap:2px 8px; align-items:center; color:var(--kum-d); font-size:.8125rem; font-weight:700; }
+  #mobileVersion { color:var(--soft); font-size:.75rem; font-weight:500; }
+  #updCheck { min-height:44px; padding:9px 12px; border:1px solid #ccbba9; border-radius:12px; background:#fff; color:var(--kum-d); font-size:.8125rem; font-weight:700; cursor:pointer; }
+  #updCheck.update-ready { background:#d9480f; color:#fff; border-color:#d9480f; }
+  #updCheck:disabled { opacity:.65; cursor:wait; }
+  #updStatus { margin:3px 0 0; color:var(--soft); font-size:.8125rem; line-height:1.5; }
+  #updStatus[data-state="available"] { color:#ac380c; font-weight:600; }
+  #updStatus[data-state="error"] { color:#a33; }
+  .upd { z-index:100; font-family:var(--ui); font-size:.9375rem; padding-top:calc(10px + env(safe-area-inset-top,0px)); }
   .upd button { min-height:44px; }
   .mobile-print-help { color:var(--soft); font-size:.875rem; line-height:1.6; margin:-6px 0 16px; }
   .mobile-empty-cta { margin-top:16px; }
@@ -3174,7 +3244,7 @@ $('method').addEventListener('change', tdfMethodNow); tdfMethodNow();
   }
 }
 @media print {
-  .mobile-jumps,.mobile-help,.mobile-print-help,.mobile-empty-cta { display:none!important; }
+  .mobile-jumps,.mobile-help,.mobile-print-help,.mobile-empty-cta,.mobile-update-tools { display:none!important; }
 }
 
 </style>
