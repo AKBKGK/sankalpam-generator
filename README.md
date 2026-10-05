@@ -2,9 +2,7 @@
 
 A free, single-page app that prepares a complete, correctly worded **saṅkalpam** for daily pūjā and pārāyaṇam, and the full **tarpaṇam** text, with the day's **pañcāṅgam** calculated for your city.
 
-**Open the app:** https://sankalpam.live/
-
-(The old address, akbkgk.github.io/sankalpam-generator, now forwards to sankalpam.live and brings your saved details with it.)
+**Open the app:** https://akbkgk.github.io/sankalpam-generator/ (soon also at https://sankalpam.live/)
 
 ## What it does
 
@@ -15,6 +13,8 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
   - **Mahālaya pakṣam** – the dates of the pakṣam and Mahālaya Amāvāsyā; the day for each tithi on request.
   - **Māsa pirappu** – the next month's saṅkrānti time, the day the Tamil month begins, and the next 12 months.
   - **Compare** Vākya and Tirukkaṇita side by side; **Use** fills in the date (and month) for the tarpaṇam.
+- **Pañcāṅgam calendar (new in 5.0.4)** – any month and year, with Ekādaśī, Pradoṣam, Caturthī, Amāvāsyā, Pūrṇimā and Mahālaya Pakṣa calculated from the tithi, the day's śrāddha tithi, tithi and nakṣatra times, Rāhu kālam, Yamagaṇḍam and Kuḷigai, and the next 16 days.
+- **Phone and computer** (new in 5.0.5) – one app: phones get a touch-friendly layout, computers the full desktop layout.
 - **Your calendar** – Tamil (solar) or Telugu / Kannada (lunar, with adhika and nija māsa).
 - **Your details and family** – name (Tamil spellings become Sanskrit stems, e.g. Chidambareshwaran → चिदम्बरेश्वर, Subramanian → सुब्रह्मण्य), gotra, birth star and pāda (rāśi fills in automatically), family members.
 - **What you will chant** – Śrī Rudram, Vedic sūktas, sahasranāmams and aṣṭottaras, with closing verses to match.

@@ -1,43 +1,46 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.0.6
+Updated: 2026-10-05
+================================================================================
+
+NEW IN 5.0.6 – VĀKYA END TIMES IN THE TABLES
+  ✓ With the Vākya method, the "upto" times under the tithi and nakṣatra in the
+    saṅkalpam and tarpaṇam tables are now Vākya times (06:00 + nāzhigai × 24 min),
+    the same as the note in step 1. Earlier they showed the Tirukkaṇita time.
+  ✓ Tirukkaṇita mode is unchanged.
+
+================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.0.5
+Updated: 2026-10-05
+================================================================================
+
+NEW IN 5.0.5 – ONE APP FOR PHONES AND COMPUTERS
+  ✓ The mobile edition is merged into index.html. Screens up to 760 px wide get
+    the phone layout; wider screens keep the desktop layout unchanged.
+  ✓ Phone layout: tab icons, section jump buttons, a quick guide, Date and City
+    first with the rest of the pañcāṅgam in a fold-out box, larger buttons,
+    "Check for updates" button.
+  ✓ Details saved on the device are shared by both layouts.
+  ✓ Update check every 30 minutes (and on request on phones).
+  FILES CHANGED: index.html, CHANGELOG.md, CHANGELOG.txt, README.md, README.txt.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.0.4
-Updated: 2026-10-02
+Updated: 2026-10-05
 ================================================================================
 
-NEW IN 5.0.4
-  ✓ Kāruṇika pitṛs: the relationship is said in each line, in the booklet's
-    honorific form, e.g.
-      … हेमलता नाम्नीः वसुवसुस्वरूपाः पत्नीः कारुणिकपितॄः स्वधा नमस्तर्पयामि ॥
-      … सुब्रह्मण्य शर्मणः वसुवसुस्वरूपान् मातुलान् कारुणिकपितॄन् स्वधा नमस्तर्पयामि ॥
-  ✓ Name and relationship are highlighted.
-  ✓ Elder / Younger brother and Elder / Younger sister.
-  ⚠ Relationship words to be confirmed by the vādhyār.
-  FILES CHANGED: index.html, CHANGELOG.md, CHANGELOG.txt, README.txt.
-
-================================================================================
-SAṄKALPAM GENERATOR - VERSION 5.0.3
-Updated: 2026-10-02
-================================================================================
-
-NEW IN 5.0.3
-  ✓ Kāruṇika pitṛs: Wife (dharmapatnī) added; her gotra fills in as yours.
-  ✓ New group "Your own family": wife, brother, brother's wife, sister.
-  FILES CHANGED: index.html, CHANGELOG.md, CHANGELOG.txt, README.txt.
-
-================================================================================
-SAṄKALPAM GENERATOR - VERSION 5.0.2
-Updated: 2026-10-02
-================================================================================
-
-NEW IN 5.0.2 – MOVE TO sankalpam.live
-  ✓ The app is hosted at https://sankalpam.live (Hostinger, auto-deployed from
-    the GitHub repository's main branch).
-  ✓ The old address akbkgk.github.io/sankalpam-generator forwards to
-    sankalpam.live. Links from the daily email keep their date and tarpaṇam.
-  ✓ Details saved on the device (your details, tarpaṇam names, home-screen note)
-    are carried across once, privately: they travel after "#", which browsers
-    never send to a server, and never overwrite details already saved at
-    sankalpam.live.
-  FILES CHANGED: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
+NEW IN 5.0.2 – 5.0.4
+  ✓ New address sankalpam.live: the old github.io address forwards visitors there
+    and carries the details saved on the device (5.0.2).
+  ✓ Kāruṇika pitṛ lines name the relationship; wife and elder / younger brothers
+    and sisters added.
+  ✓ Every saṅkalpam ends with अनेन मया कृतेन कर्मणा श्रीपरमेश्वरः प्रीयतां ॥
+    ॐ तत्सत् ब्रह्मार्पणमस्तु ॥
+  ✓ Calendar tab: any month and year; Ekādaśī, Pradoṣam, Caturthī, Amāvāsyā,
+    Pūrṇimā and Mahālaya Pakṣa calculated from the tithi; daily śrāddha tithi;
+    tithi and nakṣatra from–to times; Rāhu kālam, Yamagaṇḍam, Kuḷigai; next 16 days.
+  ✓ Checked against the Sringeri Mutt Vākya pañcāṅgam, January 2027.
+  FILES CHANGED: index.html, CHANGELOG.md, CHANGELOG.txt, README.md, README.txt.
 
 ================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.0.1
@@ -116,7 +119,6 @@ v4.6 (30 Sep 2026): Email PDF Once, PDF download tracking
 v4.7–4.8 (30 Sep 2026, not published): Kāruṇika pitṛs section, Calculation Method box
 v5.0 (1 Oct 2026): Vākya pañcāṅgam, "Which day?", Kāruṇika pitṛs, MIT License
 v5.0.1 (1 Oct 2026): PDF tool error message, Cancel fix, footnote wording
-v5.0.2 (2 Oct 2026): Move to sankalpam.live, forwarding from the old address
-v5.0.3 (2 Oct 2026): Wife added to the Kāruṇika pitṛs
-v5.0.4 (2 Oct 2026): Relationship in each Kāruṇika line, highlighted; younger sister and brother
+v5.0.2–5.0.4 (2–5 Oct 2026): sankalpam.live address, Kāruṇika relationship words, closing lines, Calendar tab
+v5.0.5 (5 Oct 2026): one app for phones and computers (mobile edition merged)
 ================================================================================
