@@ -1,4 +1,18 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.1
+Updated: 2026-10-05
+================================================================================
+
+NEW IN 5.1 – A SIMPLER LAYOUT (calculations unchanged)
+  ✓ Computers: menu down the left; one heading with the date and city.
+  ✓ Phones: slim top bar, tabs at the bottom (Saṅkalpam, Tarpaṇam, Calendar,
+    Email, More); "Check for updates" moved to More.
+  ✓ Step 1: date, city, calendar and a Vākya / Tirukkaṇita switch; today's
+    pañcāṅgam and end times in one box; "Edit pañcāṅgam" opens the fields.
+  ✓ Daily email has its own tab.
+  ✓ Calendar on phones: month grid first, then the day details.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.0.6
 Updated: 2026-10-05
 ================================================================================
