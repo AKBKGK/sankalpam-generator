@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.0.5  |  Updated: 2026-10-05
+  Version: 5.2  |  Updated: 2026-10-06
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -226,6 +226,16 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 </div>
 
 <div id="form" class="tab-content active" role="tabpanel" aria-labelledby="mobile-tab-form">
+<section class="sg-intro" id="sgIntro" aria-labelledby="sgIntroT">
+  <div class="sg-intro-full">
+    <h2 class="sg-intro-t" id="sgIntroT">Your daily saṅkalpam, ready in a minute.</h2>
+    <p class="sg-intro-more">Choose the date and your city, add your name, gotra and family, and tick what you will chant. The app fills in that day's pañcāṅgam (Vākya or Tirukkaṇita) and writes the complete saṅkalpam in Sanskrit, Tamil, Telugu, Kannada or English letters – ready to read, print or share.</p>
+    <p class="sg-intro-free">Free · no sign-up · your details stay on your device.</p>
+    <p class="sg-intro-more">Also: tarpaṇam texts, a pañcāṅgam calendar and a daily email.</p>
+    <div class="sg-intro-act"><button type="button" class="btn ghost" id="sgIntroOk">Got it</button><button type="button" class="link sg-intro-how" id="sgIntroHow" aria-expanded="false">How it works</button></div>
+  </div>
+  <div class="sg-intro-mini"><span>Your daily saṅkalpam with that day's pañcāṅgam · free · no sign-up</span><button type="button" class="link" id="sgIntroOpen">About this app</button></div>
+</section>
 <div class="sg-head" id="sgHead">
   <span class="sg-eyebrow" id="sgEyebrow"></span>
   <h2 class="sg-title" id="sgTitle">Today's saṅkalpam</h2>
@@ -548,6 +558,16 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     #calendar .pc-big.ek,#calendar .pc-c.ek{background:#fdf0d5;color:#9a5b00}
     #calendar .pc-big.pr,#calendar .pc-c.pr{background:#fbe1dd;color:#a5281b}
     #calendar .pc-big.ch,#calendar .pc-c.ch{background:#fbe6d6;color:#9a3d00}
+    #calendar .pc-big.sv,#calendar .pc-c.sv{background:#ece4f7;color:#5b3a8c}
+    #calendar .pc-big.fe,#calendar .pc-c.fe{background:#e3f1e0;color:#2f6b2a}
+    #calendar .pc-find{margin:0 0 12px;max-width:420px}
+    #calendar .pc-more{font-style:normal;font-size:.68rem;font-weight:700;color:var(--soft);padding:1px 3px;line-height:1.45}
+    #calendar .pc-evbox{margin:10px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:#fff}
+    #calendar .pc-evbox .k{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);font-weight:700;margin-bottom:4px}
+    #calendar .pc-evbox ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+    #calendar .pc-evbox li{display:flex;gap:8px;align-items:baseline;font-weight:700;font-size:.92rem;line-height:1.4;color:var(--ink)}
+    #calendar .pc-evbox .pc-dot{flex:none;width:10px;height:10px;padding:0;border-radius:3px;font-size:0;border:1px solid currentColor;position:relative;top:1px}
+    #calendar .pc-find select{width:100%}
     #calendar .pc-big.am,#calendar .pc-c.am{background:#e2e7ee;color:#2c3e50}
     #calendar .pc-big.pu,#calendar .pc-c.pu{background:#dff0f5;color:#14607a}
     #calendar .pc-big.ml,#calendar .pc-c.ml{background:#fce4ec;color:#a3154d}
@@ -612,6 +632,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
       </div>
     </div>
     <div class="pc-method" id="pc-method"></div>
+    <div class="pc-find"><label for="pc-fest">Festivals in <span id="pc-festY"></span></label><select id="pc-fest"><option value="">Choose a festival…</option></select></div>
 
     <div class="pc-main">
     <div class="pc-dayw"><section class="pc-day" id="pc-day" aria-live="polite"><div class="pc-busy">Calculating…</div></section><button type="button" class="btn sg-dayBtn" id="sgDayBtn">Saṅkalpam for this day ›</button></div>
@@ -623,6 +644,8 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
       <span class="pc-c ek">Ekādaśī</span>
       <span class="pc-c pr">Pradoṣam</span>
       <span class="pc-c ch">Caturthī</span>
+      <span class="pc-c sv">Śivarātri</span>
+      <span class="pc-c fe">Festival</span>
     </div>
     <div class="pc-wrap">
       <table class="pc-grid" id="pc-grid">
@@ -1816,7 +1839,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.1';
+const APP_VERSION = 'v5.2';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -3458,7 +3481,19 @@ details.sg-more>.grid{margin-top:8px}
 #calendar .pc-cityrow select{flex:1 1 auto;width:auto;min-width:0}
 #calendar .pc-cityrow .btn{margin:0;padding:8px 12px;min-height:44px;font-size:.92rem;white-space:nowrap}
 .sg-dayBtn{display:block;width:100%;margin:10px 0 0;min-height:48px}
-@media print{.sg-side,.sg-head,.sg-dayBtn{display:none!important}}
+.sg-intro{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 18px}
+.sg-intro-t{margin:0;font-size:1.25rem;line-height:1.3;color:var(--kum-d)}
+.sg-intro p{margin:6px 0 0;font-size:.95rem;line-height:1.55;color:var(--ink);max-width:68ch}
+.sg-intro p.sg-intro-free{color:var(--kum);font-weight:700}
+.sg-intro-act{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-top:12px}
+.sg-intro-act .btn{min-height:44px}
+.sg-intro .link{font-size:.9rem;min-height:44px}
+.sg-intro-how{display:none}
+.sg-intro-mini{display:none;flex-wrap:wrap;gap:2px 12px;align-items:center;font-size:.9rem;color:var(--soft)}
+.sg-intro.min{padding:6px 14px}
+.sg-intro.min .sg-intro-full{display:none}
+.sg-intro.min .sg-intro-mini{display:flex}
+@media print{.sg-side,.sg-head,.sg-dayBtn,.sg-intro{display:none!important}}
 
 /* tablets and small computer screens: header on top, tabs under it (as before) */
 @media screen and (min-width:761px){
@@ -3522,6 +3557,10 @@ details.sg-more>.grid{margin-top:8px}
   .sg-plabel{text-transform:none;letter-spacing:0;font-size:.8125rem}
   details.sg-pedit>summary{border-radius:12px;font-family:var(--ui)}
   .sg-updcard{padding:16px 16px 12px}
+  .sg-intro{padding:14px 16px}
+  .sg-intro-t{font-size:1.15rem}
+  .sg-intro:not(.how) .sg-intro-more{display:none}
+  .sg-intro:not(.how) .sg-intro-how{display:inline-flex}
   #calendar .pc-bar{display:block}
   #calendar .pc-bar label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   #calendar .pc-nav{display:grid;grid-template-columns:48px minmax(0,1fr) 84px 48px;gap:6px;width:100%;align-items:stretch}
@@ -3652,7 +3691,8 @@ details.sg-more>.grid{margin-top:8px}
     pournami:    {label: 'Pūrṇimā', long: 'Pūrṇimā', cls: 'pu'},
     ekadasi:     {label: 'Ekādaśī', long: 'Ekādaśī', cls: 'ek'},
     pradosham:   {label: 'Pradoṣam', long: 'Pradoṣam (evening)', cls: 'pr'},
-    vinayaka:    {label: 'Vināyaka Caturthī', short: 'Vināyaka', long: 'Vināyaka (Śukla) Caturthī', cls: 'ch'},
+    caturthi:    {label: 'Caturthī', long: 'Caturthī (Śukla) – Vināyaka worship', cls: 'ch'},
+    masaShiv:    {label: 'Māsa Śivarātri', short: 'Śivarātri', long: 'Māsa Śivarātri – Kṛṣṇa Caturdaśī at midnight', cls: 'sv'},
     sankata:     {label: 'Saṅkaṭahara Caturthī', short: 'Saṅkaṭa', long: 'Saṅkaṭahara Caturthī (at moonrise)', cls: 'ch'}
   };
   const p2 = n => String(n).padStart(2, '0');
@@ -3711,8 +3751,8 @@ details.sg-more>.grid{margin-top:8px}
     if (atRef(add(ds, -1), X, ref) || atRef(add(ds, 1), X, ref)) return false;
     return S[0].index === X || (seg.f0 > 0 && !seg.open);
   }
-  function eventsOf(ds) {
-    const key = 'e|' + ckey() + '|' + ds; if (cache.has(key)) return cache.get(key);
+  function eventsOf(ds, baseOnly) {
+    const key = 'e|' + ckey() + '|' + ds + (baseOnly ? '|b' : ''); if (cache.has(key)) return cache.get(key);
     const d = dayOf(ds), S = segs(d, 'T'), has = i => S.some(s => s.index === i), list = [];
     const rise = S[0].index;
     let ml = false; try { ml = isMahalaya(ds, city()); } catch (e) {}
@@ -3721,10 +3761,152 @@ details.sg-more>.grid{margin-top:8px}
     if (pick(ds, 14, REF.sunset)) list.push('pournami');
     if (pick(ds, 10, REF.sunrise) || pick(ds, 25, REF.sunrise)) list.push('ekadasi');
     if (pick(ds, 12, REF.sunset) || pick(ds, 27, REF.sunset)) list.push('pradosham');
-    if (pick(ds, 3, REF.midday)) list.push('vinayaka');
+    if (pick(ds, 3, REF.midday)) list.push('caturthi');
     if (pick(ds, 18, REF.moonrise)) list.push('sankata');
+    if (!baseOnly) festivalsOf(ds, list.slice()).forEach(x => list.push(x));
+    // a named festival replaces the plain monthly entry it falls on (no 'Ekādaśī' next to 'Vaikuṇṭha Ekādaśī')
+    [['vaikuntha', 'ekadasi'], ['chitra', 'pournami'], ['guru', 'pournami'], ['vinayakaC', 'caturthi']].forEach(([f, b]) => { if (list.includes(f) && list.includes(b)) list.splice(list.indexOf(b), 1); });
     const r = {list, rise, ml};
     cache.set(key, r); return r;
+  }
+  /* ---------- annual festivals (v5.1) ----------
+     Lunar months are amānta (new moon to new moon), named from the Sun's rāśi at the new moon; adhika months are skipped.
+     Tamil (solar) months begin on the day the Sun enters the rāśi before sunset. All from the chosen method (Vākya or Drik). */
+  const FEST = {
+    mahaShiv:   {label: 'Mahā Śivarātri', long: 'Mahā Śivarātri – Māgha Kṛṣṇa Caturdaśī at midnight'},
+    vinayakaC:  {label: 'Vināyaka Caturthī', long: 'Vināyaka Caturthī – Bhādrapada Śukla Caturthī at midday'},
+    gokul:      {label: 'Gokulāṣṭamī (smārta)', short: 'Gokulāṣṭamī', long: 'Kṛṣṇa Jayantī – Gokulāṣṭamī (smārta): Śrāvaṇa Kṛṣṇa Aṣṭamī at midnight'},
+    sriJayanti: {label: 'Śrī Jayantī (Vaiṣṇava)', short: 'Śrī Jayantī', long: 'Śrī Jayantī (Vaiṣṇava) – Rohiṇī at midnight in Āvaṇi'},
+    ramaNav:    {label: 'Śrī Rāma Navamī', long: 'Śrī Rāma Navamī – Caitra Śukla Navamī at midday'},
+    navaratri:  {label: 'Navarātri begins', long: 'Navarātri begins – Āśvina Śukla Prathamā'},
+    sarasvati:  {label: 'Sarasvatī Pūjā', long: 'Sarasvatī Pūjā · Āyudha Pūjā – Mahānavamī, the day before Vijayadaśamī'},
+    vijaya:     {label: 'Vijayadaśamī', long: 'Vijayadaśamī – Āśvina Śukla Daśamī (afternoon)'},
+    dipavali:   {label: 'Dīpāvalī', long: 'Dīpāvalī – Naraka Caturdaśī before sunrise'},
+    skanda:     {label: 'Skanda Ṣaṣṭhī', long: 'Skanda Ṣaṣṭhī · Sūra Saṃhāram – Aippasi Śukla Ṣaṣṭhī'},
+    karthigai:  {label: 'Kārttikai Dīpam', long: 'Kārttikai Dīpam – Kṛttikā at sunset in Kārttikai'},
+    vaikuntha:  {label: 'Vaikuṇṭha Ekādaśī', long: 'Vaikuṇṭha Ekādaśī – Mārgazhi Śukla Ekādaśī'},
+    arudra:     {label: 'Āruddhrā Darśanam', long: 'Āruddhrā Darśanam – Ārdrā in Mārgazhi'},
+    hanumat:    {label: 'Hanumat Jayantī', long: 'Hanumat Jayantī – Mārgaśīrṣa Amāvāsyā'},
+    bhogi:      {label: 'Bhogi', long: 'Bhogi – last day of Mārgazhi'},
+    pongal:     {label: 'Thai Pongal', long: 'Thai Pongal · Makara Saṅkrānti – Thai 1'},
+    mattu:      {label: 'Māṭṭu Pongal', long: 'Māṭṭu Pongal – Thai 2'},
+    thaipusam:  {label: 'Thai Pūsam', long: 'Thai Pūsam – Puṣya at sunset in Thai'},
+    ratha:      {label: 'Ratha Saptamī', long: 'Ratha Saptamī – Māgha Śukla Saptamī'},
+    masimagam:  {label: 'Māsi Magam', long: 'Māsi Magam – Maghā in Māsi'},
+    karadaiyan: {label: 'Kāradaiyān Nōnbu', short: 'Kāradaiyān', long: 'Kāradaiyān Nōnbu – the Sun enters Mīna (end of Māsi)'},
+    panguni:    {label: 'Paṅguni Uttiram', long: 'Paṅguni Uttiram – Uttara Phalgunī in Paṅguni'},
+    puthandu:   {label: 'Tamil New Year', long: 'Tamil New Year (Puthandu) – Chithirai 1'},
+    chitra:     {label: 'Chitrā Pournami', long: 'Chitrā Pournami – Pūrṇimā in Chithirai'},
+    akshaya:    {label: 'Akṣaya Tṛtīyā', long: 'Akṣaya Tṛtīyā – Vaiśākha Śukla Tṛtīyā at midday'},
+    narasimha:  {label: 'Narasiṃha Jayantī', long: 'Narasiṃha Jayantī – Vaiśākha Śukla Caturdaśī (evening)'},
+    vaikasi:    {label: 'Vaikāsi Viśākham', long: 'Vaikāsi Viśākham – Viśākhā in Vaikāsi'},
+    guru:       {label: 'Guru Pūrṇimā', long: 'Guru Pūrṇimā · Vyāsa Pūjā – Āṣāḍha Pūrṇimā at sunrise'},
+    adiperukku: {label: 'Āḍi Perukku', long: 'Āḍi Perukku – Āḍi 18'},
+    varalakshmi:{label: 'Varalakṣmī Vratam', long: 'Varalakṣmī Vratam – Friday before Śrāvaṇa Pūrṇimā'},
+    avani:      {label: 'Āvaṇi Avittam', long: 'Āvaṇi Avittam – Yajur Veda Upākarma (Śrāvaṇa Pūrṇimā); confirm with your vādhyār'}
+  };
+  const evOf = x => EV[x] || (FEST[x] ? Object.assign({cls: 'fe'}, FEST[x]) : {label: x, long: x, cls: 'fe'});
+  const sunAt = (ds, f) => tdfSunSid(sys(), ds, f);
+  const spanDays = d => d.system === 'drik' ? d._span / 864e5 : 1;
+  // Tamil month (0 = Chithirai … 11 = Paṅguni) of a day: the rāśi of the Sun at sunset
+  function tamilMonth(ds) {
+    const key = 'tm|' + ckey() + '|' + ds; if (cache.has(key)) return cache.get(key);
+    const m = Math.floor(sunAt(ds, dayOf(ds).dayFrac) / 30) % 12; cache.set(key, m); return m;
+  }
+  function tamilDay(ds) {             // 1 = first day of the Tamil month
+    const m = tamilMonth(ds); let n = 1; while (n < 33 && tamilMonth(add(ds, -n)) === m) n++; return n;
+  }
+  // new moon (end of Amāvāsyā) within a day, as the Sun's rāśi at that moment, or null
+  function newMoonRasi(ds) {
+    const key = 'nm|' + ckey() + '|' + ds; if (cache.has(key)) return cache.get(key);
+    const s = segs(dayOf(ds), 'T').find(x => x.index === 29 && !x.open);
+    const r = s ? Math.floor(sunAt(ds, s.f1) / 30) % 12 : null; cache.set(key, r); return r;
+  }
+  // amānta lunar month at sunrise of ds: {m: 0 = Caitra … 11 = Phālguna, adhika}
+  function lunar(ds) {
+    const key = 'lm|' + ckey() + '|' + ds; if (cache.has(key)) return cache.get(key);
+    let r0 = null, r1 = null;
+    for (let k = 1; k <= 32 && r0 === null; k++) r0 = newMoonRasi(add(ds, -k));
+    for (let k = 0; k <= 32 && r1 === null; k++) r1 = newMoonRasi(add(ds, k));
+    const res = {m: (r0 + 1) % 12, adhika: r0 === r1}; cache.set(key, res); return res;
+  }
+  // month of tithi X on day ds: a Śukla tithi that follows a new moon during the same day belongs to the new month
+  function lunarAt(ds, X) {
+    const r = X < 15 ? newMoonRasi(ds) : null;
+    if (r === null) return lunar(ds);
+    let r1 = null; for (let k = 1; k <= 32 && r1 === null; k++) r1 = newMoonRasi(add(ds, k));
+    return {m: (r + 1) % 12, adhika: r === r1};
+  }
+  const inLunar = (ds, m, X) => { const l = X === undefined ? lunar(ds) : lunarAt(ds, X); return l.m === m && !l.adhika; };
+  const fullDay = ds => dayOf(ds, true);
+  const nakAt = (ds, f) => idxAt(fullDay(ds), 'N', f);
+  // the day a nakṣatra prevails at the reference moment in a Tamil month; if it happens twice, the one nearer Pūrṇimā
+  function nakDayIn(ds, month, N, ref) {
+    ref = ref || REF.sunrise;
+    if (tamilMonth(ds) !== month) return false;
+    const start = add(ds, 1 - tamilDay(ds)), key = 'nk|' + ckey() + '|' + start + '|' + N + '|' + (ref === REF.sunrise ? 'r' : ref === REF.sunset ? 's' : 'n');
+    let best = cache.get(key);
+    if (best === undefined) {
+      const cand = [];
+      for (let k = 0; k < 32; k++) { const x = add(start, k); if (tamilMonth(x) !== month) break;
+        const f = d => ref(fullDay(d)); if (nakAt(x, f(x)) === N && nakAt(add(x, -1), f(add(x, -1))) !== N) cand.push(x); }
+      if (!cand.length)       // kṣaya at sunrise: the day it begins and ends
+        for (let k = 0; k < 32; k++) { const x = add(start, k); if (tamilMonth(x) !== month) break; if (segs(fullDay(x), 'N').some(s => s.index === N)) { cand.push(x); break; } }
+      const dist = x => { const t = segs(dayOf(x), 'T')[0].index; return Math.min(Math.abs(t - 14), 30 - Math.abs(t - 14)); };
+      best = cand.sort((a, b) => dist(a) - dist(b))[0] || null; cache.set(key, best);
+    }
+    return best === ds;
+  }
+  REF.nishitha = d => (d.dayFrac + 1) / 2;
+  REF.aparahna = d => (d.aparahna[0] + d.aparahna[1]) / 2;
+  const dawnT = ds => { const p = dayOf(add(ds, -1)); return idxAt(p, 'T', 1 - 96 / 1440 / spanDays(p)); };
+  function dipavaliOn(ds) {           // Naraka Caturdaśī at aruṇodaya (about 1½ hours before sunrise)
+    if (dawnT(ds) === 28) return dawnT(add(ds, -1)) !== 28;
+    if (dawnT(add(ds, -1)) === 28 || dawnT(add(ds, 1)) === 28) return false;
+    return pick(ds, 28, REF.sunrise);
+  }
+  function festivalsOf(ds, base) {
+    const out = [], T = id => out.push(id), wd = wdOf(ds);
+    const pournami = base.includes('pournami'), amavasya = base.includes('amavasya') || base.includes('mahalayaAma');
+    // lunar-month festivals
+    if (pick(ds, 28, REF.nishitha)) T(inLunar(ds, 10) ? 'mahaShiv' : 'masaShiv');
+    if (pick(ds, 3, REF.midday) && inLunar(ds, 5, 3)) T('vinayakaC');
+    if (pick(ds, 22, REF.nishitha) && inLunar(ds, 4)) T('gokul');
+    if (pick(ds, 8, REF.midday) && inLunar(ds, 0, 8)) T('ramaNav');
+    if (pick(ds, 0, REF.sunrise) && inLunar(ds, 6, 0)) T('navaratri');
+    if (pick(add(ds, 1), 9, REF.aparahna) && inLunar(add(ds, 1), 6, 9)) T('sarasvati');   // Tamil custom: the day before Vijayadaśamī
+    if (pick(ds, 9, REF.aparahna) && inLunar(ds, 6, 9)) T('vijaya');
+    if (dipavaliOn(ds) && inLunar(ds, 6)) T('dipavali');
+    if (pick(ds, 6, REF.sunrise) && inLunar(ds, 10, 6)) T('ratha');
+    if (pick(ds, 2, REF.midday) && inLunar(ds, 1, 2)) T('akshaya');
+    if (pick(ds, 13, REF.sunset) && inLunar(ds, 1, 13)) T('narasimha');
+    if (pick(ds, 14, REF.sunrise) && inLunar(ds, 3, 14)) T('guru');
+    if (pournami && inLunar(ds, 4, 14)) T('avani');
+    // the last Friday before the day Śrāvaṇa Pūrṇimā prevails at sunrise
+    if (wd === 5 && segs(dayOf(ds), 'T')[0].index < 14 && segs(dayOf(ds), 'T')[0].index > 0) {
+      for (let k = 1; k <= 7; k++) { const x = add(ds, k), t = segs(dayOf(x), 'T')[0].index;
+        if (t >= 14 && t < 20) { if (inLunar(x, 4)) T('varalakshmi'); break; } }
+    }
+    // Tamil (solar) month festivals
+    const tm = tamilMonth(ds), prevTm = tamilMonth(add(ds, -1)), nextTm = tamilMonth(add(ds, 1));
+    if (tm === 9 && prevTm === 8) T('pongal');
+    if (tm === 9 && prevTm === 9 && tamilMonth(add(ds, -2)) === 8) T('mattu');
+    if (tm === 8 && nextTm === 9) T('bhogi');
+    if (tm === 0 && prevTm === 11) T('puthandu');
+    if (tm === 3 && tamilDay(ds) === 18) T('adiperukku');
+    if (Math.floor(sunAt(ds, 0) / 30) % 12 === 10 && Math.floor(sunAt(add(ds, 1), 0) / 30) % 12 === 11) T('karadaiyan');
+    if (tm === 0 && pournami) T('chitra');
+    if (tm === 6 && pick(ds, 5, REF.sunrise)) T('skanda');
+    if (tm === 8 && base.includes('ekadasi') && segs(dayOf(ds), 'T').some(s => s.index === 10)) T('vaikuntha');
+    if (pick(ds, 29, REF.sunrise) && inLunar(ds, 8)) T('hanumat');
+    if (nakDayIn(ds, 4, 3, REF.nishitha)) T('sriJayanti');
+    if (nakDayIn(ds, 7, 2, REF.sunset)) T('karthigai');
+    if (nakDayIn(ds, 8, 5)) T('arudra');
+    if (nakDayIn(ds, 9, 7, REF.sunset)) T('thaipusam');
+    if (nakDayIn(ds, 10, 9)) T('masimagam');
+    if (nakDayIn(ds, 11, 11)) T('panguni');
+    if (nakDayIn(ds, 1, 15)) T('vaikasi');
+    return out;
   }
 
   // names
@@ -3768,10 +3950,15 @@ details.sg-more>.grid{margin-top:8px}
       for (let k = 0; k < 7; k++) {
         const ds = add(first, w * 7 + k - dow), e = eventsOf(ds), d = +ds.slice(8);
         const cls = ['pc-d', ds.slice(0, 7) !== ym ? 'out' : '', e.ml ? 'ml' : '', ds === t ? 'today' : '', ds === sel ? 'sel' : ''].filter(Boolean).join(' ');
-        const chips = e.list.filter(x => x !== 'mahalaya').map(x => '<i class="pc-c ' + EV[x].cls + '" title="' + EV[x].label + '">' + (EV[x].short || EV[x].label) + '</i>').join('');
-        const lbl = longD(ds) + ', ' + tName(e.rise) + (e.list.length ? ', ' + e.list.map(x => EV[x].label).join(', ') : '');
+        const RANK = x => FEST[x] ? 0 : ({mahalayaAma: 1, amavasya: 2, pournami: 3, ekadasi: 4, pradosham: 5, masaShiv: 6, caturthi: 7, sankata: 8}[x] || 9);
+        const shownEv = e.list.filter(x => x !== 'mahalaya').sort((a, b) => RANK(a) - RANK(b));
+        const chips = shownEv.slice(0, 1).map(x => '<i class="pc-c ' + evOf(x).cls + '" title="' + esc(shownEv.map(y => evOf(y).label).join(', ')) + '">' + (evOf(x).short || evOf(x).label) + '</i>').join('') +
+                      (shownEv.length > 1 ? '<i class="pc-more" aria-hidden="true">+' + (shownEv.length - 1) + '</i>' : '');
+        const DUP = {ekadasi: [10, 25], amavasya: [29], mahalayaAma: [29], pournami: [14], caturthi: [3], vaikuntha: [10], chitra: [14], guru: [14], vinayakaC: [3]};
+        const sameAsChip = e.list.some(x => DUP[x] && DUP[x].includes(e.rise));
+        const lbl = longD(ds) + ', ' + tName(e.rise) + (e.list.length ? ', ' + e.list.map(x => evOf(x).label).join(', ') : '');
         h += '<td><button type="button" class="' + cls + '" data-date="' + ds + '" aria-label="' + esc(lbl) + '"' + (ds === sel ? ' aria-pressed="true"' : '') + '>' +
-             '<span class="pc-n">' + d + '</span><span class="pc-t">' + tShort(e.rise) + '</span><span class="pc-chips">' + chips + '</span></button></td>';
+             '<span class="pc-n">' + d + '</span><span class="pc-t">' + (sameAsChip ? '' : tShort(e.rise)) + '</span><span class="pc-chips">' + chips + '</span></button></td>';
       }
       h += '</tr>';
     }
@@ -3783,7 +3970,8 @@ details.sg-more>.grid{margin-top:8px}
     const shr = aparahnaTithi(d), drik = d.system === 'drik';
     const sun = drik ? ' · Sunrise ' + d.clockOf(0) + ' · Sunset ' + d.clockOf(d.dayFrac) : ' · Times: Vākya printed convention (sunrise 6:00 AM)';
     let h = '<div class="pc-date">' + longD(ds) + '</div><div class="pc-sub">' + esc(c[0]) + ' · ' + (TDF_LABEL[sys()] || '') + sun + '</div>';
-    if (e.list.length) h += '<div class="pc-evrow">' + e.list.map(x => '<span class="pc-big ' + EV[x].cls + '">' + EV[x].long + '<small>' + shortD(ds) + '</small></span>').join('') + '</div>';
+    if (e.list.length) h += '<div class="pc-evbox"><div class="k">Observances · ' + shortD(ds) + '</div><ul>' +
+      e.list.map(x => '<li><i class="pc-c pc-dot ' + evOf(x).cls + '" aria-hidden="true"></i><span>' + evOf(x).long + '</span></li>').join('') + '</ul></div>';
     h += '<div class="pc-tiles">';
     h += '<div class="pc-tile hl"><div class="k">Tithi</div>' + spanLines(ds, 'T') + '</div>';
     h += '<div class="pc-tile hl"><div class="k">Nakṣatra</div>' + spanLines(ds, 'N') + '</div>';
@@ -3806,7 +3994,7 @@ details.sg-more>.grid{margin-top:8px}
     }
     let u = '<div class="k">🗓 Next 16 days from ' + shortD(ds) + '</div>';
     u += up.length ? '<ul>' + up.map(u => {
-      const ev = u.n === 'mlStart' ? {label: 'Mahālaya Pakṣa begins', cls: 'ml'} : EV[u.n];
+      const ev = u.n === 'mlStart' ? {label: 'Mahālaya Pakṣa begins', cls: 'ml'} : evOf(u.n);
       return '<li><span class="pc-c ' + ev.cls + '">' + ev.label + '</span><b>' + shortD(u.x) + '</b><span class="when">' + (u.k === 1 ? 'next day' : 'in ' + u.k + ' days') + '</span></li>'; }).join('') + '</ul>'
       : '<div class="pc-sub">No listed festivals in this period.</div>';
     el('pc-day').innerHTML = h;
@@ -3817,8 +4005,31 @@ details.sg-more>.grid{margin-top:8px}
     el('pc-mon').value = String(+ym.slice(5));
     el('pc-year').value = ym.slice(0, 4);
     el('pc-method').innerHTML = 'Method: <b>' + (TDF_LABEL[sys()] || '') + '</b>' + (sys() === 'drik' ? ' (Drik, for the city chosen)' : ' (traditional, computed for Tamil Nadu)') + ' – change it in step 1 of the Saṅkalpam tab.';
-    try { renderGrid(); renderDay(); }
+    try { renderGrid(); renderDay(); yearList(); }
     catch (err) { console.error('Calendar:', err); el('pc-day').innerHTML = '<div class="pc-busy">Sorry – the pañcāṅgam could not be calculated for this date (' + esc(String(err && err.message || err)) + ').</div>'; }
+  }
+  // "Festivals in <year>" dropdown, filled month by month in the background
+  let ylKey = '', ylJob = 0;
+  function yearList() {
+    const Y = ym.slice(0, 4), key = ckey() + '|' + Y, box = el('pc-fest'); if (!box) return;
+    el('pc-festY').textContent = Y;
+    if (ylKey === key) { box.value = [...box.options].some(o => o.value === sel) ? sel : ''; return; }
+    ylKey = key; const job = ++ylJob, found = [];
+    box.innerHTML = '<option value="">Calculating the festivals of ' + Y + '…</option>'; box.disabled = true;
+    let m = 1;
+    const step = () => {
+      if (job !== ylJob) return;
+      try {
+        const first = Y + '-' + p2(m) + '-01', n = new Date(Date.UTC(+Y, m, 0)).getUTCDate();
+        for (let k = 0; k < n; k++) { const x = add(first, k);
+          eventsOf(x).list.forEach(id => { if (FEST[id] || id === 'mahalayaAma') found.push({x, id}); }); }
+      } catch (err) { console.error('Calendar:', err); }
+      if (++m <= 12) { setTimeout(step, 0); return; }
+      box.innerHTML = '<option value="">Choose a festival (' + found.length + ')…</option>' +
+        found.map(f => '<option value="' + f.x + '">' + esc(evOf(f.id).label) + ' – ' + shortD(f.x) + '</option>').join('');
+      box.disabled = false; box.value = found.some(f => f.x === sel) ? sel : '';
+    };
+    setTimeout(step, 30);
   }
   function later() { el('pc-day').innerHTML = '<div class="pc-busy">Calculating…</div>'; setTimeout(render, 20); }
   function setMonth(y, m) {
@@ -3841,6 +4052,7 @@ details.sg-more>.grid{margin-top:8px}
     el('pc-mon').addEventListener('change', () => setMonth(+el('pc-year').value, +el('pc-mon').value));
     el('pc-year').addEventListener('change', () => setMonth(+el('pc-year').value, +el('pc-mon').value));
     el('pc-city').addEventListener('change', later);
+    el('pc-fest').addEventListener('change', () => { const v = el('pc-fest').value; if (!v) return; sel = v; ym = v.slice(0, 7); later(); });
     const meth = el('method'); if (meth) meth.addEventListener('change', () => { if (shown) later(); });
     el('pc-body').addEventListener('click', ev => {
       const b = ev.target.closest('button[data-date]'); if (!b) return;
@@ -3942,6 +4154,14 @@ details.sg-more>.grid{margin-top:8px}
 
   // Daily email tab only when the email service is switched on
   if ($id('subCard').classList.contains('hide')) $id('mobile-tab-email').classList.add('hide');
+
+  // Welcome box: full the first time; one line after "Got it" (remembered on this device)
+  const intro = $id('sgIntro'), KEY = 'sankalpam.introSeen';
+  let seen = false; try { seen = localStorage.getItem(KEY) === '1'; } catch (e) {}
+  intro.classList.toggle('min', seen);
+  $id('sgIntroOk').addEventListener('click', () => { intro.classList.add('min'); try { localStorage.setItem(KEY, '1'); } catch (e) {} $id('sgIntroOpen').focus(); });
+  $id('sgIntroOpen').addEventListener('click', () => { intro.classList.remove('min'); $id('sgIntroOk').focus(); });
+  $id('sgIntroHow').addEventListener('click', () => { const on = intro.classList.toggle('how'); $id('sgIntroHow').setAttribute('aria-expanded', String(on)); $id('sgIntroHow').textContent = on ? 'Show less' : 'How it works'; });
 
   syncSeg(); try { refresh(); } catch (e) {} labelDayBtn();
 })();

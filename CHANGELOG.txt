@@ -1,16 +1,21 @@
 ================================================================================
-SAṄKALPAM GENERATOR - VERSION 5.1
-Updated: 2026-10-05
+SAṄKALPAM GENERATOR - VERSION 5.2
+Updated: 2026-10-06
 ================================================================================
 
-NEW IN 5.1 – A SIMPLER LAYOUT (calculations unchanged)
+NEW IN 5.2 – A SIMPLER LAYOUT (calculations unchanged)
   ✓ Computers: menu down the left; one heading with the date and city.
   ✓ Phones: slim top bar, tabs at the bottom (Saṅkalpam, Tarpaṇam, Calendar,
     Email, More); "Check for updates" moved to More.
   ✓ Step 1: date, city, calendar and a Vākya / Tirukkaṇita switch; today's
     pañcāṅgam and end times in one box; "Edit pañcāṅgam" opens the fields.
+  ✓ A welcome box at the top explains what the app does; after "Got it" it
+    shrinks to one line.
   ✓ Daily email has its own tab.
   ✓ Calendar on phones: month grid first, then the day details.
+  ✓ Calendar: about 30 annual festivals and monthly Māsa Śivarātri, with a
+    "Festivals in <year>" list; the monthly Caturthī is now just "Caturthī".
+  ✓ One chip per date box (+N for more) and one "Observances" box per day.
 
 ================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.0.6
