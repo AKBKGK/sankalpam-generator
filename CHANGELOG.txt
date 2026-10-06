@@ -1,4 +1,15 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.1
+Updated: 2026-10-06
+================================================================================
+
+NEW IN 5.2.1 – A MORE COMPACT CALENDAR (calculations unchanged)
+  ✓ The "Next 16 days" list below the month grid is removed (festivals already
+    show in the grid).
+  ✓ The day details box now sits beside the month grid, level with the
+    "Festivals in <year>" list.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2
 Updated: 2026-10-06
 ================================================================================
