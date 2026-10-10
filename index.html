@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.1  |  Updated: 2026-10-06
+  Version: 5.2.2  |  Updated: 2026-10-10
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -92,6 +92,13 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(138,59,18,.25);bo
 @media print{.upd{display:none!important}}
 .namecheck{background:#fff8e1;border:2px solid var(--gold);border-radius:10px;padding:10px 14px;margin:12px 0 0;font-size:.9rem}
 .nbig{font-size:1.6rem;font-weight:700;color:#8b1a1a;margin:0 6px}.nbig2{font-size:1.15rem;color:#6d2d0c}
+.kpv{margin:10px 0 2px;padding-top:8px;border-top:1px dashed #e2c98f}.kpv-l{font-size:.8rem;color:var(--soft)}
+.kpv-t{margin:4px 0 0;font-size:1.05rem;line-height:1.9;overflow-wrap:anywhere}.kpv-b{color:#a33;font-weight:700}
+.sg-intro p.sg-intro-def{margin:8px 0 0;padding:8px 12px;border-radius:8px;background:#fff1b8;color:#3b2a10;font-weight:600}
+.outmail{margin:16px 0 0;padding:14px 16px;border:1px solid #efdcc0;border-radius:12px;background:var(--tint)}
+.outmail .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.outmail input{flex:1 1 200px;min-width:0}
+.geo-row{margin:6px 0 0}.geo-row .link{font-size:.88rem}
+@media print{.outmail,.geo-row{display:none!important}}
 .note{background:var(--tint);border:1px solid #f0d9b8;border-left:4px solid var(--gold);border-radius:8px;padding:9px 12px;font-size:.87rem;margin:0 0 14px}
 .sub{font-size:.9rem;font-weight:700;color:var(--kum-d);margin:14px 0 8px}
 .item-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px}
@@ -229,12 +236,13 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <section class="sg-intro" id="sgIntro" aria-labelledby="sgIntroT">
   <div class="sg-intro-full">
     <h2 class="sg-intro-t" id="sgIntroT">Your daily saṅkalpam, ready in a minute.</h2>
+    <p class="sg-intro-def">A saṅkalpam is a vow: you state when, where, who and why before a pūjā.</p>
     <p class="sg-intro-more">Choose the date and your city, add your name, gotra and family, and tick what you will chant. The app fills in that day's pañcāṅgam (Vākya or Tirukkaṇita) and writes the complete saṅkalpam in Sanskrit, Tamil, Telugu, Kannada or English letters – ready to read, print or share.</p>
     <p class="sg-intro-free">Free · no sign-up · your details stay on your device.</p>
     <p class="sg-intro-more">Also: tarpaṇam texts, a pañcāṅgam calendar and a daily email.</p>
     <div class="sg-intro-act"><button type="button" class="btn ghost" id="sgIntroOk">Got it</button><button type="button" class="link sg-intro-how" id="sgIntroHow" aria-expanded="false">How it works</button></div>
   </div>
-  <div class="sg-intro-mini"><span>Your daily saṅkalpam with that day's pañcāṅgam · free · no sign-up</span><button type="button" class="link" id="sgIntroOpen">About this app</button></div>
+  <div class="sg-intro-mini"><span>A saṅkalpam is a vow: you state when, where, who and why before a pūjā · free · no sign-up</span><button type="button" class="link" id="sgIntroOpen">About this app</button></div>
 </section>
 <div class="sg-head" id="sgHead">
   <span class="sg-eyebrow" id="sgEyebrow"></span>
@@ -249,16 +257,13 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <p class="lead d-only">Choose the date and your city. Today's pañcāṅgam is filled in for you – open <b>Edit pañcāṅgam</b> only if your printed pañcāṅgam differs.</p>
   <div class="grid sg-g1">
     <div><label class="req" for="date">Date</label><input type="date" id="date"></div>
-    <div><label for="city">City (for sunrise)</label><select id="city"></select></div>
+    <div><label for="city">City (for sunrise)</label><select id="city"></select>
+      <p class="geo-row hide" id="geoRow"><button type="button" class="link" id="geoBtn">📍 Use my location for sunrise times</button></p>
+      <p class="hint hide" id="geoStatus" role="status"></p></div>
     <div><label for="cal">Calendar</label><select id="cal">
       <option value="ta" selected>Tamil (solar · sauramāna)</option>
       <option value="te">Telugu (lunar · cāndramāna)</option>
       <option value="kn">Kannada (lunar · cāndramāna)</option></select></div>
-    <div class="sg-mwrap"><span class="sg-lbl" id="sgMethodLbl">Calculation method</span>
-      <div class="sg-seg" role="group" aria-labelledby="sgMethodLbl"><button type="button" data-m="vakya" aria-pressed="true">Vākya<small>Traditional</small></button><button type="button" data-m="drik" aria-pressed="false">Tirukkaṇita<small>Modern</small></button></div>
-      <select id="method" class="hide" aria-hidden="true" tabindex="-1">
-      <option value="vakya" selected>Vākya (traditional)</option>
-      <option value="drik">Tirukkaṇita (modern astronomical)</option></select></div>
   </div>
   <div class="sg-pbox" id="sgPbox">
     <div class="sg-plabel" id="sgPlabel">Pañcāṅgam</div>
@@ -266,6 +271,12 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <p class="sg-ptimes" id="sgPtimes"></p>
     <div class="note hide" id="p-warn" style="margin:10px 0 0;border-left-color:#d98b00;background:#fff4dc"></div>
     <details class="sg-pedit" id="mobilePanchanga"><summary><span class="sg-c">Edit pañcāṅgam</span><span class="sg-o">Hide pañcāṅgam fields</span></summary>
+    <div class="sg-mwrap" style="margin-top:14px"><span class="sg-lbl" id="sgMethodLbl">Calculation method</span>
+      <div class="sg-seg" role="group" aria-labelledby="sgMethodLbl"><button type="button" data-m="vakya" aria-pressed="true">Vākya<small>Traditional</small></button><button type="button" data-m="drik" aria-pressed="false">Tirukkaṇita<small>Modern</small></button></div>
+      <select id="method" class="hide" aria-hidden="true" tabindex="-1">
+      <option value="vakya" selected>Vākya (traditional)</option>
+      <option value="drik">Tirukkaṇita (modern astronomical)</option></select>
+      <p class="hint">Vākya (used mainly in Tamil Nadu) is the default. Change it only if your family uses a Tirukkaṇita pañcāṅgam.</p></div>
   <div class="grid">
     <div><label for="p-samv">Saṁvatsara</label><select id="p-samv" class="deva"></select></div>
     <div><label for="p-ayana">Ayana</label><select id="p-ayana" class="deva"></select></div>
@@ -292,26 +303,35 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <p class="lead">Type the name in English; the Devanagari fills in automatically and can be corrected. For long vowels type double letters (e.g. <em>shreenivaasa</em> → श्रीनिवास).</p>
   <p class="reqkey">marks a field that must be filled.</p>
   <div class="grid">
-    <div><label class="req" for="name">Name (English)</label><input type="text" id="name" placeholder="e.g. raama daasa"></div>
-    <div><label class="req" for="nameD">Name (Devanagari)</label><input type="text" id="nameD" class="deva" placeholder="राम दास"></div>
-    <div><label class="req" for="gotra">Gotra</label><select id="gotra"></select></div>
+    <div><label class="req" for="name">Your first name only (no surname)</label><input type="text" id="name" placeholder="e.g. shreenivaasa"></div>
+    <div><label class="req" for="nameD">First name (Devanagari)</label><input type="text" id="nameD" class="deva" placeholder="श्रीनिवास"></div>
+    <div><label class="req" for="gotra">Gotra</label><select id="gotra"></select>
+      <p class="hint hide" id="gotraNkNote">Kāśyapa is used when the gotra is not known. Ask your elders if you can.</p></div>
     <div id="gotraOtherBox" class="hide"><label class="req" for="gotraOther">Your Gotra (English)</label><input type="text" id="gotraOther" placeholder="e.g. kaapi"></div>
     <div><label class="req" for="gotraD">Gotra (Devanagari)</label><input type="text" id="gotraD" class="deva" placeholder="गोत्र"></div>
-    <div><label for="nak">Birth Nakṣatra</label><select id="nak" class="deva"></select></div>
+    <div><label class="req" for="nak">Birth Nakṣatra</label><select id="nak" class="deva"></select>
+      <p class="hint">Please confirm your birth star (janma nakṣatra) – it is recited in the saṅkalpam. If unsure, check your horoscope or ask your elders.</p></div>
     <div><label for="gender">Gender</label><select id="gender"><option value="m" selected>Male</option><option value="f">Female</option></select></div>
-  </div>
-  <details class="sg-more" id="sgMore"><summary>Name ending, pāda and rāśi <span class="sg-moresum" id="sgMoreSum"></span></summary>
-  <div class="grid">
     <div id="suffixBox"><label for="suffix">Name ending</label><select id="suffix">
-      <option value="sharma" selected>Śarmā · शर्मणः</option><option value="varma" disabled>Varmā · वर्मणः (coming soon)</option>
-      <option value="gupta" disabled>Gupta · गुप्तस्य (coming soon)</option><option value="dasa" disabled>Dāsa · दासस्य (coming soon)</option>
-      <option value="none" disabled>None · नाम्नः (coming soon)</option></select></div>
+      <option value="none" selected>None · नाम्नः</option><option value="sharma">Śarmā · शर्मणः</option><option value="varma">Varmā · वर्मणः</option>
+      <option value="gupta">Gupta · गुप्तस्य</option><option value="dasa">Dāsa · दासस्य</option></select>
+      <p class="hint">Choose the ending your family uses. If unsure, keep <b>None</b>.
+        <button type="button" class="link" id="suffixWhyBtn" aria-expanded="false" aria-controls="suffixWhy">Why?</button></p>
+      <div class="note hide" id="suffixWhy" style="margin:6px 0 0">Śarmā, Varmā, Gupta and Dāsa are the traditional name endings given in the Viṣṇu Purāṇa (3.10.9):
+        <span class="deva" style="display:block;margin:6px 0">शर्मेति ब्राह्मणस्योक्तं वर्मेति क्षत्रसंश्रयम् ।<br>गुप्तदासात्मकं नाम प्रशस्तं वैश्यशूद्रयोः ॥</span>
+        <b>None (नाम्नः)</b> simply means “of the one named …” and suits everyone. Follow your family's custom; if in doubt, ask your vādhyār.
+        <a href="https://vedapath.app/en/vishnu-purana/amsha-3/10/9" target="_blank" rel="noopener">Read the verse ›</a></div></div>
+  </div>
+  <details class="sg-more" id="sgMore"><summary>Pāda and rāśi <span class="sg-moresum" id="sgMoreSum"></span></summary>
+  <div class="grid">
     <div><label for="pada">Pāda</label><select id="pada"><option value="0" selected>Don't know</option><option value="1">Pāda 1</option><option value="2">Pāda 2</option><option value="3">Pāda 3</option><option value="4">Pāda 4</option></select></div>
     <div><label for="rashi">Birth Rāśi</label><select id="rashi" class="deva ro" disabled></select></div>
   </div>
   </details>
   <div id="nameCheck" class="namecheck hide">
     <div>Your name as it will be recited: <span id="nameBig" class="deva nbig"></span> <span id="nameBigS" class="nbig2"></span></div>
+    <div class="kpv"><span class="kpv-l">Live preview – your line in today's saṅkalpam:</span>
+      <p id="kartaPv" class="deva kpv-t"></p></div>
     <div class="hint" style="color:var(--ink)">⚠️ <strong>Please check this spelling.</strong> If it is not right, correct it in the <em>Name (Devanagari)</em> box – for long vowels type double letters in English (e.g. <em>shreenivaasa</em> → श्रीनिवास), or ask your vādhyār.</div>
   </div>
   <div id="rashiNote" class="note hide" style="margin:12px 0 0">⚠️ <strong>Please check your Rāśi.</strong> <span id="rashiNoteText"></span></div>
@@ -406,8 +426,14 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <div id="output" class="tab-content" role="tabpanel" aria-labelledby="mobile-tab-output">
   <div id="noResult" class="card" style="text-align:center;color:var(--soft)"><span class="d-only">Fill in the Saṅkalpam tab and press <strong>Generate Saṅkalpam</strong>.</span><div class="m-only"><p style="margin:0">Your saṅkalpam will appear here.</p><p class="hint">Enter your name and gotra, choose your chants, then generate.</p><button type="button" class="btn mobile-empty-cta" onclick="switchTab('form')">Go to Saṅkalpam</button></div></div>
   <div id="resultContainer" class="hide">
-    <div class="actions"><button class="btn" onclick="copySankalpam()">Copy text</button><button class="btn ghost" onclick="printDoc('sank', false)"><span class="d-only">Print / Save as PDF</span><span class="m-only">Print / PDF</span></button><button class="btn ghost" onclick="printDoc('sank', true)"><span class="d-only">📱 Compact PDF (WhatsApp)</span><span class="m-only">Compact PDF</span></button><button class="btn ghost hide" onclick="emailPdfOnce('sank')">📧 Email This PDF Once</button><button class="btn ghost" onclick="switchTab('form')"><span class="d-only">← Edit</span><span class="m-only">Edit details</span></button><span class="okmsg" id="copyStatus"></span></div>
+    <div class="actions"><button class="btn" onclick="copySankalpam()">Copy text</button><button class="btn hide" id="shareBtn" type="button" onclick="shareSankalpam()">Share</button><button class="btn ghost" onclick="printDoc('sank', false)"><span class="d-only">Print / Save as PDF</span><span class="m-only">Print / PDF</span></button><button class="btn ghost" onclick="printDoc('sank', true)"><span class="d-only">📱 Compact PDF (WhatsApp)</span><span class="m-only">Compact PDF</span></button><button class="btn ghost hide" onclick="emailPdfOnce('sank')">📧 Email This PDF Once</button><button class="btn ghost" onclick="switchTab('form')"><span class="d-only">← Edit</span><span class="m-only">Edit details</span></button><span class="okmsg" id="copyStatus"></span></div>
     <p class="mobile-print-help m-only">To save a PDF on your phone, use Print / PDF and your phone’s print or sharing options.</p><div id="result" class="doc"></div>
+    <div class="outmail hide" id="outMail">
+      <b>📧 Get your saṅkalpam every evening by email</b>
+      <p class="hint" style="margin:4px 0 0">At 9 pm, ready for the next morning – with the pañcāṅgam for your city. Free; unsubscribe any time.</p>
+      <div class="row"><input type="email" id="outMailEmail" autocomplete="email" placeholder="name@example.com" aria-label="Your email">
+        <button type="button" class="btn" id="outMailGo">Continue</button></div>
+    </div>
   </div>
 </div>
 <div id="tarpanam" class="tab-content" role="tabpanel" aria-labelledby="mobile-tab-tarpanam">
@@ -962,9 +988,11 @@ function nkName(i) {                 // "Pūrvaproṣṭhapadā (Poorattathi)" �
   const cal = V('cal') || 'ta';
   return cap(NK[i][0]) + ' (' + (cal === 'ta' ? NK_TA[i] : NK_TK[i]) + ')';
 }
-const nkOpts = () => NK.map((x, i) => '<option value="' + i + '">' + nkName(i) + ' · ' + x[1] + '</option>').join('');
+// v5.2.2: birth-star lists (kartā and family) start blank, so no star is ever recited by default.
+const NK_BLANK = '<option value="">– Select birth star –</option>';
+const nkOpts = blank => (blank ? NK_BLANK : '') + NK.map((x, i) => '<option value="' + i + '">' + nkName(i) + ' · ' + x[1] + '</option>').join('');
 function refreshStarLabels() {       // relabel every star list, keeping the selections
-  document.querySelectorAll('#nak, #p-nak, .f-nak').forEach(sel => { const v = sel.value; sel.innerHTML = nkOpts(); sel.value = v; });
+  document.querySelectorAll('#nak, #p-nak, .f-nak').forEach(sel => { const v = sel.value; sel.innerHTML = nkOpts(sel.id !== 'p-nak'); sel.value = v; });
 }
 const RS = [["meṣa","मेष"],["vṛṣabha","वृषभ"],["mithuna","मिथुन"],["karkaṭaka","कर्कटक"],["siṃha","सिंह"],["kanyā","कन्या"],["tulā","तुला"],["vṛścika","वृश्चिक"],["dhanus","धनु"],["makara","मकर"],["kumbha","कुम्भ"],["mīna","मीन"]];
 const MASA_LUNAR = [["Caitra","चैत्र"],["Vaiśākha","वैशाख"],["Jyeṣṭha","ज्येष्ठ"],["Āṣāḍha","आषाढ"],["Śrāvaṇa","श्रावण"],["Bhādrapada","भाद्रपद"],
@@ -1225,7 +1253,7 @@ function famRow(m) {
     '<div><label>Relation</label><select class="f-rel">' + rels.map(r => '<option value="' + r[0] + '">' + r[1] + '</option>').join('') + '</select></div>' +
     '<div><label>Name (English)</label><input type="text" class="f-name" placeholder="e.g. raghu"></div>' +
     '<div><label>Name (Devanagari)</label><input type="text" class="f-nameD deva"></div>' +
-    '<div><label>Birth star</label><select class="f-nak deva">' + nkOpts() + '</select></div>' +
+    '<div><label class="req">Birth star</label><select class="f-nak deva">' + nkOpts(true) + '</select></div>' +
     '<div><label>Pāda</label><select class="f-pada"><option value="0">Don\'t know</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></div>' +
     '<div><label>Rāśi</label><select class="f-rashi deva"></select></div>' +
     '<div class="f-gbox hide"><label>Gotra</label><select class="f-gotra"></select></div>' +
@@ -1251,6 +1279,9 @@ function famRow(m) {
   if (m.nak != null) q('.f-nak').value = m.nak;
   if (m.pada != null) q('.f-pada').value = m.pada;
   const sync = keep => {
+    if (q('.f-nak').value === '') {                 // no star chosen yet: rāśi waits for it
+      q('.f-rashi').innerHTML = '<option value="">– from the star –</option>'; q('.f-rashi').disabled = true; q('.f-rashi').classList.add('ro'); return;
+    }
     const [list, def] = rashiChoices(+q('.f-nak').value, +q('.f-pada').value), cur = +q('.f-rashi').value;
     q('.f-rashi').innerHTML = list.map(i => '<option value="' + i + '">' + RS[i][0] + ' · ' + RS[i][1] + '</option>').join('');
     q('.f-rashi').value = keep && list.includes(keep) ? keep : (list.includes(cur) && q('.f-rashi').dataset.set ? cur : def);
@@ -1274,7 +1305,7 @@ function famData() {
   return [...document.querySelectorAll('#famList .fam')].map(d => {
     const q = c => d.querySelector(c);
     return {rel: q('.f-rel').value, name: q('.f-name').value.trim(), nameD: q('.f-nameD').value.trim(),
-            nak: +q('.f-nak').value, pada: +q('.f-pada').value, rashi: +q('.f-rashi').value,
+            nak: q('.f-nak').value === '' ? '' : +q('.f-nak').value, pada: +q('.f-pada').value, rashi: q('.f-rashi').value === '' ? '' : +q('.f-rashi').value,
             gotra: OWN_GOTRA[q('.f-rel').value] ? q('.f-gotra').value : '', gother: q('.f-gother').value.trim()};
   });
 }
@@ -1640,6 +1671,11 @@ function $(id) { return document.getElementById(id); }
 function setVal(id, v) { $(id).value = String(v); }
 function fill(id, list, fmt) { $(id).innerHTML = list.map((x, i) => '<option value="' + i + '">' + fmt(x, i) + '</option>').join(''); }
 function syncRashi() {
+  if ($('nak').value === '') {                      // v5.2.2: no star chosen yet – pāda and rāśi wait for it
+    const pd0 = $('pada'); pd0.value = '0'; pd0.disabled = true; pd0.classList.add('ro'); pd0.options[0].text = "Don't know";
+    $('rashi').innerHTML = '<option value="">– fills in from your star –</option>'; $('rashi').disabled = true; $('rashi').classList.add('ro');
+    $('rashiNote').classList.add('hide'); return;
+  }
   const n = +$('nak').value, sel = $('rashi');
   const r1 = Math.floor(n * 4 / 9), r2 = Math.floor((n * 4 + 3) / 9);
   const pd = $('pada'), single = r1 === r2;
@@ -1662,6 +1698,8 @@ function syncRashi() {
   $('rashiNote').classList.toggle('hide', !note); $('rashiNoteText').textContent = note;
 }
 function updateGotra() {
+  if ($('gotra').value === 'nk') { $('gotra').value = String(GOTHRAS.findIndex(g => g[0] === 'Kāśyapa')); $('gotraNkNote').classList.remove('hide'); }
+  else if ($('gotra').value !== String(GOTHRAS.findIndex(g => g[0] === 'Kāśyapa'))) $('gotraNkNote').classList.add('hide');
   const v = $('gotra').value, other = v === 'other';
   $('gotraOtherBox').classList.toggle('hide', !other);
   $('gotraD').value = other ? iastToDevanagari($('gotraOther').value) : (v === '' ? '' : GOTHRAS[+v][1]);
@@ -1775,10 +1813,9 @@ function generateSankalpam() {
   if (!name) miss.push($('name'));
   if (!nameD) miss.push($('nameD'));
   if (!gotraD) miss.push($('gotra').value === 'other' ? $('gotraOther') : $('gotra'), $('gotraD'));
-  if (miss.length) { st.textContent = 'Please fill in the fields marked in red (' + (!date ? 'date' : !name || !nameD ? 'name' : 'gotra') + ').'; flagInvalid(miss); return; }
-  const famAll = famData(), famBad = famAll.find(m => m.nameD && ((OWN_GOTRA[m.rel] === 'req' && m.gotra === '') || (m.gotra === 'other' && !m.gother)));
-  if (famBad) { st.textContent = 'Please choose the gotra for ' + (famBad.name || relById(famBad.rel)[1]) + '.';
-    const row = document.querySelectorAll('#famList .fam')[famAll.indexOf(famBad)]; flagInvalid([row && row.querySelector(famBad.gotra === 'other' ? '.f-gother' : '.f-gotra')]); return; }
+  if ($('nak').value === '') miss.push($('nak'));
+  if (miss.length) { st.textContent = 'Please fill in the fields marked in red (' + (!date ? 'date' : !name || !nameD ? 'name' : !gotraD ? 'gotra' : 'birth star') + ').'; flagInvalid(miss); return; }
+  if (famCheck(st)) return;
 
   const cal = $('cal').value;
   const P = {samv: +$('p-samv').value, ayana: +$('p-ayana').value, rtu: +$('p-rtu').value, masa: +$('p-masa').value, adhika: cal === 'ta' ? 0 : +$('p-adhika').value,
@@ -1791,6 +1828,17 @@ function generateSankalpam() {
   $('resultContainer').classList.remove('hide'); $('noResult').classList.add('hide');
   switchTab('output');
 }
+// Family members with a name need a gotra (where required) and a birth star (v5.2.2). Returns true and flags the field if one is missing.
+function famCheck(st) {
+  const famAll = famData(), rows = document.querySelectorAll('#famList .fam');
+  const gBad = famAll.find(m => m.nameD && ((OWN_GOTRA[m.rel] === 'req' && m.gotra === '') || (m.gotra === 'other' && !m.gother)));
+  if (gBad) { st.textContent = 'Please choose the gotra for ' + (gBad.name || relById(gBad.rel)[1]) + '.';
+    const row = rows[famAll.indexOf(gBad)]; switchTab('form'); flagInvalid([row && row.querySelector(gBad.gotra === 'other' ? '.f-gother' : '.f-gotra')]); return true; }
+  const nBad = famAll.find(m => m.nameD && m.nak === '');
+  if (nBad) { st.textContent = 'Please choose the birth star for ' + (nBad.name || relById(nBad.rel)[1]) + '.';
+    const row = rows[famAll.indexOf(nBad)]; switchTab('form'); flagInvalid([row && row.querySelector('.f-nak')]); return true; }
+  return false;
+}
 // Outline the missing fields in red, open their group / tab, scroll to the first one and focus it.
 function flagInvalid(els) {
   document.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
@@ -1799,13 +1847,31 @@ function flagInvalid(els) {
   const f = els[0], d = f.closest('details'); if (d) d.open = true;
   f.scrollIntoView({behavior: 'smooth', block: 'center'}); try { f.focus({preventScroll: true}); } catch (e) {}
 }
+// The kartā's own words in the saṅkalpam (Devanagari). Women: …जातायाः <name>नाम्न्याः. Men: the chosen name ending
+// (v5.2.2: all endings are available in the saṅkalpam; default None · नाम्नः). The tarpaṇam keeps its own wording.
+const SANK_SUFFIX = {sharma: 'शर्मणः', varma: 'वर्मणः', gupta: 'गुप्तस्य', dasa: 'दासस्य', none: 'नाम्नः'};
+function kartaPhrase(fem, gotraD, nakD, rashiD, nameD, suffix, Pp) {
+  return fem
+    ? Pp(gotraD) + ' गोत्रोद्भवायाः ' + Pp(nakD) + ' नक्षत्रे ' + Pp(rashiD) + ' राशौ जातायाः ' + Pp(nameD) + 'नाम्न्याः'
+    : Pp(gotraD) + ' गोत्रोद्भवस्य ' + Pp(nakD) + ' नक्षत्रे ' + Pp(rashiD) + ' राशौ जातस्य ' + Pp(nameD) + (SANK_SUFFIX[suffix] || SANK_SUFFIX.sharma);
+}
+// Live preview under the name (v5.2.2): the kartā's line as it will be recited, in the chosen script; blanks show "____".
+function updateKartaPreview() {
+  const box = $('kartaPv'); if (!box) return;
+  const blank = '<span class="kpv-b">____</span>', P = s => s ? '<b>' + s + '</b>' : blank;
+  const nak = $('nak').value, rashi = $('rashi').value;
+  const nakD = nak === '' ? '' : NK[+nak][1], rashiD = nak === '' || rashi === '' ? '' : RS[+rashi][1];
+  let tl = ''; try { tl = tithiLoc(+$('p-tithi').value); } catch (e) {}
+  const h = '… अस्यां ' + (tl ? tl + ' शुभतिथौ ' : '') +
+    kartaPhrase($('gender').value === 'f', esc($('gotraD').value.trim()), nakD, rashiD, esc($('nameD').value.trim()), $('suffix').value, P) + ' …';
+  box.innerHTML = devaTo(h, $('script').value);
+}
 function genStamp() { const q = localParts(Date.now(), 'Asia/Kolkata'); return q.d + ' ' + MONTHS_EN[q.m - 1].slice(0, 3) + ' ' + q.y + ', ' + pad2(q.H) + ':' + pad2(q.M) + ' IST'; }
 // Builds the complete saṅkalpam HTML (already in the chosen script) from the inputs (form or saved state)
 // and a pañcāṅgam object P. Used by the page and by the daily email.
 function composeSankalpam(P, date, stamp) {
   const script = V('script') || 'sa', cal = V('cal') || 'ta', city = curCity(), fem = V('gender') === 'f';
   const name = V('name').trim(), nameD = esc(V('nameD').trim()), gotraD = esc(V('gotraD').trim());
-  const SUFFIX = {sharma: 'शर्मणः', varma: 'वर्मणः', gupta: 'गुप्तस्य', dasa: 'दासस्य', none: 'नाम्नः'};
   const nakIdx = +V('nak'), rashiIdx = +V('rashi');
   const sel = collectSelections();
   const calName = {ta: 'Tamil calendar', te: 'Telugu calendar', kn: 'Kannada calendar'}[cal];
@@ -1813,10 +1879,7 @@ function composeSankalpam(P, date, stamp) {
   const T = s => hl('t', s);
   const kala = T(SAMV[P.samv][1]) + ' नाम संवत्सरे ' + T(AYANA[P.ayana][1]) + ' ' + T(RTU[P.rtu][1]) + ' ऋतौ ' + T(masaLoc(cal, P.masa, P.adhika)) + ' ' + T(paksha) +
     ' पक्षे ' + T(tl) + ' शुभतिथौ ' + T(VARA[P.vara][1]) + ' वासरयुक्तायां ' + T(NK[P.nak][1]) + ' नक्षत्रयुक्तायां शुभयोग शुभकरण एवं गुण विशेषण विशिष्टायां अस्यां ' + T(tl) + ' शुभतिथौ';
-  const Pp = s => hl('p', s);
-  const karta = fem
-    ? Pp(gotraD) + ' गोत्रोद्भवायाः ' + Pp(NK[nakIdx][1]) + ' नक्षत्रे ' + Pp(RS[rashiIdx][1]) + ' राशौ जातायाः ' + Pp(nameD) + 'नाम्न्याः'
-    : Pp(gotraD) + ' गोत्रोद्भवस्य ' + Pp(NK[nakIdx][1]) + ' नक्षत्रे ' + Pp(RS[rashiIdx][1]) + ' राशौ जातस्य ' + Pp(nameD) + (SUFFIX[TP_CONFIRM.suffixes ? V('suffix') : 'sharma'] || SUFFIX.sharma);
+  const karta = kartaPhrase(fem, gotraD, NK[nakIdx][1], RS[rashiIdx][1], nameD, V('suffix'), s => hl('p', s));
   const row = (a, b, c, d) => '<tr><td>' + a + '</td><td>' + b + '</td><td>' + c + '</td><td>' + d + '</td></tr>';
   let h = '<h3>॥ सङ्कल्पः ॥</h3><div class="meta">' + esc(name.toUpperCase()) + ' · ' + longDate(date) + ' · ' + esc(city[0]) + ' · ' + calName + '</div>';
   h += '<table class="ptable">' +
@@ -1840,7 +1903,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.1';
+const APP_VERSION = 'v5.2.2';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -1880,6 +1943,8 @@ async function subscribe() {
   if (!$('subConsent').checked) { out.textContent = 'Please tick the consent box.'; flagInvalid([$('subConsent')]); return; }
   if (!$('name').value.trim() || !$('nameD').value.trim() || !$('gotraD').value.trim()) { out.textContent = 'Please fill in your name and gotra in step 2 first.';
     flagInvalid([!$('name').value.trim() && $('name'), !$('nameD').value.trim() && $('nameD'), !$('gotraD').value.trim() && $('gotra'), !$('gotraD').value.trim() && $('gotraD')]); return; }
+  if ($('nak').value === '') { out.textContent = $('status').textContent = 'Please choose your birth star in step 2 first.'; switchTab('form'); flagInvalid([$('nak')]); return; }
+  if (famCheck($('status'))) { out.textContent = $('status').textContent; return; }
   const famOn = famData().some(m => m.nameD);
   if (famOn && !$('subFamConsent').checked) { out.textContent = 'Please confirm that your family members agree (tick the second box), or remove them in step 2.'; flagInvalid([$('subFamConsent')]); return; }
   const mode = $('subMode').value, time = $('subTime').value;
@@ -2032,14 +2097,16 @@ let saveBlocked = false;
 function saveDetails() {
   if (saveBlocked) return;
   try { const o = Object.fromEntries(SAVE_IDS.map(id => [id, $(id).value])); o.family = famData();
+        o.gotraNK = !$('gotraNkNote').classList.contains('hide');          // "Not known (use Kāśyapa)" was chosen
         localStorage.setItem('sankalpam.v3', JSON.stringify(o)); } catch (e) {}
 }
 function loadDetails() {
   let d = null; try { d = JSON.parse(localStorage.getItem('sankalpam.v3') || 'null'); } catch (e) {}
   if (!d) return;
   ['script','gender','suffix','name','nameD','gotra','gotraOther','nak','pada','method'].forEach(id => { if (d[id] != null) $(id).value = d[id]; });
-  if (!$('suffix').value || $('suffix').selectedOptions[0].disabled) $('suffix').value = 'sharma';   // other endings: coming soon
+  if (!$('suffix').value) $('suffix').value = d.suffix == null ? 'sharma' : 'none';   // very old saved details had no ending: they were always Śarmā
   updateGotra(); if (d.gotraD) $('gotraD').value = d.gotraD;
+  if (d.gotraNK && GOTHRAS[+$('gotra').value] && GOTHRAS[+$('gotra').value][0] === 'Kāśyapa') $('gotraNkNote').classList.remove('hide');
   syncRashi(); if (d.rashi != null && !$('rashi').disabled) $('rashi').value = d.rashi;
   if (Array.isArray(d.family)) d.family.forEach(famRow);
 }
@@ -2122,6 +2189,20 @@ function eclipseOn(dateStr, c, kind) {
 }
 // Mahālaya pakṣa = kṛṣṇa pakṣa of (amānta) Bhādrapada.
 function isMahalaya(dateStr, c) { const L = calcPanchang(dateStr, c, 'te'); return L.masa === 5 && L.adhika !== 1 && L.tithi >= 15; }
+// v5.2.2: is the Mahālaya tarpaṇam offered on this date? From 15 days before Mahālaya pakṣa until its last day.
+// The owner can see it on any date with the link ?show=mahalaya (remembered on that device; ?show=off ends it).
+const ML_WIN = {};
+function mahalayaWindow(dateStr, c) {
+  try { if (localStorage.getItem('sankalpam.showMahalaya') === '1') return true; } catch (e) {}
+  const key = dateStr + '|' + c[0];
+  if (!(key in ML_WIN)) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    let on = false;
+    for (let k = 0; k <= 15 && !on; k++) on = isMahalaya(new Date(Date.UTC(y, m - 1, d + k)).toISOString().slice(0, 10), c);
+    ML_WIN[key] = on;
+  }
+  return ML_WIN[key];
+}
 // Four lines of ancestors, four generations each. The first three who have passed away receive tarpaṇam
 // (vasu, rudra, āditya). If someone in a line is alive, that line moves up a generation.
 // [id, English, relation hint, accusative (normal), accusative (line moved up), compound stem (normal), stem (moved up)]
@@ -2463,6 +2544,14 @@ function tSync() {
   if (v && $('t-rasi').dataset.auto !== v) { $('t-rasi').value = String(sunRasiAt(v, c).rasi); $('t-rasi').dataset.auto = v; }
   // when the date (or city) changes: keep the chosen tarpaṇam if it suits the date, otherwise switch to the one that falls on it
   const sugKey = v + '|' + c[0], ty = $('t-type');
+  // v5.2.2: Mahālaya tarpaṇam is offered only from 15 days before Mahālaya pakṣa until it ends (owner link ?show=mahalaya shows it always)
+  const mlOn = !v || mahalayaWindow(v, c), mlOpt = ty.querySelector('option[value="mahalaya"]');
+  mlOpt.hidden = mlOpt.disabled = !mlOn;
+  if (!mlOn && ty.value === 'mahalaya') {
+    ty.value = tSuggest(v, c) || 'amavasya';
+    $('t-rasiBox').classList.toggle('hide', ty.value !== 'masa'); $('t-mldayBox').classList.toggle('hide', true); updateKarunigaVisibility();
+    setTimeout(() => ty.dispatchEvent(new Event('change', {bubbles: true})), 0);   // refresh "Which day?" and saved choice
+  }
   if (v && ty.dataset.autoFor !== sugKey) { ty.dataset.autoFor = sugKey; ty.dataset.sug = tSuggest(v, c); if (ty.dataset.sug && !tFits(ty.value, v, c)) ty.value = ty.dataset.sug;
     $('t-rasiBox').classList.toggle('hide', ty.value !== 'masa'); $('t-mldayBox').classList.toggle('hide', ty.value !== 'mahalaya'); updateKarunigaVisibility(); }
   const tsug = ty.dataset.sug || '';
@@ -2587,7 +2676,12 @@ function generateTarpanam(quiet) {
   if (!$('date').value) { st.textContent = 'Please choose the date of tarpaṇam.'; flagInvalid([$('t-date')]); return; }
   if (!$('gotraD').value.trim()) { st.textContent = 'Please choose your gotra in step 2 of the Saṅkalpam tab (marked in red).'; switchTab('form'); flagInvalid([$('gotra'), $('gotraD')]); return; }
   if ($('t-father').value === 'alive') return;
-  if (!TP_CONFIRM.suffixes && $('suffix').value !== 'sharma' && $('gender').value !== 'f') { st.textContent = 'Your name ending in step 2 is not Śarmā – the tarpaṇam wording for this is awaiting confirmation.'; return; }
+  if (!TP_CONFIRM.suffixes && $('suffix').value !== 'sharma' && $('gender').value !== 'f') {
+    if (quiet === true) return;
+    st.innerHTML = 'The tarpaṇam text is ready only for the Śarmā name ending (other endings are awaiting confirmation by a vādhyār). If your family uses Śarmā: ' +
+      '<button type="button" class="btn ghost" id="tUseSharma" style="margin:6px 0 0">Use Śarmā and continue</button>';
+    $('tUseSharma').addEventListener('click', () => { $('suffix').value = 'sharma'; $('suffix').dispatchEvent(new Event('change', {bubbles: true})); generateTarpanam(); });
+    return; }
   const [pr, prEls] = tProblems(); if (pr) { st.textContent = pr; flagInvalid(prEls); return; }
   const cal = $('cal').value;
   const P = {samv: +$('p-samv').value, ayana: +$('p-ayana').value, rtu: +$('p-rtu').value, masa: +$('p-masa').value, adhika: cal === 'ta' ? 0 : +$('p-adhika').value,
@@ -2634,9 +2728,10 @@ function init() {
   fill('p-rtu', RTU, x => x[0] + ' · ' + x[1]);
   fill('p-tithi', Array.from({length: 30}), (x, i) => tithiLabel(i));
   fill('p-vara', VARA, x => x[0] + ' · ' + x[1] + ' वासर');
-  $('p-nak').innerHTML = nkOpts(); $('nak').innerHTML = nkOpts();
+  $('p-nak').innerHTML = nkOpts(); $('nak').innerHTML = nkOpts(true);
   fill('p-yoga', YOGA, x => x[0] + ' · ' + x[1]); fill('p-karana', KARANA_ALL, x => x[0] + ' · ' + x[1]);
-  $('gotra').innerHTML = '<option value="">– Select gotra –</option>' + GOTHRAS.map((g, i) => '<option value="' + i + '">' + g[0] + ' · ' + g[1] + '</option>').join('') + '<option value="other">Other (type below)</option>';
+  // "Not known" is stored as Kāśyapa itself (no new value), so saved details and the email service read it as before.
+  $('gotra').innerHTML = '<option value="">– Select gotra –</option><option value="nk">Not known (use Kāśyapa · काश्यप)</option>' + GOTHRAS.map((g, i) => '<option value="' + i + '">' + g[0] + ' · ' + g[1] + '</option>').join('') + '<option value="other">Other (type below)</option>';
   const anu = n => Array.from({length: n}, (_, i) => '<option value="' + (i + 1) + '">Anuvāka ' + (i + 1) + '</option>').join('');
   ['namaka', 'chamaka'].forEach(k => {
     const n = 11;
@@ -2670,7 +2765,7 @@ function init() {
   const gSync = () => { $('suffixBox').classList.toggle('hide', $('gender').value === 'f'); updatePurposePreview(); };
   $('gender').addEventListener('change', () => { nameRegender($('name').value, $('nameD'), $('gender').value === 'f'); updateNameCheck(); famRebuild(); gSync(); saveDetails(); });
   $('forget').addEventListener('click', () => { try { localStorage.removeItem('sankalpam.v3'); localStorage.removeItem('sankalpam.tarpanam'); } catch (e) {} saveBlocked = true; $('forget').textContent = 'Forgotten ✓ (reload to clear the form)'; });
-  loadDetails(); gSync(); updateNameCheck(); tSetup(); $('famConsentBox').classList.toggle('hide', !famData().some(m => m.nameD));
+  loadDetails(); gSync(); updateNameCheck(); v53Setup(); tSetup(); $('famConsentBox').classList.toggle('hide', !famData().some(m => m.nameD));
   $('script').addEventListener('change', () => { updateNameCheck(); if (!$('tOut').classList.contains('hide')) generateTarpanam(true); if (!$('abOut').classList.contains('hide')) showAbhivadaye(); if ($('output').classList.contains('active') && !$('resultContainer').classList.contains('hide')) generateSankalpam(); });
   $('form').addEventListener('change', updateSummary); updateSummary();
   $('fbText').addEventListener('input', () => { $('fbCount').textContent = $('fbText').value.length; $('fbStatus').textContent = ''; });
@@ -2679,6 +2774,65 @@ function init() {
   $('tIosNote').classList.toggle('hide', !(/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)));
   openFromLink();
   updateSetup();
+}
+// ---------- v5.2.2 additions: live preview, name-ending note, Share, email box under the output, location ----------
+function v53Setup() {
+  // Owner link: ?show=mahalaya keeps the Mahālaya tarpaṇam visible on this device; ?show=off hides it again
+  try { const sh = new URLSearchParams(location.search).get('show');
+    if (sh === 'mahalaya') localStorage.setItem('sankalpam.showMahalaya', '1'); else if (sh === 'off') localStorage.removeItem('sankalpam.showMahalaya'); } catch (e) {}
+  const later = () => setTimeout(() => { try { updateKartaPreview(); } catch (e) {} }, 0);
+  $('form').addEventListener('input', later); $('form').addEventListener('change', later);
+  $('script').addEventListener('change', later); later();
+  // "Why?" under the name ending
+  $('suffixWhyBtn').addEventListener('click', () => {
+    const on = $('suffixWhy').classList.toggle('hide') === false; $('suffixWhyBtn').setAttribute('aria-expanded', String(on));
+  });
+  // Remember the details as soon as they are entered (earlier: only on Generate)
+  ['name', 'nameD', 'gotra', 'gotraOther', 'gotraD', 'nak', 'pada', 'rashi', 'suffix'].forEach(id => $(id).addEventListener('change', () => setTimeout(saveDetails, 0)));
+  let typing = 0;                                   // typed text is saved shortly after the last key (no need to leave the box)
+  ['name', 'nameD', 'gotraOther', 'gotraD'].forEach(id => $(id).addEventListener('input', () => { clearTimeout(typing); typing = setTimeout(saveDetails, 600); }));
+  // Share: only where the phone / browser offers a share sheet; Copy text stays for the rest
+  if (navigator.share) $('shareBtn').classList.remove('hide');
+  // Email box under the output: takes the address to the Daily email tab, where the consent boxes are
+  if (SUBSCRIBE_URL) $('outMail').classList.remove('hide');
+  $('outMailGo').addEventListener('click', () => {
+    const e = $('outMailEmail').value.trim();
+    if (e) $('subEmail').value = e;
+    switchTab('email');
+    const c = $('subConsent'); c.scrollIntoView({behavior: 'smooth', block: 'center'}); try { c.focus({preventScroll: true}); } catch (x) {}
+    $('subStatus').style.color = 'var(--soft)'; $('subStatus').textContent = 'Please tick the box above, then press Subscribe.';
+  });
+  geoSetup();
+}
+function shareSankalpam() {
+  const s = $('copyStatus'), text = $('result').innerText.trim();
+  if (!text) return;
+  navigator.share({title: 'Saṅkalpam', text: text + '\n\nPrepared with sankalpam.live – https://sankalpam.live/'})
+    .then(() => { s.textContent = ''; })
+    .catch(err => { if (err && err.name !== 'AbortError') s.textContent = 'Could not open sharing – please use Copy text.'; });
+}
+// "Use my location": asks the browser only when the button is pressed, then picks the nearest city in the list.
+// The position is used on this device only and is not saved or sent anywhere. If refused, the city list is used as before.
+function geoSetup() {
+  if (!navigator.geolocation || !window.isSecureContext) return;
+  $('geoRow').classList.remove('hide');
+  const st = $('geoStatus'), say = (t, warn) => { st.textContent = t; st.style.color = warn ? '#a33' : ''; st.classList.remove('hide'); };
+  $('geoBtn').addEventListener('click', () => {
+    say('Finding your location…');
+    navigator.geolocation.getCurrentPosition(pos => {
+      const la = pos.coords.latitude, lo = pos.coords.longitude, R = 6371, rad = x => x * Math.PI / 180;
+      const km = c => { const dLa = rad(c[1] - la), dLo = rad(c[2] - lo);
+        const a = Math.sin(dLa / 2) ** 2 + Math.cos(rad(la)) * Math.cos(rad(c[1])) * Math.sin(dLo / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(a)); };
+      let best = 0, bestKm = Infinity; CITY_FLAT.forEach((c, i) => { const d = km(c); if (d < bestKm) { bestKm = d; best = i; } });
+      const city = $('city'); city.value = String(best); city.dispatchEvent(new Event('change', {bubbles: true}));
+      const d = Math.round(bestKm);
+      if (d > 150) say('Nearest city in the list: ' + CITY_FLAT[best][0] + ' (about ' + d + ' km away). Sunrise there can differ from yours by several minutes – choose another city if one is closer.', true);
+      else say('Nearest city in the list: ' + CITY_FLAT[best][0] + ' (about ' + d + ' km away). You can change it in the list.');
+    }, err => {
+      say(err && err.code === 1 ? 'Location not allowed – please choose your city from the list. (You can allow it later in your browser settings.)'
+                                : 'Could not find your location – please choose your city from the list.', true);
+    }, {enableHighAccuracy: false, timeout: 15000, maximumAge: 600000});
+  });
 }
 // Links from the daily email: ?date=YYYY-MM-DD opens that date; &tp=<type> opens that tarpaṇam (names come from this device).
 function openFromLink() {
@@ -4123,10 +4277,9 @@ details.sg-more>.grid{margin-top:8px}
   }
   function refreshMore() {
     const parts = [];
-    if (!$id('suffixBox').classList.contains('hide')) parts.push(lat('suffix'));
     if ($id('pada').value !== '0') parts.push('pāda ' + $id('pada').value);
-    parts.push(cap(lat('rashi')));
-    $id('sgMoreSum').textContent = '(' + parts.filter(Boolean).join(' · ') + ')';
+    if ($id('rashi').value !== '') parts.push(cap(lat('rashi')));
+    $id('sgMoreSum').textContent = parts.filter(Boolean).length ? '(' + parts.filter(Boolean).join(' · ') + ')' : '';
     if (!$id('rashi').disabled || !$id('rashiNote').classList.contains('hide')) $id('sgMore').open = true;
   }
   // refresh after every pañcāṅgam update and every change in the form

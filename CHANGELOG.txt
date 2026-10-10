@@ -1,4 +1,51 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.2
+Updated: 2026-10-10
+================================================================================
+
+NEW IN 5.2.2 – NO SILENT DEFAULTS, NAME ENDINGS, LIVE PREVIEW, SHARE
+(Requested after a first-time-user test on a phone, 9 Oct 2026.)
+  ✓ Birth star starts blank ("– Select birth star –") and must be chosen before
+    Generate or Subscribe. Earlier, an untouched form recited Aśvinī / Meṣa.
+    A note asks the user to confirm the star. Pāda and rāśi wait for the star.
+  ✓ Family members: the birth star also starts blank and is required when a
+    name is entered.
+  ✓ Gotra: new "Not known (use Kāśyapa)" choice, with a short note.
+  ✓ Name ending: None · नाम्नः (new default), Śarmā, Varmā, Gupta and Dāsa are
+    all available in the saṅkalpam (no longer "coming soon"); moved out of the
+    fold next to Gender; note "Choose the ending your family uses. If unsure,
+    keep None." and a "Why?" box quoting Viṣṇu Purāṇa 3.10.9 with a link.
+    Women keep नाम्न्याः. The tarpaṇam stays Śarmā-only (message explains).
+  ✓ Name box: "Your first name only (no surname)", example "shreenivaasa"
+    (was "raama daasa", which looked like a name plus an ending).
+  ✓ Live preview under the name: the kartā's line of today's saṅkalpam in the
+    chosen script, updating while typing; ____ marks anything missing.
+  ✓ Share button (phone share sheet), shown where the phone or browser has one.
+  ✓ Email box under the saṅkalpam: takes the address to the Daily email tab.
+  ✓ Home-screen icon opens like an app (manifest "display": "standalone").
+  ✓ Vākya stays the default; the Vākya / Tirukkaṇita switch moved into
+    "Edit pañcāṅgam".
+  ✓ Welcome box: "A saṅkalpam is a vow: you state when, where, who and why
+    before a pūjā." (highlighted; also in the one-line version).
+  ✓ "📍 Use my location for sunrise times" under City: asks permission only
+    when pressed, picks the nearest city in the list and says how far it is.
+  ✓ Name, gotra, star, pāda and ending are remembered as soon as they are
+    entered (earlier: only on Generate); typed names are saved while typing.
+  ✓ "Not known (use Kāśyapa)" is remembered, with its note.
+  ✓ Tarpaṇam with a non-Śarmā ending: a "Use Śarmā and continue" button
+    instead of a dead end.
+  ✓ Mahālaya tarpaṇam is offered only from 15 days before Mahālaya pakṣa until
+    its last day (next: 1–30 Sep 2027 by the app's calculation; the pakṣam
+    itself 16–30 Sep 2027). On other dates the box starts at the tarpaṇam of
+    the day, or Amāvāsyā. Owner link to see it on any date (this device only):
+    https://sankalpam.live/?show=mahalaya  – and ?show=off to hide it again.
+  ✓ Unchanged: pañcāṅgam calculations and all tarpaṇam text.
+  ⚠ Waiting for the vādhyār: वर्मणः, गुप्तस्य, दासस्य, नाम्नः, नाम्न्याः in the
+    saṅkalpam; Kāśyapa for an unknown gotra.
+  ✓ Daily email: no change to Code.gs needed (it loads the live app code);
+    run refreshEngine() after uploading – see README.txt.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.1
 Updated: 2026-10-06
 ================================================================================

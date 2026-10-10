@@ -2,7 +2,21 @@
 
 A free, single-page app that prepares a complete, correctly worded **saṅkalpam** for daily pūjā and pārāyaṇam, and the full **tarpaṇam** text, with the day's **pañcāṅgam** calculated for your city.
 
-**Open the app:** https://akbkgk.github.io/sankalpam-generator/ (soon also at https://sankalpam.live/)
+**Open the app:** https://sankalpam.live/
+
+> A **saṅkalpam** is a vow: you state when, where, who and why before a pūjā.
+
+## New in 5.2.2
+
+- **No silent defaults** – the birth star starts blank and must be chosen; rāśi follows the star. Family members too.
+- **Gotra not known** – choose "Not known (use Kāśyapa)".
+- **Name ending** – None · नाम्नः (default), Śarmā, Varmā, Gupta or Dāsa, with the Viṣṇu Purāṇa 3.10.9 verse behind "Why?". Women: नाम्न्याः.
+- **First name only** – the name box asks for the first name, without the surname.
+- **Live preview** – your own line of the saṅkalpam appears as you type.
+- **Share** – send the saṅkalpam to WhatsApp, Gmail and others from your phone.
+- **Daily email** – sign up right under your saṅkalpam.
+- **Use my location** – picks the nearest city for sunrise.
+- **Opens like an app** from the home-screen icon.
 
 ## What it does
 
@@ -13,7 +27,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
   - **Mahālaya pakṣam** – the dates of the pakṣam and Mahālaya Amāvāsyā; the day for each tithi on request.
   - **Māsa pirappu** – the next month's saṅkrānti time, the day the Tamil month begins, and the next 12 months.
   - **Compare** Vākya and Tirukkaṇita side by side; **Use** fills in the date (and month) for the tarpaṇam.
-- **Pañcāṅgam calendar (new in 5.0.4)** – any month and year, with Ekādaśī, Pradoṣam, Caturthī, Amāvāsyā, Pūrṇimā and Mahālaya Pakṣa calculated from the tithi, the day's śrāddha tithi, tithi and nakṣatra times, Rāhu kālam, Yamagaṇḍam and Kuḷigai, and the next 16 days.
+- **Pañcāṅgam calendar (new in 5.0.4)** – any month and year, with Ekādaśī, Pradoṣam, Caturthī, Amāvāsyā, Pūrṇimā and Mahālaya Pakṣa calculated from the tithi, the day's śrāddha tithi, tithi and nakṣatra times, Rāhu kālam, Yamagaṇḍam and Kuḷigai,.
 - **Phone and computer** (new in 5.0.5) – one app: phones get a touch-friendly layout, computers the full desktop layout.
 - **Your calendar** – Tamil (solar) or Telugu / Kannada (lunar, with adhika and nija māsa).
 - **Your details and family** – name (Tamil spellings become Sanskrit stems, e.g. Chidambareshwaran → चिदम्बरेश्वर, Subramanian → सुब्रह्मण्य), gotra, birth star and pāda (rāśi fills in automatically), family members.

@@ -1,4 +1,4 @@
-# Saṅkalpam Generator – Change Log (v1.1 to v5.2.1)
+# Saṅkalpam Generator – Change Log (v1.1 to v5.2.2)
 
 **App:** https://akbkgk.github.io/sankalpam-generator/ · **© 2026 Saṅkalpam Generator · MIT License**
 **Sources:** GitHub commit history, the saved app files and this project's conversation notes.
@@ -35,12 +35,17 @@ Rows marked *(not recorded)* in the "Requested" column come from before the conv
 | v5.0.6 | 5 Oct 2026 | With Vākya chosen, the 'upto' times in the saṅkalpam and tarpaṇam tables should be Vākya times. | In Vākya mode the tithi and nakṣatra end times under the table now come from the Vākya pañcāṅgam (06:00 + nāzhigai × 24 min, with nāzhigai), the same as the note in step 1. Earlier they showed the Tirukkaṇita time, or nothing when the two methods gave a different nakṣatra. Tirukkaṇita mode is unchanged. |
 | v5.2.1 | 6 Oct 2026 | A more compact calendar: festivals already show in the month grid. | Calendar only: the "Next 16 days" list below the grid is removed, and the day details box now sits beside the month grid, level with the "Festivals in <year>" list. Calculations unchanged. |
 | v5.2 | 6 Oct 2026 | A simpler, cleaner layout for computers and phones before marketing; a tester asked for an explanation at the top. | New layout only – all calculations and the saṅkalpam/tarpaṇam text are unchanged. Wide screens: menu down the left (Saṅkalpam, Preview, Tarpaṇam, Calendar, Daily email, Feedback). Phones: slim top bar and tabs at the bottom (Saṅkalpam, Tarpaṇam, Calendar, Email, More). Step 1 shows date, city, calendar and a Vākya (Traditional) / Tirukkaṇita (Modern) switch, with today's pañcāṅgam and end times in one box; the ten pañcāṅgam fields open with "Edit pañcāṅgam". Heading with the date and a tarpaṇam-day bar. Name ending, pāda and rāśi folded (opens by itself when a choice is needed). Daily email has its own tab. Calendar on phones: month grid first, ‹ month year › in one row, City and Today in one row, and a "Saṅkalpam for this day" button. A welcome box at the top says what the app does (free, no sign-up, details stay on the device); after "Got it" it shrinks to one line. Calendar: about 30 annual festivals (Mahā Śivarātri, Vināyaka Caturthī, Gokulāṣṭamī and Śrī Jayantī, Navarātri, Dīpāvalī, Kārttikai Dīpam, Vaikuṇṭha Ekādaśī, Pongal, Tamil New Year and others), monthly Māsa Śivarātri, and a "Festivals in <year>" list to jump to any of them; the monthly Śukla Caturthī is now called Caturthī. Each date box shows one chip (+N when there are more) and the day details list everything in one "Observances" box. |
+| **v5.2.2** | 10 Oct 2026 | First-time-user test (9 Oct): no silent star or ending in the sacred text; gotra "not known"; first name only; live preview; Share; email under the output; open like an app; explain what a saṅkalpam is; city from location. | **Birth star** blank by default and required (kartā and family; Generate and Subscribe check it), note to confirm it, pāda and rāśi wait for it. **Gotra** "Not known (use Kāśyapa)". **Name ending** None · नाम्नः (default), Śarmā, Varmā, Gupta, Dāsa in the saṅkalpam, with a note and a "Why?" box quoting Viṣṇu Purāṇa 3.10.9; women keep नाम्न्याः; tarpaṇam stays Śarmā-only. Name box "Your first name only (no surname)", example *shreenivaasa*. **Live preview** of the kartā's line while typing (____ for missing details). **Share** button (share sheet). **Email box** under the saṅkalpam. Manifest `display: standalone`. Vākya / Tirukkaṇita switch moved into Edit pañcāṅgam (Vākya default). Highlighted line "A saṅkalpam is a vow: you state when, where, who and why before a pūjā." **Use my location** → nearest city. Details saved as soon as entered (typed names too); "Not known" remembered; tarpaṇam offers "Use Śarmā and continue" when the ending is not Śarmā. **Mahālaya tarpaṇam** shown only from 15 days before Mahālaya pakṣa until it ends (owner link `?show=mahalaya`, `?show=off`). Calculations and tarpaṇam text unchanged. |
 
 ## Still to do
 
 | Item | Status |
 |---|---|
-| Name endings other than Śarmā (Varmā, Gupta, Dāsa) | Greyed out until the wording is confirmed |
+| Name endings in the saṅkalpam (Varmā, Gupta, Dāsa, None, and नाम्न्याः for women) | Switched on in v5.2.2 – vādhyār to confirm the wording |
+| Name endings other than Śarmā in the tarpaṇam | Waiting for the wording |
+| "Not known → Kāśyapa" for the kartā's gotra | Added in v5.2.2 – vādhyār to confirm |
+| Mahālaya Amāvāsyā: which tarpaṇam the app picks | Vādhyār to confirm |
+| Birth star from date, time and place of birth | Later |
 | Mother's gotra when it is not known | Hidden until decided |
 | Bodhāyana sūtra tarpaṇam | Waiting for the text |
 | Ṛg and Sāma Veda tarpaṇam texts | Waiting for the text |
