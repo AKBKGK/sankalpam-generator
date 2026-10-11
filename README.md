@@ -6,10 +6,6 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 
 > A **saṅkalpam** is a vow: you state when, where, who and why before a pūjā.
 
-## New in 5.2.5
-
-- **Namaste card** shows the meaning of saṅkalpam, and a **Start again with my name** button for the guided steps (your details are kept).
-
 ## New in 5.2.4
 
 - **Choose your calendar at the start** – Tamil (solar), Telugu or Kannada (lunar, Ugādi), and Vākya or Tirukkaṇita, with a short note.

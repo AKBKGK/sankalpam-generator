@@ -1,13 +1,4 @@
 ================================================================================
-SAṄKALPAM GENERATOR - VERSION 5.2.5
-Updated: 2026-10-11
-================================================================================
-  ✓ Namaste card: the vow line ("A saṅkalpam is a vow …") for returning users.
-  ✓ "Start again with my name": guided steps from the name, details kept.
-  ✓ "For another person" kept as its own link (warns before replacing).
-  ✓ Unchanged: calculations and all texts.
-
-================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.4
 Updated: 2026-10-11
 ================================================================================

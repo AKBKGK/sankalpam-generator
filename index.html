@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.5  |  Updated: 2026-10-11
+  Version: 5.2.4  |  Updated: 2026-10-11
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -314,13 +314,11 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <section class="home hide" id="home" aria-labelledby="homeT">
  <div class="home-hd"><div class="home-d" id="homeD"></div><h2 id="homeT">Namaste</h2></div>
  <div class="home-c">
-  <p class="home-vow">A saṅkalpam is a vow: you state when, where, who and why before a pūjā.</p>
   <b>Today's saṅkalpam is ready</b>
   <p class="wz-line deva" id="homeLine"></p>
   <div class="home-b"><button type="button" class="btn" id="homeOpen">Open my saṅkalpam</button><button type="button" class="btn ghost hide" id="homeShare">Share</button></div>
   <div class="wz-small">Chanting something extra today? Change it in the steps below.</div>
-  <button type="button" class="btn ghost home-again" id="homeAgain">Start again with my name ›</button>
-  <button type="button" class="link home-other" id="homeOther">For another person ›</button>
+  <button type="button" class="link home-other" id="homeOther">Guided steps / for another person ›</button>
   <div class="home-warn hide" id="homeWarn" role="alertdialog" aria-labelledby="homeWarnT">
    <p id="homeWarnT">This phone keeps one person's details. Starting again will replace the saved details of <b id="homeWarnName"></b> (name, gotra, star and family members).</p>
    <div class="home-b"><button type="button" class="btn" id="homeWarnGo">Continue</button><button type="button" class="btn ghost" id="homeWarnNo">Cancel</button></div>
@@ -2050,7 +2048,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.5';
+const APP_VERSION = 'v5.2.4';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -4636,8 +4634,6 @@ body.wz-open{overflow:hidden}
 .home-c{padding:14px 18px;display:flex;flex-direction:column;gap:8px}
 .home-b{display:grid;grid-template-columns:2fr 1fr;gap:8px}.home-b .btn{min-height:50px;margin:0}
 .home-other{align-self:flex-start;min-height:44px;font-size:.9rem}
-.home-vow{margin:0;padding:10px 12px;border-radius:10px;background:#fff1b8;font-size:.92rem;line-height:1.5}
-.home-again{margin:0;min-height:48px;width:100%;white-space:normal}
 .home-warn{padding:12px 14px;border-radius:12px;background:#fff4dc;border:1px solid #f0d49a;display:flex;flex-direction:column;gap:10px}.home-warn p{margin:0;line-height:1.5}
 .home-up{padding:0 18px 16px;display:flex;flex-direction:column;gap:8px}
 .home-up a{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:50px;padding:0 14px;border-radius:12px;background:#f3ecff;color:#4b2a7a;text-decoration:none;font-size:.92rem}
@@ -4876,9 +4872,7 @@ body.has-home #sgIntro{display:none}
   $i('nakFindLink').addEventListener('click', () => {
     openWz(4); $i('wzFindBox').classList.add('hide'); $i('wzFind').click();
   });
-  // v5.2.5: the guided steps again for the same person, starting with the name – nothing is cleared
-  $i('homeAgain').addEventListener('click', () => openWz(2));
-  // guided steps for another person (friend, relative): warn first, then clear the person's details
+  // guided steps again – for this person or another (friend, relative): warn first, then clear the person's details
   $i('homeOther').addEventListener('click', () => {
     $i('homeWarnName').textContent = capFirst(devaTo($i('nameD').value.trim(), 'en')) || 'the current person';
     $i('homeWarn').classList.remove('hide'); $i('homeWarnGo').focus();
@@ -5070,7 +5064,6 @@ body.has-home #sgIntro{display:none}
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [
-    {v: '5.2.5', items: ['The meaning of saṅkalpam on your Namaste card', '"Start again with my name" – the guided steps any time']},
     {v: '5.2.4', items: ['WhatsApp text in Tamil, Telugu and Kannada', 'Choose your calendar (Tamil, Telugu, Kannada) at the start', 'Short Help in More']},
     {v: '5.2.3', items: ['A 5-step welcome and "Don\'t know my star?"', 'Sunrise, sunset, Chandrāṣṭamam and more every day', 'Closing lines no longer printed twice']}];
   const cur = String(typeof APP_VERSION === 'string' ? APP_VERSION : '').replace(/^v/, '');
