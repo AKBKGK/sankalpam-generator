@@ -1,5 +1,5 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.2.4
+SAṄKALPAM GENERATOR v5.2.5
 Updated: 2026-10-11
 ================================================================================
 
@@ -12,6 +12,16 @@ FILES IN THIS FOLDER
   CHANGELOG.md / .txt   → version history – CHANGED
   LICENSE               → MIT License (unchanged)
   (icons: apple-touch-icon.png, icon-192.png, icon-512.png – unchanged)
+
+================================================================================
+WHAT'S NEW IN 5.2.5
+  • Namaste card (returning users) now shows the meaning of saṅkalpam:
+    "A saṅkalpam is a vow: you state when, where, who and why before a pūjā."
+  • "Start again with my name" button on the Namaste card: the guided steps
+    from the name, with your saved details kept (nothing is cleared).
+  • "For another person" stays as a separate link, with its warning.
+NOT CHANGED: everything else (tested: saṅkalpam, tarpaṇam and email identical
+to 5.2.4).
 
 ================================================================================
 WHAT'S NEW IN 5.2.4  (5.2.3 was never uploaded, so this upload has both)
@@ -125,8 +135,8 @@ OPTION A – GITHUB PAGES  (when you decide to upload)
   1. Open the repository → Add file → Upload files.
   2. Drag in: index.html, manifest.webmanifest, README.md, README.txt,
      CHANGELOG.md, CHANGELOG.txt. (Same names, so they replace the old ones.)
-  3. Commit message: "v5.2.4: calendar at the start, WhatsApp text in Tamil,
-     Telugu, Kannada, Help, What's new (includes 5.2.3)".
+  3. Commit message: "v5.2.5: vow line and 'Start again with my name' on the
+     Namaste card".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER
