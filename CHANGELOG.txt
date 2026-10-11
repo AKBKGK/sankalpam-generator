@@ -1,4 +1,50 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.3
+Updated: 2026-10-11
+================================================================================
+
+NEW IN 5.2.3 – FIRST VISIT IN 5 STEPS, STAR FINDER, DAILY PAÑCĀṄGAM EXTRAS
+  ✓ Welcome screens for a first visit: Today (pañcāṅgam + Share) → Your name
+    (large in Sanskrit and four scripts, live line) → Gotra (search, or
+    "I don't know my gotra") → Birth star → "Your saṅkalpam is ready, <name>".
+    "Full form" skips them; users with saved details never see them;
+    ?welcome=1 shows them again.
+  ✓ "I don't know my star": date, place (current city filled in) and time of
+    birth → exact star and pāda; without the time, the stars of that day with
+    from–to times to choose from. Footnote on the saṅkalpam when chosen:
+    "Birth star chosen by the user (time of birth not known)."
+  ✓ Star finder also from the full form ("Don't know your star?" link).
+  ✓ "Guided steps / for another person" on the Namaste card, with a warning
+    that the saved details (one person per phone) will be replaced.
+  ✓ Returning users: "Namaste, <name>" card with today's saṅkalpam in one tap,
+    Share and "Coming up" (next Māsa pirappu and Amāvāsyā tarpaṇam days).
+  ✓ Daily pañcāṅgam extras: sunrise rounded to the nearest minute, sunset,
+    the two karaṇas of the tithi at sunrise, Chandrāṣṭamam, Rāhu kālam,
+    Yamagaṇḍam, Kuḷigai; "Share today's pañcāṅgam" as text for WhatsApp.
+    All checked against a printed pañcāṅgam for 11 Oct 2026 (Chennai).
+  ✓ Calendar: sunrise and sunset in the day details; Vākya note "counted from
+    6:00 AM" instead of "sunrise 6:00 AM"; Chandrāṣṭamam tile; both karaṇas.
+  ✓ Calendar: no Mahālaya chip or pink days outside the Mahālaya season.
+  ✓ Tabs: Saṅkalpam, Tarpaṇam, Calendar, More (daily email inside More and
+    under the saṅkalpam). "Make it yours" chips under the saṅkalpam.
+  ✓ "देवनागरी" language label no longer cut off on phones.
+  ✓ Saṅkalpam ending: "अनेन मया कृतेन कर्मणा श्रीपरमेश्वरः प्रीयताम् ॥" and
+    "ॐ तत्सत् ब्रह्मार्पणमस्तु ॥" were printed twice in the Detailed and Simple
+    endings – now once. Very simple ending unchanged.
+  ✓ Links such as ?welcome=1 now work (they were being dropped before the
+    app read them).
+  ✓ PDF count (Print / PDF, Compact PDF) now sent as plain text, like Subscribe,
+    so it can reach the Google script (the JSON request was stopped by the
+    browser). Still only the document kind and the button – no details.
+    Privacy section in README.md mentions it.
+  ✓ README: "email the PDF once" removed (that button is not shown).
+  ✓ Code comment corrected: the app needs internet to open; once open, it
+    works without a signal.
+  ✓ Unchanged: calculations, the rest of the saṅkalpam and the tarpaṇam text.
+  ⚠ Waiting for: Good time and Amṛtādi yogam tables (hidden until given).
+  ⚠ Vādhyār to confirm: Chandrāṣṭamam rule (Moon's star + 11), karaṇa listing.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.2
 Updated: 2026-10-10
 ================================================================================

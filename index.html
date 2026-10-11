@@ -1,14 +1,14 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.2  |  Updated: 2026-10-10
+  Version: 5.2.3  |  Updated: 2026-10-11
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
   Pañcāṅgam is calculated in the browser for the chosen date and city (local
   sunrise, Lahiri ayanāṁśa, low-precision Sun/Moon theory). Calendars: Tamil
   (solar, sauramāna) and Telugu / Kannada (lunar amānta, cāndramāna, with
-  adhika māsa). Works offline once loaded;
-  web fonts load only when online (system fonts are used otherwise).
+  adhika māsa). Needs internet to open; once open, it works without a
+  signal. Web fonts load only when online (system fonts are used otherwise).
   Output scripts: Sanskrit (Devanagari), Tamil (Grantha + superscripts),
   Telugu, Kannada, English letters (IAST).
 -->
@@ -36,6 +36,7 @@ function sgMove(loc, store, go) {
   return 'stay';
 }
 try { sgMove(location, localStorage, function (u) { location.replace(u); }); } catch (e) {}
+var SG_QS = location.search;   // the address as opened (the app tidies the address bar later)
 </script>
 <meta charset="utf-8">
 <meta name="author" content="Saṅkalpam Generator">
@@ -225,6 +226,77 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 
 
 <div class="wrap">
+<!-- ===== v5.2.3: first-visit welcome, 5 steps ===== -->
+<div id="wz" class="wz hide" role="dialog" aria-modal="true" aria-labelledby="wzT1">
+ <div class="wz-in">
+  <div class="wz-top"><button type="button" class="wz-back hide" id="wzBack" aria-label="Back"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+   <div class="wz-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><span class="wz-stepl" id="wzStepL">Step 1 of 5 · Today</span>
+   <button type="button" class="link wz-skip" id="wzSkip">Full form</button></div>
+
+  <section class="wz-p" data-s="1">
+   <div class="wz-hi">Namaste</div>
+   <h2 class="wz-h" id="wzT1">Your saṅkalpam, ready in a minute.</h2>
+   <p class="wz-vow">A saṅkalpam is a vow: you state when, where, who and why before a pūjā.</p>
+   <div class="dx-card" id="wzToday"></div>
+   <button type="button" class="btn wz-go" data-next="2">Make my saṅkalpam ›</button>
+   <p class="wz-small">4 quick steps · free · no sign-up · your details stay on your phone</p>
+  </section>
+
+  <section class="wz-p hide" data-s="2">
+   <h2 class="wz-h">What is your name?</h2>
+   <label for="wzName" class="wz-l">Your first name only (no surname)</label>
+   <input type="text" id="wzName" autocomplete="given-name" placeholder="e.g. shreenivaasa">
+   <p class="wz-small">Long vowels: type double letters (shreenivaasa → श्रीनिवास)</p>
+   <div class="wz-seg" role="group" aria-label="Gender"><button type="button" data-g="m" aria-pressed="true">Male</button><button type="button" data-g="f" aria-pressed="false">Female</button></div>
+   <div class="wz-wow hide" id="wzWow">
+    <div class="wz-k">Your name, as it will be recited</div>
+    <div class="wz-big deva" id="wzBig"></div>
+    <div class="wz-chips" id="wzChips"></div>
+    <div class="wz-k" style="margin-top:10px">Your line in today's saṅkalpam – it fills in as you go</div>
+    <p class="wz-line deva" id="wzLine2"></p>
+    <details class="wz-fix"><summary>Spelling not right? Correct it here</summary>
+     <label for="wzNameD" class="wz-l">Name in Devanagari</label><input type="text" id="wzNameD" class="deva"></details>
+   </div>
+   <button type="button" class="btn wz-go" data-next="3" id="wzGo2" disabled>Next: your gotra ›</button>
+  </section>
+
+  <section class="wz-p hide" data-s="3">
+   <h2 class="wz-h">Your gotra</h2>
+   <label for="wzGs" class="wz-l">Search</label>
+   <input type="text" id="wzGs" placeholder="Type to search, e.g. bhaa" autocomplete="off">
+   <div class="wz-list" id="wzGlist" role="listbox" aria-label="Gotra"></div>
+   <div id="wzGotherBox" class="hide"><label for="wzGother" class="wz-l">Your gotra (English letters)</label><input type="text" id="wzGother" placeholder="e.g. kaapi"></div>
+   <button type="button" class="wz-nk" id="wzGnk">I don't know my gotra<span>Kāśyapa will be used – please ask your elders when you can</span></button>
+   <div class="wz-wow"><div class="wz-k">Your line so far</div><p class="wz-line deva" id="wzLine3"></p></div>
+   <button type="button" class="btn wz-go" data-next="4" id="wzGo3" disabled>Next: your birth star ›</button>
+  </section>
+
+  <section class="wz-p hide" data-s="4">
+   <h2 class="wz-h">Your birth star</h2>
+   <label for="wzNak" class="wz-l">Birth nakṣatra</label>
+   <select id="wzNak" class="deva"></select>
+   <p class="wz-small">It is recited in your saṅkalpam – please confirm it from your horoscope or with your elders.</p>
+   <div class="wz-two"><div><label for="wzPada" class="wz-l">Pāda</label><select id="wzPada"></select></div>
+    <div><label for="wzRashi" class="wz-l">Rāśi</label><select id="wzRashi" class="deva"></select></div></div>
+   <button type="button" class="wz-nk" id="wzFind">I don't know my star<span>Find it from your date of birth</span></button>
+   <div class="wz-find hide" id="wzFindBox">
+    <h3 class="wz-h3">Let's find your star</h3>
+    <label for="wzDob" class="wz-l">Date of birth</label><input type="date" id="wzDob" min="1900-01-01">
+    <label for="wzPob" class="wz-l">Place of birth</label><select id="wzPob"></select>
+    <p class="wz-small">Your current city is filled in – change it if you were born elsewhere.</p>
+    <label for="wzTob" class="wz-l">Time of birth</label><input type="time" id="wzTob">
+    <label class="wz-chk"><input type="checkbox" id="wzTobNo"> I don't know my time of birth</label>
+    <p class="wz-warn hide" id="wzTobMsg">The time of birth gives the exact star. Without it, please choose from the stars of that day.</p>
+    <button type="button" class="btn ghost" id="wzCalc">Find my star</button>
+    <div id="wzStarRes" aria-live="polite"></div>
+   </div>
+   <div class="wz-wow"><div class="wz-k" id="wzLine4K">Your line so far</div><p class="wz-line deva" id="wzLine4"></p></div>
+   <button type="button" class="btn wz-go" id="wzDone" disabled>See my saṅkalpam ›</button>
+  </section>
+ </div>
+</div>
+
+
 <div id="a2hs" class="a2hs hide">
   <div class="a2hs-ic">📲</div>
   <div class="a2hs-tx"><strong>Add this app to your home screen</strong> – open it in one tap every morning.<br>
@@ -233,6 +305,22 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 </div>
 
 <div id="form" class="tab-content active" role="tabpanel" aria-labelledby="mobile-tab-form">
+<!-- ===== v5.2.3: returning user ===== -->
+<section class="home hide" id="home" aria-labelledby="homeT">
+ <div class="home-hd"><div class="home-d" id="homeD"></div><h2 id="homeT">Namaste</h2></div>
+ <div class="home-c">
+  <b>Today's saṅkalpam is ready</b>
+  <p class="wz-line deva" id="homeLine"></p>
+  <div class="home-b"><button type="button" class="btn" id="homeOpen">Open my saṅkalpam</button><button type="button" class="btn ghost hide" id="homeShare">Share</button></div>
+  <div class="wz-small">Chanting something extra today? Change it in the steps below.</div>
+  <button type="button" class="link home-other" id="homeOther">Guided steps / for another person ›</button>
+  <div class="home-warn hide" id="homeWarn" role="alertdialog" aria-labelledby="homeWarnT">
+   <p id="homeWarnT">This phone keeps one person's details. Starting again will replace the saved details of <b id="homeWarnName"></b> (name, gotra, star and family members).</p>
+   <div class="home-b"><button type="button" class="btn" id="homeWarnGo">Continue</button><button type="button" class="btn ghost" id="homeWarnNo">Cancel</button></div>
+  </div>
+ </div>
+ <div class="home-up hide" id="homeUpBox"><b>Coming up</b><div id="homeUp"></div></div>
+</section>
 <section class="sg-intro" id="sgIntro" aria-labelledby="sgIntroT">
   <div class="sg-intro-full">
     <h2 class="sg-intro-t" id="sgIntroT">Your daily saṅkalpam, ready in a minute.</h2>
@@ -269,6 +357,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <div class="sg-plabel" id="sgPlabel">Pañcāṅgam</div>
     <p class="sg-pline" id="sgPline"></p>
     <p class="sg-ptimes" id="sgPtimes"></p>
+    <div class="dx" id="dxBox"></div>
     <div class="note hide" id="p-warn" style="margin:10px 0 0;border-left-color:#d98b00;background:#fff4dc"></div>
     <details class="sg-pedit" id="mobilePanchanga"><summary><span class="sg-c">Edit pañcāṅgam</span><span class="sg-o">Hide pañcāṅgam fields</span></summary>
     <div class="sg-mwrap" style="margin-top:14px"><span class="sg-lbl" id="sgMethodLbl">Calculation method</span>
@@ -310,7 +399,8 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <div id="gotraOtherBox" class="hide"><label class="req" for="gotraOther">Your Gotra (English)</label><input type="text" id="gotraOther" placeholder="e.g. kaapi"></div>
     <div><label class="req" for="gotraD">Gotra (Devanagari)</label><input type="text" id="gotraD" class="deva" placeholder="गोत्र"></div>
     <div><label class="req" for="nak">Birth Nakṣatra</label><select id="nak" class="deva"></select>
-      <p class="hint">Please confirm your birth star (janma nakṣatra) – it is recited in the saṅkalpam. If unsure, check your horoscope or ask your elders.</p></div>
+      <p class="hint">Please confirm your birth star (janma nakṣatra) – it is recited in the saṅkalpam. If unsure, check your horoscope or ask your elders.</p><input type="hidden" id="nakSrc" value="">
+      <p class="hint"><button type="button" class="link" id="nakFindLink">Don't know your star? Find it from your date of birth ›</button></p></div>
     <div><label for="gender">Gender</label><select id="gender"><option value="m" selected>Male</option><option value="f">Female</option></select></div>
     <div id="suffixBox"><label for="suffix">Name ending</label><select id="suffix">
       <option value="none" selected>None · नाम्नः</option><option value="sharma">Śarmā · शर्मणः</option><option value="varma">Varmā · वर्मणः</option>
@@ -426,6 +516,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <div id="output" class="tab-content" role="tabpanel" aria-labelledby="mobile-tab-output">
   <div id="noResult" class="card" style="text-align:center;color:var(--soft)"><span class="d-only">Fill in the Saṅkalpam tab and press <strong>Generate Saṅkalpam</strong>.</span><div class="m-only"><p style="margin:0">Your saṅkalpam will appear here.</p><p class="hint">Enter your name and gotra, choose your chants, then generate.</p><button type="button" class="btn mobile-empty-cta" onclick="switchTab('form')">Go to Saṅkalpam</button></div></div>
   <div id="resultContainer" class="hide">
+    <div class="ready hide" id="readyHd"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#ffd98a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c2.2 3.2 3.3 4.8 3.3 7a3.3 3.3 0 0 1-6.6 0c0-2.2 1.1-3.8 3.3-7z"></path><path d="M3.5 15h17l-2.2 4.5H5.7z"></path></svg><div><b id="readyT">Your saṅkalpam is ready</b><div id="readyD"></div></div></div>
     <div class="actions"><button class="btn" onclick="copySankalpam()">Copy text</button><button class="btn hide" id="shareBtn" type="button" onclick="shareSankalpam()">Share</button><button class="btn ghost" onclick="printDoc('sank', false)"><span class="d-only">Print / Save as PDF</span><span class="m-only">Print / PDF</span></button><button class="btn ghost" onclick="printDoc('sank', true)"><span class="d-only">📱 Compact PDF (WhatsApp)</span><span class="m-only">Compact PDF</span></button><button class="btn ghost hide" onclick="emailPdfOnce('sank')">📧 Email This PDF Once</button><button class="btn ghost" onclick="switchTab('form')"><span class="d-only">← Edit</span><span class="m-only">Edit details</span></button><span class="okmsg" id="copyStatus"></span></div>
     <p class="mobile-print-help m-only">To save a PDF on your phone, use Print / PDF and your phone’s print or sharing options.</p><div id="result" class="doc"></div>
     <div class="outmail hide" id="outMail">
@@ -434,6 +525,8 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
       <div class="row"><input type="email" id="outMailEmail" autocomplete="email" placeholder="name@example.com" aria-label="Your email">
         <button type="button" class="btn" id="outMailGo">Continue</button></div>
     </div>
+    <div class="mine"><b>Make it yours</b> <span class="hint">(optional)</span>
+      <div class="mine-b"><button type="button" class="btn ghost" data-go="chantCard">+ What I chant</button><button type="button" class="btn ghost" data-go="famAdd">+ Family</button><button type="button" class="btn ghost" data-go="mobile-purpose">+ Prayers</button><button type="button" class="btn ghost" data-go="suffixBox" id="mineSuffix">Name ending</button></div></div>
   </div>
 </div>
 <div id="tarpanam" class="tab-content" role="tabpanel" aria-labelledby="mobile-tab-tarpanam">
@@ -696,6 +789,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <p id="updStatus" role="status" aria-live="polite">Updates are checked automatically while you are online.</p>
 </section>
 </div>
+  <div class="card"><h2>Daily saṅkalpam by email</h2><p class="lead">Your saṅkalpam every evening at 9 pm, ready for the next morning.</p><button type="button" class="btn" onclick="switchTab('email')">Set up the daily email ›</button></div>
   <div class="card">
     <h2>Share Your Feedback</h2>
     <p class="lead">Your opinion and suggestions are most welcome. 🙏</p>
@@ -1508,6 +1602,25 @@ function sunEvent(y, m, d, lat, lon, tz, rise) {
   }
   return jdOf(base) + t / 24;
 }
+// ---- v5.2.3: daily almanac extras ----
+// Clock time rounded to the nearest minute, 12-hour (05:58:50 → "5:59 AM"), as printed pañcāṅgams show it.
+const clock12 = (H, M) => (H % 12 || 12) + ':' + pad2(M) + ' ' + (H < 12 ? 'AM' : 'PM');
+function roundClock(jd, tz) { const q = localParts((jd - 2440587.5) * 864e5 + 30e3, tz); return clock12(q.H, q.M); }
+function sunTimes(dateStr, c) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return {rise: roundClock(sunEvent(y, m, d, c[1], c[2], c[3], true), c[3]), set: roundClock(sunEvent(y, m, d, c[1], c[2], c[3], false), c[3])};
+}
+// "21:44" or "23:33 (next morning)" → "9:44 PM" / "11:33 PM"
+function hm12(s) { const m = /^(\d\d):(\d\d)/.exec(s || ''); return m ? clock12(+m[1], +m[2]) + (/next/.test(s) ? ' (next day)' : '') : (s || ''); }
+// Fixed weekday timings printed in Tamil calendars: [Rāhu kālam, Yamagaṇḍam, Kuḷigai]
+const RYK_TABLE = [['4:30 – 6:00 PM', '12:00 – 1:30 PM', '3:00 – 4:30 PM'], ['7:30 – 9:00 AM', '10:30 AM – 12:00 PM', '1:30 – 3:00 PM'],
+  ['3:00 – 4:30 PM', '9:00 – 10:30 AM', '12:00 – 1:30 PM'], ['12:00 – 1:30 PM', '7:30 – 9:00 AM', '10:30 AM – 12:00 PM'],
+  ['1:30 – 3:00 PM', '6:00 – 7:30 AM', '9:00 – 10:30 AM'], ['10:30 AM – 12:00 PM', '3:00 – 4:30 PM', '7:30 – 9:00 AM'], ['9:00 – 10:30 AM', '1:30 – 3:00 PM', '6:00 – 7:30 AM']];
+// Chandrāṣṭamam: the stars whose 17th star is the Moon's star that day (Moon's star + 11). Checked against a printed
+// Tamil pañcāṅgam for 11 Oct 2026 (Citrā, then Svātī → Pūraṭṭādhi, Uttiraṭṭādhi). Vādhyār to confirm the rule.
+const chandrashtama = nakIdx => (nakIdx + 11) % 27;
+// Amṛtādi yogam and Good time (nalla neram): tables differ between pañcāṅgams – filled in once the table is given.
+const AMRITADI_TABLE = null, GOOD_TIME_TABLE = null;
 function newMoonNear(jd, dir) {                                // dir −1: last new moon before jd, +1: next after
   const e = elong(jd);
   let t = jd + (dir < 0 ? -e : 360 - e) / 12.1907;
@@ -1897,13 +2010,17 @@ function composeSankalpam(P, date, stamp) {
   h += '<p>' + buildSidhyartha(sel.vedic) + ' —</p>';
   if (sel.lines.length) h += '<p>' + (sel.sukta ? hl('u', 'नानासूक्तपाठेन') + ' ' : '') + sel.lines.map(x => hl('u', x)).join(' च ') + ' करिष्ये ॥</p>';
   else h += '<p>' + hl('u', 'यथाशक्ति नित्यकर्म') + ' करिष्ये ॥</p>';
-  h += '<h4>Samāpanam</h4>' + completionFor(sel).map(m => '<p>' + m + '</p>').join('');
-  h += '<p>अनेन मया कृतेन कर्मणा श्रीपरमेश्वरः प्रीयतां ॥</p>';
-  h += '<p>ॐ तत्सत् ब्रह्मार्पणमस्तु ॥</p>';
-  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + '<br>' + getPanchangaNote() + '</div>';
+  const comp = completionFor(sel);
+  h += '<h4>Samāpanam</h4>' + comp.map(m => '<p>' + m + '</p>').join('');
+  if (!comp.includes(C.anena)) {            // v5.2.3: added only when the closing verses do not already have them (no repeat)
+    h += '<p>अनेन मया कृतेन कर्मणा श्रीपरमेश्वरः प्रीयतां ॥</p>';
+    h += '<p>ॐ तत्सत् ब्रह्मार्पणमस्तु ॥</p>';
+  }
+  const nakNote = V('nakSrc') === 'chosen' ? '<br>Birth star chosen by the user (time of birth not known).' : '';
+  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.2';
+const APP_VERSION = 'v5.2.3';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -1928,7 +2045,7 @@ const PANCHANGA_NOTE_STATIC = 'Pañcāṅgam calculated by the dṛk-gaṇita (T
 // Everything the saṅkalpam depends on, as a plain object (the same shape V()/CHK() read on the server).
 function readState() {
   const st = {v: 1};
-  const ids = ['script','cal','city','method','gender','suffix','name','nameD','gotra','gotraOther','gotraD','nak','pada','rashi','comp-mode','otherD',
+  const ids = ['script','cal','city','method','gender','suffix','name','nameD','gotra','gotraOther','gotraD','nak','pada','rashi','nakSrc','comp-mode','otherD',
                'namaka-option','namaka-p-anuvaka','namaka-g-anuvaka','chamaka-option','chamaka-p-anuvaka','chamaka-g-anuvaka'];
   SUKTAS.forEach(it => ids.push('suk-' + it.id)); SAHASRA.forEach(it => ids.push('sah-' + it.id)); ASHTO.forEach(it => ids.push('ash-' + it.id));
   ids.forEach(id => { st[id] = V(id); });
@@ -2071,13 +2188,13 @@ function pdfName(kind) {
   return head + '_' + pad2(d) + '-' + MONTHS_EN[m - 1].slice(0, 3) + '-' + y + '_' + ascii(tl);
 }
 function printDoc(kind, compact) {
-  // Track PDF download for analytics
+  // Count PDF downloads (only the kind of document and the button – no names or details).
+  // v5.2.3: sent as plain text, like Subscribe – a JSON request is stopped by the browser's cross-site check before it reaches Apps Script.
   const action = compact ? 'CompactPDF' : 'PrintPDF';
-  fetch(SUBSCRIBE_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'logPdfDownload', docType: kind, downloadAction: action })
-  }).catch(e => console.warn('Could not log download: ' + e));
+  if (SUBSCRIBE_URL) try {
+    fetch(SUBSCRIBE_URL, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({action: 'logPdfDownload', docType: kind, downloadAction: action})}).catch(e => console.warn('Could not count download: ' + e));
+  } catch (e) {}
   
   const old = document.title;
   document.title = pdfName(kind);
@@ -2092,7 +2209,7 @@ function copySankalpam() {
     () => { s.textContent = 'Could not copy – please select the text and copy it manually.'; });
 }
 // ---------- Remember details on this device ----------
-const SAVE_IDS = ['cal','city','method','script','gender','suffix','name','nameD','gotra','gotraOther','gotraD','nak','pada','rashi'];
+const SAVE_IDS = ['cal','city','method','script','gender','suffix','name','nameD','gotra','gotraOther','gotraD','nak','pada','rashi','nakSrc'];
 let saveBlocked = false;
 function saveDetails() {
   if (saveBlocked) return;
@@ -2103,7 +2220,7 @@ function saveDetails() {
 function loadDetails() {
   let d = null; try { d = JSON.parse(localStorage.getItem('sankalpam.v3') || 'null'); } catch (e) {}
   if (!d) return;
-  ['script','gender','suffix','name','nameD','gotra','gotraOther','nak','pada','method'].forEach(id => { if (d[id] != null) $(id).value = d[id]; });
+  ['script','gender','suffix','name','nameD','gotra','gotraOther','nak','pada','method','nakSrc'].forEach(id => { if (d[id] != null) $(id).value = d[id]; });
   if (!$('suffix').value) $('suffix').value = d.suffix == null ? 'sharma' : 'none';   // very old saved details had no ending: they were always Śarmā
   updateGotra(); if (d.gotraD) $('gotraD').value = d.gotraD;
   if (d.gotraNK && GOTHRAS[+$('gotra').value] && GOTHRAS[+$('gotra').value][0] === 'Kāśyapa') $('gotraNkNote').classList.remove('hide');
@@ -2189,6 +2306,12 @@ function eclipseOn(dateStr, c, kind) {
 }
 // Mahālaya pakṣa = kṛṣṇa pakṣa of (amānta) Bhādrapada.
 function isMahalaya(dateStr, c) { const L = calcPanchang(dateStr, c, 'te'); return L.masa === 5 && L.adhika !== 1 && L.tithi >= 15; }
+// v5.2.3: is today (the real date) within the Mahālaya season? Used to hide Mahālaya in the Calendar after it ends.
+let ML_SEASON = null;
+function mahalayaSeason() {
+  if (ML_SEASON === null) { try { ML_SEASON = mahalayaWindow(localDateStr(Date.now(), 'Asia/Kolkata'), curCity()); } catch (e) { ML_SEASON = false; } }
+  return ML_SEASON;
+}
 // v5.2.2: is the Mahālaya tarpaṇam offered on this date? From 15 days before Mahālaya pakṣa until its last day.
 // The owner can see it on any date with the link ?show=mahalaya (remembered on that device; ?show=off ends it).
 const ML_WIN = {};
@@ -2778,7 +2901,7 @@ function init() {
 // ---------- v5.2.2 additions: live preview, name-ending note, Share, email box under the output, location ----------
 function v53Setup() {
   // Owner link: ?show=mahalaya keeps the Mahālaya tarpaṇam visible on this device; ?show=off hides it again
-  try { const sh = new URLSearchParams(location.search).get('show');
+  try { const sh = new URLSearchParams(window.SG_QS || location.search).get('show');
     if (sh === 'mahalaya') localStorage.setItem('sankalpam.showMahalaya', '1'); else if (sh === 'off') localStorage.removeItem('sankalpam.showMahalaya'); } catch (e) {}
   const later = () => setTimeout(() => { try { updateKartaPreview(); } catch (e) {} }, 0);
   $('form').addEventListener('input', later); $('form').addEventListener('change', later);
@@ -3910,7 +4033,7 @@ details.sg-more>.grid{margin-top:8px}
     const key = 'e|' + ckey() + '|' + ds + (baseOnly ? '|b' : ''); if (cache.has(key)) return cache.get(key);
     const d = dayOf(ds), S = segs(d, 'T'), has = i => S.some(s => s.index === i), list = [];
     const rise = S[0].index;
-    let ml = false; try { ml = isMahalaya(ds, city()); } catch (e) {}
+    let ml = false; try { ml = mahalayaSeason() && isMahalaya(ds, city()); } catch (e) {}   // v5.2.3: shown only in season
     if (ml) list.push('mahalaya');
     if (has(29)) { const p = Panchanga.pitruDay(x => dayOf(x), ds, 29, 15); if (p && p.date === ds) list.push(ml ? 'mahalayaAma' : 'amavasya'); }
     if (pick(ds, 14, REF.sunset)) list.push('pournami');
@@ -4123,7 +4246,8 @@ details.sg-more>.grid{margin-top:8px}
   function renderDay() {
     const ds = sel, d = dayOf(ds, true), e = eventsOf(ds), c = city(), wd = wdOf(ds), ryk = RYK[wd];
     const shr = aparahnaTithi(d), drik = d.system === 'drik';
-    const sun = drik ? ' · Sunrise ' + d.clockOf(0) + ' · Sunset ' + d.clockOf(d.dayFrac) : ' · Times: Vākya printed convention (sunrise 6:00 AM)';
+    let st = {rise: '', set: ''}; try { st = sunTimes(ds, c); } catch (err) {}
+    const sun = ' · Sunrise ' + st.rise + ' · Sunset ' + st.set + (drik ? '' : '<br>Tithi and star times follow the Vākya convention: counted from 6:00 AM.');
     let h = '<div class="pc-date">' + longD(ds) + '</div><div class="pc-sub">' + esc(c[0]) + ' · ' + (TDF_LABEL[sys()] || '') + sun + '</div>';
     if (e.list.length) h += '<div class="pc-evbox"><div class="k">Observances · ' + shortD(ds) + '</div><ul>' +
       e.list.map(x => '<li><i class="pc-c pc-dot ' + evOf(x).cls + '" aria-hidden="true"></i><span>' + evOf(x).long + '</span></li>').join('') + '</ul></div>';
@@ -4138,8 +4262,12 @@ details.sg-more>.grid{margin-top:8px}
          '<div class="s">Afternoon (aparāhṇa) ' + d.clockOf(d.aparahna[0]) + ' – ' + d.clockOf(d.aparahna[1]) + ' · śrāddham day for a Pitṛ with this tithi' +
          (e.ml ? ' · Mahālaya Pakṣa day' : '') + '</div></div>';
     const Y = spans(ds, 'Y'), K = spans(ds, 'K');
-    h += '<div class="pc-tile"><div class="k">Yoga · Karaṇa (at sunrise)</div><div class="v">' + esc(NAME.Y(Y[0].index)) + ' · ' + esc(NAME.K(K[0].index)) + '</div>' +
-         '<div class="s">Yoga upto ' + fmtAbs(Y[0].to, ds) + ' · Karaṇa upto ' + fmtAbs(K[0].to, ds) + '</div></div>';
+    const T0 = spans(ds, 'T')[0].index;   // v5.2.3: the two karaṇas of the tithi at sunrise, as printed pañcāṅgams list them
+    h += '<div class="pc-tile"><div class="k">Yoga · Karaṇa</div><div class="v">' + esc(NAME.Y(Y[0].index)) + ' · ' + esc(NAME.K(2 * T0)) + ', ' + esc(NAME.K(2 * T0 + 1)) + '</div>' +
+         '<div class="s">Yoga upto ' + fmtAbs(Y[0].to, ds) + ' · ' + esc(NAME.K(K[0].index)) + ' upto ' + fmtAbs(K[0].to, ds) + '</div></div>';
+    const NS = spans(ds, 'N');
+    h += '<div class="pc-tile"><div class="k">Chandrāṣṭamam</div><div class="v">' + NS.map(s => esc(nkName(chandrashtama(s.index)).replace(/^.*\((.*)\)$/, '$1'))).join(', ') + '</div>' +
+         '<div class="s">Stars for whom the Moon is in the 8th place today</div></div>';
     h += '</div>';
     // next 16 days from the selected date
     const up = [];
@@ -4258,7 +4386,7 @@ details.sg-more>.grid{margin-top:8px}
     $id('sgTitle').textContent = isToday ? 'Today\'s saṅkalpam' : v === Panchanga.addDays(today, 1) ? 'Tomorrow\'s saṅkalpam' : 'Saṅkalpam for ' + longDate(v).split(', ')[1];
     let tp = ''; try { tp = tSuggest(v, c) || ''; } catch (e) {}
     $id('sgFest').classList.toggle('hide', !FEST[tp]); $id('sgFestText').textContent = FEST[tp] || '';
-    let rise = ''; try { rise = fmtTime(calcPanchang(v, c, cal).rise, c[3]); } catch (e) {}
+    let rise = ''; try { rise = sunTimes(v, c).rise; } catch (e) {}                // v5.2.3: rounded to the nearest minute
     $id('sgPlabel').textContent = (isToday ? 'Today\'s pañcāṅgam' : 'Pañcāṅgam') + ' · ' + (drik ? 'Tirukkaṇita' : 'Vākya') + (rise ? ' · sunrise ' + rise + ' at ' + c[0] : '');
     const a = $id('p-adhika').value, masa = (cal !== 'ta' && a === '1' ? 'Adhika ' : cal !== 'ta' && a === '2' ? 'Nija ' : '') + lat('p-masa');
     const e = x => esc(x);
@@ -4321,5 +4449,403 @@ details.sg-more>.grid{margin-top:8px}
 })();
 
 </script>
+<style id="welcome-style">
+/* ===== v5.2.3: welcome flow, Today card, extras ===== */
+body.wz-open{overflow:hidden}
+.wz{position:fixed;inset:0;z-index:200;background:var(--cream,#fbf7f0);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.wz-in{max-width:520px;margin:0 auto;padding:0 18px calc(28px + env(safe-area-inset-bottom,0px))}
+.wz-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;margin:0 -18px;padding:10px 14px;background:var(--cream,#fbf7f0);border-bottom:1px solid var(--line)}
+.wz-back{width:44px;height:44px;border-radius:22px;border:0;background:transparent;color:var(--kum-d);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.wz-dots{display:flex;gap:5px;align-items:center}.wz-dots i{width:7px;height:7px;border-radius:4px;background:#dccbb3}.wz-dots i.on{background:var(--kum)}.wz-dots i.cur{width:22px}
+.wz-stepl{font-size:.8rem;color:var(--soft);flex:1}
+.wz-skip{font-size:.85rem;min-height:44px}
+.wz-p{display:flex;flex-direction:column;gap:12px;padding-top:18px}
+.wz-hi{font-size:1rem;color:var(--soft)}
+.wz-h{margin:0;font-family:var(--lat);font-size:1.7rem;line-height:1.2;color:var(--kum-d)}
+.wz-h3{margin:4px 0 0;font-family:var(--lat);font-size:1.2rem;color:var(--kum-d)}
+.wz-vow{margin:0;padding:10px 12px;border-radius:10px;background:#fff1b8;font-weight:600;color:#3b2a10;line-height:1.45}
+.wz-l{font-size:.85rem;font-weight:600;text-transform:none;letter-spacing:0;color:var(--ink)}
+.wz input[type=text],.wz input[type=date],.wz input[type=time],.wz select{min-height:48px;font-size:1rem;border-radius:12px}
+.wz-small{margin:0;font-size:.8rem;color:var(--soft);line-height:1.5}
+.wz-go{min-height:54px;font-size:1.05rem;border-radius:14px;margin-top:6px}
+.wz-go[disabled]{opacity:.45;cursor:not-allowed}
+.wz-seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.wz-seg button{min-height:46px;border-radius:12px;border:1px solid #c9b79e;background:#fff;font-weight:600;font-size:1rem;color:var(--ink);cursor:pointer}
+.wz-seg button[aria-pressed=true]{background:var(--kum);border-color:var(--kum);color:#fff}
+.wz-wow{padding:14px;border-radius:16px;background:#fff8e1;border:2px solid #e2c27a}
+.wz-k{font-size:.78rem;font-weight:600;color:var(--soft)}
+.wz-big{font-size:2.4rem;font-weight:700;color:#8b1a1a;line-height:1.3;overflow-wrap:anywhere}
+.wz-chips{display:flex;flex-wrap:wrap;gap:6px}.wz-chips span{padding:3px 10px;border-radius:14px;background:#fff;border:1px solid #ead9b4;font-size:.95rem}
+.wz-line{margin:4px 0 0;font-size:1.05rem;line-height:1.9;overflow-wrap:anywhere}
+.wz-line b{background:#fff1b8;padding:0 3px;border-radius:3px}.wz-line .bl{color:#a33;font-weight:700;background:none}
+.wz-fix{margin-top:8px}.wz-fix summary{cursor:pointer;color:var(--kum);font-weight:600;font-size:.9rem;min-height:40px;display:flex;align-items:center}
+.wz-list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;max-height:300px;overflow-y:auto}
+.wz-list button{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:48px;padding:0 14px;border:0;border-bottom:1px solid #efe4d3;background:#fff;font-size:1rem;text-align:left;color:var(--ink);cursor:pointer}
+.wz-list button .dv{font-family:var(--deva);color:var(--soft)}
+.wz-list button[aria-selected=true]{background:#f6e9dc;color:var(--kum-d);font-weight:700}
+.wz-nk{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:52px;padding:10px 14px;border-radius:12px;border:1px dashed #c9b79e;background:transparent;font-weight:600;color:var(--kum-d);text-align:left;cursor:pointer;font-size:.95rem}
+.wz-nk span{font-weight:400;font-size:.8rem;color:var(--soft)}
+.wz-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.wz-two>div{display:flex;flex-direction:column;gap:6px}
+.wz-find{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:14px;background:#fffdf9;border:1px solid var(--line)}
+.wz-chk{display:flex;align-items:center;gap:10px;min-height:44px;font-size:.95rem;text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink)}
+.wz-chk input{width:20px;height:20px}
+.wz-warn{margin:0;padding:10px 12px;border-radius:10px;background:#fff4dc;font-size:.85rem;line-height:1.5}
+.wz-opt{display:flex;flex-direction:column;align-items:flex-start;gap:3px;width:100%;padding:12px 14px;margin-top:8px;border-radius:12px;border:1px solid #c9b79e;background:#fff;text-align:left;font-size:.95rem;color:var(--ink);cursor:pointer}
+.wz-opt[aria-pressed=true]{border:2px solid var(--kum);background:#f6e9dc}
+.wz-opt b{color:var(--kum-d)}
+/* Today card (wizard) and extras (step 1 box) */
+.dx-card{background:#fffdf9;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.dx-hd{padding:12px 14px;background:#f6ead8}.dx-hd b{display:block}.dx-hd span{font-size:.8rem;color:var(--soft)}
+.dx-tl{padding:10px 14px;font-weight:600;color:var(--kum-d);border-bottom:1px solid #efe4d3}
+.dx-g{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;padding:12px 14px;font-size:.88rem}.dx-g small{display:block;color:var(--soft);font-size:.72rem}
+.dx-sun{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px 12px}.dx-sun div{padding:8px 10px;border-radius:10px;background:#fff6e6;font-size:.88rem}.dx-sun div+div{background:#f3ecf7}.dx-sun small{display:block;color:var(--soft);font-size:.72rem}
+.dx-rows{padding:0 14px 12px;display:flex;flex-direction:column;gap:6px;font-size:.88rem}
+.dx-rows div{display:flex;justify-content:space-between;gap:12px}.dx-rows span{color:var(--soft)}.dx-rows b{text-align:right}.dx-rows .na{font-weight:400;color:var(--soft)}
+.dx-share{margin:0 14px 14px;width:calc(100% - 28px);min-height:44px}
+.dx{margin:10px 0 0}.dx .dx-sun,.dx .dx-rows{padding-left:0;padding-right:0}.dx .dx-share{margin:4px 0 0;width:100%}
+/* returning user */
+.home{margin:0 0 18px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#fffdf9}
+.home-hd{padding:16px 18px;background:var(--kum-d);color:#fff}.home-hd h2{margin:2px 0 0;font-family:var(--lat);font-size:1.6rem;color:#fff}.home-d{font-size:.85rem;color:#f3d9c0}
+.home-c{padding:14px 18px;display:flex;flex-direction:column;gap:8px}
+.home-b{display:grid;grid-template-columns:2fr 1fr;gap:8px}.home-b .btn{min-height:50px;margin:0}
+.home-other{align-self:flex-start;min-height:44px;font-size:.9rem}
+.home-warn{padding:12px 14px;border-radius:12px;background:#fff4dc;border:1px solid #f0d49a;display:flex;flex-direction:column;gap:10px}.home-warn p{margin:0;line-height:1.5}
+.home-up{padding:0 18px 16px;display:flex;flex-direction:column;gap:8px}
+.home-up a{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:50px;padding:0 14px;border-radius:12px;background:#f3ecff;color:#4b2a7a;text-decoration:none;font-size:.92rem}
+.home-up a+a{background:#eef1f4;color:#2f3e4e}
+body.has-home #sgIntro{display:none}
+/* ready header and Make it yours */
+.ready{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:14px 16px;border-radius:14px;background:var(--kum-d);color:#fff}
+.ready b{font-family:var(--lat);font-size:1.2rem}.ready div div{font-size:.85rem;color:#f3d9c0}
+.mine{margin:14px 0 0}.mine-b{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.mine-b .btn{min-height:42px;margin:0;border-radius:21px;font-size:.9rem;padding:6px 14px}
+.wz-h:focus{outline:none}
+.home-up a span:last-child{white-space:nowrap}
+@media screen and (max-width:760px){.langsel select{max-width:52vw;font-size:.8rem;padding-right:24px}}
+#mobile-tab-email{display:none!important}
+.wa{margin:12px 0 0;padding:12px;border-radius:12px;border:1px solid #bfe3c8;background:#f1faf3;display:flex;flex-direction:column;gap:8px}
+.wa-h{font-weight:700;color:#1c5c2e}.wa-h small{font-weight:400;color:var(--soft)}
+.wa-r{display:flex;flex-direction:column;gap:4px;font-size:.85rem}.wa-r input{min-height:44px;font-size:1rem}
+.wa .btn{margin:0;min-height:44px;width:100%}.wa-n{color:var(--soft);line-height:1.45}
+@media print{.wz,.home,.ready,.mine,.dx{display:none!important}}
+</style>
+<script id="welcome-ui">
+/* ===== v5.2.3: first-visit welcome (5 steps), Today card with almanac extras, returning-user card ===== */
+(function () {
+  'use strict';
+  const $i = id => document.getElementById(id);
+  const ev = (el, type) => el.dispatchEvent(new Event(type, {bubbles: true}));
+  const lat = id => { const e = $i(id); const t = e && e.selectedOptions && e.selectedOptions[0] ? e.selectedOptions[0].textContent.trim() : ''; return t.split(' · ')[0].replace(/^\d+\.\s*/, ''); };
+  const capFirst = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+  const dateNow = () => $i('date').value || localDateStr(Date.now(), 'Asia/Kolkata');
+  const addD = (ds, k) => { const [y, m, d] = ds.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d + k)).toISOString().slice(0, 10); };
+  const shortDay = ds => { const [y, m, d] = ds.split('-').map(Number); return VARA[new Date(Date.UTC(y, m - 1, d)).getUTCDay()][0].slice(0, 3) + ' ' + d + ' ' + MONTHS_EN[m - 1].slice(0, 3); };
+  const kName = k => (k === 0 || k >= 57) ? KARANA_FIX[k][0] : KARANA_MOV[(k - 1) % 7][0];
+  const nkShort = i => nkName(i).replace(/^.*\((.*)\)$/, '$1');
+
+  // ---------- the day's almanac (karaṇas: the two of the tithi at sunrise, as printed pañcāṅgams list them) ----------
+  function extras(ds) {
+    const c = curCity(), prof = tdfProfile(), d = tdfDay(prof, ds), seg = g => Panchanga.segments(d, g);
+    const T = seg('T'), N = seg('N'), Y = seg('Y'), K = seg('K');
+    const clk = f => hm12(prof === 'drik' ? d.clockOf(f) : tdfHM(f));
+    const till = S => S[0].open ? 'all day' : 'till ' + clk(S[0].f1);
+    const [y, m, dd] = ds.split('-').map(Number), wd = new Date(Date.UTC(y, m - 1, dd)).getUTCDay();
+    let st = {rise: '', set: ''}; try { st = sunTimes(ds, c); } catch (e) {}
+    return {c, ds, wd, st, method: TDF_LABEL[prof],
+      tithi: tithiLabel(T[0].index).split(' · ')[0], tithiTill: till(T), star: nkName(N[0].index), starTill: till(N),
+      yoga: YOGA[Y[0].index][0], karanas: [kName(2 * T[0].index), kName(2 * T[0].index + 1)], chandra: N.map(s => nkShort(chandrashtama(s.index))), ryk: RYK_TABLE[wd]};
+  }
+  const NA = '<b class="na">awaiting our pañcāṅgam\'s table</b>';
+  function rowsHTML(x) {
+    return '<div class="dx-rows">' +
+      '<div><span>Rāhu kālam</span><b>' + x.ryk[0] + '</b></div><div><span>Yamagaṇḍam</span><b>' + x.ryk[1] + '</b></div><div><span>Kuḷigai</span><b>' + x.ryk[2] + '</b></div>' +
+      (GOOD_TIME_TABLE ? '<div><span>Good time</span>' + NA + '</div>' : '') + (AMRITADI_TABLE ? '<div><span>Amṛtādi yogam</span>' + NA + '</div>' : '') +
+      '<div><span>Chandrāṣṭamam</span><b>' + esc(x.chandra.join(', ')) + '</b></div></div>';
+  }
+  const sunHTML = x => '<div class="dx-sun"><div><small>Sunrise</small><b>' + x.st.rise + '</b></div><div><small>Sunset</small><b>' + x.st.set + '</b></div></div>';
+  function todayCardHTML(x) {
+    const today = x.ds === localDateStr(Date.now(), x.c[3]);
+    return '<div class="dx-hd"><b>' + esc(longDate(x.ds)) + '</b><span>' + esc(x.c[0]) + ' · ' + (today ? 'Today\'s pañcāṅgam' : 'Pañcāṅgam') + ' · ' + x.method + '</span></div>' +
+      '<div class="dx-tl">' + esc(x.tithi) + ' ' + x.tithiTill + ' · ' + esc(x.star) + ' ' + x.starTill + '</div>' +
+      '<div class="dx-g"><div><small>Year</small><b>' + esc(lat('p-samv')) + '</b></div><div><small>Ayanam · Ṛtu</small><b>' + esc(lat('p-ayana')) + ' · ' + esc(lat('p-rtu')) + '</b></div>' +
+      '<div><small>Month</small><b>' + esc(lat('p-masa')) + '</b></div><div><small>Yogam · Karaṇam</small><b>' + esc(x.yoga) + ' · ' + esc(x.karanas.join(', ')) + '</b></div></div>' +
+      sunHTML(x) + rowsHTML(x) + '<button type="button" class="btn ghost dx-share" data-share-day>Share today\'s pañcāṅgam</button>';
+  }
+  function shareText(x) {
+    return 'Pañcāṅgam · ' + longDate(x.ds) + ' · ' + x.c[0] + ' (' + x.method + ')\n' +
+      'Year: ' + lat('p-samv') + ' · Ayanam: ' + lat('p-ayana') + ' · Ṛtu: ' + lat('p-rtu') + '\n' +
+      'Month: ' + lat('p-masa') + '\n' +
+      'Tithi: ' + x.tithi + ' ' + x.tithiTill + '\n' +
+      'Star: ' + x.star + ' ' + x.starTill + '\n' +
+      'Yogam: ' + x.yoga + ' · Karaṇam: ' + x.karanas.join(', ') + '\n' +
+      'Sunrise ' + x.st.rise + ' · Sunset ' + x.st.set + '\n' +
+      'Rāhu kālam ' + x.ryk[0] + ' · Yamagaṇḍam ' + x.ryk[1] + ' · Kuḷigai ' + x.ryk[2] + '\n' +
+      'Chandrāṣṭamam: ' + x.chandra.join(', ') + '\n\n' +
+      'Your own saṅkalpam for today, free: https://sankalpam.live/';
+  }
+  function shareOrCopy(text, statusEl) {
+    if (navigator.share) { navigator.share({title: 'Pañcāṅgam', text}).catch(() => {}); return; }
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(
+      () => { if (statusEl) statusEl.textContent = '✓ Copied – paste it in WhatsApp'; },
+      () => { if (statusEl) statusEl.textContent = 'Could not copy on this device.'; });
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-share-day]'); if (!b) return;
+    let x; try { x = extras(dateNow()); } catch (err) { return; }
+    let s = b.nextElementSibling; if (!s || !s.classList.contains('okmsg')) { s = document.createElement('span'); s.className = 'okmsg'; b.after(s); }
+    shareOrCopy(shareText(x), s);
+  });
+  // ---------- owner only: send the day's pañcāṅgam on WhatsApp (turn on with ?owner=on, off with ?owner=off) ----------
+  // Uses WhatsApp's click-to-chat links (wa.me). Nothing is sent by the app: WhatsApp opens with the text ready and the owner taps Send.
+  try { const ow = new URLSearchParams(window.SG_QS || location.search).get('owner');
+    if (ow === 'on') localStorage.setItem('sankalpam.owner', '1'); else if (ow === 'off') { localStorage.removeItem('sankalpam.owner'); localStorage.removeItem('sankalpam.waMe'); } } catch (e) {}
+  const isOwner = () => { try { return localStorage.getItem('sankalpam.owner') === '1'; } catch (e) { return false; } };
+  const waNum = s => { let n = String(s || '').replace(/\D/g, '').replace(/^00/, ''); if (n.length === 11 && n[0] === '0') n = n.slice(1); if (n.length === 10) n = '91' + n; return n.length >= 11 && n.length <= 15 ? n : ''; };
+  function waPanelHTML() {
+    if (!isOwner()) return '';
+    let me = ''; try { me = localStorage.getItem('sankalpam.waMe') || ''; } catch (e) {}
+    return '<div class="wa" id="waBox"><div class="wa-h">WhatsApp <small>(only on this device)</small></div>' +
+      '<label class="wa-r"><span>My number</span><input type="tel" id="waMe" inputmode="tel" autocomplete="off" placeholder="98765 43210" value="' + esc(me) + '"></label>' +
+      '<button type="button" class="btn" data-wa="me">Send to myself</button>' +
+      '<label class="wa-r"><span>Another number</span><input type="tel" id="waTo" inputmode="tel" autocomplete="off" placeholder="98765 43210 or +44 …"></label>' +
+      '<button type="button" class="btn ghost" data-wa="to">Send to this number</button>' +
+      '<button type="button" class="btn ghost" data-wa="pick">Choose a contact, group or broadcast list</button>' +
+      '<span class="okmsg" id="waStatus"></span>' +
+      '<small class="wa-n">WhatsApp opens with the text ready. Check it and tap Send. Indian numbers can be typed with 10 digits; others need the country code.</small></div>';
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-wa]'); if (!b) return;
+    const st = $i('waStatus'); let x; try { x = extras(dateNow()); } catch (err) { if (st) st.textContent = 'Could not prepare the pañcāṅgam.'; return; }
+    const text = encodeURIComponent(shareText(x)), mode = b.getAttribute('data-wa');
+    let num = '';
+    if (mode === 'me') { num = waNum($i('waMe').value); if (!num) { st.textContent = 'Type your WhatsApp number first.'; $i('waMe').focus(); return; }
+      try { localStorage.setItem('sankalpam.waMe', $i('waMe').value.trim()); } catch (err) {} }
+    if (mode === 'to') { num = waNum($i('waTo').value); if (!num) { st.textContent = 'Type a valid number (10 digits, or with the country code).'; $i('waTo').focus(); return; } }
+    st.textContent = '';
+    window.open('https://wa.me/' + num + '?text=' + text, '_blank', 'noopener');
+  });
+  function renderExtras() {
+    let x; try { x = extras(dateNow()); } catch (err) { console.warn('Pañcāṅgam extras:', err); return; }
+    $i('dxBox').innerHTML = sunHTML(x) + '<div class="dx-rows"><div><span>Yogam · Karaṇam</span><b>' + esc(x.yoga) + ' · ' + esc(x.karanas.join(', ')) + '</b></div></div>' + rowsHTML(x) +
+      '<button type="button" class="btn ghost dx-share" data-share-day>Share this pañcāṅgam</button>';
+    if (!$i('waBox') && isOwner()) $i('dxBox').insertAdjacentHTML('afterend', waPanelHTML());   // drawn once, so typed numbers stay
+    if (!$i('wz').classList.contains('hide') && step === 1) $i('wzToday').innerHTML = todayCardHTML(x);
+  }
+
+  // ---------- the kartā's line, with blanks ----------
+  function kLine() {
+    const nak = $i('nak').value, rashi = $i('rashi').value, P = s => s ? '<b>' + s + '</b>' : '<b class="bl">____</b>';
+    const nakD = nak === '' ? '' : NK[+nak][1], rashiD = nak === '' || rashi === '' ? '' : RS[+rashi][1];
+    let tl = ''; try { tl = tithiLoc(+$i('p-tithi').value); } catch (e) {}
+    const h = '… अस्यां ' + (tl ? tl + ' शुभतिथौ ' : '') + kartaPhrase($i('gender').value === 'f', esc($i('gotraD').value.trim()), nakD, rashiD, esc($i('nameD').value.trim()), $i('suffix').value, P) + ' …';
+    return devaTo(h, $i('script').value);
+  }
+
+  // ---------- welcome flow ----------
+  let step = 1;
+  const LBL = ['', 'Today', 'Your name', 'Gotra', 'Birth star'];
+  function show(n) {
+    step = n;
+    document.querySelectorAll('#wz .wz-p').forEach(p => p.classList.toggle('hide', +p.dataset.s !== n));
+    document.querySelectorAll('#wz .wz-dots i').forEach((d, i) => { d.classList.toggle('on', i < n); d.classList.toggle('cur', i === n - 1); });
+    $i('wzStepL').textContent = 'Step ' + n + ' of 5 · ' + LBL[n];
+    $i('wzBack').classList.toggle('hide', n === 1);
+    $i('wz').scrollTop = 0;
+    if (n === 1) renderExtras();
+    if (n === 2) { $i('wzName').value = $i('name').value; syncName(); }
+    if (n === 3) { renderGotras(); syncLines(); }
+    if (n === 4) { syncStar(); }
+    const h = document.querySelector('#wz .wz-p[data-s="' + n + '"] .wz-h'); if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({preventScroll: true}); } catch (e) {} }
+  }
+  function openWz(n) { $i('wz').classList.remove('hide'); document.body.classList.add('wz-open'); show(n || 1); }
+  function closeWz() { $i('wz').classList.add('hide'); document.body.classList.remove('wz-open'); try { localStorage.setItem('sankalpam.wzDone', '1'); } catch (e) {} }
+  function syncLines() { const l = kLine(); ['wzLine2', 'wzLine3', 'wzLine4', 'homeLine'].forEach(id => { if ($i(id)) $i(id).innerHTML = l; }); }
+  function syncName() {
+    const dv = $i('nameD').value.trim();
+    $i('wzWow').classList.toggle('hide', !dv);
+    $i('wzBig').textContent = dv;
+    $i('wzChips').innerHTML = dv ? ['ta', 'te', 'kn', 'en'].map(sc => '<span>' + esc(devaTo(dv, sc)) + '</span>').join('') : '';
+    if (document.activeElement !== $i('wzNameD')) $i('wzNameD').value = dv;
+    $i('wzGo2').disabled = !dv;
+    document.querySelectorAll('#wz .wz-seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.g === $i('gender').value)));
+    syncLines();
+  }
+  $i('wzName').addEventListener('input', () => { $i('name').value = $i('wzName').value; ev($i('name'), 'input'); ev($i('name'), 'change'); syncName(); });
+  $i('wzNameD').addEventListener('input', () => { $i('nameD').value = $i('wzNameD').value; ev($i('nameD'), 'input'); ev($i('nameD'), 'change'); syncName(); });
+  document.querySelectorAll('#wz .wz-seg button').forEach(b => b.addEventListener('click', () => { $i('gender').value = b.dataset.g; ev($i('gender'), 'change'); syncName(); }));
+  // gotra
+  const fold = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/aa/g, 'a').replace(/ee|ii/g, 'i').replace(/oo|uu/g, 'u').replace(/sh/g, 's').replace(/h/g, '');
+  function renderGotras() {
+    const q = fold($i('wzGs').value.trim()), cur = $i('gotra').value;
+    $i('wzGlist').innerHTML = GOTHRAS.map((g, i) => [g, i]).filter(([g]) => !q || fold(g[0]).includes(q)).map(([g, i]) =>
+      '<button type="button" role="option" data-g="' + i + '" aria-selected="' + (String(i) === cur) + '">' + esc(g[0]) + ' <span class="dv">' + g[1] + '</span></button>').join('') +
+      '<button type="button" role="option" data-g="other" aria-selected="' + (cur === 'other') + '">Other – type it</button>';
+    $i('wzGotherBox').classList.toggle('hide', cur !== 'other');
+    $i('wzGo3').disabled = !$i('gotraD').value.trim();
+  }
+  $i('wzGs').addEventListener('input', renderGotras);
+  $i('wzGlist').addEventListener('click', e => { const b = e.target.closest('button[data-g]'); if (!b) return; $i('gotra').value = b.dataset.g; ev($i('gotra'), 'change'); renderGotras(); syncLines(); if (b.dataset.g === 'other') $i('wzGother').focus(); });
+  $i('wzGother').addEventListener('input', () => { $i('gotraOther').value = $i('wzGother').value; ev($i('gotraOther'), 'input'); renderGotras(); syncLines(); });
+  $i('wzGnk').addEventListener('click', () => { $i('gotra').value = 'nk'; ev($i('gotra'), 'change'); renderGotras(); syncLines(); });
+  // star
+  let progStar = false;
+  function syncStar() {
+    if (!$i('wzNak').options.length) $i('wzNak').innerHTML = nkOpts(true);
+    $i('wzNak').value = $i('nak').value;
+    $i('wzPada').innerHTML = $i('pada').innerHTML; $i('wzPada').value = $i('pada').value; $i('wzPada').disabled = $i('pada').disabled;
+    $i('wzRashi').innerHTML = $i('rashi').innerHTML; $i('wzRashi').value = $i('rashi').value; $i('wzRashi').disabled = $i('rashi').disabled;
+    $i('wzDone').disabled = $i('nak').value === '';
+    $i('wzLine4K').textContent = $i('nak').value === '' ? 'Your line so far' : '✓ Your line is complete';
+    syncLines();
+  }
+  function setStar(nak, pada, src) {
+    progStar = true;
+    $i('nak').value = String(nak); ev($i('nak'), 'change');
+    $i('pada').value = String(pada || 0); ev($i('pada'), 'change');
+    $i('nakSrc').value = src || ''; progStar = false; saveDetails(); syncStar();
+  }
+  $i('nak').addEventListener('change', () => { if (!progStar) $i('nakSrc').value = ''; });
+  $i('wzNak').addEventListener('change', () => setStar($i('wzNak').value, 0, ''));
+  $i('wzPada').addEventListener('change', () => { $i('pada').value = $i('wzPada').value; ev($i('pada'), 'change'); syncStar(); });
+  $i('wzRashi').addEventListener('change', () => { $i('rashi').value = $i('wzRashi').value; ev($i('rashi'), 'change'); syncStar(); });
+  $i('wzFind').addEventListener('click', () => {
+    const box = $i('wzFindBox'); box.classList.toggle('hide');
+    if (!$i('wzPob').options.length) { $i('wzPob').innerHTML = CITY_FLAT.map((c, i) => '<option value="' + i + '">' + esc(c[0]) + '</option>').join(''); }
+    $i('wzPob').value = $i('city').value;
+    if (!box.classList.contains('hide')) $i('wzDob').focus();
+  });
+  $i('wzTobNo').addEventListener('change', () => { const no = $i('wzTobNo').checked; $i('wzTob').disabled = no; $i('wzTobMsg').classList.toggle('hide', !no); });
+  // Moon's sidereal position (Lahiri) at an instant → [nakṣatra 0–26, pāda 1–4]
+  function moonNak(ms) { const jd = ms / 864e5 + 2440587.5, L = norm(moonLongitude(TofJD(jd)) - ayanamsa(jd)), w = 360 / 27; return [Math.floor(L / w), Math.floor((L % w) / (w / 4)) + 1]; }
+  const localMs = (ds, H, M, tz) => { const [y, m, d] = ds.split('-').map(Number), g = Date.UTC(y, m - 1, d, H, M); return g - tzOffsetH(tz, g - tzOffsetH(tz, g) * 36e5) * 36e5; };
+  $i('wzCalc').addEventListener('click', () => {
+    const ds = $i('wzDob').value, c = CITY_FLAT[+$i('wzPob').value] || curCity(), out = $i('wzStarRes');
+    if (!/^\d{4}-\d\d-\d\d$/.test(ds)) { out.innerHTML = '<p class="wz-warn">Please enter your date of birth.</p>'; $i('wzDob').focus(); return; }
+    const tob = $i('wzTob').value, noTime = $i('wzTobNo').checked || !tob;
+    if (!noTime) {
+      const [H, M] = tob.split(':').map(Number), [n, p] = moonNak(localMs(ds, H, M, c[3]));
+      out.innerHTML = '<button type="button" class="wz-opt" aria-pressed="true" data-n="' + n + '" data-p="' + p + '" data-src="calc"><b>' + esc(nkName(n)) + ' · <span class="deva">' + NK[n][1] + '</span></b><span>Pāda ' + p + ' · born ' + esc(clock12(H, M)) + ', ' + esc(c[0]) + '</span></button>' +
+        '<p class="wz-small">Calculated with the modern (Tirukkaṇita) method. Please confirm with your horoscope.</p>';
+      setStar(n, p, 'calc'); return;
+    }
+    $i('wzTobMsg').classList.remove('hide');
+    // the stars of that civil day (12 midnight to 12 midnight, local time)
+    const t0 = localMs(ds, 0, 0, c[3]), t1 = localMs(addD(ds, 1), 0, 0, c[3]), segs = [];
+    let cur = moonNak(t0)[0], from = t0;
+    for (let t = t0 + 10 * 6e4; t <= t1; t += 10 * 6e4) {
+      const n = moonNak(t)[0];
+      if (n !== cur) { let a = t - 10 * 6e4, b = t; while (b - a > 3e4) { const mid = (a + b) / 2; if (moonNak(mid)[0] === cur) a = mid; else b = mid; } segs.push({n: cur, from, to: b}); cur = n; from = b; }
+    }
+    segs.push({n: cur, from, to: t1});
+    const clk = ms => { const q = localParts(ms + 3e4, c[3]); return clock12(q.H, q.M); };
+    const lbl = s => (s.from === t0 ? '12:00 midnight' : clk(s.from)) + ' → ' + (s.to === t1 ? 'midnight' : clk(s.to));
+    out.innerHTML = '<p class="wz-k" style="margin:6px 0 0">On ' + esc(longDate(ds)) + ' (' + esc(c[0]) + ') the Moon was in:</p>' +
+      segs.map(s => '<button type="button" class="wz-opt" aria-pressed="false" data-n="' + s.n + '" data-p="0" data-src="chosen"><b>' + esc(nkName(s.n)) + ' · <span class="deva">' + NK[s.n][1] + '</span></b><span>' + lbl(s) + '</span></button>').join('') +
+      '<p class="wz-small">' + (segs.length > 1 ? 'Since the time of birth is not known, please choose your star. ' : 'Only one star that whole day – this is your star. ') +
+      'Your printout will note: “Birth star chosen by the user (time of birth not known).” If unsure, ask your elders.</p>';
+  });
+  $i('wzStarRes').addEventListener('click', e => {
+    const b = e.target.closest('.wz-opt'); if (!b) return;
+    document.querySelectorAll('#wzStarRes .wz-opt').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    setStar(+b.dataset.n, +b.dataset.p, b.dataset.src);
+  });
+  document.querySelectorAll('#wz [data-next]').forEach(b => b.addEventListener('click', () => show(+b.dataset.next)));
+  $i('wzBack').addEventListener('click', () => show(Math.max(1, step - 1)));
+  $i('wzSkip').addEventListener('click', () => { closeWz(); refreshHome(); });
+  $i('wzDone').addEventListener('click', () => { closeWz(); saveDetails(); refreshHome(); window.generateSankalpam(); });
+
+  // ---------- "ready" header after generating ----------
+  const gen0 = window.generateSankalpam;
+  window.generateSankalpam = function () {
+    const r = gen0.apply(this, arguments);
+    const ok = !$i('resultContainer').classList.contains('hide') && $i('output').classList.contains('active');
+    if (ok) {
+      const nm = capFirst(devaTo($i('nameD').value.trim(), 'en'));
+      $i('readyT').textContent = 'Your saṅkalpam is ready' + (nm ? ', ' + nm : '');
+      $i('readyD').textContent = longDate(dateNow()) + ' · ' + curCity()[0];
+      $i('readyHd').classList.remove('hide');
+      const sx = $i('suffix'); $i('mineSuffix').textContent = 'Name ending: ' + (sx.selectedOptions[0] ? sx.selectedOptions[0].textContent.split(' · ')[0] : '');
+      $i('mineSuffix').classList.toggle('hide', $i('gender').value === 'f');
+    }
+    return r;
+  };
+  document.querySelectorAll('.mine-b [data-go]').forEach(b => b.addEventListener('click', () => {
+    switchTab('form');
+    const t = $i(b.dataset.go); if (!t) return;
+    const det = t.matches('details') ? t : t.querySelector('details') || t.closest('details'); if (det) det.open = true;
+    setTimeout(() => t.scrollIntoView({behavior: 'smooth', block: 'start'}), 50);
+  }));
+
+  // ---------- returning user ----------
+  function refreshHome() {
+    const nameD = $i('nameD').value.trim(), on = !!nameD && $i('wz').classList.contains('hide');
+    $i('home').classList.toggle('hide', !on); document.body.classList.toggle('has-home', on);
+    if (!on) return;
+    const c = curCity();
+    $i('homeD').textContent = longDate(dateNow()) + ' · ' + c[0];
+    $i('homeT').textContent = 'Namaste, ' + capFirst(devaTo(nameD, 'en'));
+    $i('homeLine').innerHTML = kLine();
+    $i('homeShare').classList.toggle('hide', !navigator.share);
+  }
+  $i('homeOpen').addEventListener('click', () => window.generateSankalpam());
+  // star finder from the full form, any time
+  $i('nakFindLink').addEventListener('click', () => {
+    openWz(4); $i('wzFindBox').classList.add('hide'); $i('wzFind').click();
+  });
+  // guided steps again – for this person or another (friend, relative): warn first, then clear the person's details
+  $i('homeOther').addEventListener('click', () => {
+    $i('homeWarnName').textContent = capFirst(devaTo($i('nameD').value.trim(), 'en')) || 'the current person';
+    $i('homeWarn').classList.remove('hide'); $i('homeWarnGo').focus();
+  });
+  $i('homeWarnNo').addEventListener('click', () => $i('homeWarn').classList.add('hide'));
+  $i('homeWarnGo').addEventListener('click', () => {
+    $i('homeWarn').classList.add('hide');
+    ['name', 'nameD', 'gotraOther', 'gotraD', 'nakSrc'].forEach(id => { $i(id).value = ''; });
+    $i('gotra').value = ''; ev($i('gotra'), 'change');
+    $i('gender').value = 'm'; ev($i('gender'), 'change');
+    $i('suffix').value = 'none';
+    $i('famList').innerHTML = ''; famChanged();
+    progStar = true; $i('nak').value = ''; ev($i('nak'), 'change'); $i('pada').value = '0'; ev($i('pada'), 'change'); progStar = false;
+    ev($i('name'), 'input'); saveDetails(); refreshHome(); openWz(2);
+  });
+  $i('homeShare').addEventListener('click', () => { window.generateSankalpam(); if (!$i('resultContainer').classList.contains('hide')) shareSankalpam(); });
+  let upKey = '';
+  function comingUp() {
+    const c = curCity(), base = localDateStr(Date.now(), c[3]), key = base + '|' + c[0]; if (upKey === key) return; upKey = key;
+    const found = [], sys = tdfProfile(), from = addD(base, 1);
+    try { const sk = tdfNextSankrantis(sys, from, 1)[0]; if (sk) found.push({t: 'masa', ds: sk.monthDay, label: (MASA_TA[sk.rasi] || '') + ' māsa pirappu'}); } catch (e) {}
+    try { const am = tdfNextAma(sys, from); if (am && am.date) found.push({t: 'amavasya', ds: am.date, label: 'Amāvāsyā'}); } catch (e) {}
+    found.sort((a, b) => a.ds < b.ds ? -1 : 1);
+    $i('homeUp').innerHTML = found.map(f => '<a href="#tarpanam" data-up="' + f.ds + '" data-t="' + f.t + '"><span><b>' + esc(f.label) + '</b> · tarpaṇam</span><span>' + shortDay(f.ds) + ' ›</span></a>').join('');
+    $i('homeUpBox').classList.toggle('hide', !found.length);
+  }
+  $i('homeUp').addEventListener('click', e => {
+    const a = e.target.closest('a[data-up]'); if (!a) return; e.preventDefault();
+    $i('date').value = a.dataset.up; ev($i('date'), 'change');
+    switchTab('tarpanam'); const ty = $i('t-type'); ty.value = a.dataset.t; ev(ty, 'change');
+  });
+
+  // ---------- 4 tabs, Mahālaya out of season ----------
+  document.querySelectorAll('#mobile-tab-feedback .d-only').forEach(s => { if (s.textContent.trim() === 'Feedback') s.textContent = 'More'; });
+  if (!mahalayaSeason()) document.querySelectorAll('.pc-legend .ml').forEach(x => x.classList.add('hide'));
+
+  // ---------- keep everything in step ----------
+  const ap0 = window.applyPanchang;
+  if (typeof ap0 === 'function') window.applyPanchang = function () { const r = ap0.apply(this, arguments); setTimeout(() => { renderExtras(); refreshHome(); }, 0); return r; };
+  const later = () => setTimeout(() => { try { syncLines(); if (step === 4 && !$i('wz').classList.contains('hide')) syncStar(); } catch (e) {} }, 0);
+  $i('form').addEventListener('change', later); $i('form').addEventListener('input', later); $i('script').addEventListener('change', later);
+  ['date', 'city', 'cal', 'method'].forEach(id => $i(id).addEventListener('change', () => setTimeout(() => { renderExtras(); refreshHome(); }, 0)));
+
+  function start() {
+    let saved = null, done = false;
+    try { saved = JSON.parse(localStorage.getItem('sankalpam.v3') || 'null'); done = localStorage.getItem('sankalpam.wzDone') === '1'; } catch (e) {}
+    const force = /[?&]welcome=1/.test(window.SG_QS || location.search);
+    renderExtras();
+    if (force || (!(saved && saved.nameD) && !done)) openWz(); else refreshHome();
+    setTimeout(() => { try { comingUp(); } catch (e) {} }, 400);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(start, 0)); else setTimeout(start, 0);
+})();
+</script>
+
 </body>
 </html>

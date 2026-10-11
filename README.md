@@ -6,6 +6,13 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 
 > A **saṅkalpam** is a vow: you state when, where, who and why before a pūjā.
 
+## New in 5.2.3
+
+- **A welcome in 5 steps** – today's pañcāṅgam first, then your name (shown in Sanskrit as you type), gotra and star, and your saṅkalpam is ready.
+- **Don't know your star?** – enter your date, place and time of birth; without the time, choose from the stars of that day.
+- **Personal greeting** – returning users are greeted by name and get today's saṅkalpam in one tap, and the coming tarpaṇam days.
+- **Daily pañcāṅgam** – sunrise and sunset, karaṇam, Rāhu kālam, Yamagaṇḍam, Kuḷigai and Chandrāṣṭamam, to share on WhatsApp.
+
 ## New in 5.2.2
 
 - **No silent defaults** – the birth star starts blank and must be chosen; rāśi follows the star. Family members too.
@@ -35,7 +42,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 - **Tarpaṇam** – the complete text (Kṛṣṇa Yajur Veda, Āpastamba sūtra) for Mahālaya, Amāvāsyā, Māsa pirappu and grahaṇa, with both sides of the family.
   - **Kāruṇika pitṛs** – add relatives one at a time; the gotra fills in from the relationship (your gotra for Periyappā, Chithappā and their wives; your mother's for Māmā and Māmī); lines are grouped by gotra.
 - **Your script** – Sanskrit (Devanagari), Tamil (Grantha), Telugu, Kannada or English letters (IAST).
-- **Copy, print or save as PDF**, including a small PDF for WhatsApp, or email the PDF once.
+- **Copy, print or save as PDF**, including a small PDF for WhatsApp.
 
 ## Vākya and Tirukkaṇita
 
@@ -50,6 +57,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 - The app runs in your browser. No sign-in is needed.
 - Your details are saved only on your own device. **Ancestors' names and Kāruṇika pitṛs stay only on your device and are never sent anywhere.**
 - **Feedback** is sent anonymously through a Google Form.
+- **PDF count:** when you tap Print / PDF or Compact PDF, the app counts it – only whether it was a saṅkalpam or tarpaṇam and which button. No names or other details are sent.
 - **Optional daily email:** if you subscribe, your email address and the details you entered are stored in a private Google Sheet, used only to send you the daily saṅkalpam. You confirm by email first, and every email has an **Unsubscribe** link that deletes your details.
 
 ## Please note
