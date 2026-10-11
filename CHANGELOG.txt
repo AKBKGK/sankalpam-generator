@@ -1,4 +1,30 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.4
+Updated: 2026-10-11
+================================================================================
+
+NEW IN 5.2.4 – CALENDAR AT THE START, WHATSAPP IN YOUR LANGUAGE, HELP
+  ✓ "Your pañcāṅgam" on the welcome screen and in step 1: Tamil / Telugu /
+    Kannada calendar and Vākya / Tirukkaṇita, with a note on the difference.
+  ✓ Telugu or Kannada calendar → saṅkalpam in those letters, with Undo.
+  ✓ Telugu or Kannada letters with another calendar → asked once whether to use
+    that calendar too (the calendar is never changed silently).
+  ✓ Hint for Telugu / Kannada calendar with Vākya (vādhyār to confirm).
+  ✓ "Share this pañcāṅgam": text in Tamil, Telugu or Kannada when that is the
+    saṅkalpam language; otherwise English letters (adhika / nija māsa now shown).
+  ✓ "Updated to …" note once after an update; More → What's new; More → Help.
+  ✓ Features page: ?features, with "See features" and "Share link" in More.
+  ✓ Owner's WhatsApp tools moved out of the public app.
+  ✓ FIX: with Tirukkaṇita, times from 10:00 to 12:59 in the daily box and the
+    shared text were shown with the wrong AM/PM (e.g. 10:14 PM as 10:14 AM),
+    and "(next day)" was missing. Now correct (checked against the app's own
+    24-hour times on 65 day/city cases).
+  ✓ The message no longer covers the Generate button on phones; Undo returns to
+    the letters before the first switch.
+  ✓ Unchanged: calculations, saṅkalpam, tarpaṇam and daily email text.
+  ⚠ Native readers to check the Tamil, Telugu and Kannada words.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.3
 Updated: 2026-10-11
 ================================================================================

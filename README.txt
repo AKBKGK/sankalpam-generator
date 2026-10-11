@@ -1,5 +1,5 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.2.3
+SAṄKALPAM GENERATOR v5.2.4
 Updated: 2026-10-11
 ================================================================================
 
@@ -14,7 +14,36 @@ FILES IN THIS FOLDER
   (icons: apple-touch-icon.png, icon-192.png, icon-512.png – unchanged)
 
 ================================================================================
-WHAT'S NEW IN 5.2.3  (details in CHANGELOG.txt)
+WHAT'S NEW IN 5.2.4  (5.2.3 was never uploaded, so this upload has both)
+  • CALENDAR AT THE START – the welcome screen and step 1 show "Your pañcāṅgam":
+      Tamil (solar months) · Telugu (lunar, Ugādi) · Kannada (lunar, Ugādi),
+      and Vākya · Tirukkaṇita, with a short note on the difference.
+  • LETTERS FOLLOW THE CALENDAR – choosing the Telugu or Kannada calendar
+    switches the saṅkalpam to Telugu / Kannada letters at once, with "Undo".
+  • CALENDAR ASKED, NEVER CHANGED SILENTLY – choosing Telugu or Kannada letters
+    while the calendar is another one asks once: "Use the Telugu calendar too?"
+  • Telugu / Kannada calendar with Vākya: a hint that many Telugu and Kannada
+    pañcāṅgams are not Vākya (vādhyār to confirm – easy to switch off).
+  • WHATSAPP TEXT IN TAMIL, TELUGU, KANNADA – "Share this pañcāṅgam" sends the
+    day's pañcāṅgam in the saṅkalpam language chosen (Sanskrit and English-letter
+    users keep the English-letter text). Times stay in digits (5:59 AM).
+  • WHAT'S NEW NOTE – after an update, people who used an older version see a
+    short note once; × or "See what's new" closes it. Always in More → What's new.
+    First-time users don't see it.
+  • HELP – More → Help: 8 short questions and answers.
+  • FEATURES PAGE – https://sankalpam.live/?features (also More → "See
+    features" / "Share link") lists what the app does.
+  • The owner's WhatsApp tools are no longer inside the public app.
+  • FIX: Tirukkaṇita users saw some times with the wrong AM/PM (10:00–12:59)
+    in the daily box and shared text – corrected.
+NOT CHANGED: calculations, saṅkalpam text, tarpaṇam text, daily email text
+(tested: identical to 5.2.3).
+
+  ⚠ Native readers to check the Tamil, Telugu and Kannada words in the WhatsApp
+    text (tithi, star, yogam, karaṇam, Kuḷigai …) before telling users.
+
+================================================================================
+WHAT'S NEW IN 5.2.3  (details in CHANGELOG.txt) – included in this upload
   • FIRST VISIT IN 5 STEPS – a welcome screen guides a new user:
       1 Today      – today's pañcāṅgam at once, with "Share today's pañcāṅgam"
       2 Your name  – shown large in Sanskrit, with Tamil, Telugu, Kannada and
@@ -96,8 +125,8 @@ OPTION A – GITHUB PAGES  (when you decide to upload)
   1. Open the repository → Add file → Upload files.
   2. Drag in: index.html, manifest.webmanifest, README.md, README.txt,
      CHANGELOG.md, CHANGELOG.txt. (Same names, so they replace the old ones.)
-  3. Commit message: "v5.2.3: 5-step welcome, star finder, daily pañcāṅgam
-     extras, 4 tabs".
+  3. Commit message: "v5.2.4: calendar at the start, WhatsApp text in Tamil,
+     Telugu, Kannada, Help, What's new (includes 5.2.3)".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER
@@ -105,7 +134,8 @@ OPTION B – HOSTINGER
   2. Upload index.html and manifest.webmanifest (replace when asked).
 
 AFTER UPLOAD – TEST (on a phone)
-  1. Open the site and reload. Anyone on v5.2.2 sees "Update now".
+  1. Open the site and reload. Anyone on v5.2.2 sees "Update now", then the
+     green "Updated to 5.2.4" note once.
   2. In a private/incognito window: the welcome screen opens at step 1 with
      today's pañcāṅgam (sunrise, sunset, Chandrāṣṭamam).
   3. Step 2: type a name – it appears large in Sanskrit and the other scripts.

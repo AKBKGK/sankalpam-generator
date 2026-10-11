@@ -6,6 +6,14 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 
 > A **saṅkalpam** is a vow: you state when, where, who and why before a pūjā.
 
+## New in 5.2.4
+
+- **Choose your calendar at the start** – Tamil (solar), Telugu or Kannada (lunar, Ugādi), and Vākya or Tirukkaṇita, with a short note.
+- **Letters follow the calendar** – choosing the Telugu or Kannada calendar switches the saṅkalpam to those letters (with Undo); the calendar is never changed without asking.
+- **WhatsApp text in Tamil, Telugu and Kannada** – "Share this pañcāṅgam" uses the language you chose.
+- **What's new and Help** – a short note after each update, and a Help card in More.
+- **Features page** – https://sankalpam.live/?features
+
 ## New in 5.2.3
 
 - **A welcome in 5 steps** – today's pañcāṅgam first, then your name (shown in Sanskrit as you type), gotra and star, and your saṅkalpam is ready.
