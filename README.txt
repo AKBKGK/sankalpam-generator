@@ -1,5 +1,5 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.2.8
+SAṄKALPAM GENERATOR v5.2.9
 Updated: 2026-10-12
 ================================================================================
 
@@ -14,7 +14,15 @@ FILES IN THIS FOLDER
   (icons: apple-touch-icon.png, icon-192.png, icon-512.png – unchanged)
 
 ================================================================================
-WHAT'S NEW IN 5.2.8
+WHAT'S NEW IN 5.2.9
+  • The "tap 🎤 on your keyboard" hints are hidden for now (Quick chat welcome,
+    name and gotra questions, More → Quick chat card). People can still use
+    their keyboard's own voice typing; the app simply does not mention it.
+  • Everything else as 5.2.8 (gotra spellings, tarpaṇam wording when sharing).
+NOT CHANGED: saṅkalpam, tarpaṇam, pañcāṅgam and daily email.
+
+================================================================================
+EARLIER – 5.2.8
   • SHARING THE APP – the message now reads: "Saṅkalpam Generator – your daily
     saṅkalpam with the day's pañcāṅgam, and tarpaṇam for those whose father
     has passed away. Free: https://sankalpam.live/?features". The features
@@ -209,15 +217,14 @@ email text.
      WhatsApp pañcāṅgam text.
   4. DAILY EMAIL (Code.gs v9) – no change needed. After uploading, run
      refreshEngine() once in the Apps Script editor.
-  5. Keep a backup of your current 5.2.7 files.
+  5. Keep a backup of your current 5.2.8 files.
 
 ================================================================================
 OPTION A – GITHUB PAGES  (when you decide to upload)
   1. Open the repository → Add file → Upload files.
   2. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
      (Same names, so they replace the old ones.)
-  3. Commit message: "v5.2.8: share message – tarpaṇam for those whose father
-     has passed away; gotra found as spoken; keyboard mic hint".
+  3. Commit message: "v5.2.9: keyboard mic hints hidden for now".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER
