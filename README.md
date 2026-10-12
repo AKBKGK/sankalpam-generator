@@ -1,6 +1,6 @@
 # Saṅkalpam Generator
 
-A free, single-page app that prepares a complete, correctly worded **saṅkalpam** for daily pūjā and pārāyaṇam, and the full **tarpaṇam** text, with the day's **pañcāṅgam** calculated for your city.
+A free, single-page app that prepares a complete, correctly worded **saṅkalpam** for daily pūjā and pārāyaṇam, and the full **tarpaṇam** text (for those whose father has passed away), with the day's **pañcāṅgam** calculated for your city.
 
 **Open the app:** https://sankalpam.live/
 
@@ -21,7 +21,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 
 - **Quick chat** – for anyone who does not want the whole app: "My saṅkalpam", "Today's pañcāṅgam", "Good time today" and "Next Amāvāsyā / tarpaṇam day", one question at a time. It can also make a saṅkalpam for someone else (used once, not saved), and find a star from the date of birth. No AI – the app's own engine answers, on the phone.
 - **Daily pañcāṅgam** – sunrise, sunset, karaṇam, **good time** (Gowri nalla neram, as printed in Tamil calendars, sunrise taken as 6 AM), **Amṛta / Siddha / Maraṇa yogam** (weekday and star), Rāhu kālam, Yamagaṇḍam, Kuḷigai and Chandrāṣṭamam; **Share this pañcāṅgam** sends it to WhatsApp in your language.
-- **Tarpaṇam** – the complete text (Kṛṣṇa Yajur Veda, Āpastamba sūtra) for Mahālaya, Amāvāsyā, Māsa pirappu and grahaṇa, with both sides of the family and Kāruṇika pitṛs (the gotra fills in from the relationship; lines grouped by gotra).
+- **Tarpaṇam** – for those whose father has passed away: the complete text (Kṛṣṇa Yajur Veda, Āpastamba sūtra) for Mahālaya, Amāvāsyā, Māsa pirappu and grahaṇa, with both sides of the family and Kāruṇika pitṛs (the gotra fills in from the relationship; lines grouped by gotra).
 - **Which day?** – the right day for tarpaṇam by the aparāhṇa (afternoon) rule: Amāvāsyā (with the afternoon window marked and a "close call" warning), Mahālaya pakṣam, and Māsa pirappu (saṅkrānti time and the next 12 months). Compare Vākya and Tirukkaṇita side by side. The tarpaṇam suggestion and the daily email use the same day.
 - **Calendar** – any month and year, with Ekādaśī, Pradoṣam, Caturthī, Amāvāsyā, Pūrṇimā and Mahālaya pakṣa, the day's śrāddha tithi, and tithi and nakṣatra times.
 - **Returning users** – a Namaste card with today's saṅkalpam in one tap, Share, "Start again with my name" and the coming tarpaṇam days.

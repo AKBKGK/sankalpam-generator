@@ -1,4 +1,15 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.8
+Updated: 2026-10-12
+================================================================================
+  ✓ Share message and features page: "tarpaṇam for those whose father has
+    passed away".
+  ✓ Gotra search understands everyday / spoken spellings (Bharadwaj,
+    Koundinya, Kaushik, Vashishta).
+  ✓ Quick chat: "tap 🎤 on your keyboard" to speak instead of typing.
+  ✓ Unchanged: saṅkalpam, tarpaṇam, pañcāṅgam and daily email.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.7
 Updated: 2026-10-12
 ================================================================================

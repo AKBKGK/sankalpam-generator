@@ -1,5 +1,5 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.2.7
+SAṄKALPAM GENERATOR v5.2.8
 Updated: 2026-10-12
 ================================================================================
 
@@ -14,7 +14,23 @@ FILES IN THIS FOLDER
   (icons: apple-touch-icon.png, icon-192.png, icon-512.png – unchanged)
 
 ================================================================================
-WHAT'S NEW IN 5.2.7
+WHAT'S NEW IN 5.2.8
+  • SHARING THE APP – the message now reads: "Saṅkalpam Generator – your daily
+    saṅkalpam with the day's pañcāṅgam, and tarpaṇam for those whose father
+    has passed away. Free: https://sankalpam.live/?features". The features
+    page says the same on its Tarpaṇam card, and Quick chat is described with
+    "the next Amāvāsyā" instead of "the next tarpaṇam day".
+  • GOTRA SPELLINGS – the gotra search (welcome steps and Quick chat) now finds
+    the gotra when it is spelt as spoken or in everyday English: Bharadwaj →
+    Bhāradvāja, Koundinya → Kaundinya, Kaushik → Kauśika, Vashishta →
+    Vasiṣṭha (w/v, x/ks, z/j, ou/au and a missing final "a" are treated alike).
+  • SPEAK INSTEAD OF TYPING – Quick chat says "tap 🎤 on your keyboard" at the
+    name and gotra questions (the phone's own voice typing; nothing new in the
+    app). The name is always shown back ("It will be recited as …") to check.
+NOT CHANGED: saṅkalpam, tarpaṇam, pañcāṅgam and daily email.
+
+================================================================================
+EARLIER – 5.2.7
   • QUICK CHAT – "Prefer a quick chat? ›" on the opening page, "Quick chat" on
     the Namaste card and in More. Welcome, then: My saṅkalpam · Today's
     pañcāṅgam · Good time today · Next Amāvāsyā / tarpaṇam day.
@@ -193,15 +209,15 @@ email text.
      WhatsApp pañcāṅgam text.
   4. DAILY EMAIL (Code.gs v9) – no change needed. After uploading, run
      refreshEngine() once in the Apps Script editor.
-  5. Keep a backup of your current 5.2.6 files.
+  5. Keep a backup of your current 5.2.7 files.
 
 ================================================================================
 OPTION A – GITHUB PAGES  (when you decide to upload)
   1. Open the repository → Add file → Upload files.
   2. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
      (Same names, so they replace the old ones.)
-  3. Commit message: "v5.2.7: Quick chat; good time (Gowri nalla neram) and
-     Amṛta / Siddha / Maraṇa yogam in the daily pañcāṅgam".
+  3. Commit message: "v5.2.8: share message – tarpaṇam for those whose father
+     has passed away; gotra found as spoken; keyboard mic hint".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER

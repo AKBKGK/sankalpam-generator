@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.7  |  Updated: 2026-10-12
+  Version: 5.2.8  |  Updated: 2026-10-12
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -830,7 +830,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <details><summary>How do I get the newest version?</summary><p>The app checks by itself. When you see "Update now", tap it.</p></details>
 </div>
 <div class="card v4wn" id="wnCard"><h2>What's new</h2><div id="wnList"></div></div>
-<div class="card" id="qcCard"><h2>Quick chat</h2><p class="lead">Your saṅkalpam, today's pañcāṅgam, good time and the next tarpaṇam day – one question at a time.</p>
+<div class="card" id="qcCard"><h2>Quick chat</h2><p class="lead">Your saṅkalpam, today's pañcāṅgam, good time and the next Amāvāsyā – one question at a time. You can also speak: tap 🎤 on your keyboard.</p>
   <button type="button" class="btn" data-qc-open>Open quick chat ›</button></div>
 <div class="card" id="featCard"><h2>Tell others about the app</h2><p class="lead">A short page that lists everything the app does.</p>
   <div class="v4feat-b"><button type="button" class="btn" id="featOpen">See features</button><button type="button" class="btn ghost" id="featShare">Share link</button></div>
@@ -2111,7 +2111,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.7';
+const APP_VERSION = 'v5.2.8';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -4877,7 +4877,8 @@ body.has-home #sgIntro{display:none}
   document.querySelectorAll('#wzSfx [data-sfx]').forEach(b => b.addEventListener('click', () => { $i('suffix').value = b.dataset.sfx; ev($i('suffix'), 'change'); saveDetails(); syncName(); }));
   $i('wzSfxWhyBtn').addEventListener('click', () => { const on = $i('wzSfxWhy').classList.toggle('hide') === false; $i('wzSfxWhyBtn').setAttribute('aria-expanded', String(on)); });
   // gotra
-  const fold = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/aa/g, 'a').replace(/ee|ii/g, 'i').replace(/oo|uu/g, 'u').replace(/sh/g, 's').replace(/h/g, '');
+  const fold = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/aa/g, 'a').replace(/ee|ii/g, 'i').replace(/oo|uu/g, 'u').replace(/sh/g, 's').replace(/h/g, '')
+    .replace(/w/g, 'v').replace(/x/g, 'ks').replace(/z/g, 'j').replace(/ou/g, 'au').replace(/[^a-z]/g, '').replace(/a$/, '');   // v5.2.8: spoken / everyday spellings (Bharadwaj, Koundinya, Kaushik)
   function renderGotras() {
     const q = fold($i('wzGs').value.trim()), cur = $i('gotra').value;
     $i('wzGlist').innerHTML = GOTHRAS.map((g, i) => [g, i]).filter(([g]) => !q || fold(g[0]).includes(q)).map(([g, i]) =>
@@ -5123,13 +5124,13 @@ body.has-home #sgIntro{display:none}
   <div class="feat-l">
    <div><b>Your language, your calendar</b><span>Sanskrit, Tamil, Telugu, Kannada or English letters. Tamil, Telugu or Kannada calendar. Vākya or Tirukkaṇita.</span></div>
    <div><b>Form or formless</b><span>Both are honoured – verses from the Śvetāśvatara Upaniṣad and the Bhagavad Gītā, in Help.</span></div>
-   <div><b>Quick chat</b><span>Your saṅkalpam, today's pañcāṅgam, good time and the next tarpaṇam day – one question at a time. For someone else too, without changing your saved details.</span></div>
+   <div><b>Quick chat</b><span>Your saṅkalpam, today's pañcāṅgam, good time and the next Amāvāsyā – one question at a time. For someone else too, without changing your saved details.</span></div>
    <div><b>Saṅkalpam for today</b><span>With the day's pañcāṅgam for your city, your name, gotra and star, family and chants – and Pradoṣam on its days.</span></div>
    <div><b>Name ending</b><span>None, Śarmā, Varmā, Gupta or Dāsa – with the Viṣṇu Purāṇa verse that gives them.</span></div>
    <div><b>Don't know your star?</b><span>Find it from your date, place and time of birth.</span></div>
    <div><b>Share and print</b><span>Share your saṅkalpam or the day's pañcāṅgam on WhatsApp in your language; PDF and print; or your saṅkalpam by email every evening.</span></div>
    <div><b>Daily pañcāṅgam and calendar</b><span>Sunrise, sunset, good time (Gowri nalla neram), Amṛta / Siddha / Maraṇa yogam, Rāhu kālam, Yamagaṇḍam, Kuḷigai and Chandrāṣṭamam; festivals for any month.</span></div>
-   <div><b>Tarpaṇam</b><span>Amāvāsyā, Māsa pirappu, Mahālaya and grahaṇa, with the full text for both sides of the family. "Which day?" finds the day by the afternoon (aparāhṇa) rule.</span></div>
+   <div><b>Tarpaṇam</b><span>For those whose father has passed away: Amāvāsyā, Māsa pirappu, Mahālaya and grahaṇa, with the full text for both sides of the family. "Which day?" finds the day by the afternoon (aparāhṇa) rule.</span></div>
    <div class="priv"><b>Private</b><span>Your details stay on your phone. Ancestors' names are never sent anywhere.</span></div>
   </div>
   <div class="feat-h" id="featHelp"><h2>Help</h2></div>
@@ -5211,6 +5212,7 @@ body.has-home #sgIntro{display:none}
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [               // v: used only to pick what is new for this phone – never shown
+    {v: '5.2.8', items: ['Gotra found even when spelt as spoken (Bharadwaj, Koundinya, Kaushik)', 'Speak instead of typing: tap 🎤 on your keyboard', 'Clearer words about tarpaṇam when sharing the app']},
     {v: '5.2.7', items: ['Quick chat – your saṅkalpam, pañcāṅgam and good time, one question at a time', 'Good time (Gowri nalla neram) every day', 'Amṛta, Siddha or Maraṇa yogam every day']},
     {v: '5.2.6', items: ['Name ending (Śarmā, Varmā, Gupta, Dāsa) with “Why?” in the first steps', '“Form or formless?” – verses from the Upaniṣad and the Gītā', 'Share your saṅkalpam on WhatsApp in your language – on a computer too', 'One Amāvāsyā tarpaṇam day, the same as "Which day?"', 'Pradoṣam in "What you will chant"']},
     {v: '5.2.5', items: ['The meaning of saṅkalpam on your Namaste card', '"Start again with my name" – the guided steps any time']},
@@ -5251,7 +5253,7 @@ body.has-home #sgIntro{display:none}
   $i('featGo').addEventListener('click', closeFeat);
   $i('featOpen').addEventListener('click', openFeat);
   $i('featShare').addEventListener('click', () => {
-    const text = 'Saṅkalpam Generator – your saṅkalpam and tarpaṇam with the day\'s pañcāṅgam, free: ' + FEAT_URL;
+    const text = 'Saṅkalpam Generator – your daily saṅkalpam with the day\'s pañcāṅgam, and tarpaṇam for those whose father has passed away. Free: ' + FEAT_URL;
     waShare('Saṅkalpam Generator', text, $i('featStatus'));
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$i('feat').classList.contains('hide')) closeFeat(); });
@@ -5360,7 +5362,8 @@ body.has-home #sgIntro{display:none}
     from = document.activeElement; log.innerHTML = ''; act.innerHTML = '';
     $i('qc').classList.remove('hide'); document.body.style.overflow = 'hidden';
     const nm = saved() && saved().nameD ? myName() : '';
-    say('🙏 Namaste' + (nm ? ', ' + esc(nm) : '') + '! I can help you with today\'s saṅkalpam and pañcāṅgam.');
+    say('🙏 Namaste' + (nm ? ', ' + esc(nm) : '') + '! I can help you with today\'s saṅkalpam and pañcāṅgam.' +
+        '<span class="qc-ctx">🎤 You can type or speak – tap the mic on your phone\'s keyboard.</span>');
     ensureCity(menu);
   }
   function close() { $i('qc').classList.add('hide'); document.body.style.overflow = ''; if (from && from.focus) try { from.focus(); } catch (e) {} }
@@ -5439,7 +5442,7 @@ body.has-home #sgIntro{display:none}
   function person(mine) {
     const P = {gender: 'm', suffix: 'none', name: '', nameD: '', gotra: '', gotraOther: '', gotraD: '', gotraNK: false, nak: '', pada: '0', rashi: '', nakSrc: ''};
     say(mine ? 'Your first name (no surname)?' : 'Their first name (no surname)?');
-    ask('text', 'e.g. shreenivaasa', v => { P.name = v; gender(); }, null, 'Long vowels: type double letters (shreenivaasa → श्रीनिवास)');
+    ask('text', 'e.g. shreenivaasa', v => { P.name = v; gender(); }, null, 'Long vowels: type double letters (shreenivaasa → श्रीनिवास). You can also speak – tap 🎤 on your keyboard.');
     function gender() {
       say('Male or female?');
       chips([['Male', () => { P.gender = 'm'; nameOk(); }], ['Female', () => { P.gender = 'f'; nameOk(); }]]);
@@ -5455,12 +5458,13 @@ body.has-home #sgIntro{display:none}
       chips([['None', () => { P.suffix = 'none'; gotra(); }, true], ['Śarmā', () => { P.suffix = 'sharma'; gotra(); }], ['Varmā', () => { P.suffix = 'varma'; gotra(); }],
              ['Gupta', () => { P.suffix = 'gupta'; gotra(); }], ['Dāsa', () => { P.suffix = 'dasa'; gotra(); }]]);
     }
-    const fold = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/aa/g, 'a').replace(/ee|ii/g, 'i').replace(/oo|uu/g, 'u').replace(/sh/g, 's').replace(/h/g, '');
+    const fold = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/aa/g, 'a').replace(/ee|ii/g, 'i').replace(/oo|uu/g, 'u').replace(/sh/g, 's').replace(/h/g, '')
+    .replace(/w/g, 'v').replace(/x/g, 'ks').replace(/z/g, 'j').replace(/ou/g, 'au').replace(/[^a-z]/g, '').replace(/a$/, '');   // v5.2.8: spoken / everyday spellings (Bharadwaj, Koundinya, Kaushik)
     function gotra() {
       say('Gotra? Type a few letters.');
       const kas = GOTHRAS.findIndex(g => g[0] === 'Kāśyapa');
       const inp = ask('text', 'e.g. bhaa', v => { const i = GOTHRAS.findIndex(g => fold(g[0]) === fold(v)); if (i >= 0) setG(i); else setOther(v); },
-        [['I don\'t know', () => { setG(kas, true); }]], 'Matching gotras appear below as you type.');
+        [['I don\'t know', () => { setG(kas, true); }]], 'Matching gotras appear below as you type (or speak – tap 🎤 on your keyboard).');
       const box = document.createElement('div'); box.className = 'qc-row'; box.style.flexWrap = 'wrap'; act.insertBefore(box, act.children[1]);
       inp.addEventListener('input', () => {
         const q = fold(inp.value.trim()); box.innerHTML = '';
