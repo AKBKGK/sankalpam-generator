@@ -4,53 +4,28 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 
 **Open the app:** https://sankalpam.live/
 
-> A **saṅkalpam** is a vow: you state when, where, who and why before a pūjā.
+> **What is a saṅkalpam?** Saṅkalpa (सङ्कल्पः) means a firm resolve. Before a pūjā, homa or tarpaṇam you state **when** (the day's pañcāṅgam), **where**, **who** (your name, gotra and star) and **why**. This app prepares it for you.
+>
+> **Form or formless?** Both are honoured – Śvetāśvatara Upaniṣad 6.11 (beyond qualities, nirguṇa) and Bhagavad Gītā 7.21 (with form) and 12.3–4 (the formless too). A saṅkalpam is said before sandhyā, japa, pārāyaṇam, homa and tarpaṇam too – not only image worship.
 
-## New in 5.2.4
+## How it works – in the order you use it
 
-- **Choose your calendar at the start** – Tamil (solar), Telugu or Kannada (lunar, Ugādi), and Vākya or Tirukkaṇita, with a short note.
-- **Letters follow the calendar** – choosing the Telugu or Kannada calendar switches the saṅkalpam to those letters (with Undo); the calendar is never changed without asking.
-- **WhatsApp text in Tamil, Telugu and Kannada** – "Share this pañcāṅgam" uses the language you chose.
-- **What's new and Help** – a short note after each update, and a Help card in More.
-- **Features page** – https://sankalpam.live/?features
+1. **Choose your pañcāṅgam** – Tamil (solar months), Telugu or Kannada (lunar, from Ugādi, with adhika and nija māsa); **Vākya** (traditional) or **Tirukkaṇita** (modern astronomy). Choosing the Telugu or Kannada calendar also switches the letters (with Undo); changing the letters never changes the calendar without asking.
+2. **Your name** – first name only; it appears in Sanskrit as you type, with Tamil, Telugu, Kannada and English letters. **Name ending**: None · नाम्नः, Śarmā, Varmā, Gupta or Dāsa, with the Viṣṇu Purāṇa 3.10.9 verse behind **Why?**. Women: नाम्न्याः.
+3. **Your gotra** – searchable list, or "I don't know my gotra" (Kāśyapa is used).
+4. **Your birth star** – or **"I don't know my star"**: find it from your date, place and time of birth.
+5. **Your saṅkalpam** – with the pañcāṅgam for your city (saṁvatsara, ayana, ṛtu, māsa, pakṣa, tithi, vāsara, nakṣatra, yoga, karaṇa, with "upto" times; 70+ cities). Add what you will chant (Śrī Rudram, sūktas, sahasranāmams, aṣṭottaras, and on Pradoṣam days प्रदोषपुण्यकाले / प्रदोषपूजां), family members and prayers.
+6. **Share, print or email** – **Share** sends the saṅkalpam in the letters you chose (Sanskrit, Tamil, Telugu, Kannada or English) to WhatsApp or any app; on a computer WhatsApp opens with the text ready. Copy, print, PDF (also a small PDF for WhatsApp), or the saṅkalpam by email every evening.
 
-## New in 5.2.3
+## Also in the app
 
-- **A welcome in 5 steps** – today's pañcāṅgam first, then your name (shown in Sanskrit as you type), gotra and star, and your saṅkalpam is ready.
-- **Don't know your star?** – enter your date, place and time of birth; without the time, choose from the stars of that day.
-- **Personal greeting** – returning users are greeted by name and get today's saṅkalpam in one tap, and the coming tarpaṇam days.
-- **Daily pañcāṅgam** – sunrise and sunset, karaṇam, Rāhu kālam, Yamagaṇḍam, Kuḷigai and Chandrāṣṭamam, to share on WhatsApp.
-
-## New in 5.2.2
-
-- **No silent defaults** – the birth star starts blank and must be chosen; rāśi follows the star. Family members too.
-- **Gotra not known** – choose "Not known (use Kāśyapa)".
-- **Name ending** – None · नाम्नः (default), Śarmā, Varmā, Gupta or Dāsa, with the Viṣṇu Purāṇa 3.10.9 verse behind "Why?". Women: नाम्न्याः.
-- **First name only** – the name box asks for the first name, without the surname.
-- **Live preview** – your own line of the saṅkalpam appears as you type.
-- **Share** – send the saṅkalpam to WhatsApp, Gmail and others from your phone.
-- **Daily email** – sign up right under your saṅkalpam.
-- **Use my location** – picks the nearest city for sunrise.
-- **Opens like an app** from the home-screen icon.
-
-## What it does
-
-- **Choose your pañcāṅgam** – **Vākya** (traditional) or **Tirukkaṇita** (modern astronomical). The choice is shown, highlighted, at the foot of every saṅkalpam and tarpaṇam.
-- **Pañcāṅgam for your city** – saṁvatsara, ayana, ṛtu, māsa, pakṣa, tithi, vāsara, nakṣatra, yoga and karaṇa at sunrise, with "upto" times (70+ cities in India and abroad).
-- **Which day? (new in 5.0)** – finds the right day for tarpaṇam by the aparāhṇa (afternoon) rule:
-  - **Amāvāsyā** – the next Amāvāsyā, with the afternoon window highlighted and a "close call" warning when the choice is tight.
-  - **Mahālaya pakṣam** – the dates of the pakṣam and Mahālaya Amāvāsyā; the day for each tithi on request.
-  - **Māsa pirappu** – the next month's saṅkrānti time, the day the Tamil month begins, and the next 12 months.
-  - **Compare** Vākya and Tirukkaṇita side by side; **Use** fills in the date (and month) for the tarpaṇam.
-- **Pañcāṅgam calendar (new in 5.0.4)** – any month and year, with Ekādaśī, Pradoṣam, Caturthī, Amāvāsyā, Pūrṇimā and Mahālaya Pakṣa calculated from the tithi, the day's śrāddha tithi, tithi and nakṣatra times, Rāhu kālam, Yamagaṇḍam and Kuḷigai,.
-- **Phone and computer** (new in 5.0.5) – one app: phones get a touch-friendly layout, computers the full desktop layout.
-- **Your calendar** – Tamil (solar) or Telugu / Kannada (lunar, with adhika and nija māsa).
-- **Your details and family** – name (Tamil spellings become Sanskrit stems, e.g. Chidambareshwaran → चिदम्बरेश्वर, Subramanian → सुब्रह्मण्य), gotra, birth star and pāda (rāśi fills in automatically), family members.
-- **What you will chant** – Śrī Rudram, Vedic sūktas, sahasranāmams and aṣṭottaras, with closing verses to match.
-- **Tarpaṇam** – the complete text (Kṛṣṇa Yajur Veda, Āpastamba sūtra) for Mahālaya, Amāvāsyā, Māsa pirappu and grahaṇa, with both sides of the family.
-  - **Kāruṇika pitṛs** – add relatives one at a time; the gotra fills in from the relationship (your gotra for Periyappā, Chithappā and their wives; your mother's for Māmā and Māmī); lines are grouped by gotra.
-- **Your script** – Sanskrit (Devanagari), Tamil (Grantha), Telugu, Kannada or English letters (IAST).
-- **Copy, print or save as PDF**, including a small PDF for WhatsApp.
+- **Daily pañcāṅgam** – sunrise, sunset, karaṇam, Rāhu kālam, Yamagaṇḍam, Kuḷigai and Chandrāṣṭamam; **Share this pañcāṅgam** sends it to WhatsApp in your language.
+- **Tarpaṇam** – the complete text (Kṛṣṇa Yajur Veda, Āpastamba sūtra) for Mahālaya, Amāvāsyā, Māsa pirappu and grahaṇa, with both sides of the family and Kāruṇika pitṛs (the gotra fills in from the relationship; lines grouped by gotra).
+- **Which day?** – the right day for tarpaṇam by the aparāhṇa (afternoon) rule: Amāvāsyā (with the afternoon window marked and a "close call" warning), Mahālaya pakṣam, and Māsa pirappu (saṅkrānti time and the next 12 months). Compare Vākya and Tirukkaṇita side by side. The tarpaṇam suggestion and the daily email use the same day.
+- **Calendar** – any month and year, with Ekādaśī, Pradoṣam, Caturthī, Amāvāsyā, Pūrṇimā and Mahālaya pakṣa, the day's śrāddha tithi, and tithi and nakṣatra times.
+- **Returning users** – a Namaste card with today's saṅkalpam in one tap, Share, "Start again with my name" and the coming tarpaṇam days.
+- **Help** (More tab) and a **features page**: https://sankalpam.live/?features
+- **Phone and computer** – one app; it can be added to the home screen and opens like an app.
 
 ## Vākya and Tirukkaṇita
 

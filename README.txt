@@ -1,12 +1,12 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.2.4
+SAṄKALPAM GENERATOR v5.2.6
 Updated: 2026-10-11
 ================================================================================
 
 FILES IN THIS FOLDER
 ────────────────────
   index.html            → the app (everything is inside this one file) – CHANGED
-  manifest.webmanifest  → app name and icons ("display": "standalone", as 5.2.2)
+  manifest.webmanifest  → app name and icons (unchanged)
   README.md             → project description (shown on GitHub) – CHANGED
   README.txt            → this file – CHANGED
   CHANGELOG.md / .txt   → version history – CHANGED
@@ -14,7 +14,56 @@ FILES IN THIS FOLDER
   (icons: apple-touch-icon.png, icon-192.png, icon-512.png – unchanged)
 
 ================================================================================
-WHAT'S NEW IN 5.2.4  (5.2.3 was never uploaded, so this upload has both)
+WHAT'S NEW IN 5.2.6
+  • SIMPLE OPENING PAGE, in order: what a saṅkalpam is → choose your
+    pañcāṅgam → "Make my saṅkalpam". Today's pañcāṅgam is one tap below
+    ("See today's pañcāṅgam"). Everything fits on one phone screen.
+  • NAME ENDING IN THE FIRST STEPS – the name step now has None · Śarmā ·
+    Varmā · Gupta · Dāsa, with "Why?" showing the Viṣṇu Purāṇa 3.10.9 verse
+    (verse and reference only). Women: नाम्न्याः (shown as a note).
+  • SHARE THE SAṄKALPAM ON WHATSAPP IN ANY LANGUAGE – the saṅkalpam is shared
+    in the letters chosen (Sanskrit, Tamil, Telugu, Kannada, English). Phones:
+    the share sheet (WhatsApp, etc.). Computers (no share sheet): "Share on
+    WhatsApp" opens WhatsApp with the text, and the text is copied too.
+    The Share button now shows on computers as well.
+  • NO VERSION NUMBERS ON FEATURES – What's new, the update note ("The app has
+    been updated") and the features page show no numbers. (The version is
+    still in the update box and at the foot of each saṅkalpam.)
+  • "FORM OR FORMLESS?" – a link on the opening page (and in Help) opens
+    verses showing both are honoured: Śvetāśvatara Upaniṣad 6.11, Gītā 7.21
+    and 12.3–4. Back returns to the same place.
+  • FEATURES PAGE = what the app does + the Help (11 questions, in the order
+    you use the app, starting with "What is a saṅkalpam?").
+  • ONE AMĀVĀSYĀ DAY – the tarpaṇam suggestion and the daily email reminder
+    now use the same afternoon (aparāhṇa) rule as "Which day?". Example:
+    Aippasi 2026, Chennai, Vākya → Sun 8 Nov only (before: 8 and 9 Nov).
+  • PRADOṢAM in "What you will chant" – two tick boxes (nothing ticked
+    automatically; not saved; not in the daily email):
+      – before the chants:  प्रदोषपुण्यकाले श्रीरुद्र … पारायणं करिष्ये ॥
+      – its own line:        प्रदोषपूजां करिष्ये ॥
+    Wording from the owner; vādhyār may refine later.
+  • "WHICH DAY?" PICTURE – the afternoon window is marked by a gold bar above
+    the strip (no box over the tithi names); Amāvāsyā is written in white.
+  • No outside website links in the name-ending "Why?" (verse and reference
+    only).
+NOT CHANGED: calculations, saṅkalpam text, tarpaṇam text (tested: identical
+to 5.2.5 on 30 saṅkalpam cases, tarpaṇam and "Which day?").
+Telugu / Kannada calendar re-checked: Ugādi 19 Mar 2026 (Parābhava), Adhika
+Jyeṣṭha 17 May–15 Jun 2026, Kārtika from 10 Nov 2026, Ugādi 7 Apr 2027
+(Plavaṅga) – all match published pañcāṅgams.
+
+================================================================================
+EARLIER – 5.2.5
+  • Namaste card (returning users) now shows the meaning of saṅkalpam:
+    "A saṅkalpam is a vow: you state when, where, who and why before a pūjā."
+  • "Start again with my name" button on the Namaste card: the guided steps
+    from the name, with your saved details kept (nothing is cleared).
+  • "For another person" stays as a separate link, with its warning.
+NOT CHANGED: everything else (tested: saṅkalpam, tarpaṇam and email identical
+to 5.2.4).
+
+================================================================================
+EARLIER – 5.2.4
   • CALENDAR AT THE START – the welcome screen and step 1 show "Your pañcāṅgam":
       Tamil (solar months) · Telugu (lunar, Ugādi) · Kannada (lunar, Ugādi),
       and Vākya · Tirukkaṇita, with a short note on the difference.
@@ -43,7 +92,7 @@ NOT CHANGED: calculations, saṅkalpam text, tarpaṇam text, daily email text
     text (tithi, star, yogam, karaṇam, Kuḷigai …) before telling users.
 
 ================================================================================
-WHAT'S NEW IN 5.2.3  (details in CHANGELOG.txt) – included in this upload
+EARLIER – 5.2.3 (details in CHANGELOG.txt)
   • FIRST VISIT IN 5 STEPS – a welcome screen guides a new user:
       1 Today      – today's pañcāṅgam at once, with "Share today's pañcāṅgam"
       2 Your name  – shown large in Sanskrit, with Tamil, Telugu, Kannada and
@@ -100,50 +149,41 @@ email text.
 
 ================================================================================
 ⚠️  BEFORE YOU UPLOAD – PLEASE READ
-  1. STILL WAITING FOR (not shown in the app until given):
-       – Good time (nalla neram) table from our pañcāṅgam
-       – Amṛtādi yogam table (weekday × star)
-  2. VĀDHYĀR TO CONFIRM:
-       – Chandrāṣṭamam rule used: the stars whose 17th star is the Moon's star
-         (Moon's star + 11). It matches the printed pañcāṅgam for 11 Oct 2026.
-       – Karaṇam listed as the two karaṇas of the tithi at sunrise.
-       – Everything listed for 5.2.2 (name endings, नाम्न्याः, Kāśyapa).
-       – Very simple ending has both "ॐ तत्सत् सर्वं श्रीपरमेश्वरार्पणमस्तु" and
-         "ॐ तत्सत् ब्रह्मार्पणमस्तु" (as in earlier versions) – keep both?
-  3. AMĀVĀSYĀ DATE – "Coming up" uses the app's own tarpaṇam-day rule (the
-     same as the "Which day?" card). For Aippasi 2026 it gives Sun 8 Nov
-     (Vākya). Please check this against the printed pañcāṅgam.
-  4. DAILY EMAIL (Code.gs v8) – no change needed. It loads the app's code
-     from CONFIG.APP_URL (the GitHub address). Tested by simulating the
-     loader: existing subscribers get exactly the same email text.
-     After uploading, run refreshEngine() once in the Apps Script editor.
-  5. iPHONE – test once from the home-screen icon (saved details, Print / PDF).
-  6. Keep a backup of your current v5.2.2 files.
+  1. STILL WAITING FOR: Good time (nalla neram) and Amṛtādi yogam tables.
+  2. VĀDHYĀR TO CONFIRM: name endings and नाम्न्याः; Kāśyapa when the gotra is
+     not known; Chandrāṣṭamam rule; karaṇa listing; the Amāvāsyā day
+     (8 Nov 2026 for Chennai, Vākya); the Tirukkaṇita hint for Telugu /
+     Kannada.
+  3. NATIVE READERS to check the Tamil, Telugu and Kannada words in the
+     WhatsApp pañcāṅgam text.
+  4. DAILY EMAIL (Code.gs v9) – no change needed. After uploading, run
+     refreshEngine() once in the Apps Script editor.
+  5. Keep a backup of your current 5.2.5 files.
 
 ================================================================================
 OPTION A – GITHUB PAGES  (when you decide to upload)
   1. Open the repository → Add file → Upload files.
-  2. Drag in: index.html, manifest.webmanifest, README.md, README.txt,
-     CHANGELOG.md, CHANGELOG.txt. (Same names, so they replace the old ones.)
-  3. Commit message: "v5.2.4: calendar at the start, WhatsApp text in Tamil,
-     Telugu, Kannada, Help, What's new (includes 5.2.3)".
+  2. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
+     (Same names, so they replace the old ones.)
+  3. Commit message: "v5.2.6: simple opening page, name ending with Why?,
+     share the saṅkalpam on WhatsApp in any language, one Amāvāsyā day".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER
   1. hPanel → Websites → your site → File Manager → public_html.
-  2. Upload index.html and manifest.webmanifest (replace when asked).
+  2. Upload index.html (replace when asked).
 
 AFTER UPLOAD – TEST (on a phone)
-  1. Open the site and reload. Anyone on v5.2.2 sees "Update now", then the
-     green "Updated to 5.2.4" note once.
-  2. In a private/incognito window: the welcome screen opens at step 1 with
-     today's pañcāṅgam (sunrise, sunset, Chandrāṣṭamam).
-  3. Step 2: type a name – it appears large in Sanskrit and the other scripts.
-  4. Step 4: "I don't know my star" → date of birth, tick "I don't know my
-     time of birth" → Find my star → choose one → See my saṅkalpam.
-     The footnote says "Birth star chosen by the user …".
-  5. Reload: "Namaste, <name>" with Coming up.
-  6. Calendar: sunrise and sunset in the day details; no Mahālaya chip.
+  1. Open the site and reload. Anyone on 5.2.5 sees "Update now", then the
+     note "The app has been updated" once.
+  2. In a private/incognito window: the opening page shows what a saṅkalpam
+     is, "Your pañcāṅgam" and "Make my saṅkalpam" on one screen.
+  3. Step 2: type a name, tap Śarmā – your line shows शर्मणः. Tap "Why?" –
+     the verse and "Read the verse" link appear.
+  4. Finish the steps → Share → WhatsApp: the text is in your chosen letters.
+  5. Tarpaṇam tab, date 9 Nov 2026 (Chennai, Vākya): no Amāvāsyā suggestion;
+     8 Nov: Amāvāsyā.
+  6. More → See features: features, then Help.
   7. Apps Script editor → run refreshEngine() once.
   To see the welcome screens again on your own phone: add ?welcome=1 to the
   address (e.g. https://sankalpam.live/?welcome=1).

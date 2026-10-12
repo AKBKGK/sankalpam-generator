@@ -1,4 +1,37 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.6
+Updated: 2026-10-11
+================================================================================
+  ✓ Opening page in order: what a saṅkalpam is → your pañcāṅgam → Make my
+    saṅkalpam; today's pañcāṅgam one tap below. Fits one phone screen.
+  ✓ Name step: name ending (None, Śarmā, Varmā, Gupta, Dāsa) with "Why?" –
+    Viṣṇu Purāṇa 3.10.9 verse (no outside link). Women: नाम्न्याः note.
+  ✓ Share the saṅkalpam in the chosen letters (Sanskrit, Tamil, Telugu,
+    Kannada, English): phone share sheet; on computers WhatsApp opens with the
+    text (also copied). Share button now on computers too.
+  ✓ No version numbers in What's new, the update note or the features page.
+  ✓ "Form or formless?" on the opening page and in Help: Śvetāśvatara 6.11,
+    Gītā 7.21 and 12.3–4.
+  ✓ Features page now includes the Help; Help has 11 questions in the order
+    of use ("What is a saṅkalpam?" first, "Name ending" added).
+  ✓ One Amāvāsyā tarpaṇam day: suggestion and email reminder follow the
+    aparāhṇa rule, the same as "Which day?" (e.g. 8 Nov 2026, not 8 and 9).
+  ✓ Pradoṣam in "What you will chant": प्रदोषपुण्यकाले (before the chants) and
+    प्रदोषपूजां करिष्ये (own line); ticked by the user, not saved, not emailed.
+  ✓ "Which day?": afternoon window marked by a gold bar above the strip, no
+    box over the text; Amāvāsyā in white. No outside links in "Why?".
+  ✓ Unchanged: calculations, saṅkalpam and tarpaṇam text.
+
+================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.5
+Updated: 2026-10-11
+================================================================================
+  ✓ Namaste card: the vow line ("A saṅkalpam is a vow …") for returning users.
+  ✓ "Start again with my name": guided steps from the name, details kept.
+  ✓ "For another person" kept as its own link (warns before replacing).
+  ✓ Unchanged: calculations and all texts.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.4
 Updated: 2026-10-11
 ================================================================================

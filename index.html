@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.4  |  Updated: 2026-10-11
+  Version: 5.2.6  |  Updated: 2026-10-11
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -237,13 +237,14 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <section class="wz-p" data-s="1">
    <div class="wz-hi">Namaste</div>
    <h2 class="wz-h" id="wzT1">Your saṅkalpam, ready in a minute.</h2>
-   <p class="wz-vow">A saṅkalpam is a vow: you state when, where, who and why before a pūjā.</p>
-   <div class="wz-cal"><div class="wz-cal-h"><b id="wzCalL">Your pañcāṅgam</b><span>change any time in step 1</span></div>
+   <p class="wz-vow"><span class="wz-vow-k">What is a saṅkalpam?</span> Saṅkalpa (सङ्कल्पः) means a firm resolve. Before a pūjā, homa or tarpaṇam you state <b>when</b> (the day's pañcāṅgam), <b>where</b>, <b>who</b> (your name, gotra and star) and <b>why</b>. This app prepares it for you.
+    <button type="button" class="link wz-ff" data-ff aria-haspopup="dialog">Form or formless? ›</button></p>
+   <div class="wz-cal"><div class="wz-cal-h"><b id="wzCalL">Your pañcāṅgam</b><span>you can change it later</span></div>
     <div class="chips3" role="group" aria-labelledby="wzCalL"><button type="button" data-cal="ta" aria-pressed="true">Tamil<small>solar months</small></button><button type="button" data-cal="te" aria-pressed="false">Telugu<small>lunar · Ugādi</small></button><button type="button" data-cal="kn" aria-pressed="false">Kannada<small>lunar · Ugādi</small></button></div>
     <div class="chips2" role="group" aria-label="Method"><button type="button" data-meth="vakya" aria-pressed="true">Vākya<small>traditional</small></button><button type="button" data-meth="drik" aria-pressed="false">Tirukkaṇita<small>modern</small></button></div></div>
-   <div class="dx-card" id="wzToday"></div>
    <button type="button" class="btn wz-go" data-next="2">Make my saṅkalpam ›</button>
-   <p class="wz-small">4 quick steps · free · no sign-up · your details stay on your phone</p>
+   <p class="wz-small">4 more quick steps · free · no sign-up · your details stay on your phone</p>
+   <details class="wz-todayd"><summary>See today's pañcāṅgam</summary><div class="dx-card" id="wzToday"></div></details>
   </section>
 
   <section class="wz-p hide" data-s="2">
@@ -252,6 +253,15 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
    <input type="text" id="wzName" autocomplete="given-name" placeholder="e.g. shreenivaasa">
    <p class="wz-small">Long vowels: type double letters (shreenivaasa → श्रीनिवास)</p>
    <div class="wz-seg" role="group" aria-label="Gender"><button type="button" data-g="m" aria-pressed="true">Male</button><button type="button" data-g="f" aria-pressed="false">Female</button></div>
+   <div class="wz-sfx" id="wzSfx">
+    <div class="wz-sfx-h"><span class="wz-l" id="wzSfxL">Name ending</span><button type="button" class="link" id="wzSfxWhyBtn" aria-expanded="false" aria-controls="wzSfxWhy">Why?</button></div>
+    <div class="wz-sfx-c" role="group" aria-labelledby="wzSfxL"><button type="button" data-sfx="none" aria-pressed="true">None<small class="deva">नाम्नः</small></button><button type="button" data-sfx="sharma" aria-pressed="false">Śarmā<small class="deva">शर्मणः</small></button><button type="button" data-sfx="varma" aria-pressed="false">Varmā<small class="deva">वर्मणः</small></button><button type="button" data-sfx="gupta" aria-pressed="false">Gupta<small class="deva">गुप्तस्य</small></button><button type="button" data-sfx="dasa" aria-pressed="false">Dāsa<small class="deva">दासस्य</small></button></div>
+    <p class="wz-small">Choose the ending your family uses. If unsure, keep <b>None</b>.</p>
+    <div class="note hide" id="wzSfxWhy">Śarmā, Varmā, Gupta and Dāsa are the traditional name endings given in the Viṣṇu Purāṇa (3.10.9):
+        <span class="deva" style="display:block;margin:6px 0">शर्मेति ब्राह्मणस्योक्तं वर्मेति क्षत्रसंश्रयम् ।<br>गुप्तदासात्मकं नाम प्रशस्तं वैश्यशूद्रयोः ॥</span>
+        <b>None (नाम्नः)</b> simply means “of the one named …” and suits everyone. Follow your family's custom; if in doubt, ask your vādhyār.</div>
+   </div>
+   <p class="wz-small hide" id="wzSfxF">For women the saṅkalpam uses <span class="deva">नाम्न्याः</span> (“of the one named …”).</p>
    <div class="wz-wow hide" id="wzWow">
     <div class="wz-k">Your name, as it will be recited</div>
     <div class="wz-big deva" id="wzBig"></div>
@@ -314,11 +324,13 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <section class="home hide" id="home" aria-labelledby="homeT">
  <div class="home-hd"><div class="home-d" id="homeD"></div><h2 id="homeT">Namaste</h2></div>
  <div class="home-c">
+  <p class="home-vow">Saṅkalpa (सङ्कल्पः) means a firm resolve: before a pūjā you state when, where, who and why.</p>
   <b>Today's saṅkalpam is ready</b>
   <p class="wz-line deva" id="homeLine"></p>
   <div class="home-b"><button type="button" class="btn" id="homeOpen">Open my saṅkalpam</button><button type="button" class="btn ghost hide" id="homeShare">Share</button></div>
   <div class="wz-small">Chanting something extra today? Change it in the steps below.</div>
-  <button type="button" class="link home-other" id="homeOther">Guided steps / for another person ›</button>
+  <button type="button" class="btn ghost home-again" id="homeAgain">Start again with my name ›</button>
+  <button type="button" class="link home-other" id="homeOther">For another person ›</button>
   <div class="home-warn hide" id="homeWarn" role="alertdialog" aria-labelledby="homeWarnT">
    <p id="homeWarnT">This phone keeps one person's details. Starting again will replace the saved details of <b id="homeWarnName"></b> (name, gotra, star and family members).</p>
    <div class="home-b"><button type="button" class="btn" id="homeWarnGo">Continue</button><button type="button" class="btn ghost" id="homeWarnNo">Cancel</button></div>
@@ -422,8 +434,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
         <button type="button" class="link" id="suffixWhyBtn" aria-expanded="false" aria-controls="suffixWhy">Why?</button></p>
       <div class="note hide" id="suffixWhy" style="margin:6px 0 0">Śarmā, Varmā, Gupta and Dāsa are the traditional name endings given in the Viṣṇu Purāṇa (3.10.9):
         <span class="deva" style="display:block;margin:6px 0">शर्मेति ब्राह्मणस्योक्तं वर्मेति क्षत्रसंश्रयम् ।<br>गुप्तदासात्मकं नाम प्रशस्तं वैश्यशूद्रयोः ॥</span>
-        <b>None (नाम्नः)</b> simply means “of the one named …” and suits everyone. Follow your family's custom; if in doubt, ask your vādhyār.
-        <a href="https://vedapath.app/en/vishnu-purana/amsha-3/10/9" target="_blank" rel="noopener">Read the verse ›</a></div></div>
+        <b>None (नाम्नः)</b> simply means “of the one named …” and suits everyone. Follow your family's custom; if in doubt, ask your vādhyār.</div></div>
   </div>
   <details class="sg-more" id="sgMore"><summary>Pāda and rāśi <span class="sg-moresum" id="sgMoreSum"></span></summary>
   <div class="grid">
@@ -470,6 +481,10 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <p class="hint">After ticking, choose Pārāyaṇam (stotram) or Arcana (nāmāvali).</p></details>
   <details class="chant" id="grp-ashto"><summary>Aṣṭottarams <span class="hint">(108 names)</span> <span class="gcount"></span></summary><div class="cgrid" id="grid-ashto"></div>
     <p class="hint">After ticking, choose Pārāyaṇam (stotram) or Arcana (nāmāvali).</p></details>
+  <details class="chant" id="grp-prad"><summary>Pradoṣam <span class="gcount"></span></summary>
+    <div class="crow"><label class="cchk"><input type="checkbox" id="prad-kala"> <span>Pradoṣa puṇyakāla – before the chants <span class="dv">प्रदोषपुण्यकाले … पारायणं करिष्ये</span></span></label></div>
+    <div class="crow"><label class="cchk"><input type="checkbox" id="prad-puja"> <span>Pradoṣa pūjā – its own line <span class="dv">प्रदोषपूजां करिष्ये</span></span></label></div>
+    <p class="hint">Only on Pradoṣam days (trayodaśī at sunset – see the Calendar). "Before the chants" needs at least one chant ticked above. Not saved for other days, and not in the daily email.</p></details>
 </div>
 
 <!-- 4. Purpose -->
@@ -795,12 +810,18 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 </div>
 <div id="feedback" class="tab-content" role="tabpanel" aria-labelledby="mobile-tab-feedback">
 <div class="card v4help" id="helpCard"><h2>Help</h2>
-  <details><summary>Language or calendar – what's the difference?</summary><p>The <b>language</b> at the top changes only the letters of your saṅkalpam. The <b>calendar</b> in step 1 (Tamil, Telugu or Kannada) changes the year and month in it. Choosing the Telugu or Kannada calendar also switches the letters (you can undo it).</p></details>
+  <details><summary>What is a saṅkalpam?</summary><p>Saṅkalpa (सङ्कल्पः) means a firm resolve. Before a pūjā, homa or tarpaṇam you state when (the day's pañcāṅgam), where, who (your name, gotra and star) and why. The app fills in the day for your city; you add your details once.</p></details>
+  <details id="helpFF" class="ff"><summary>Form or formless – is this only for image worship?</summary><div class="ff-a"><p class="ff-sub">Both are honoured in the Upaniṣad and the Gītā. A saṅkalpam is a resolve, not tied to an image – it is said before sandhyā, japa, pārāyaṇam, homa and tarpaṇam too.</p>
+    <p><b>Śvetāśvatara Upaniṣad 6.11</b> – without qualities (nirguṇa)<span class="deva ff-v">एको देवः सर्वभूतेषु गूढः सर्वव्यापी सर्वभूतान्तरात्मा ।<br>कर्माध्यक्षः सर्वभूताधिवासः साक्षी चेता केवलो निर्गुणश्च ॥</span>“One God, hidden in all beings, the inner Self of all; the witness, pure awareness, beyond all qualities.”</p>
+    <p><b>Bhagavad Gītā 7.21</b> – with form (saguṇa)<span class="deva ff-v">यो यो यां यां तनुं भक्तः श्रद्धयार्चितुमिच्छति ।<br>तस्य तस्याचलां श्रद्धां तामेव विदधाम्यहम् ॥</span>“Whatever form a devotee worships with faith, I make that faith firm.”</p>
+    <p><b>Bhagavad Gītā 12.3–4</b> – the formless too reaches Him<span class="deva ff-v">ये त्वक्षरमनिर्देश्यमव्यक्तं पर्युपासते …<br>ते प्राप्नुवन्ति मामेव सर्वभूतहिते रताः ॥</span>“Those who worship the imperishable, formless, unmanifest … they too reach Me.”</p></div></details>
+  <details><summary>Language or calendar – what's the difference?</summary><p>The <b>language</b> changes only the letters of your saṅkalpam (Sanskrit, Tamil, Telugu, Kannada or English). The <b>calendar</b> (Tamil, Telugu or Kannada) changes the year and month in it. Choosing the Telugu or Kannada calendar also switches the letters – you can undo it.</p></details>
   <details><summary>Vākya or Tirukkaṇita?</summary><p>Vākya is the traditional method of Tamil Nadu pañcāṅgams; Tirukkaṇita is modern astronomy for your city. They can differ by up to an hour, and now and then by a day. Use the one your family pañcāṅgam follows.</p></details>
-  <details><summary>I don't know my birth star</summary><p>Tap "Don't know your star?" under Birth Nakṣatra and give your date, place and time of birth. Without the time, choose from that day's stars; the printout notes it.</p></details>
-  <details><summary>I don't know my gotra</summary><p>Choose "Not known (use Kāśyapa)". Ask your elders when you can.</p></details>
+  <details><summary>Name ending – Śarmā, Varmā, Gupta, Dāsa</summary><p>These are the traditional endings given in the Viṣṇu Purāṇa (3.10.9). <b>None (नाम्नः)</b> means “of the one named …” and suits everyone. Choose the one your family uses; tap “Why?” next to Name ending for the verse. For women the saṅkalpam uses नाम्न्याः.</p></details>
+  <details><summary>I don't know my gotra</summary><p>Choose "I don't know my gotra" in the first steps, or "Not known (use Kāśyapa)" in the full form – Kāśyapa is used. Ask your elders when you can.</p></details>
+  <details><summary>I don't know my birth star</summary><p>Tap "I don't know my star" in the first steps, or "Don't know your star?" under Birth Nakṣatra in the full form, and give your date, place and time of birth. Without the time, choose from that day's stars; the printout notes it.</p></details>
   <details><summary>Which day for tarpaṇam?</summary><p>Tarpaṇam tab → "Which day?" finds the day by the afternoon (aparāhṇa) rule for Amāvāsyā, Māsa pirappu and Mahālaya.</p></details>
-  <details><summary>Sharing, PDF and the daily email</summary><p>"Share this pañcāṅgam" sends the day's pañcāṅgam to WhatsApp in your language. Print / PDF saves a copy. The daily email brings your saṅkalpam every evening.</p></details>
+  <details><summary>Sharing on WhatsApp, PDF and the daily email</summary><p><b>Share</b> sends your saṅkalpam in the letters you chose – Sanskrit, Tamil, Telugu, Kannada or English – to WhatsApp or any app. On a computer, WhatsApp opens with the text ready. "Share this pañcāṅgam" sends the day's pañcāṅgam. Print / PDF saves a copy. The daily email brings your saṅkalpam every evening.</p></details>
   <details><summary>Where are my details kept?</summary><p>Only on this phone. Ancestors' names are never sent anywhere. If you subscribe to the email, your email and details are kept in a private Google Sheet only to send it; every email has Unsubscribe.</p></details>
   <details><summary>How do I get the newest version?</summary><p>The app checks by itself. When you see "Update now", tap it.</p></details>
 </div>
@@ -1871,7 +1892,7 @@ function chantSync() {
     if (box) box.classList.toggle('hide', !on); else sel.classList.toggle('hide', !on);
   });
   document.querySelectorAll('#chantCard details.chant').forEach(d => {
-    const n = [...d.querySelectorAll('input[data-sel]')].filter(c => c.checked).length;
+    const n = [...d.querySelectorAll('input[data-sel], input[id^="prad-"]')].filter(c => c.checked).length;
     d.querySelector('.gcount').textContent = n ? '✓ ' + n + ' selected' : '';
   });
 }
@@ -1921,6 +1942,9 @@ function collectSelections() {
     r.tags.add(it.tag); r.summary.push(it.en + ' Aṣṭottaram – ' + lbl[v]);
     if (v === 'P') r.lines.push(it.d + ' अष्टोत्तरशतनामस्तोत्र पारायणं'); else { r.lines.push(it.d + ' अष्टोत्तरशतनामावल्या अर्चनं'); r.arcana = true; }
   });
+  // Pradoṣam (v5.2.6): page only – not part of the saved details or the daily email
+  r.pradKala = CHK('prad-kala') && r.lines.length > 0; r.pradPuja = CHK('prad-puja');
+  if (r.pradKala) r.summary.push('Pradoṣa puṇyakāla'); if (r.pradPuja) r.summary.push('Pradoṣa pūjā');
   return r;
 }
 function updateSummary() {
@@ -2036,8 +2060,9 @@ function composeSankalpam(P, date, stamp) {
        dot('t') + 'today\'s pañcāṅgam · ' + dot('p') + 'you and family · ' + dot('u') + 'purposes and what you chant</div>';
   h += '<p>' + MANTRAS_D.mamopath + ' ' + MANTRAS_D.shubhe + ' ' + kala + ' ' + karta + famPhrase() + ',</p>';
   h += '<p>' + buildSidhyartha(sel.vedic) + ' —</p>';
-  if (sel.lines.length) h += '<p>' + (sel.sukta ? hl('u', 'नानासूक्तपाठेन') + ' ' : '') + sel.lines.map(x => hl('u', x)).join(' च ') + ' करिष्ये ॥</p>';
+  if (sel.lines.length) h += '<p>' + (sel.pradKala ? hl('u', 'प्रदोषपुण्यकाले') + ' ' : '') + (sel.sukta ? hl('u', 'नानासूक्तपाठेन') + ' ' : '') + sel.lines.map(x => hl('u', x)).join(' च ') + ' करिष्ये ॥</p>';
   else h += '<p>' + hl('u', 'यथाशक्ति नित्यकर्म') + ' करिष्ये ॥</p>';
+  if (sel.pradPuja) h += '<p>' + hl('u', 'प्रदोषपूजां') + ' करिष्ये ॥</p>';      // v5.2.6: Pradoṣam (wording from the owner; vādhyār may refine)
   const comp = completionFor(sel);
   h += '<h4>Samāpanam</h4>' + comp.map(m => '<p>' + m + '</p>').join('');
   if (!comp.includes(C.anena)) {            // v5.2.3: added only when the closing verses do not already have them (no repeat)
@@ -2048,7 +2073,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.4';
+const APP_VERSION = 'v5.2.6';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2709,24 +2734,38 @@ function tSync() {
   $('tTypeTip').innerHTML = !v ? '' : tsug
     ? (tFits(ty.value, v, c) ? '💡 <b>' + TP_TYPES[ty.value].en + '</b> falls on this date' + (ty.value !== tsug ? ' (so does ' + TP_TYPES[tsug].en + ')' : '') + '.'
        : '💡 Suggested for this date: <b>' + TP_TYPES[tsug].en + '</b> – you have chosen <b>' + TP_TYPES[ty.value].en + '</b>, which does not fall on it.') + ' Please check that this is the tarpaṇam you are doing.'
+    : amaOtherDay(v, c) ? '💡 Amāvāsyā touches this date, but by the afternoon (aparāhṇa) rule the Amāvāsyā tarpaṇam is on <b>' + longDate(amaOtherDay(v, c)) + '</b> – see "Which day?" below. Please follow your pañcāṅgam.'
     : '💡 No tarpaṇam falls on this date in ' + esc(c[0]) + ' – please check the date and the tarpaṇam chosen.';
   const g = GOTHRAS_EN(), sug = PRAVARA_SUGGEST[g];
   $('abHint').innerHTML = sug ? 'Suggested for ' + esc(g) + ' gotra: <b class="deva">' + sug + '</b> <a class="a2hs-link" id="abUse">use this</a> (check with your elders).'
                               : 'Type your pravara ṛṣis in the order your family says them (1, 3 or 5 names).';
   if (sug) $('abUse').onclick = () => { $('ab-pravara').value = sug; $('ab-pravaraEn').value = ''; tSave(); };
 }
+// Amāvāsyā tarpaṇam day: the one day chosen by the afternoon (aparāhṇa) rule for the method in use – the same day as "Which day?".
+// (Amāvāsyā can touch two days; before 5.2.6 both were suggested.) Falls back to the older test if the day finder is not loaded.
+function amaTarpanaDay(v, c) {
+  try { if (typeof tdfDay === 'function') { const sys = tdfProfile(), r = Panchanga.pitruDay(tdfFn(sys), v, 29, TDF_CLOSE[sys]); return !!r && r.date === v; } }
+  catch (e) {}
+  return !!isAmavasyaDay(v, c);
+}
+// Amāvāsyā touches this date but the tarpaṇam day (aparāhṇa rule) is another day: that day, else ''.
+function amaOtherDay(v, c) {
+  try { if (typeof tdfDay === 'function') { const sys = tdfProfile(); if (!Panchanga.segments(tdfDay(sys, v, 'T'), 'T').some(s => s.index === 29)) return '';
+          const r = Panchanga.pitruDay(tdfFn(sys), v, 29, TDF_CLOSE[sys]); return r && r.date !== v ? r.date : ''; } } catch (e) {}
+  return '';
+}
 // Which tarpaṇam falls on this date in this city ('' if none). Eclipse first, then Mahālaya pakṣa, Amāvāsyā, Māsa pirappu.
 function tSuggest(v, c) {
   if (eclipseOn(v, c, 'surya')) return 'surya';
   if (eclipseOn(v, c, 'chandra')) return 'chandra';
   if (isMahalaya(v, c)) return 'mahalaya';
-  if (isAmavasyaDay(v, c)) return 'amavasya';
+  if (amaTarpanaDay(v, c)) return 'amavasya';
   if (sunRasiAt(v, c).first) return 'masa';
   return '';
 }
 // Does the chosen tarpaṇam suit this date?
 function tFits(t, v, c) {
-  return t === 'mahalaya' ? isMahalaya(v, c) : t === 'amavasya' ? !!isAmavasyaDay(v, c) : t === 'masa' ? sunRasiAt(v, c).first
+  return t === 'mahalaya' ? isMahalaya(v, c) : t === 'amavasya' ? amaTarpanaDay(v, c) : t === 'masa' ? sunRasiAt(v, c).first
        : t === 'surya' || t === 'chandra' ? !!eclipseOn(v, c, t) : false;
 }
 function tDateWarn(v, c) {
@@ -2943,7 +2982,7 @@ function v53Setup() {
   let typing = 0;                                   // typed text is saved shortly after the last key (no need to leave the box)
   ['name', 'nameD', 'gotraOther', 'gotraD'].forEach(id => $(id).addEventListener('input', () => { clearTimeout(typing); typing = setTimeout(saveDetails, 600); }));
   // Share: only where the phone / browser offers a share sheet; Copy text stays for the rest
-  if (navigator.share) $('shareBtn').classList.remove('hide');
+  $('shareBtn').textContent = SHARE_LABEL(); $('shareBtn').classList.remove('hide');
   // Email box under the output: takes the address to the Daily email tab, where the consent boxes are
   if (SUBSCRIBE_URL) $('outMail').classList.remove('hide');
   $('outMailGo').addEventListener('click', () => {
@@ -2955,12 +2994,24 @@ function v53Setup() {
   });
   geoSetup();
 }
+// Share: the phone's share sheet (WhatsApp, Telegram, SMS …). Where there is none (most computers), WhatsApp opens
+// with the text ready, and the text is copied too. The text is in the letters chosen (Sanskrit, Tamil, Telugu, Kannada, English).
+function waShare(title, text, s) {
+  const say = t => { if (s) s.textContent = t; };
+  if (navigator.share) {
+    navigator.share({title, text}).then(() => say('')).catch(err => { if (err && err.name !== 'AbortError') say('Could not open sharing – please use Copy text.'); });
+    return 'sheet';
+  }
+  try { if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {}); } catch (e) {}
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
+  say('WhatsApp opened in a new tab. The text is copied too – paste it if needed.');
+  return 'whatsapp';
+}
+const SHARE_LABEL = () => navigator.share ? 'Share' : 'Share on WhatsApp';
 function shareSankalpam() {
-  const s = $('copyStatus'), text = $('result').innerText.trim();
+  const text = $('result').innerText.trim();
   if (!text) return;
-  navigator.share({title: 'Saṅkalpam', text: text + '\n\nPrepared with sankalpam.live – https://sankalpam.live/'})
-    .then(() => { s.textContent = ''; })
-    .catch(err => { if (err && err.name !== 'AbortError') s.textContent = 'Could not open sharing – please use Copy text.'; });
+  waShare('Saṅkalpam', text.replace(/Saṅkalpam Generator v\d+(\.\d+)+/g, 'Saṅkalpam Generator') + '\n\nPrepared with sankalpam.live – https://sankalpam.live/', $('copyStatus'));
 }
 // "Use my location": asks the browser only when the button is pressed, then picks the nearest city in the list.
 // The position is used on this device only and is not saved or sent anywhere. If refused, the city list is used as before.
@@ -3307,9 +3358,9 @@ function tdfRibbon(d) {
   s += '<rect x="' + X(d.dayFrac) + '" y="' + (y0 - 4) + '" width="' + (W - X(d.dayFrac)) + '" height="' + (h + 8) + '" fill="#1d1a17" opacity=".08"/>';
   Panchanga.segments(d, 'T').forEach((g, i) => { const x = X(g.f0), w = Math.max(0, X(g.f1) - x), ama = g.index === 29;
     s += '<rect x="' + x + '" y="' + y0 + '" width="' + w + '" height="' + h + '" fill="' + (ama ? '#3a2f28' : (i % 2 ? '#f3e6cf' : '#e9dcc0')) + '" stroke="#e3d9cb"/>';
-    if (w > 70) s += '<text x="' + (x + 6) + '" y="' + (y0 + 20) + '" font-size="13" fill="' + (ama ? '#f6ead2' : '#1d1a17') + '">' + tithiLabel(g.index).split(' · ')[0] + '</text>'; });
+    if (w > 70) s += '<text x="' + (x + 6) + '" y="' + (y0 + 20) + '" font-size="13" fill="' + (ama ? '#ffffff' : '#1d1a17') + '">' + tithiLabel(g.index).split(' · ')[0] + '</text>'; });
   const a0 = X(d.aparahna[0]), a1 = X(d.aparahna[1]);
-  s += '<rect x="' + a0 + '" y="' + (y0 - 7) + '" width="' + (a1 - a0) + '" height="' + (h + 14) + '" fill="none" stroke="#b8862b" stroke-width="2.5" rx="4"/>';
+  s += '<rect x="' + a0 + '" y="' + (y0 - 6) + '" width="' + (a1 - a0) + '" height="4" fill="#b8862b" rx="2"/>';
   s += '<text x="' + ((a0 + a1) / 2) + '" y="' + (y0 - 10) + '" text-anchor="middle" font-size="12" font-weight="700" fill="#8a6414">aparāhṇa</text>';
   const sx = X(d.dayFrac);
   s += '<line x1="' + sx + '" x2="' + sx + '" y1="' + (y0 - 3) + '" y2="' + (y0 + h + 6) + '" stroke="#8a3b12" stroke-width="1.5"/>';
@@ -4592,6 +4643,20 @@ body.wz-open{overflow:hidden}
 .wz-l{font-size:.85rem;font-weight:600;text-transform:none;letter-spacing:0;color:var(--ink)}
 .wz input[type=text],.wz input[type=date],.wz input[type=time],.wz select{min-height:48px;font-size:1rem;border-radius:12px}
 .wz-small{margin:0;font-size:.8rem;color:var(--soft);line-height:1.5}
+.wz-vow-k{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:#7a5a12;margin-bottom:2px}
+.wz-vow b{color:var(--kum-d)}
+.wz-todayd{border:1px solid var(--line);border-radius:14px;background:#fffdf9}
+.wz-todayd>summary{min-height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-weight:600;color:var(--kum-d);cursor:pointer;list-style:none}
+.wz-todayd>summary::-webkit-details-marker{display:none}.wz-todayd>summary::after,.feat-h summary::after{content:'▾';margin-left:8px;transition:transform .15s}
+.wz-todayd[open]>summary::after,.feat-h details[open] summary::after{transform:rotate(180deg)}
+.wz-todayd[open]>summary{border-bottom:1px solid var(--line)}.wz-todayd .dx-card{border:0;border-radius:0 0 14px 14px}
+.wz-sfx{display:flex;flex-direction:column;gap:6px}.wz-sfx.hide{display:none}
+.wz-sfx-h{display:flex;justify-content:space-between;align-items:center;gap:8px}.wz-sfx-h .link{min-height:40px;padding:0 4px}
+.wz-sfx-c{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.wz-sfx-c button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:52px;padding:4px 2px;border-radius:10px;border:1px solid #c9b79e;background:#fff;color:var(--ink);font:600 .86rem/1.2 var(--lat);cursor:pointer}
+.wz-sfx-c button small{font-size:.74rem;font-weight:400;color:var(--soft)}
+.wz-sfx-c button[aria-pressed="true"]{border:2px solid var(--kum);color:var(--kum-d);background:#fbf1e6}
+.wz-sfx .note{margin:0}
 .wz-go{min-height:54px;font-size:1.05rem;border-radius:14px;margin-top:6px}
 .wz-go[disabled]{opacity:.45;cursor:not-allowed}
 .wz-seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -4634,6 +4699,8 @@ body.wz-open{overflow:hidden}
 .home-c{padding:14px 18px;display:flex;flex-direction:column;gap:8px}
 .home-b{display:grid;grid-template-columns:2fr 1fr;gap:8px}.home-b .btn{min-height:50px;margin:0}
 .home-other{align-self:flex-start;min-height:44px;font-size:.9rem}
+.home-vow{margin:0;padding:10px 12px;border-radius:10px;background:#fff1b8;font-size:.92rem;line-height:1.5}
+.home-again{margin:0;min-height:48px;width:100%;white-space:normal}
 .home-warn{padding:12px 14px;border-radius:12px;background:#fff4dc;border:1px solid #f0d49a;display:flex;flex-direction:column;gap:10px}.home-warn p{margin:0;line-height:1.5}
 .home-up{padding:0 18px 16px;display:flex;flex-direction:column;gap:8px}
 .home-up a{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:50px;padding:0 14px;border-radius:12px;background:#f3ecff;color:#4b2a7a;text-decoration:none;font-size:.92rem}
@@ -4693,12 +4760,7 @@ body.has-home #sgIntro{display:none}
   }
   // v5.2.4: one text for the app and the owner's page, in the chosen saṅkalpam language (Tamil, Telugu, Kannada; else English letters)
   function shareText(x) { return panchangShareText(x.ds, x.c, $i('cal').value, $i('method').value, $i('script').value); }
-  function shareOrCopy(text, statusEl) {
-    if (navigator.share) { navigator.share({title: 'Pañcāṅgam', text}).catch(() => {}); return; }
-    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(
-      () => { if (statusEl) statusEl.textContent = '✓ Copied – paste it in WhatsApp'; },
-      () => { if (statusEl) statusEl.textContent = 'Could not copy on this device.'; });
-  }
+  function shareOrCopy(text, statusEl) { waShare('Pañcāṅgam', text, statusEl); }
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-share-day]'); if (!b) return;
     let x; try { x = extras(dateNow()); } catch (err) { return; }
@@ -4748,11 +4810,16 @@ body.has-home #sgIntro{display:none}
     if (document.activeElement !== $i('wzNameD')) $i('wzNameD').value = dv;
     $i('wzGo2').disabled = !dv;
     document.querySelectorAll('#wz .wz-seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.g === $i('gender').value)));
+    const fem = $i('gender').value === 'f';
+    $i('wzSfx').classList.toggle('hide', fem); $i('wzSfxF').classList.toggle('hide', !fem);
+    document.querySelectorAll('#wzSfx [data-sfx]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.sfx === $i('suffix').value)));
     syncLines();
   }
   $i('wzName').addEventListener('input', () => { $i('name').value = $i('wzName').value; ev($i('name'), 'input'); ev($i('name'), 'change'); syncName(); });
   $i('wzNameD').addEventListener('input', () => { $i('nameD').value = $i('wzNameD').value; ev($i('nameD'), 'input'); ev($i('nameD'), 'change'); syncName(); });
   document.querySelectorAll('#wz .wz-seg button').forEach(b => b.addEventListener('click', () => { $i('gender').value = b.dataset.g; ev($i('gender'), 'change'); syncName(); }));
+  document.querySelectorAll('#wzSfx [data-sfx]').forEach(b => b.addEventListener('click', () => { $i('suffix').value = b.dataset.sfx; ev($i('suffix'), 'change'); saveDetails(); syncName(); }));
+  $i('wzSfxWhyBtn').addEventListener('click', () => { const on = $i('wzSfxWhy').classList.toggle('hide') === false; $i('wzSfxWhyBtn').setAttribute('aria-expanded', String(on)); });
   // gotra
   const fold = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/aa/g, 'a').replace(/ee|ii/g, 'i').replace(/oo|uu/g, 'u').replace(/sh/g, 's').replace(/h/g, '');
   function renderGotras() {
@@ -4865,14 +4932,16 @@ body.has-home #sgIntro{display:none}
     $i('homeD').textContent = longDate(dateNow()) + ' · ' + c[0];
     $i('homeT').textContent = 'Namaste, ' + capFirst(devaTo(nameD, 'en'));
     $i('homeLine').innerHTML = kLine();
-    $i('homeShare').classList.toggle('hide', !navigator.share);
+    $i('homeShare').textContent = SHARE_LABEL(); $i('homeShare').classList.remove('hide');
   }
   $i('homeOpen').addEventListener('click', () => window.generateSankalpam());
   // star finder from the full form, any time
   $i('nakFindLink').addEventListener('click', () => {
     openWz(4); $i('wzFindBox').classList.add('hide'); $i('wzFind').click();
   });
-  // guided steps again – for this person or another (friend, relative): warn first, then clear the person's details
+  // v5.2.5: the guided steps again for the same person, starting with the name – nothing is cleared
+  $i('homeAgain').addEventListener('click', () => openWz(2));
+  // guided steps for another person (friend, relative): warn first, then clear the person's details
   $i('homeOther').addEventListener('click', () => {
     $i('homeWarnName').textContent = capFirst(devaTo($i('nameD').value.trim(), 'en')) || 'the current person';
     $i('homeWarn').classList.remove('hide'); $i('homeWarnGo').focus();
@@ -4957,12 +5026,23 @@ body.has-home #sgIntro{display:none}
 .feat{position:fixed;inset:0;z-index:300;background:var(--cream,#fbf7f0);overflow-y:auto;-webkit-overflow-scrolling:touch}
 .feat-in{max-width:560px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
 .feat-hd{padding:22px 18px 18px;background:var(--kum-d);color:#fff}.feat-hd small{color:#f3d9c0;font-size:.78rem}
-.feat-hd h1{margin:4px 0 6px;font-family:var(--lat);font-size:1.6rem;line-height:1.2;color:#fff}.feat-hd p{margin:0;color:#f8e6d6;line-height:1.5}
+.feat-hd h1:focus{outline:none}.feat-hd h1{margin:4px 0 6px;font-family:var(--lat);font-size:1.6rem;line-height:1.2;color:#fff}.feat-hd p{margin:0;color:#f8e6d6;line-height:1.5}
 .feat-l{padding:14px 18px 0;display:flex;flex-direction:column;gap:10px}
 .feat-l div{padding:12px 14px;border-radius:12px;background:#fff;border:1px solid var(--line)}.feat-l b{color:var(--kum-d)}.feat-l span{display:block;font-size:.9rem;line-height:1.5;margin-top:2px}
 .feat-l div.priv{background:#eef6ee;border-color:#b9dcbc}.feat-l div.priv b{color:#1c5c2e}
 .feat-f{margin-top:auto;padding:16px 18px 24px;display:flex;flex-direction:column;gap:8px}.feat-f .btn{margin:0;min-height:52px}
 .feat-f p{margin:0;font-size:.8rem;color:var(--soft);text-align:center}
+.feat-h{margin:16px 18px 0;padding:12px 14px;border-radius:12px;background:#fff;border:1px solid var(--line)}.feat-h h2{margin:0 0 4px;font-size:1.1rem;color:var(--kum-d)}
+.feat-h details{border-top:1px solid #efe4d3;padding:6px 0}.feat-h summary{min-height:40px;display:flex;align-items:center;justify-content:space-between;font-weight:600;cursor:pointer;list-style:none}.feat-h summary::-webkit-details-marker{display:none}
+.feat-h details p{margin:4px 0 6px;font-size:.9rem;line-height:1.55;color:#3b2f26}
+.v4wn ul{margin:6px 0 0;padding-left:20px}.v4wn li{margin:4px 0;font-size:.9rem;line-height:1.5}
+.ffs{position:fixed;inset:0;z-index:400;background:var(--cream,#fbf7f0);overflow-y:auto;-webkit-overflow-scrolling:touch}.ffs.hide{display:none}
+.ffs-in{max-width:560px;margin:0 auto;padding:0 18px 28px}.ffs-top{position:sticky;top:0;display:flex;align-items:center;gap:10px;padding:8px 0;background:var(--cream,#fbf7f0);color:var(--soft);font-size:.85rem}
+.ffs-back{min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--kum-d);font:600 .95rem var(--lat);cursor:pointer}
+.ffs h2{margin:6px 0 10px;font-family:var(--lat);color:var(--kum-d);font-size:1.4rem}.ffs h2:focus{outline:none}.ffs .btn{width:100%;margin:14px 0 0;min-height:50px}
+.ff-a p{margin:0 0 12px;font-size:.92rem;line-height:1.55;color:#3b2f26}.ff-a .ff-sub{padding:10px 12px;border-radius:10px;background:#fff1b8;color:#3b2a10}
+.ff-a .ff-v{display:block;margin:6px 0;font-size:1rem;line-height:1.7;color:var(--kum-d)}.ff-a small{display:block;margin-top:4px;color:var(--soft)}
+.wz-ff{display:inline-flex;align-items:center;min-height:40px;margin-top:4px;padding:0;font-weight:700}
 .v4toast.hide,.v4ask.hide,.v4new.hide,.feat.hide,.v4toast button.hide{display:none}
 @media screen and (max-width:760px){.v4toast,.v4ask{bottom:calc(150px + env(safe-area-inset-bottom,0px))}}
 @media print{.v4toast,.v4ask,.v4new,.feat{display:none!important}}
@@ -4974,18 +5054,26 @@ body.has-home #sgIntro{display:none}
   <p style="font-size:.82rem;color:var(--soft)">This changes the month and year in your saṅkalpam. Asked only once.</p>
   <div class="v4b"><button type="button" class="btn" id="v4Yes">Yes</button><button type="button" class="btn ghost" id="v4No">No</button></div>
 </div>
+<div class="ffs hide" id="ffSheet" role="dialog" aria-modal="true" aria-labelledby="ffT">
+ <div class="ffs-in"><div class="ffs-top"><button type="button" class="ffs-back" id="ffBack">‹ Back</button><span>Help</span></div>
+  <h2 id="ffT" tabindex="-1">Form or formless?</h2><div class="ff-a" id="ffBody"></div>
+  <button type="button" class="btn" id="ffDone">Back</button></div>
+</div>
 <div class="feat hide" id="feat" role="dialog" aria-modal="true" aria-labelledby="featT">
  <div class="feat-in">
-  <div class="feat-hd"><small>sankalpam.live · free · no sign-in</small><h1 id="featT">Your saṅkalpam, ready in a minute</h1><p>A saṅkalpam is a vow: you state when, where, who and why before a pūjā.</p></div>
+  <div class="feat-hd"><small>sankalpam.live · free · no sign-in</small><h1 id="featT">Your saṅkalpam, ready in a minute</h1><p>Saṅkalpa (सङ्कल्पः) means a firm resolve: before a pūjā you state when, where, who and why.</p></div>
   <div class="feat-l">
-   <div><b>Saṅkalpam for today</b><span>With the day's pañcāṅgam for your city, your name, gotra and star, family and chants.</span></div>
-   <div><b>Tarpaṇam</b><span>Amāvāsyā, Māsa pirappu, Mahālaya and grahaṇa – the right day found for you, and the full text with both sides of the family.</span></div>
-   <div><b>Daily pañcāṅgam and calendar</b><span>Sunrise, sunset, Rāhu kālam, Yamagaṇḍam, Kuḷigai and Chandrāṣṭamam; festivals for any month.</span></div>
    <div><b>Your language, your calendar</b><span>Sanskrit, Tamil, Telugu, Kannada or English letters. Tamil, Telugu or Kannada calendar. Vākya or Tirukkaṇita.</span></div>
+   <div><b>Form or formless</b><span>Both are honoured – verses from the Śvetāśvatara Upaniṣad and the Bhagavad Gītā, in Help.</span></div>
+   <div><b>Saṅkalpam for today</b><span>With the day's pañcāṅgam for your city, your name, gotra and star, family and chants – and Pradoṣam on its days.</span></div>
+   <div><b>Name ending</b><span>None, Śarmā, Varmā, Gupta or Dāsa – with the Viṣṇu Purāṇa verse that gives them.</span></div>
    <div><b>Don't know your star?</b><span>Find it from your date, place and time of birth.</span></div>
-   <div><b>Share and print</b><span>WhatsApp, PDF and print – or your saṅkalpam by email every evening.</span></div>
+   <div><b>Share and print</b><span>Share your saṅkalpam or the day's pañcāṅgam on WhatsApp in your language; PDF and print; or your saṅkalpam by email every evening.</span></div>
+   <div><b>Daily pañcāṅgam and calendar</b><span>Sunrise, sunset, Rāhu kālam, Yamagaṇḍam, Kuḷigai and Chandrāṣṭamam; festivals for any month.</span></div>
+   <div><b>Tarpaṇam</b><span>Amāvāsyā, Māsa pirappu, Mahālaya and grahaṇa, with the full text for both sides of the family. "Which day?" finds the day by the afternoon (aparāhṇa) rule.</span></div>
    <div class="priv"><b>Private</b><span>Your details stay on your phone. Ancestors' names are never sent anywhere.</span></div>
   </div>
+  <div class="feat-h" id="featHelp"><h2>Help</h2></div>
   <div class="feat-f"><button type="button" class="btn" id="featGo">Open the app ›</button><p>Please have your vādhyār check the text before use.</p></div>
  </div>
 </div>
@@ -5063,39 +5151,48 @@ body.has-home #sgIntro{display:none}
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$i('v4Ask').classList.contains('hide')) closeAsk(); });
 
   // ---------- What's new: shown once to people who used an older version ----------
-  const WN = [
+  const WN = [               // v: used only to pick what is new for this phone – never shown
+    {v: '5.2.6', items: ['Name ending (Śarmā, Varmā, Gupta, Dāsa) with “Why?” in the first steps', '“Form or formless?” – verses from the Upaniṣad and the Gītā', 'Share your saṅkalpam on WhatsApp in your language – on a computer too', 'One Amāvāsyā tarpaṇam day, the same as "Which day?"', 'Pradoṣam in "What you will chant"']},
+    {v: '5.2.5', items: ['The meaning of saṅkalpam on your Namaste card', '"Start again with my name" – the guided steps any time']},
     {v: '5.2.4', items: ['WhatsApp text in Tamil, Telugu and Kannada', 'Choose your calendar (Tamil, Telugu, Kannada) at the start', 'Short Help in More']},
     {v: '5.2.3', items: ['A 5-step welcome and "Don\'t know my star?"', 'Sunrise, sunset, Chandrāṣṭamam and more every day', 'Closing lines no longer printed twice']}];
   const cur = String(typeof APP_VERSION === 'string' ? APP_VERSION : '').replace(/^v/, '');
   const cmp = (a, b) => { const x = a.split('.').map(Number), y = b.split('.').map(Number);
     for (let i = 0; i < Math.max(x.length, y.length); i++) { const d = (x[i] || 0) - (y[i] || 0); if (d) return d; } return 0; };
-  $i('wnList').innerHTML = WN.map(w => '<p><b>' + w.v + '</b> · ' + w.items.map(esc).join(' · ') + '</p>').join('');
+  $i('wnList').innerHTML = '<ul>' + WN.slice(0, 2).flatMap(w => w.items).map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>';
   let seen = LS.get('sankalpam.seenVer');
   const returning = ['sankalpam.v3', 'sankalpam.wzDone', 'sankalpam.introSeen'].some(k => (window.SG_KEYS0 || []).indexOf(k) >= 0);
   if (!seen) { if (returning) seen = '5.2.2'; else { seen = cur; LS.set('sankalpam.seenVer', cur); } }
   const fresh = cur ? WN.filter(w => cmp(w.v, seen) > 0 && cmp(w.v, cur) <= 0) : [];
   const done = () => { LS.set('sankalpam.seenVer', cur); $i('v4New').classList.add('hide'); };
   if (fresh.length) {
-    $i('v4NewT').textContent = 'Updated to ' + cur;
+    $i('v4NewT').textContent = 'The app has been updated';
     $i('v4NewL').innerHTML = fresh.flatMap(w => w.items).slice(0, 3).map(x => '<li>' + esc(x) + '</li>').join('');
     $i('v4New').classList.remove('hide');
   }
   $i('v4NewX').addEventListener('click', done);
   $i('v4NewGo').addEventListener('click', () => { done(); switchTab('feedback'); setTimeout(() => $i('wnCard').scrollIntoView({block: 'start'}), 50); });
 
+  // ---------- "Form or formless?" (opening page → the Help answer over the page; Back returns) ----------
+  let ffFrom = null;
+  function openFF() { ffFrom = document.activeElement; $i('ffBody').innerHTML = document.querySelector('#helpFF .ff-a').innerHTML;
+    $i('ffSheet').classList.remove('hide'); $i('ffSheet').scrollTop = 0; $i('ffT').focus(); }
+  function closeFF() { $i('ffSheet').classList.add('hide'); if (ffFrom && ffFrom.focus) ffFrom.focus(); ffFrom = null; }
+  document.addEventListener('click', e => { if (e.target.closest('[data-ff]')) openFF(); });
+  $i('ffBack').addEventListener('click', closeFF); $i('ffDone').addEventListener('click', closeFF);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$i('ffSheet').classList.contains('hide')) closeFF(); });
+
   // ---------- Features page ----------
   const FEAT_URL = 'https://sankalpam.live/?features';
-  function openFeat() { featFrom = document.activeElement; $i('feat').classList.remove('hide'); document.body.style.overflow = 'hidden'; $i('featT').focus && $i('featT').setAttribute('tabindex', '-1'); $i('featT').focus(); }
+  function openFeat() { featFrom = document.activeElement;
+    if (!$i('featHelp').querySelector('details')) $i('helpCard').querySelectorAll('details').forEach(d => { const k = d.cloneNode(true); k.open = false; k.removeAttribute('id'); $i('featHelp').appendChild(k); }); $i('feat').classList.remove('hide'); document.body.style.overflow = 'hidden'; $i('featT').focus && $i('featT').setAttribute('tabindex', '-1'); $i('featT').focus(); }
   let featFrom = null;
   function closeFeat() { $i('feat').classList.add('hide'); document.body.style.overflow = ''; if (featFrom && featFrom.focus) featFrom.focus(); featFrom = null; }
   $i('featGo').addEventListener('click', closeFeat);
   $i('featOpen').addEventListener('click', openFeat);
   $i('featShare').addEventListener('click', () => {
     const text = 'Saṅkalpam Generator – your saṅkalpam and tarpaṇam with the day\'s pañcāṅgam, free: ' + FEAT_URL;
-    if (navigator.share) { navigator.share({title: 'Saṅkalpam Generator', text}).catch(() => {}); return; }
-    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(
-      () => { $i('featStatus').textContent = '✓ Link copied – paste it in WhatsApp'; },
-      () => { $i('featStatus').textContent = FEAT_URL; });
+    waShare('Saṅkalpam Generator', text, $i('featStatus'));
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$i('feat').classList.contains('hide')) closeFeat(); });
   if (/[?&]features\b/.test(window.SG_QS || location.search)) openFeat();
