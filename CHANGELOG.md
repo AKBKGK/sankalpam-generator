@@ -1,4 +1,4 @@
-# Saṅkalpam Generator – Change Log (v1.1 to v5.2.6)
+# Saṅkalpam Generator – Change Log (v1.1 to v5.2.7)
 
 **App:** https://akbkgk.github.io/sankalpam-generator/ · **© 2026 Saṅkalpam Generator · MIT License**
 **Sources:** GitHub commit history, the saved app files and this project's conversation notes.
@@ -40,6 +40,7 @@ Rows marked *(not recorded)* in the "Requested" column come from before the conv
 | **v5.2.4** | 11 Oct 2026 | Make the calendar choice clear from the start; WhatsApp text in the reader's language; Help and What's new. | **Your pañcāṅgam** chips (calendar + method) on the welcome screen and in step 1, with a note. Telugu/Kannada calendar switches the letters (Undo); letters ask before changing the calendar. **WhatsApp text** in Tamil, Telugu, Kannada. **Updated to …** note once after an update; **Help** and **What's new** in More; **features page** `?features`. Owner tools moved out of the public app. **Fix:** Tirukkaṇita times 10:00–12:59 showed the wrong AM/PM and no "(next day)" in the daily box and shared text. Calculations and texts unchanged. |
 | **v5.2.5** | 11 Oct 2026 | Returning users also see what a saṅkalpam is, and can redo the guided steps easily. | Namaste card: vow line; **Start again with my name** (guided steps from the name, details kept); "For another person" as its own link. Texts unchanged. |
 | **v5.2.6** | 11 Oct 2026 | A clean, simple app in the order it is used: meaning first; name ending with "Why?" (Viṣṇu Purāṇa verse); share the saṅkalpam on WhatsApp in any language; no version numbers on features; features page with Help; one Amāvāsyā day. | **Opening page**: meaning → your pañcāṅgam → Make my saṅkalpam (today's pañcāṅgam one tap below). **Name step**: None/Śarmā/Varmā/Gupta/Dāsa with **Why?** (verse and reference); women नाम्न्याः. **Share**: saṅkalpam in the chosen letters; phones use the share sheet, computers open WhatsApp (text copied too). **What's new**, update note and features page without version numbers; **Form or formless?** link on the opening page and in Help (Śvetāśvatara 6.11, Gītā 7.21, 12.3–4). **Features page** includes the Help (11 questions, in order of use). **Amāvāsyā**: tarpaṇam suggestion and email reminder use the aparāhṇa rule, as "Which day?" (8 Nov 2026 only, Chennai Vākya). "Which day?" afternoon window marked by a gold bar above the strip; Amāvāsyā in white; no outside links in "Why?". **Pradoṣam** in What you will chant: प्रदोषपुण्यकाले before the chants and प्रदोषपूजां करिष्ये as its own line (user ticks; not saved or emailed). Calculations and texts otherwise unchanged. |
+| **v5.2.7** | 12 Oct 2026 | Good time and Amṛtādi yogam from our Tamil calendar's tables; a chat for users who do not want the whole app. | **Quick chat** (opening page, Namaste card, More): My saṅkalpam (Yes / Someone else – used once, not saved), today's pañcāṅgam, good time, next Amāvāsyā and Māsa pirappu; "I don't know" for gotra and star; no AI. **Good time** (Gowri nalla neram, 6 AM convention) for day and night, and **Amṛta / Siddha / Maraṇa yogam** (weekday × star, changes with the star) in the daily pañcāṅgam, welcome card, Calendar and Share this pañcāṅgam; Help item. Saturday night 4:30 AM slot taken as Rogam (calendar prints Soram twice). Saṅkalpam, tarpaṇam and email unchanged. |
 
 ## Still to do
 
@@ -50,7 +51,7 @@ Rows marked *(not recorded)* in the "Requested" column come from before the conv
 | "Not known → Kāśyapa" for the kartā's gotra | Added in v5.2.2 – vādhyār to confirm |
 | Mahālaya Amāvāsyā: which tarpaṇam the app picks | Vādhyār to confirm |
 | Pradoṣam wording (प्रदोषपुण्यकाले, प्रदोषपूजां करिष्ये) | Added in v5.2.6 – vādhyār may refine |
-| Good time (nalla neram) and Amṛtādi yogam | Waiting for the table from our pañcāṅgam |
+| Good time (Gowri) and Amṛtādi yogam | Added in v5.2.7 – Saturday 4:30 AM slot taken as Rogam (vādhyār may confirm) |
 | Chandrāṣṭamam rule, karaṇa listing | Added in v5.2.3 – vādhyār to confirm |
 | Mother's gotra when it is not known | Hidden until decided |
 | Bodhāyana sūtra tarpaṇam | Waiting for the text |

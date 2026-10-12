@@ -1,4 +1,19 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.7
+Updated: 2026-10-12
+================================================================================
+  ✓ Good time (Gowri nalla neram, as printed in our Tamil calendar, 6 AM
+    convention): good slots of the day and the night, every day.
+  ✓ Amṛta / Siddha / Maraṇa yogam (weekday × star), changing with the star.
+  ✓ Shown in the daily pañcāṅgam, welcome card, Calendar day details and
+    "Share this pañcāṅgam" (all languages). Help: "Good time and yogam".
+  ✓ Saturday night 4:30–6:00 AM taken as Rogam (Soram printed twice).
+  ✓ Quick chat: My saṅkalpam (Yes / Someone else, used once and not saved),
+    today's pañcāṅgam, good time, next Amāvāsyā and Māsa pirappu; "I don't
+    know" help for gotra and star. No AI; nothing sent anywhere.
+  ✓ Unchanged: saṅkalpam, tarpaṇam, "Which day?" and daily email.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.6
 Updated: 2026-10-11
 ================================================================================

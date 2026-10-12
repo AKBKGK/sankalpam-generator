@@ -1,6 +1,6 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.2.6
-Updated: 2026-10-11
+SAṄKALPAM GENERATOR v5.2.7
+Updated: 2026-10-12
 ================================================================================
 
 FILES IN THIS FOLDER
@@ -14,7 +14,42 @@ FILES IN THIS FOLDER
   (icons: apple-touch-icon.png, icon-192.png, icon-512.png – unchanged)
 
 ================================================================================
-WHAT'S NEW IN 5.2.6
+WHAT'S NEW IN 5.2.7
+  • QUICK CHAT – "Prefer a quick chat? ›" on the opening page, "Quick chat" on
+    the Namaste card and in More. Welcome, then: My saṅkalpam · Today's
+    pañcāṅgam · Good time today · Next Amāvāsyā / tarpaṇam day.
+      – My saṅkalpam: "Saṅkalpam for <name>?" Yes / Someone else. First-time
+        users are asked city, name, male/female, (name ending), gotra and star
+        once, and these are saved.
+      – Someone else: asked each time; used once, NOT saved; your own details,
+        family and prayers are untouched (their saṅkalpam uses the standard
+        prayers and today's date).
+      – "I don't know" for gotra (Kāśyapa) and star (date, place and time of
+        birth; without the time, choose from that day's stars).
+      – Every pañcāṅgam reply ends with "Vākya · <city> · Tamil calendar ·
+        Change ›". No AI, no personal details sent anywhere, no cost.
+  • Checked by an independent review: "Someone else" never changes saved
+    details; fixes made for share/PDF of someone else's saṅkalpam, double taps,
+    questions hidden behind buttons, long names and keyboard focus.
+  • GOOD TIME (GOWRI NALLA NERAM) – every day in the daily pañcāṅgam, the
+    welcome card, the Calendar day details and "Share this pañcāṅgam":
+    the good slots of the day and the night, from our Tamil calendar's Gowri
+    table (sunrise taken as 6 AM, 8 slots of 1½ hours). Good: Uthi, Amirtham,
+    Labham, Dhanam, Sugam. Not good: Rogam, Soram, Visham.
+      Saturday night: the calendar prints Soram twice; the 4:30–6:00 AM slot is
+        taken as Rogam (your decision). Good times are the same either way.
+  • YOGAM – Amṛta, Siddha or Maraṇa yogam every day, from our calendar's
+    weekday × star table; when the star changes, e.g. "Amṛta yogam till
+    12:54 AM (next day), then Maraṇa yogam". Follows the chosen method
+    (Vākya or Tirukkaṇita) for the star.
+  • Help: "Good time and yogam".
+NOT CHANGED: saṅkalpam, tarpaṇam, "Which day?" and the daily email (tested
+identical to 5.2.6).
+  ⚠ Native readers to check the new Telugu and Kannada words
+    (గౌరీ మంచి సమయం, ಗೌರಿ ಶುಭ ಸಮಯ, అమృత/సిద్ధ/మరణ యోగం, ಅಮೃತ/ಸಿದ್ಧ/ಮರಣ ಯೋಗ).
+
+================================================================================
+EARLIER – 5.2.6
   • SIMPLE OPENING PAGE, in order: what a saṅkalpam is → choose your
     pañcāṅgam → "Make my saṅkalpam". Today's pañcāṅgam is one tap below
     ("See today's pañcāṅgam"). Everything fits on one phone screen.
@@ -158,15 +193,15 @@ email text.
      WhatsApp pañcāṅgam text.
   4. DAILY EMAIL (Code.gs v9) – no change needed. After uploading, run
      refreshEngine() once in the Apps Script editor.
-  5. Keep a backup of your current 5.2.5 files.
+  5. Keep a backup of your current 5.2.6 files.
 
 ================================================================================
 OPTION A – GITHUB PAGES  (when you decide to upload)
   1. Open the repository → Add file → Upload files.
   2. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
      (Same names, so they replace the old ones.)
-  3. Commit message: "v5.2.6: simple opening page, name ending with Why?,
-     share the saṅkalpam on WhatsApp in any language, one Amāvāsyā day".
+  3. Commit message: "v5.2.7: Quick chat; good time (Gowri nalla neram) and
+     Amṛta / Siddha / Maraṇa yogam in the daily pañcāṅgam".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER

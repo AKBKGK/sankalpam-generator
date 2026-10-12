@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.6  |  Updated: 2026-10-11
+  Version: 5.2.7  |  Updated: 2026-10-12
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -244,6 +244,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <div class="chips2" role="group" aria-label="Method"><button type="button" data-meth="vakya" aria-pressed="true">Vākya<small>traditional</small></button><button type="button" data-meth="drik" aria-pressed="false">Tirukkaṇita<small>modern</small></button></div></div>
    <button type="button" class="btn wz-go" data-next="2">Make my saṅkalpam ›</button>
    <p class="wz-small">4 more quick steps · free · no sign-up · your details stay on your phone</p>
+   <button type="button" class="qc-open" data-qc-open>Prefer a quick chat? ›</button>
    <details class="wz-todayd"><summary>See today's pañcāṅgam</summary><div class="dx-card" id="wzToday"></div></details>
   </section>
 
@@ -330,6 +331,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <div class="home-b"><button type="button" class="btn" id="homeOpen">Open my saṅkalpam</button><button type="button" class="btn ghost hide" id="homeShare">Share</button></div>
   <div class="wz-small">Chanting something extra today? Change it in the steps below.</div>
   <button type="button" class="btn ghost home-again" id="homeAgain">Start again with my name ›</button>
+  <button type="button" class="qc-open" data-qc-open>Quick chat – saṅkalpam, pañcāṅgam, good time ›</button>
   <button type="button" class="link home-other" id="homeOther">For another person ›</button>
   <div class="home-warn hide" id="homeWarn" role="alertdialog" aria-labelledby="homeWarnT">
    <p id="homeWarnT">This phone keeps one person's details. Starting again will replace the saved details of <b id="homeWarnName"></b> (name, gotra, star and family members).</p>
@@ -695,6 +697,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     #calendar .pc-tile.pit{background:#fce4ec;border-color:#f3b6cb}
     #calendar .pc-tile.pit .v{color:#8e1846}
     #calendar .pc-tile.bad{background:#fdecea;border-color:#f2c1bb}
+    #calendar .pc-tile.good{background:#eef6ee;border-color:#b9dcbc}#calendar .pc-tile.good .row b{color:#1c5c2e;text-align:right}
     #calendar .pc-up{margin-top:12px}
     #calendar .pc-up .k{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--kum);font-weight:700;margin-bottom:6px}
     #calendar .pc-up ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px}
@@ -820,12 +823,15 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <details><summary>Name ending – Śarmā, Varmā, Gupta, Dāsa</summary><p>These are the traditional endings given in the Viṣṇu Purāṇa (3.10.9). <b>None (नाम्नः)</b> means “of the one named …” and suits everyone. Choose the one your family uses; tap “Why?” next to Name ending for the verse. For women the saṅkalpam uses नाम्न्याः.</p></details>
   <details><summary>I don't know my gotra</summary><p>Choose "I don't know my gotra" in the first steps, or "Not known (use Kāśyapa)" in the full form – Kāśyapa is used. Ask your elders when you can.</p></details>
   <details><summary>I don't know my birth star</summary><p>Tap "I don't know my star" in the first steps, or "Don't know your star?" under Birth Nakṣatra in the full form, and give your date, place and time of birth. Without the time, choose from that day's stars; the printout notes it.</p></details>
+  <details><summary>Good time and yogam</summary><p><b>Good time</b> is the Gowri nalla neram as printed in Tamil calendars: the day and the night each in 8 parts of 1½ hours, taken from 6 AM. Uthi, Amirtham, Labham, Dhanam and Sugam are good; Rogam, Soram and Visham are not. <b>Yogam</b> (Amṛta, Siddha or Maraṇa) comes from the weekday and the day's star – Amṛta and Siddha are good days, Maraṇa is avoided for new beginnings. Your city's actual sunrise may shift the times a little. For a wedding or upanayanam, a muhūrtam is fixed by your jyotiṣa.</p></details>
   <details><summary>Which day for tarpaṇam?</summary><p>Tarpaṇam tab → "Which day?" finds the day by the afternoon (aparāhṇa) rule for Amāvāsyā, Māsa pirappu and Mahālaya.</p></details>
   <details><summary>Sharing on WhatsApp, PDF and the daily email</summary><p><b>Share</b> sends your saṅkalpam in the letters you chose – Sanskrit, Tamil, Telugu, Kannada or English – to WhatsApp or any app. On a computer, WhatsApp opens with the text ready. "Share this pañcāṅgam" sends the day's pañcāṅgam. Print / PDF saves a copy. The daily email brings your saṅkalpam every evening.</p></details>
   <details><summary>Where are my details kept?</summary><p>Only on this phone. Ancestors' names are never sent anywhere. If you subscribe to the email, your email and details are kept in a private Google Sheet only to send it; every email has Unsubscribe.</p></details>
   <details><summary>How do I get the newest version?</summary><p>The app checks by itself. When you see "Update now", tap it.</p></details>
 </div>
 <div class="card v4wn" id="wnCard"><h2>What's new</h2><div id="wnList"></div></div>
+<div class="card" id="qcCard"><h2>Quick chat</h2><p class="lead">Your saṅkalpam, today's pañcāṅgam, good time and the next tarpaṇam day – one question at a time.</p>
+  <button type="button" class="btn" data-qc-open>Open quick chat ›</button></div>
 <div class="card" id="featCard"><h2>Tell others about the app</h2><p class="lead">A short page that lists everything the app does.</p>
   <div class="v4feat-b"><button type="button" class="btn" id="featOpen">See features</button><button type="button" class="btn ghost" id="featShare">Share link</button></div>
   <p class="okmsg" id="featStatus" role="status"></p></div>
@@ -1668,8 +1674,40 @@ const RYK_TABLE = [['4:30 – 6:00 PM', '12:00 – 1:30 PM', '3:00 – 4:30 PM']
 // Chandrāṣṭamam: the stars whose 17th star is the Moon's star that day (Moon's star + 11). Checked against a printed
 // Tamil pañcāṅgam for 11 Oct 2026 (Citrā, then Svātī → Pūraṭṭādhi, Uttiraṭṭādhi). Vādhyār to confirm the rule.
 const chandrashtama = nakIdx => (nakIdx + 11) % 27;
-// Amṛtādi yogam and Good time (nalla neram): tables differ between pañcāṅgams – filled in once the table is given.
-const AMRITADI_TABLE = null, GOOD_TIME_TABLE = null;
+// v5.2.7 – Gowri nalla neram, as printed in our Tamil calendar (Gowri pañcāṅgam): sunrise taken as 6 AM; the day 6 AM–6 PM and
+// the night 6 PM–6 AM, each in 8 slots of 1½ hours, Sunday … Saturday. U Uthi (udyogam), A Amirtham, L Labham, D Dhanam,
+// S Sugam = good; R Rogam, O Soram, V Visham = bad. Saturday night is printed with Soram twice (10:30 PM and 4:30 AM) and no
+// Rogam; the 4:30–6:00 AM slot is taken as Rogam (owner's decision, 12 Oct 2026). Both are bad slots, so good times are unaffected.
+const GOWRI_DAY   = ['UARLDSOV', 'AVRLDSOU', 'RLDSOUVA', 'LDSOVUAR', 'DSOUAVRL', 'SOUVARLD', 'OUVARLDS'];
+const GOWRI_NIGHT = ['DSOVUARL', 'SOUAVRLD', 'OUVARLDS', 'UARLDSOV', 'AVRLDSOU', 'RLDSOUVA', 'LDSOUVAR'];
+const GOWRI_GOOD = 'UALDS';
+// good slots of the day (night = false) or night (true), joined into ranges: ['6:00 – 7:30 AM', '10:30 AM – 3:00 PM', …]
+function gowriGood(wd, night) {
+  const row = (night ? GOWRI_NIGHT : GOWRI_DAY)[wd], base = night ? 18 * 60 : 6 * 60, out = [];
+  const t = m => { m = ((m % 1440) + 1440) % 1440; return [Math.floor(m / 60), m % 60]; };
+  for (let i = 0; i < 8; i++) {
+    if (GOWRI_GOOD.indexOf(row[i]) < 0) continue;
+    let j = i; while (j + 1 < 8 && GOWRI_GOOD.indexOf(row[j + 1]) >= 0) j++;
+    const [h0, m0] = t(base + 90 * i), [h1, m1] = t(base + 90 * (j + 1)), a = clock12(h0, m0), b = clock12(h1, m1);
+    out.push(a.slice(-2) === b.slice(-2) ? a.slice(0, -3) + ' – ' + b : a + ' – ' + b);
+    i = j;
+  }
+  return out;
+}
+// v5.2.7 – Amṛtādi yogam, as printed in our Tamil calendar: for each star (Aśvinī … Revatī), Sunday … Saturday:
+// A Amṛta (அமிர்தயோகம்), S Siddha (சித்தயோகம்), M Maraṇa (மரணயோகம்).
+const AMRITADI = ['SSSMAAS', 'SSSSSSS', 'SMSAMSA', 'SAASMMA', 'SASSMSS', 'SSMSMSS', 'SASSASS', 'SSSSAMS', 'SSSSSMM', 'MMSSAMA',
+  'SSSASSS', 'ASAAMSM', 'ASSMSAM', 'SSSSSSM', 'SASSASA', 'MMMSSSS', 'MSSSSSS', 'MSSSSMS', 'ASAMSAS', 'SSSASSS', 'AMSASSS', 'AASSSMS',
+  'MSSMSSS', 'SSMSMSA', 'SMMASSM', 'ASASSSS', 'ASSMSAM'];
+const AMRITADI_NAME = {A: {en: 'Amṛta yogam', ta: 'அமிர்தயோகம்', te: 'అమృత యోగం', kn: 'ಅಮೃತ ಯೋಗ'},
+                       S: {en: 'Siddha yogam', ta: 'சித்தயோகம்', te: 'సిద్ధ యోగం', kn: 'ಸಿದ್ಧ ಯೋಗ'},
+                       M: {en: 'Maraṇa yogam', ta: 'மரணயோகம்', te: 'మరణ యోగం', kn: 'ಮರಣ ಯೋಗ'}};
+// stars of the day [{index, till}] (till = clock text, or '' for the last) → "Amṛta yogam till 11:33 PM, then Siddha yogam"
+function amritadiText(wd, stars, lang, tillFn, thenWord) {
+  const parts = [];
+  stars.forEach(s => { const k = AMRITADI[s.index][wd]; if (parts.length && parts[parts.length - 1].k === k) parts[parts.length - 1].till = s.till; else parts.push({k, till: s.till}); });
+  return parts.map((p, i) => AMRITADI_NAME[p.k][lang] + (i < parts.length - 1 && p.till ? ' ' + tillFn(p.till) : '')).join(thenWord);
+}
 function newMoonNear(jd, dir) {                                // dir −1: last new moon before jd, +1: next after
   const e = elong(jd);
   let t = jd + (dir < 0 ? -e : 360 - e) / 12.1907;
@@ -2073,7 +2111,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.6';
+const APP_VERSION = 'v5.2.7';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -3471,20 +3509,24 @@ function tdfRender() {
 const PT_WORDS = {
   en: {head: 'Pañcāṅgam', year: 'Year', ayana: 'Ayanam', rtu: 'Ṛtu', month: 'Month', tithi: 'Tithi', star: 'Star', yoga: 'Yogam', karana: 'Karaṇam',
        rise: 'Sunrise', set: 'Sunset', rahu: 'Rāhu kālam', yama: 'Yamagaṇḍam', kuli: 'Kuḷigai', chandra: 'Chandrāṣṭamam',
-       till: t => 'till ' + t, allDay: 'all day', nextDay: '(next day)', tail: 'Your own saṅkalpam, free', vakya: 'Vākya', drik: 'Tirukkaṇita'},
+       till: t => 'till ' + t, allDay: 'all day', nextDay: '(next day)', tail: 'Your own saṅkalpam, free', vakya: 'Vākya', drik: 'Tirukkaṇita',
+       good: 'Good time (Gowri)', then: ', then '},
   ta: {head: 'பஞ்சாங்கம்', year: 'வருடம்', ayana: 'அயனம்', rtu: 'ருது', month: 'மாதம்', tithi: 'திதி', star: 'நட்சத்திரம்', yoga: 'யோகம்', karana: 'கரணம்',
        rise: 'சூரிய உதயம்', set: 'அஸ்தமனம்', rahu: 'ராகு காலம்', yama: 'எமகண்டம்', kuli: 'குளிகை', chandra: 'சந்திராஷ்டமம்',
        till: t => t + ' வரை', allDay: 'நாள் முழுவதும்', nextDay: '(மறுநாள்)', tail: 'உங்கள் சங்கல்பம், இலவசம்', vakya: 'வாக்கியம்', drik: 'திருக்கணிதம்',
+       good: 'கௌரி நல்ல நேரம்', then: ', பின் ',
        days: ['ஞாயிறு', 'திங்கள்', 'செவ்வாய்', 'புதன்', 'வியாழன்', 'வெள்ளி', 'சனி'],
        months: ['ஜனவரி', 'பிப்ரவரி', 'மார்ச்', 'ஏப்ரல்', 'மே', 'ஜூன்', 'ஜூலை', 'ஆகஸ்ட்', 'செப்டம்பர்', 'அக்டோபர்', 'நவம்பர்', 'டிசம்பர்']},
   te: {head: 'పంచాంగం', year: 'సంవత్సరం', ayana: 'అయనం', rtu: 'ఋతువు', month: 'మాసం', tithi: 'తిథి', star: 'నక్షత్రం', yoga: 'యోగం', karana: 'కరణం',
        rise: 'సూర్యోదయం', set: 'సూర్యాస్తమయం', rahu: 'రాహుకాలం', yama: 'యమగండం', kuli: 'గుళిక', chandra: 'చంద్రాష్టమం',
        till: t => t + ' వరకు', allDay: 'రోజంతా', nextDay: '(మరుసటి రోజు)', tail: 'మీ సంకల్పం, ఉచితంగా', vakya: 'వాక్యం', drik: 'దృక్',
+       good: 'గౌరీ మంచి సమయం', then: ', తర్వాత ',
        days: ['ఆదివారం', 'సోమవారం', 'మంగళవారం', 'బుధవారం', 'గురువారం', 'శుక్రవారం', 'శనివారం'],
        months: ['జనవరి', 'ఫిబ్రవరి', 'మార్చి', 'ఏప్రిల్', 'మే', 'జూన్', 'జులై', 'ఆగస్టు', 'సెప్టెంబర్', 'అక్టోబర్', 'నవంబర్', 'డిసెంబర్']},
   kn: {head: 'ಪಂಚಾಂಗ', year: 'ಸಂವತ್ಸರ', ayana: 'ಅಯನ', rtu: 'ಋತು', month: 'ಮಾಸ', tithi: 'ತಿಥಿ', star: 'ನಕ್ಷತ್ರ', yoga: 'ಯೋಗ', karana: 'ಕರಣ',
        rise: 'ಸೂರ್ಯೋದಯ', set: 'ಸೂರ್ಯಾಸ್ತ', rahu: 'ರಾಹುಕಾಲ', yama: 'ಯಮಗಂಡ', kuli: 'ಗುಳಿಕ', chandra: 'ಚಂದ್ರಾಷ್ಟಮ',
        till: t => t + ' ರವರೆಗೆ', allDay: 'ದಿನವಿಡೀ', nextDay: '(ಮರುದಿನ)', tail: 'ನಿಮ್ಮ ಸಂಕಲ್ಪ, ಉಚಿತ', vakya: 'ವಾಕ್ಯ', drik: 'ದೃಕ್',
+       good: 'ಗೌರಿ ಶುಭ ಸಮಯ', then: ', ನಂತರ ',
        days: ['ಭಾನುವಾರ', 'ಸೋಮವಾರ', 'ಮಂಗಳವಾರ', 'ಬುಧವಾರ', 'ಗುರುವಾರ', 'ಶುಕ್ರವಾರ', 'ಶನಿವಾರ'],
        months: ['ಜನವರಿ', 'ಫೆಬ್ರವರಿ', 'ಮಾರ್ಚ್', 'ಏಪ್ರಿಲ್', 'ಮೇ', 'ಜೂನ್', 'ಜುಲೈ', 'ಆಗಸ್ಟ್', 'ಸೆಪ್ಟೆಂಬರ್', 'ಅಕ್ಟೋಬರ್', 'ನವೆಂಬರ್', 'ಡಿಸೆಂಬರ್']}
 };
@@ -3557,6 +3599,8 @@ function panchangShareText(ds, c, cal, method, script) {
     W.star + ': ' + star + ' ' + till(N) + '\n' +
     W.yoga + ': ' + yoga + ' · ' + W.karana + ': ' + karana + '\n' +
     W.rise + ' ' + st.rise + ' · ' + W.set + ' ' + st.set + '\n' +
+    amritadiText(wd, N.map(s => ({index: s.index, till: s.open ? '' : clk(s.f1)})), lang, W.till, W.then) + '\n' +
+    W.good + ': ' + gowriGood(wd, false).join(', ') + '\n' +
     W.rahu + ' ' + ryk[0] + ' · ' + W.yama + ' ' + ryk[1] + ' · ' + W.kuli + ' ' + ryk[2] + '\n' +
     W.chandra + ': ' + chandra.map(nk).join(', ') + '\n\n' +
     W.tail + ': https://sankalpam.live/';
@@ -4430,6 +4474,12 @@ details.sg-more>.grid{margin-top:8px}
     h += '<div class="pc-tiles">';
     h += '<div class="pc-tile hl"><div class="k">Tithi</div>' + spanLines(ds, 'T') + '</div>';
     h += '<div class="pc-tile hl"><div class="k">Nakṣatra</div>' + spanLines(ds, 'N') + '</div>';
+    const amr = amritadiText(wd, spans(ds, 'N').map(s => ({index: s.index, till: s.to && s.to.ds === ds ? s.to.clock : s.to ? fmtAbs(s.to, ds) : ''})), 'en', t => 'till ' + t, ', then ');
+    h += '<div class="pc-tile good"><div class="k">' + WDAY[wd] + ' – good time (Gowri)</div>' +
+         '<div class="row"><span>Day</span><b>' + gowriGood(wd, false).join('<br>') + '</b></div>' +
+         '<div class="row"><span>Night</span><b>' + gowriGood(wd, true).join('<br>') + '</b></div>' +
+         '<div class="row"><span>Amṛtādi</span><b style="color:var(--ink)">' + esc(amr) + '</b></div>' +
+         '<div class="s">Gowri nalla neram as printed in Tamil calendars (sunrise taken as 6 AM).</div></div>';
     h += '<div class="pc-tile bad"><div class="k">' + WDAY[wd] + ' – avoid for new work</div>' +
          '<div class="row"><span>Rāhu kālam</span><b>' + ryk[0] + '</b></div>' +
          '<div class="row"><span>Yamagaṇḍam</span><b>' + ryk[1] + '</b></div>' +
@@ -4691,6 +4741,7 @@ body.wz-open{overflow:hidden}
 .dx-sun{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px 12px}.dx-sun div{padding:8px 10px;border-radius:10px;background:#fff6e6;font-size:.88rem}.dx-sun div+div{background:#f3ecf7}.dx-sun small{display:block;color:var(--soft);font-size:.72rem}
 .dx-rows{padding:0 14px 12px;display:flex;flex-direction:column;gap:6px;font-size:.88rem}
 .dx-rows div{display:flex;justify-content:space-between;gap:12px}.dx-rows span{color:var(--soft)}.dx-rows b{text-align:right}.dx-rows .na{font-weight:400;color:var(--soft)}
+.dx-rows .dx-good b{color:#1c5c2e}.dx-note{margin:6px 0 0;font-size:.74rem;line-height:1.45;color:var(--soft)}
 .dx-share{margin:0 14px 14px;width:calc(100% - 28px);min-height:44px}
 .dx{margin:10px 0 0}.dx .dx-sun,.dx .dx-rows{padding-left:0;padding-right:0}.dx .dx-share{margin:4px 0 0;width:100%}
 /* returning user */
@@ -4740,14 +4791,18 @@ body.has-home #sgIntro{display:none}
     let st = {rise: '', set: ''}; try { st = sunTimes(ds, c); } catch (e) {}
     return {c, ds, wd, st, method: TDF_LABEL[prof],
       tithi: tithiLabel(T[0].index).split(' · ')[0], tithiTill: till(T), star: nkName(N[0].index), starTill: till(N),
-      yoga: YOGA[Y[0].index][0], karanas: [kName(2 * T[0].index), kName(2 * T[0].index + 1)], chandra: N.map(s => nkShort(chandrashtama(s.index))), ryk: RYK_TABLE[wd]};
+      yoga: YOGA[Y[0].index][0], karanas: [kName(2 * T[0].index), kName(2 * T[0].index + 1)], chandra: N.map(s => nkShort(chandrashtama(s.index))), ryk: RYK_TABLE[wd],
+      amr: amritadiText(wd, N.map(s => ({index: s.index, till: s.open ? '' : clk(s.f1)})), 'en', t => 'till ' + t, ', then '),
+      goodDay: gowriGood(wd, false), goodNight: gowriGood(wd, true)};
   }
-  const NA = '<b class="na">awaiting our pañcāṅgam\'s table</b>';
   function rowsHTML(x) {
     return '<div class="dx-rows">' +
+      '<div><span>Amṛtādi yogam</span><b>' + esc(x.amr) + '</b></div>' +
+      '<div class="dx-good"><span>Good time</span><b>' + x.goodDay.join('<br>') + '</b></div>' +
+      '<div class="dx-good"><span>Good time · night</span><b>' + x.goodNight.join('<br>') + '</b></div>' +
       '<div><span>Rāhu kālam</span><b>' + x.ryk[0] + '</b></div><div><span>Yamagaṇḍam</span><b>' + x.ryk[1] + '</b></div><div><span>Kuḷigai</span><b>' + x.ryk[2] + '</b></div>' +
-      (GOOD_TIME_TABLE ? '<div><span>Good time</span>' + NA + '</div>' : '') + (AMRITADI_TABLE ? '<div><span>Amṛtādi yogam</span>' + NA + '</div>' : '') +
-      '<div><span>Chandrāṣṭamam</span><b>' + esc(x.chandra.join(', ')) + '</b></div></div>';
+      '<div><span>Chandrāṣṭamam</span><b>' + esc(x.chandra.join(', ')) + '</b></div>' +
+      '<p class="dx-note">Good time: Gowri nalla neram, as printed in Tamil calendars (sunrise taken as 6 AM). Amṛtādi yogam: Amṛta, Siddha or Maraṇa, from the weekday and the star.</p></div>';
   }
   const sunHTML = x => '<div class="dx-sun"><div><small>Sunrise</small><b>' + x.st.rise + '</b></div><div><small>Sunset</small><b>' + x.st.set + '</b></div></div>';
   function todayCardHTML(x) {
@@ -4801,6 +4856,7 @@ body.has-home #sgIntro{display:none}
   }
   function openWz(n) { $i('wz').classList.remove('hide'); document.body.classList.add('wz-open'); show(n || 1); }
   function closeWz() { $i('wz').classList.add('hide'); document.body.classList.remove('wz-open'); try { localStorage.setItem('sankalpam.wzDone', '1'); } catch (e) {} }
+  window.sgCloseWz = closeWz;
   function syncLines() { const l = kLine(); ['wzLine2', 'wzLine3', 'wzLine4', 'homeLine'].forEach(id => { if ($i(id)) $i(id).innerHTML = l; }); }
   function syncName() {
     const dv = $i('nameD').value.trim();
@@ -4911,6 +4967,7 @@ body.has-home #sgIntro{display:none}
       $i('readyT').textContent = 'Your saṅkalpam is ready' + (nm ? ', ' + nm : '');
       $i('readyD').textContent = longDate(dateNow()) + ' · ' + curCity()[0];
       $i('readyHd').classList.remove('hide');
+      const mb = document.querySelector('#output .mine'); if (mb) mb.classList.remove('hide');   // shown again after a chat "someone else"
       const sx = $i('suffix'); $i('mineSuffix').textContent = 'Name ending: ' + (sx.selectedOptions[0] ? sx.selectedOptions[0].textContent.split(' · ')[0] : '');
       $i('mineSuffix').classList.toggle('hide', $i('gender').value === 'f');
     }
@@ -4934,6 +4991,7 @@ body.has-home #sgIntro{display:none}
     $i('homeLine').innerHTML = kLine();
     $i('homeShare').textContent = SHARE_LABEL(); $i('homeShare').classList.remove('hide');
   }
+  window.sgRefreshHome = refreshHome;
   $i('homeOpen').addEventListener('click', () => window.generateSankalpam());
   // star finder from the full form, any time
   $i('nakFindLink').addEventListener('click', () => {
@@ -5065,11 +5123,12 @@ body.has-home #sgIntro{display:none}
   <div class="feat-l">
    <div><b>Your language, your calendar</b><span>Sanskrit, Tamil, Telugu, Kannada or English letters. Tamil, Telugu or Kannada calendar. Vākya or Tirukkaṇita.</span></div>
    <div><b>Form or formless</b><span>Both are honoured – verses from the Śvetāśvatara Upaniṣad and the Bhagavad Gītā, in Help.</span></div>
+   <div><b>Quick chat</b><span>Your saṅkalpam, today's pañcāṅgam, good time and the next tarpaṇam day – one question at a time. For someone else too, without changing your saved details.</span></div>
    <div><b>Saṅkalpam for today</b><span>With the day's pañcāṅgam for your city, your name, gotra and star, family and chants – and Pradoṣam on its days.</span></div>
    <div><b>Name ending</b><span>None, Śarmā, Varmā, Gupta or Dāsa – with the Viṣṇu Purāṇa verse that gives them.</span></div>
    <div><b>Don't know your star?</b><span>Find it from your date, place and time of birth.</span></div>
    <div><b>Share and print</b><span>Share your saṅkalpam or the day's pañcāṅgam on WhatsApp in your language; PDF and print; or your saṅkalpam by email every evening.</span></div>
-   <div><b>Daily pañcāṅgam and calendar</b><span>Sunrise, sunset, Rāhu kālam, Yamagaṇḍam, Kuḷigai and Chandrāṣṭamam; festivals for any month.</span></div>
+   <div><b>Daily pañcāṅgam and calendar</b><span>Sunrise, sunset, good time (Gowri nalla neram), Amṛta / Siddha / Maraṇa yogam, Rāhu kālam, Yamagaṇḍam, Kuḷigai and Chandrāṣṭamam; festivals for any month.</span></div>
    <div><b>Tarpaṇam</b><span>Amāvāsyā, Māsa pirappu, Mahālaya and grahaṇa, with the full text for both sides of the family. "Which day?" finds the day by the afternoon (aparāhṇa) rule.</span></div>
    <div class="priv"><b>Private</b><span>Your details stay on your phone. Ancestors' names are never sent anywhere.</span></div>
   </div>
@@ -5152,6 +5211,7 @@ body.has-home #sgIntro{display:none}
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [               // v: used only to pick what is new for this phone – never shown
+    {v: '5.2.7', items: ['Quick chat – your saṅkalpam, pañcāṅgam and good time, one question at a time', 'Good time (Gowri nalla neram) every day', 'Amṛta, Siddha or Maraṇa yogam every day']},
     {v: '5.2.6', items: ['Name ending (Śarmā, Varmā, Gupta, Dāsa) with “Why?” in the first steps', '“Form or formless?” – verses from the Upaniṣad and the Gītā', 'Share your saṅkalpam on WhatsApp in your language – on a computer too', 'One Amāvāsyā tarpaṇam day, the same as "Which day?"', 'Pradoṣam in "What you will chant"']},
     {v: '5.2.5', items: ['The meaning of saṅkalpam on your Namaste card', '"Start again with my name" – the guided steps any time']},
     {v: '5.2.4', items: ['WhatsApp text in Tamil, Telugu and Kannada', 'Choose your calendar (Tamil, Telugu, Kannada) at the start', 'Short Help in More']},
@@ -5198,6 +5258,303 @@ body.has-home #sgIntro{display:none}
   if (/[?&]features\b/.test(window.SG_QS || location.search)) openFeat();
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(sync, 0)); else setTimeout(sync, 0);
+})();
+</script>
+
+<style>
+.qc{position:fixed;inset:0;z-index:450;background:var(--cream,#fbf7f0)}.qc.hide{display:none}
+.qc-in{max-width:560px;height:100%;margin:0 auto;display:flex;flex-direction:column}
+.qc-top{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid var(--line);background:#fffdf9}
+.qc-top b{font-family:var(--lat);font-size:1.15rem;color:var(--kum-d)}
+.qc-log{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px;display:flex;flex-direction:column;gap:10px}
+.qc-b,.qc-u{max-width:88%;padding:10px 13px;border-radius:14px;font-size:.95rem;line-height:1.5;overflow-wrap:anywhere}
+.qc-b{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px;color:var(--ink)}
+.qc-u{align-self:flex-end;background:var(--kum);color:#fff;border-bottom-right-radius:4px}
+.qc-b pre{margin:0;white-space:pre-wrap;font:inherit;font-size:.9rem}
+.qc-b .deva{font-size:1.15rem;color:var(--kum-d)}
+.qc-ctx{display:block;margin-top:6px;font-size:.78rem;color:var(--soft)}
+.qc-ctx button{border:0;background:none;padding:0 2px;color:var(--kum);font:600 .78rem var(--lat);text-decoration:underline;cursor:pointer}
+.qc-ok{display:block;margin-top:4px;font-size:.8rem;color:#2e6b2e}
+.qc-act{padding:10px 14px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:#fffdf9;display:flex;flex-wrap:wrap;gap:8px}
+.qc-act button.qc-c{min-height:44px;padding:0 14px;border-radius:22px;border:1px solid #c9b79e;background:#fff;color:var(--kum-d);font:600 .92rem var(--lat);cursor:pointer}
+.qc-act button.qc-c.pri{background:var(--kum);border-color:var(--kum);color:#fff}
+.qc-act .qc-row{display:flex;gap:8px;width:100%}
+.qc-act input,.qc-act select{flex:1;min-width:0;min-height:46px;border-radius:12px;border:1px solid #c9b79e;background:#fff;padding:0 12px;font:inherit;color:var(--ink)}
+.qc-act .qc-hint{width:100%;margin:0;font-size:.78rem;color:var(--soft)}
+.qc-open{display:inline-flex;align-items:center;min-height:40px;padding:0;border:0;background:none;color:var(--kum);font:700 .95rem var(--lat);cursor:pointer;text-decoration:underline}
+@media print{.qc{display:none!important}}
+</style>
+<div class="qc hide" id="qc" role="dialog" aria-modal="true" aria-labelledby="qcT">
+ <div class="qc-in">
+  <div class="qc-top"><button type="button" class="ffs-back" id="qcClose">‹ Back</button><b id="qcT">Quick chat</b></div>
+  <div class="qc-log" id="qcLog" aria-live="polite"></div>
+  <div class="qc-act" id="qcAct"></div>
+ </div>
+</div>
+<script id="chat-ui">
+/* ===== v5.2.7: Quick chat – the app's own answers, one question at a time (no AI; no personal details are sent anywhere –
+   the PDF button only adds to the anonymous PDF count, as everywhere in the app).
+   "Someone else": details used once, never saved; the phone's own saved details are not changed. ===== */
+(function () {
+  'use strict';
+  const $i = id => document.getElementById(id);
+  const ev = (el, t) => el.dispatchEvent(new Event(t, {bubbles: true}));
+  const LS = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+  const saved = () => { try { return JSON.parse(LS('sankalpam.v3') || 'null'); } catch (e) { return null; } };
+  const capF = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+  const today = () => localDateStr(Date.now(), curCity()[3]);
+  const plusDays = (ds, k) => Panchanga.addDays(ds, k);
+  const myName = () => capF(devaTo(($i('nameD').value || '').trim(), 'en'));
+  const log = $i('qcLog'), act = $i('qcAct');
+  let from = null, lastQ = '', drawn = 0;
+  const toEnd = () => { log.scrollTop = log.scrollHeight; requestAnimationFrame(() => { log.scrollTop = log.scrollHeight; }); };
+  const fresh = () => { drawn = Date.now(); toEnd(); };
+  const tooSoon = () => Date.now() - drawn < 350;          // a double tap must not answer the next question too
+
+  // ---------- chat basics ----------
+  function say(html) { const d = document.createElement('div'); d.className = 'qc-b'; d.innerHTML = html; log.appendChild(d); lastQ = d.textContent.trim().slice(0, 80); toEnd(); return d; }
+  function me(text) { const d = document.createElement('div'); d.className = 'qc-u'; d.textContent = text; log.appendChild(d); log.scrollTop = log.scrollHeight; }
+  function chips(list) {            // list: [label, fn, primary?]
+    act.innerHTML = '';
+    list.forEach(([label, fn, pri], i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'qc-c' + (pri ? ' pri' : ''); b.textContent = label;
+      b.addEventListener('click', () => { if (tooSoon()) return; me(label); act.innerHTML = ''; fn(); });
+      act.appendChild(b); if (i === 0) setTimeout(() => { try { b.focus({preventScroll: true}); } catch (e) {} }, 0);
+    });
+    fresh();
+  }
+  function ask(type, placeholder, onOk, extra, hint) {   // a text / date / time box with a Send button, plus extra chips
+    act.innerHTML = '';
+    const row = document.createElement('div'); row.className = 'qc-row';
+    const inp = document.createElement('input'); inp.type = type; inp.placeholder = placeholder || ''; inp.autocomplete = 'off'; inp.setAttribute('aria-label', lastQ || placeholder || type);
+    const go = document.createElement('button'); go.type = 'button'; go.className = 'qc-c pri'; go.textContent = 'Send';
+    const send = () => { if (tooSoon()) return; const v = inp.value.trim(); if (!v) { inp.focus(); return; } me(type === 'date' ? longDate(v) : type === 'time' ? clock12(+v.slice(0, 2), +v.slice(3, 5)) : v); act.innerHTML = ''; onOk(v); };
+    go.addEventListener('click', send); inp.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+    row.append(inp, go); act.appendChild(row);
+    if (hint) { const p = document.createElement('p'); p.className = 'qc-hint'; p.textContent = hint; act.appendChild(p); }
+    (extra || []).forEach(([label, fn]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'qc-c'; b.textContent = label;
+      b.addEventListener('click', () => { if (tooSoon()) return; me(label); act.innerHTML = ''; fn(); }); act.appendChild(b); });
+    setTimeout(() => { try { inp.focus({preventScroll: true}); } catch (e) {} }, 0);
+    fresh();
+    return inp;
+  }
+  function pick(options, onPick, okLabel, extra) {        // a list (select) + OK
+    act.innerHTML = '';
+    const row = document.createElement('div'); row.className = 'qc-row';
+    const sel = document.createElement('select'); sel.innerHTML = options.map(([v, t]) => '<option value="' + esc(String(v)) + '">' + esc(t) + '</option>').join(''); sel.setAttribute('aria-label', lastQ || okLabel || 'Choose');
+    const go = document.createElement('button'); go.type = 'button'; go.className = 'qc-c pri'; go.textContent = okLabel || 'OK';
+    go.addEventListener('click', () => { if (tooSoon()) return; me(sel.selectedOptions[0].textContent); act.innerHTML = ''; onPick(sel.value); });
+    row.append(sel, go); act.appendChild(row);
+    (extra || []).forEach(([label, fn]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'qc-c'; b.textContent = label;
+      b.addEventListener('click', () => { if (tooSoon()) return; me(label); act.innerHTML = ''; fn(); }); act.appendChild(b); });
+    setTimeout(() => { try { sel.focus({preventScroll: true}); } catch (e) {} }, 0);
+    fresh();
+    return sel;
+  }
+  const ctxLine = () => { const m = $i('method').value === 'drik' ? 'Tirukkaṇita' : 'Vākya', cal = {ta: 'Tamil', te: 'Telugu', kn: 'Kannada'}[$i('cal').value];
+    return '<span class="qc-ctx">' + m + ' · ' + esc(curCity()[0]) + ' · ' + cal + ' calendar · <button type="button" data-qc-change>Change ›</button></span>'; };
+  log.addEventListener('click', e => { if (e.target.closest('[data-qc-change]')) { close(); switchTab('form'); setTimeout(() => { const b = $i('calBox') || $i('city'); if (b) b.scrollIntoView({behavior: 'smooth', block: 'center'}); }, 80); } });
+
+  // ---------- open / close ----------
+  function open() {
+    from = document.activeElement; log.innerHTML = ''; act.innerHTML = '';
+    $i('qc').classList.remove('hide'); document.body.style.overflow = 'hidden';
+    const nm = saved() && saved().nameD ? myName() : '';
+    say('🙏 Namaste' + (nm ? ', ' + esc(nm) : '') + '! I can help you with today\'s saṅkalpam and pañcāṅgam.');
+    ensureCity(menu);
+  }
+  function close() { $i('qc').classList.add('hide'); document.body.style.overflow = ''; if (from && from.focus) try { from.focus(); } catch (e) {} }
+  $i('qcClose').addEventListener('click', close);
+  document.addEventListener('keydown', e => {
+    if ($i('qc').classList.contains('hide')) return;
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key !== 'Tab') return;                              // keep Tab inside the chat (it is a modal dialog)
+    const f = [...$i('qc').querySelectorAll('button, input, select, [tabindex]:not([tabindex="-1"])')].filter(x => !x.disabled && x.offsetParent !== null);
+    if (!f.length) return;
+    const i = f.indexOf(document.activeElement);
+    if (e.shiftKey && (i <= 0)) { e.preventDefault(); f[f.length - 1].focus(); }
+    else if (!e.shiftKey && (i === -1 || i === f.length - 1)) { e.preventDefault(); f[0].focus(); }
+  });
+  document.addEventListener('click', e => { if (e.target.closest('[data-qc-open]')) open(); });
+
+  function ensureCity(next) {
+    const s = saved(); if (s && s.city != null && s.city !== '') { next(); return; }
+    say('Which city are you in? Sunrise and all the times depend on it.');
+    const sel = pick(CITY_FLAT.map((c, i) => [i, c[0]]), v => { const c = $i('city'); c.value = v; ev(c, 'change'); saveDetails(); next(); }, 'Use this city');
+    sel.value = $i('city').value || '0';
+  }
+  function menu() {
+    say('What would you like?');
+    chips([['My saṅkalpam', sankalpam, true], ['Today\'s pañcāṅgam', () => panchang(today())], ['Good time today', () => goodTime(today())],
+           ['Next Amāvāsyā / tarpaṇam day', nextDays], ['Close', close]]);
+  }
+  const more = extra => chips([...(extra || []), ['Main menu', menu]]);
+
+  // ---------- pañcāṅgam, good time, coming days ----------
+  function panchang(ds) {
+    let t = ''; try { t = panchangShareText(ds, curCity(), $i('cal').value, $i('method').value, $i('script').value); } catch (e) { say('Sorry – the pañcāṅgam could not be worked out for this date.'); more(); return; }
+    const b = say('<pre>' + esc(t.replace(/\n\n[^\n]*$/, '')) + '</pre>' + ctxLine() + '<span class="qc-ok" role="status"></span>');
+    more([[SHARE_LABEL(), () => { waShare('Pañcāṅgam', t, b.querySelector('.qc-ok')); more([['Tomorrow', () => panchang(plusDays(ds, 1))]]); }, true],
+          [ds === today() ? 'Tomorrow' : 'Next day', () => panchang(plusDays(ds, 1))]]);
+  }
+  function goodTime(ds) {
+    const c = curCity(), prof = tdfProfile(), d = tdfDay(prof, ds), N = Panchanga.segments(d, 'N'), wd = new Date(ds + 'T12:00:00Z').getUTCDay(), r = RYK_TABLE[wd];
+    const amr = amritadiText(wd, N.map(s => ({index: s.index, till: s.open ? '' : ptClock(d, s.f1, prof, ds, c)})), 'en', t => 'till ' + t, ', then ');
+    say('<b>' + esc(longDate(ds)) + '</b><br>' + esc(amr) + '<br><b>Good time:</b> ' + gowriGood(wd, false).join(', ') + '<br><b>Night:</b> ' + gowriGood(wd, true).join(', ') +
+        '<br><b>Avoid:</b> Rāhu kālam ' + r[0] + ' · Yamagaṇḍam ' + r[1] + ' · Kuḷigai ' + r[2] +
+        '<span class="qc-ctx">Gowri nalla neram as printed in Tamil calendars (sunrise taken as 6 AM).</span>' + ctxLine());
+    more([[ds === today() ? 'Tomorrow' : 'Next day', () => goodTime(plusDays(ds, 1))]]);
+  }
+  function nextDays() {
+    const sys = tdfProfile(), t0 = today(); let msg = '';
+    try { const a = tdfNextAma(sys, t0); if (a) msg += '<b>Amāvāsyā tarpaṇam:</b> ' + esc(longDate(a.date)) + (a.close ? ' <i>(close call – please check your pañcāṅgam)</i>' : ''); } catch (e) {}
+    try { const m = tdfNextSankrantis(sys, t0, 1)[0]; if (m) msg += '<br><b>Māsa pirappu:</b> ' + esc(longDate(m.monthDay)) + ' – ' + esc(TDF_RASI[m.rasi]); } catch (e) {}
+    say((msg || 'Sorry – could not work out the coming days.') + '<span class="qc-ctx">By the afternoon (aparāhṇa) rule, as in Tarpaṇam › "Which day?".</span>' + ctxLine());
+    more([['Open Tarpaṇam', () => { close(); switchTab('tarpanam'); }]]);
+  }
+
+  // ---------- saṅkalpam ----------
+  function sankalpam() {
+    const s = saved();
+    if (s && s.nameD) { say('Saṅkalpam for <b>' + esc(myName()) + '</b>?'); chips([['Yes', makeMine, true], ['Someone else', () => person(false)]]); return; }
+    say('Let\'s set up your details once – they stay on this phone.');
+    person(true);
+  }
+  function makeMine() {
+    setToday();
+    const mineBox = document.querySelector('#output .mine'); if (mineBox) mineBox.classList.remove('hide');
+    window.generateSankalpam();
+    if ($i('resultContainer').classList.contains('hide')) { say('A detail is missing – please complete it in the form.'); more([['Open the form', () => { close(); switchTab('form'); }]]); return; }
+    ready(myName());
+  }
+  function setToday() { const d = $i('date'), t = today(); if (d.value !== t) { d.value = t; ev(d, 'change'); } try { applyPanchang(); } catch (e) {} }
+  function ready(nm) {
+    const b = say('✓ <b>Saṅkalpam for ' + esc(nm) + '</b> – ' + esc(longDate($i('date').value)) + ' is ready.' + ctxLine() + '<span class="qc-ok" role="status"></span>');
+    more([[SHARE_LABEL(), () => { shareSankalpam(); b.querySelector('.qc-ok').textContent = navigator.share ? '' : 'WhatsApp opened in a new tab. The text is copied too.'; more([['See it', seeIt]]); }, true],
+          ['See it', seeIt], ['PDF', () => { printDoc('sank', false); more([['See it', seeIt]]); }]]);
+  }
+  const seeIt = () => { close(); switchTab('output'); };
+
+  // one person's details, asked one at a time. mine = true: saved as this phone's details; false: used once.
+  function person(mine) {
+    const P = {gender: 'm', suffix: 'none', name: '', nameD: '', gotra: '', gotraOther: '', gotraD: '', gotraNK: false, nak: '', pada: '0', rashi: '', nakSrc: ''};
+    say(mine ? 'Your first name (no surname)?' : 'Their first name (no surname)?');
+    ask('text', 'e.g. shreenivaasa', v => { P.name = v; gender(); }, null, 'Long vowels: type double letters (shreenivaasa → श्रीनिवास)');
+    function gender() {
+      say('Male or female?');
+      chips([['Male', () => { P.gender = 'm'; nameOk(); }], ['Female', () => { P.gender = 'f'; nameOk(); }]]);
+    }
+    function nameOk() {
+      P.nameD = nameToDevanagari(P.name, P.gender === 'f');
+      const sc = $i('script').value;
+      say('It will be recited as <span class="deva">' + esc(P.nameD) + '</span>' + (sc !== 'sa' ? ' (' + esc(devaTo(P.nameD, sc)) + ')' : '') + '. Is that right?');
+      chips([['Yes', P.gender === 'm' ? ending : gotra, true], ['Type again', () => { say('Please type the name again.'); ask('text', 'first name', v => { P.name = v; nameOk(); }); }]]);
+    }
+    function ending() {
+      say('Name ending? If unsure, choose None.');
+      chips([['None', () => { P.suffix = 'none'; gotra(); }, true], ['Śarmā', () => { P.suffix = 'sharma'; gotra(); }], ['Varmā', () => { P.suffix = 'varma'; gotra(); }],
+             ['Gupta', () => { P.suffix = 'gupta'; gotra(); }], ['Dāsa', () => { P.suffix = 'dasa'; gotra(); }]]);
+    }
+    const fold = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/aa/g, 'a').replace(/ee|ii/g, 'i').replace(/oo|uu/g, 'u').replace(/sh/g, 's').replace(/h/g, '');
+    function gotra() {
+      say('Gotra? Type a few letters.');
+      const kas = GOTHRAS.findIndex(g => g[0] === 'Kāśyapa');
+      const inp = ask('text', 'e.g. bhaa', v => { const i = GOTHRAS.findIndex(g => fold(g[0]) === fold(v)); if (i >= 0) setG(i); else setOther(v); },
+        [['I don\'t know', () => { setG(kas, true); }]], 'Matching gotras appear below as you type.');
+      const box = document.createElement('div'); box.className = 'qc-row'; box.style.flexWrap = 'wrap'; act.insertBefore(box, act.children[1]);
+      inp.addEventListener('input', () => {
+        const q = fold(inp.value.trim()); box.innerHTML = '';
+        if (!q) return;
+        GOTHRAS.map((g, i) => [g, i]).filter(([g]) => fold(g[0]).includes(q))
+          .sort((a, b) => (fold(a[0][0]).startsWith(q) ? 0 : 1) - (fold(b[0][0]).startsWith(q) ? 0 : 1)).slice(0, 6).forEach(([g, i]) => {
+          const b = document.createElement('button'); b.type = 'button'; b.className = 'qc-c'; b.textContent = g[0];
+          b.addEventListener('click', () => { me(g[0]); act.innerHTML = ''; setG(i); }); box.appendChild(b); });
+        toEnd();
+      });
+      function setG(i, nk) { P.gotra = String(i); P.gotraD = GOTHRAS[i][1]; P.gotraNK = !!nk; if (nk) say('Kāśyapa will be used – please ask your elders when you can.'); star(); }
+      function setOther(v) { P.gotra = 'other'; P.gotraOther = v; P.gotraD = iastToDevanagari(v); say('Gotra: <span class="deva">' + esc(P.gotraD) + '</span>'); star(); }
+    }
+    function star() {
+      say('Birth star (nakṣatra)?');
+      pick(NK.map((n, i) => [i, nkName(i)]), v => setStar(+v, 0, ''), 'OK', [['I don\'t know', finder]]);
+    }
+    function setStar(n, p, src) {
+      P.nak = String(n); P.pada = String(p || 0); P.nakSrc = src || '';
+      const r1 = Math.floor(n * 4 / 9), r2 = Math.floor((n * 4 + 3) / 9);
+      if (p > 0) { P.rashi = String(Math.floor((n * 4 + p - 1) / 9)); done(); return; }
+      if (r1 === r2) { P.rashi = String(r1); done(); return; }
+      say(esc(nkName(n)) + ' spans two rāśis. Which is it?');
+      const pads = r => [0, 1, 2, 3].filter(k => Math.floor((n * 4 + k) / 9) === r).length, def = pads(r2) > pads(r1) ? r2 : r1;
+      chips([[cap(RS[r1][0]), () => { P.rashi = String(r1); done(); }, r1 === def], [cap(RS[r2][0]), () => { P.rashi = String(r2); done(); }, r2 === def],
+             ['Don\'t know', () => { P.rashi = String(def); done(); }]]);
+    }
+    // star from date, place and time of birth (Tirukkaṇita, as in the welcome steps)
+    function moonNak(ms) { const jd = ms / 864e5 + 2440587.5, L = norm(moonLongitude(TofJD(jd)) - ayanamsa(jd)), w = 360 / 27; return [Math.floor(L / w), Math.floor((L % w) / (w / 4)) + 1]; }
+    const localMs = (ds, H, M, tz) => { const [y, m, d] = ds.split('-').map(Number), g = Date.UTC(y, m - 1, d, H, M); return g - tzOffsetH(tz, g - tzOffsetH(tz, g) * 36e5) * 36e5; };
+    function finder() {
+      const B = {};
+      say('Let\'s find it. Date of birth?');
+      const d = ask('date', 'date of birth', v => { B.ds = v; place(); }); d.min = '1900-01-01'; d.max = today();
+      function place() {
+        say('Place of birth?');
+        const s = pick(CITY_FLAT.map((c, i) => [i, c[0]]), v => { B.c = CITY_FLAT[+v]; time(); }, 'OK'); s.value = $i('city').value || '0';
+      }
+      function time() {
+        say('Time of birth?');
+        ask('time', 'time of birth', v => { const [H, M] = v.split(':').map(Number), [n, p] = moonNak(localMs(B.ds, H, M, B.c[3]));
+          say('The star is <b>' + esc(nkName(n)) + '</b>, pāda ' + p + ' <span class="qc-ctx">Modern (Tirukkaṇita) method – please confirm with the horoscope.</span>');
+          chips([['Yes, use it', () => setStar(n, p, 'calc'), true], ['Choose from the list', star]]); },
+          [['I don\'t know the time', noTime]]);
+      }
+      function noTime() {
+        const t0 = localMs(B.ds, 0, 0, B.c[3]), t1 = localMs(plusDays(B.ds, 1), 0, 0, B.c[3]), segs = [];
+        let cur = moonNak(t0)[0], f = t0;
+        for (let t = t0 + 6e5; t <= t1; t += 6e5) { const n = moonNak(t)[0]; if (n !== cur) { let a = t - 6e5, b = t; while (b - a > 3e4) { const mid = (a + b) / 2; if (moonNak(mid)[0] === cur) a = mid; else b = mid; } segs.push({n: cur, from: f, to: b}); cur = n; f = b; } }
+        segs.push({n: cur, from: f, to: t1});
+        const clk = ms => { const q = localParts(ms + 3e4, B.c[3]); return clock12(q.H, q.M); };
+        if (segs.length === 1) { say('The Moon was in <b>' + esc(nkName(segs[0].n)) + '</b> that whole day – this is the star.'); setStar(segs[0].n, 0, ''); return; }
+        say('That day the star changed. Please choose (the printout will note "Birth star chosen by the user").');
+        chips(segs.map(s => [nkName(s.n) + ' · ' + (s.from === t0 ? 'midnight' : clk(s.from)) + ' → ' + (s.to === t1 ? 'midnight' : clk(s.to)), () => setStar(s.n, 0, 'chosen')]));
+      }
+    }
+    function done() { if (mine) saveMine(); else makeOther(); }
+    // own details: into the form and saved, as the welcome steps do
+    function saveMine() {
+      const set = (id, v, t) => { const e = $i(id); e.value = v; ev(e, t || 'change'); };
+      set('gender', P.gender); set('suffix', P.suffix); set('name', P.name, 'input'); $i('nameD').value = P.nameD; ev($i('nameD'), 'input');
+      set('gotra', P.gotra); if (P.gotra === 'other') { set('gotraOther', P.gotraOther, 'input'); }
+      try { updateGotra(); } catch (e) {} $i('gotraD').value = P.gotraD; if (P.gotraNK) $i('gotraNkNote').classList.remove('hide');
+      set('nak', P.nak); set('pada', P.pada); try { syncRashi(); } catch (e) {} if (!$i('rashi').disabled) set('rashi', P.rashi); $i('nakSrc').value = P.nakSrc;
+      saveDetails();
+      if (!$i('wz').classList.contains('hide')) { if (window.sgCloseWz) window.sgCloseWz(); else $i('wz').classList.add('hide'); }
+      try { localStorage.setItem('sankalpam.wzDone', '1'); } catch (e) {}
+      if (window.sgRefreshHome) window.sgRefreshHome();
+      say('✓ Saved on this phone.');
+      makeMine();
+    }
+    // someone else: composed once from a copy of the details – nothing saved, the form is not changed
+    function makeOther() {
+      setToday();
+      const st = readState(); Object.assign(st, P, {family: []}); delete st.gotraNK;
+      Object.keys(st).forEach(k => { if (/^pp-/.test(k)) delete st[k]; }); st.otherD = '';   // standard wording, not the owner's prayers
+      ['prad-kala', 'prad-puja'].forEach(k => { st[k] = CHK(k); });
+      const cal = $i('cal').value;
+      const Pn = {samv: +$i('p-samv').value, ayana: +$i('p-ayana').value, rtu: +$i('p-rtu').value, masa: +$i('p-masa').value, adhika: cal === 'ta' ? 0 : +$i('p-adhika').value,
+                  tithi: +$i('p-tithi').value, vara: +$i('p-vara').value, nak: +$i('p-nak').value};
+      let h = ''; __ST = st;
+      try { h = composeSankalpam(Pn, $i('date').value, 'Generated ' + genStamp()); } catch (e) { h = ''; } finally { __ST = null; }
+      if (!h) { say('Sorry – something went wrong. Please try the form.'); more(); return; }
+      const res = $i('result'), sc = $i('script').value;
+      res.innerHTML = h; res.dataset.script = sc; res.lang = sc === 'en' ? 'sa-Latn' : 'sa';
+      $i('copyStatus').textContent = ''; $i('resultContainer').classList.remove('hide'); $i('noResult').classList.add('hide');
+      const nm = capF(devaTo(P.nameD, 'en'));
+      $i('readyT').textContent = 'Saṅkalpam for ' + nm; $i('readyD').textContent = longDate($i('date').value) + ' · ' + curCity()[0]; $i('readyHd').classList.remove('hide');
+      const mineBox = document.querySelector('#output .mine'); if (mineBox) mineBox.classList.add('hide');
+      switchTab('output');
+      ready(nm);
+      say('<span class="qc-ctx">Not saved – your own details on this phone are unchanged.</span>');
+    }
+  }
 })();
 </script>
 
