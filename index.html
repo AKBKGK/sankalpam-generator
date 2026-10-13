@@ -864,6 +864,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <p class="hint" id="fbHint">Your message is sent anonymously – no email or sign-in is needed. If you would like a reply, include your email in the message.</p>
   </div>
 </div>
+<aside class="today-aside" id="todayAside" aria-label="Today's pañcāṅgam"></aside>
 </div>
 
 <p class="credit">© 2026 Saṅkalpam Generator · MIT License · Made with devotion by ArvindK · <a class="a2hs-link" id="a2hsShow">📲 Add to home screen</a></p>
@@ -2195,7 +2196,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.10';
+const APP_VERSION = 'v5.2.11';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -4960,7 +4961,7 @@ body.has-home #sgIntro{display:none}
   const addD = (ds, k) => { const [y, m, d] = ds.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d + k)).toISOString().slice(0, 10); };
   const shortDay = ds => { const [y, m, d] = ds.split('-').map(Number); return VARA[new Date(Date.UTC(y, m - 1, d)).getUTCDay()][0].slice(0, 3) + ' ' + d + ' ' + MONTHS_EN[m - 1].slice(0, 3); };
   const kName = k => (k === 0 || k >= 57) ? KARANA_FIX[k][0] : KARANA_MOV[(k - 1) % 7][0];
-  const nkShort = i => nkName(i).replace(/^.*\((.*)\)$/, '$1');
+  const nkShort = i => nkName(i).replace(/^[^(]*\((.*)\)$/, '$1');
 
   // ---------- the day's almanac (karaṇas: the two of the tithi at sunrise, as printed pañcāṅgams list them) ----------
   function extras(ds) {
@@ -5012,7 +5013,7 @@ body.has-home #sgIntro{display:none}
       (x.shr ? '<div><span>Śrāddha tithi</span><b>' + esc(x.shr) + '</b></div>' : '') +
       '<div class="dx-wide"><span>Chandrāṣṭamam (by rāśi)</span>' + x.chandra.map(q => '<b>' + esc(q.r) + (q.till ? ' <small style="display:inline">till ' + esc(q.till) + '</small>' : '') + '<small>' + esc(q.stars) + '</small></b>').join('') + '</div>' +
       balHTML(x) +
-      '<p class="dx-note">Good time: Gowri nalla neram, as printed in Tamil calendars (sunrise taken as 6 AM). Amṛtādi yogam: Amṛta, Siddha or Maraṇa, from the weekday and the star. Chandrāṣṭamam: for those born in that rāśi (the Moon is in their 8th rāśi). Your Tārābalam and Chandrabalam: counted from your birth star and rāśi to the day\'s star and the Moon\'s rāśi (yours = 1), as printed in Tamil pañcāṅgams; good: Tārā 2, 4, 6, 8, 9 and Chandra 1, 3, 6, 7, 10, 11 (2, 5, 9 middling). Sunrise and sunset change by city.</p></div>';
+      '<p class="dx-note">Sunrise and sunset change by city.</p></div>';
   }
   const sunHTML = x => '<div class="dx-sun"><div><small>Sunrise</small><b>' + x.st.rise + '</b></div><div><small>Sunset</small><b>' + x.st.set + '</b></div></div>';
   const tsHTML = x => '<div class="dx-rows"><div class="dx-wide"><span>Tithi</span><b>' + esc(x.tithi) + ' <small>' + esc(x.tithiSpan) + '</small></b></div><div class="dx-wide"><span>Star</span><b>' + esc(x.star) + ' <small>' + esc(x.starSpan) + '</small></b></div></div>';
@@ -5037,6 +5038,12 @@ body.has-home #sgIntro{display:none}
     $i('dxBox').innerHTML = (x.td ? '<div class="dx-rows"><div><span>Tamil date</span><b>' + esc(x.td) + '</b></div></div>' : '') + sunHTML(x) + '<div class="dx-rows"><div><span>Yogam · Karaṇam</span><b>' + esc(x.yoga) + ' · ' + esc(x.karanas.join(', ')) + '</b></div></div>' + rowsHTML(x) +
       '<button type="button" class="btn ghost dx-share" data-share-day>Share on WhatsApp</button>';
     if (!$i('wz').classList.contains('hide') && step === 1) $i('wzToday').innerHTML = todayCardHTML(x);
+    // v5.2.11: the same day, beside the steps on wide screens
+    const as = $i('todayAside');
+    if (as) as.innerHTML = '<h3>' + (x.ds === localDateStr(Date.now(), x.c[3]) ? 'Today\'s pañcāṅgam' : 'Pañcāṅgam') + '</h3><div class="ta-b">' +
+      '<div class="ta-d"><b>' + esc(longDate(x.ds)) + '</b>' + (x.td ? '<span>' + esc(x.td) + '</span>' : '') + '<span>City: ' + esc(x.c[0]) + ' · Method: ' + x.method + '</span></div>' +
+      tsHTML(x) + sunHTML(x) + '<div class="dx-rows"><div><span>Yogam · Karaṇam</span><b>' + esc(x.yoga) + ' · ' + esc(x.karanas.join(', ')) + '</b></div></div>' + rowsHTML(x) +
+      '<button type="button" class="btn ghost dx-share" data-share-day aria-label="Share this day\'s pañcāṅgam on WhatsApp">Share on WhatsApp</button></div>';
   }
 
   // ---------- the kartā's line, with blanks ----------
@@ -5423,6 +5430,7 @@ body.has-home #sgIntro{display:none}
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [               // v: used only to pick what is new for this phone – never shown
+    {v: '5.2.11', items: ['A warmer look: sandal background, maroon section headings', 'On a wide computer screen: today\'s pañcāṅgam beside your saṅkalpam']},
     {v: '5.2.10', items: ['Chandrāṣṭamam by rāśi, with the stars and pādas and the time it changes', 'Śūlam and parihāram, Tamil date, śrāddha tithi and start times for tithi and star', 'Nārāyaṇīyam, and a closing that offers your chants or prays for your wish', 'Vākya: the Tamil month now changes on the Vākya day, as printed', 'Your Tārābalam and Chandrabalam every day', 'Quick chat at the top of the screen', 'Share the day\'s pañcāṅgam in Tamil (or your language) on WhatsApp']},
     {v: '5.2.8', items: ['Gotra found even when spelt in everyday English (Bharadwaj, Koundinya, Kaushik)', 'Clearer words about tarpaṇam when sharing the app']},
     {v: '5.2.7', items: ['Quick chat – your saṅkalpam, pañcāṅgam and good time, one question at a time', 'Good time (Gowri nalla neram) every day', 'Amṛta, Siddha or Maraṇa yogam every day']},
@@ -5773,5 +5781,44 @@ body.has-home #sgIntro{display:none}
 })();
 </script>
 
+
+<style id="v5211-theme">
+/* ===== v5.2.11: colour option B ("Kumkum & Sandal") and, on wide screens, today's pañcāṅgam beside the steps.
+   Screen only – the printed / PDF saṅkalpam, the daily email and the WhatsApp text are not affected. ===== */
+@media screen {
+  :root{--cream:#f4ebdc;--line:#e0cfb4;--tint:#fbf3e6;--band:linear-gradient(90deg,#7a2a0c,#9a3d14)}
+  body{background:#f4ebdc}
+  .card{border-color:#e0cfb4}
+  .card>h2{margin:-18px -18px 14px;padding:11px 18px;border-radius:12px 12px 0 0;background:var(--band);color:#fff}
+  .card>h2 .step{background:#fff;color:#7a2a0c}
+  .card>h2 .hint,.card>h2 small{color:#f6dcc8}
+  .today-aside{display:none}
+}
+@media screen and (min-width:1000px){
+  .sg-side{background:#ece0cb!important;border-right-color:#e0cfb4!important}
+  .tab-btn:hover{background:#e4d3b8}
+  .tab-btn.active{background:#f8efe2;color:#7a2a0c}
+}
+/* computers: the Saṅkalpam tab in two columns – steps on the left, today's pañcāṅgam on the right */
+@media screen and (min-width:1200px){
+  body[data-mobile-tab="form"] .wrap{max-width:1220px;display:grid;grid-template-columns:minmax(0,1fr) 340px;column-gap:28px;align-items:start}
+  body[data-mobile-tab="form"] .wrap>*{grid-column:1}
+  body[data-mobile-tab="form"] .today-aside:not(:empty){display:block;grid-column:2;grid-row:1 / span 60;position:sticky;top:16px;max-height:calc(100vh - 110px);overflow:auto;
+    background:#fff;border:1px solid #e0cfb4;border-radius:12px;font-size:.88rem}
+  .today-aside h3{margin:0;padding:11px 16px;background:var(--band);color:#fff;font-size:1rem}
+  .today-aside .ta-b{padding:10px 14px 14px}
+  .today-aside .ta-d{display:flex;flex-direction:column;gap:2px;margin:0 0 8px}.today-aside .ta-d span{color:var(--soft);font-size:.82rem}
+  .today-aside .dx-rows{padding:0 0 10px}.today-aside .dx-sun{padding:0 0 10px}
+  .today-aside .dx-share{width:100%;margin:4px 0 0}
+  .today-aside{overflow-x:hidden}
+  body[data-mobile-tab="form"] #dxBox{display:none}        /* the panel shows the same – no repeat */
+  body[data-mobile-tab="form"] .bar .in{max-width:1220px}
+  body[data-mobile-tab="form"] #mobile-completion .grid{grid-template-columns:1fr}
+  body:has(#updBar:not(.hide)) .today-aside{top:60px;max-height:calc(100vh - 154px)}
+}
+@media screen and (max-width:760px){.card>h2{margin:-20px -18px 14px;border-radius:19px 19px 0 0}}
+@media screen and (max-width:479px){.card>h2{margin:-19px -16px 14px}}
+@media print{.today-aside{display:none!important}}
+</style>
 </body>
 </html>

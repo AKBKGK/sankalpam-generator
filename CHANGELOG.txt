@@ -1,4 +1,16 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.11
+Updated: 2026-10-13
+================================================================================
+  ✓ Colours "Kumkum & Sandal" (screen only): sandal background, maroon
+    section headings, sandal menu on computers.
+  ✓ Wide computer screens: today's pañcāṅgam beside the steps (Saṅkalpam tab).
+  ✓ Screen note shortened to "Sunrise and sunset change by city."
+  ✓ Small fixes: Samāpanam choices not cut off; Tārābalam star-name brackets.
+  ✓ Unchanged: calculations, saṅkalpam and tarpaṇam text, WhatsApp text,
+    print / PDF, daily email.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.10
 Updated: 2026-10-13
 ================================================================================

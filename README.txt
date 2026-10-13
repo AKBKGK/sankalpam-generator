@@ -1,5 +1,5 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.2.10
+SAṄKALPAM GENERATOR v5.2.11
 Updated: 2026-10-13
 ================================================================================
 
@@ -14,7 +14,28 @@ FILES IN THIS FOLDER
   (icons: apple-touch-icon.png, icon-192.png, icon-512.png – unchanged)
 
 ================================================================================
-WHAT'S NEW IN 5.2.10
+WHAT'S NEW IN 5.2.11  (look only)
+  • COLOURS "Kumkum & Sandal" – sandal background, maroon band with white
+    text on each section heading, sandal menu on computers. Screen only: the
+    printed / PDF saṅkalpam and tarpaṇam, the daily email and the WhatsApp text
+    look exactly as before.
+  • WIDE COMPUTER SCREENS (1200 px and wider), Saṅkalpam tab: two columns –
+    the steps on the left, "Today's pañcāṅgam" on the right (stays in view
+    while scrolling, follows the date, city and method you choose, with its own
+    "Share on WhatsApp"). The day box under step 1 is hidden there, so nothing
+    shows twice. Smaller screens and the other tabs: as before.
+  • SCREEN NOTE shortened to "Sunrise and sunset change by city."
+  • Small fixes: Samāpanam choices no longer cut off on computers; the Telugu
+    / Kannada star name in "Your Tārābalam" keeps both brackets.
+NOT CHANGED: all calculations, the saṅkalpam and tarpaṇam text, the WhatsApp
+text, print / PDF and the daily email. Tested: 5.2.10 and 5.2.11 give the same
+saṅkalpam, tarpaṇam, "Which day?", WhatsApp text, daily email and owner
+WhatsApp text; print / PDF pages pixel-identical; no sideways scrolling from
+320 to 1920 px; "Update now" takes a 5.2.10 user to 5.2.11. Checked again by
+an independent reviewer (two rounds; all points fixed).
+
+================================================================================
+EARLIER – 5.2.10
   • CHANDRĀṢṬAMAM BY RĀŚI – now the rāśi rule (the Moon in the 8th rāśi from
     the birth rāśi), with the stars and pādas and the time it changes, in the
     method chosen. 11 Oct 2026, Chennai, Vākya: Kumbha (Avittam 3–4, Sathayam,
@@ -273,14 +294,14 @@ email text.
   4. DAILY EMAIL (Code.gs v9) – no change needed. After uploading, run
      refreshEngine() once in the Apps Script editor, and ownerRefresh() in
      your private WhatsApp page project.
-  5. Keep a backup of your current 5.2.9 files.
+  5. Keep a backup of your current 5.2.10 files.
 
 ================================================================================
 OPTION A – GITHUB PAGES  (when you decide to upload)
   1. Open the repository → Add file → Upload files.
   2. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
      (Same names, so they replace the old ones.)
-  3. Commit message: "v5.2.10: Chandrāṣṭamam by rāśi, śūlam, Tamil date, Nārāyaṇīyam, WhatsApp in Tamil".
+  3. Commit message: "v5.2.11: Kumkum & Sandal colours; today's pañcāṅgam beside the steps on computers".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER

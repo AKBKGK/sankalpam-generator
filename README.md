@@ -26,7 +26,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 - **Calendar** – any month and year, with Ekādaśī, Pradoṣam, Caturthī, Amāvāsyā, Pūrṇimā and Mahālaya pakṣa, the day's śrāddha tithi, and tithi and nakṣatra times.
 - **Returning users** – a Namaste card with today's saṅkalpam in one tap, Share, "Start again with my name" and the coming tarpaṇam days.
 - **Help** (More tab) and a **features page**: https://sankalpam.live/?features
-- **Phone and computer** – one app; it can be added to the home screen and opens like an app.
+- **Phone and computer** – one app; it can be added to the home screen and opens like an app. On a wide computer screen, today's pañcāṅgam stays beside your saṅkalpam.
 
 ## Vākya and Tirukkaṇita
 
