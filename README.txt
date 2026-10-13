@@ -1,6 +1,6 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.2.9
-Updated: 2026-10-12
+SAṄKALPAM GENERATOR v5.2.10
+Updated: 2026-10-13
 ================================================================================
 
 FILES IN THIS FOLDER
@@ -14,7 +14,62 @@ FILES IN THIS FOLDER
   (icons: apple-touch-icon.png, icon-192.png, icon-512.png – unchanged)
 
 ================================================================================
-WHAT'S NEW IN 5.2.9
+WHAT'S NEW IN 5.2.10
+  • CHANDRĀṢṬAMAM BY RĀŚI – now the rāśi rule (the Moon in the 8th rāśi from
+    the birth rāśi), with the stars and pādas and the time it changes, in the
+    method chosen. 11 Oct 2026, Chennai, Vākya: Kumbha (Avittam 3–4, Sathayam,
+    Pūraṭṭādhi 1–3) till 11:02 AM, then Mīna (Pūraṭṭādhi 4, Uttiraṭṭādhi,
+    Revatī). Same stars as Drik Panchang; Drik time 10:04 AM, ours 10:03 AM.
+    (5.2.9 showed one star at a time and switched at the star change.)
+  • NEW EVERY DAY: Tamil date (Puraṭṭāsi 24), śūlam and parihāram, śrāddha
+    tithi, start and end of the tithi and star (and what follows), Gowri night
+    times, "sunrise and sunset change by city", City and Method on their own
+    line – in the WhatsApp text, welcome card and Calendar (the step-1 box
+    adds Tamil date, śūlam, śrāddha tithi and Chandrāṣṭamam).
+  • WHATSAPP – the day's pañcāṅgam goes in Tamil by default (or the language
+    chosen; English when English letters are chosen), with a line that the
+    app has the other languages. Phones get the text only (no title). Every
+    share button reads "Share on WhatsApp"; the Calendar has one for any day.
+    On computers: "If WhatsApp didn't open, open it and paste the copied
+    text."
+  • VĀKYA MONTH (fix) – with Vākya and the Tamil calendar, the Tamil month (and
+    ṛtu, ayana, year) now follows the Vākya saṅkrānti, as the printed Vākya
+    pañcāṅgam does. 17 Sep 2026: Kanyā saṅkrānti at 33-12 nāzhigai (7:17 PM,
+    after sunset), so the saṅkalpam says Siṃha (Āvaṇi 31); Puraṭṭāsi 1 is
+    18 Sep. 5.2.9 said Kanyā on 17 Sep. Only a few days a year change (6 in
+    2026–27, e.g. 14 Jan 2026 stays Mārgazhi – Pongal / Thai 1 is 15 Jan).
+    Māsa pirappu (tarpaṇam reminder, "Which day?") and the daily email follow
+    the same rule: 18 Sep 2026, not 17 Sep. Māsa pirappu follows the Vākya
+    saṅkrānti whenever Vākya is chosen (any calendar), as "Which day?" did.
+  • CHANTS – Śrīmad Nārāyaṇīyam under "Sūktams & Stotrams".
+  • CLOSING – "Offering at the end": Standard (as before), offer the chants by
+    name, with pārāyaṇam / ghanam / arcana as ticked (…घनपारायणेन …), pray for the wish
+    (मम सकलाभीष्टसिद्धिरस्तु), or both. Vādhyār to confirm the wording.
+  • PĀDA – for a star in two rāśis, "Find my pāda from my date, time and place
+    of birth" opens the star finder. Other stars: pāda "Not needed" (as before).
+  • NAMES – Lakshmii, Meenaakshii (women) → लक्ष्मी, मीनाक्षी (were …िई);
+    Gowri, Kowsalya, Mowli → गौरी, कौसल्या, मौलि.
+  • YOUR TĀRĀBALAM AND CHANDRABALAM – in the daily box and welcome card, for
+    your own star and rāśi (as printed in Tamil pañcāṅgams): Tārā = count
+    from your star to the day's star, remainder after 9 (2, 4, 6, 8, 9 good;
+    3, 5, 7 not good; 1 your own star); Chandra = count from your rāśi to the
+    Moon's rāśi (1, 3, 6, 7, 10, 11 good; 2, 5, 9 middling; 4, 8, 12 not
+    good). Both change when the star / Moon's rāśi changes. Checked against
+    Drik Panchang's "Good Tarabalam" list (11 Oct 2026, all 27 stars). Not in
+    the WhatsApp text (it goes to many people).
+  • QUICK CHAT – a clear yellow 💬 button at the top of the home card ("Quick
+    chat") and of the welcome steps ("Chat", plus "Prefer a quick chat?"),
+    visible without scrolling on small phones too.
+  • "UPDATE NOW" – now also shows on top of the welcome steps and Quick chat
+    (they used to cover it). Tested on phone and computer: shows, and one tap
+    loads the new version.
+  • Footer: "Made with devotion by ArvindK".
+NOT CHANGED: the saṅkalpam and tarpaṇam text (with "Standard" closing, apart
+from the Vākya month fix above), the daily email, all other calculations. Tested: 5.2.9 and 5.2.10 give the same
+saṅkalpam (30 cases), tarpaṇam, "Which day?" and daily email.
+
+================================================================================
+EARLIER – 5.2.9
   • The "tap 🎤 on your keyboard" hints are hidden for now (Quick chat welcome,
     name and gotra questions, More → Quick chat card). People can still use
     their keyboard's own voice typing; the app simply does not mention it.
@@ -208,7 +263,7 @@ email text.
 
 ================================================================================
 ⚠️  BEFORE YOU UPLOAD – PLEASE READ
-  1. STILL WAITING FOR: Good time (nalla neram) and Amṛtādi yogam tables.
+  1. STILL WAITING FOR: the regular nalla neram table (not added).
   2. VĀDHYĀR TO CONFIRM: name endings and नाम्न्याः; Kāśyapa when the gotra is
      not known; Chandrāṣṭamam rule; karaṇa listing; the Amāvāsyā day
      (8 Nov 2026 for Chennai, Vākya); the Tirukkaṇita hint for Telugu /
@@ -216,15 +271,16 @@ email text.
   3. NATIVE READERS to check the Tamil, Telugu and Kannada words in the
      WhatsApp pañcāṅgam text.
   4. DAILY EMAIL (Code.gs v9) – no change needed. After uploading, run
-     refreshEngine() once in the Apps Script editor.
-  5. Keep a backup of your current 5.2.8 files.
+     refreshEngine() once in the Apps Script editor, and ownerRefresh() in
+     your private WhatsApp page project.
+  5. Keep a backup of your current 5.2.9 files.
 
 ================================================================================
 OPTION A – GITHUB PAGES  (when you decide to upload)
   1. Open the repository → Add file → Upload files.
   2. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
      (Same names, so they replace the old ones.)
-  3. Commit message: "v5.2.9: keyboard mic hints hidden for now".
+  3. Commit message: "v5.2.10: Chandrāṣṭamam by rāśi, śūlam, Tamil date, Nārāyaṇīyam, WhatsApp in Tamil".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER

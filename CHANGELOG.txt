@@ -1,4 +1,24 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.10
+Updated: 2026-10-13
+================================================================================
+  ✓ Chandrāṣṭamam by rāśi (8th rāśi from the birth rāśi), with stars, pādas
+    and the time it changes (Vākya or Tirukkaṇita).
+  ✓ Tamil date, śūlam and parihāram, śrāddha tithi, tithi/star start and end,
+    Gowri night times, City and Method line, "sunrise changes by city".
+  ✓ WhatsApp pañcāṅgam in Tamil by default; text only on phones; "Share on
+    WhatsApp" everywhere, also for any Calendar day.
+  ✓ Nārāyaṇīyam; closing that offers the chants or prays for the wish.
+  ✓ "Find my pāda" for stars in two rāśis; Lakshmii / Gowri spellings.
+  ✓ Your Tārābalam and Chandrabalam (own star and rāśi) every day.
+  ✓ Quick chat at the top of the home card and welcome steps; "Update now"
+    shows above the welcome steps and Quick chat; "Made with devotion by ArvindK".
+  ✓ Fix: Vākya + Tamil calendar – month follows the Vākya saṅkrānti (17 Sep 2026
+    is Āvaṇi 31; Puraṭṭāsi 1 = 18 Sep, as printed), Māsa pirappu too. 6 days
+    in 2026–27.
+  ✓ Unchanged otherwise: saṅkalpam and tarpaṇam text (Standard closing), daily email.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.9
 Updated: 2026-10-12
 ================================================================================
