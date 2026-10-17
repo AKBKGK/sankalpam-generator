@@ -1,6 +1,6 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.2.11
-Updated: 2026-10-13
+SAṄKALPAM GENERATOR v5.2.13
+Updated: 2026-10-17
 ================================================================================
 
 FILES IN THIS FOLDER
@@ -14,7 +14,97 @@ FILES IN THIS FOLDER
   (icons: apple-touch-icon.png, icon-192.png, icon-512.png – unchanged)
 
 ================================================================================
-WHAT'S NEW IN 5.2.11  (look only)
+WHAT'S NEW IN 5.2.13
+  • FIX (reported by a user, 17 Oct 2026): when a tithi or star runs across
+    midnight, both dates are now shown. Before: "Moolam · from 16 Oct, 6:47 AM
+    till 9:46 AM" – the end was on 17 Oct but read as 16 Oct. Now: "from
+    16 Oct, 6:47 AM till 17 Oct, 9:46 AM". Same in the WhatsApp text (all
+    languages), the day box, the welcome card, the computer panel and the
+    Calendar. This was there since 5.2.10.
+  • OUTSIDE INDIA AND SRI LANKA
+    – choosing such a city asks once: Tirukkaṇita is recommended there
+      (Vākya stays available – it is worked out for India);
+    – all times say which clock they are in ("New York time (EDT)"; with
+      Vākya, tithi and star times are Indian time and sunrise, Rāhu kālam
+      and good time are local – both are said);
+    – Rāhu kālam, Yamagaṇḍam, Kuḷigai and Gowri good times come from the
+      city's own sunrise and sunset (daytime and night each in 8 parts; the
+      same parts as the printed table). Example, New York, Sat 17 Oct 2026
+      (sunrise 7:09, sunset 6:13 PM): Rāhu 9:55 – 11:18 AM. India and
+      Sri Lanka keep the printed table (6 AM base) – unchanged.
+  • USE MY LOCATION – the exact place (rounded to about 1 km) and the
+    phone's time zone become "📍 My location" in the city list, with an
+    optional name ("Dublin, Ohio"). Asked only when the button is tapped;
+    saved on the device; sent only if the daily email is signed up for.
+    (Shown on https pages only, as browsers require.)
+  • TARPAṆAM DAYS MARKED – Māsa pirappu, Amāvāsyā, Mahālaya pakṣam and
+    eclipses: "🪔 Māsa pirappu – a tarpaṇam day" on the home card, the day
+    box and the first line of the WhatsApp pañcāṅgam, with
+    "Prepare tarpaṇam ›". (Telugu / Kannada calendars: "Saṅkramaṇam".)
+  • WHATSAPP PAÑCĀṄGAM IN ENGLISH by default; Tamil, Telugu or Kannada when
+    those letters are chosen at the top.
+  • EASIER TO UNDERSTAND – "What this app does – and for whom" (welcome, and
+    one line on the home card); Vākya / Tirukkaṇita explained in two lines;
+    "Quick chat" is now "Quick Help" (one button); "Full form" link only
+    where it helps.
+  • Includes everything in 5.2.12 below (if you have not uploaded 5.2.12,
+    upload 5.2.13 instead – it has both).
+NOT CHANGED: the saṅkalpam and tarpaṇam text and calculations; times for
+cities in India and Sri Lanka. Tested: the daily email for existing
+subscribers is identical with 5.2.12 and 5.2.13.
+
+================================================================================
+EARLIER – 5.2.12
+  • STAR FINDER – after "Don't know your star?", the star found is shown in a
+    green box (star · rāśi · pāda) with "Use this star ›", which takes you back
+    to where you were: the birth-star field of the form, or on to your
+    saṅkalpam in the welcome steps. Nothing changes until you tap it.
+  • FAMILY MEMBERS – each has "Don't know? Find the star ›"; the star found
+    fills only that person's row.
+  • SAVED STARS LOCKED – your star and your family's saved stars are shown
+    locked. "Change star…" warns first: "The birth star is recited in the
+    saṅkalpam. Change it only if you are sure."
+  • PĀDA "Not needed" for everyone (you, family, welcome, finder) whose star
+    lies in one rāśi (18 of the 27 stars). The 9 stars that span two rāśis
+    (Kṛttikā, Mṛgaśira, Punarvasu, Uttara Phalgunī, Citrā, Viśākhā,
+    Uttarāṣāḍhā, Dhaniṣṭhā, Pūrva Bhādrapadā) keep "Don't know" and Pāda 1–4.
+    A star changed by hand starts again with "Don't know".
+  • HOME – one button: "Generate Saṅkalpam" at the bottom opens it (the card
+    keeps Share). For another date it says "Saṅkalpam for <date> is ready",
+    with "Back to today".
+  • SRI LANKA – Colombo is treated like an Indian city: Indian Standard Time,
+    Vākya without the "outside India" note.
+  • FIXES (independent tester, 14 Oct):
+    – a family member's rāśi Meṣa (pāda unknown) was lost after reopening and
+      recited as Vṛṣabha – fixed;
+    – Quick chat: a half-typed gotra ("bhar") is no longer saved as typed – it
+      asks "Did you mean…?";
+    – kāruṇika pitṛ with no gotra / no Devanagari name: asked for before
+      printing (no more "……");
+    – Devanagari boxes accept Devanagari only (your name, gotra, family,
+      tarpaṇam names);
+    – shared / copied saṅkalpam: no colour legend; the details as
+      "Label: value" lines;
+    – welcome: "Step n of 4", keyboard stays inside, Esc closes, the language
+      message no longer covers the buttons; "The app has been updated" note
+      now below the Namaste card; small-phone (320 px) header fits;
+    – email screen keeps "More" highlighted; spellings Kauṇḍinya, Paṅguni;
+      rāśi names capitalised; family "Pāda 1–4".
+    – "Generated …" time in the city's own time zone (IST for India and Sri
+      Lanka).
+  • NAMES – Tamil "-āl" endings for women: Girigujambaal → गिरिगुजम्बा
+    (vādhyār to confirm).
+CHANGED IN THE SAṄKALPAM TEXT (screen, print, daily email) – only 3 header
+lines: the name as recited (Śrīnivāsa, not SHREENIVAASA); tithi / star end
+times in AM/PM, the same as the pañcāṅgam card ("upto 1:16 AM (next day)");
+"Paṅguni". The recited text itself is unchanged. Tested: 5.2.11 vs 5.2.12 –
+30 saṅkalpam cases, tarpaṇam, "Which day?", 4 daily emails, owner WhatsApp
+text; only these lines differ.
+NOT IN THIS VERSION (waiting for your decision): Tirukkaṇita for cities
+outside India; "copy my details to another device"; place line abroad.
+
+================================================================================
+EARLIER – 5.2.11  (look only)
   • COLOURS "Kumkum & Sandal" – sandal background, maroon band with white
     text on each section heading, sandal menu on computers. Screen only: the
     printed / PDF saṅkalpam and tarpaṇam, the daily email and the WhatsApp text
@@ -291,17 +381,18 @@ email text.
      Kannada.
   3. NATIVE READERS to check the Tamil, Telugu and Kannada words in the
      WhatsApp pañcāṅgam text.
-  4. DAILY EMAIL (Code.gs v9) – no change needed. After uploading, run
+  4. DAILY EMAIL (Code.gs v9) – no change to the script. After uploading, run
      refreshEngine() once in the Apps Script editor, and ownerRefresh() in
-     your private WhatsApp page project.
-  5. Keep a backup of your current 5.2.10 files.
+     your private WhatsApp page project (the email header now shows the name
+     as recited and AM/PM end times).
+  5. Keep a backup of your current 5.2.11 files.
 
 ================================================================================
 OPTION A – GITHUB PAGES  (when you decide to upload)
   1. Open the repository → Add file → Upload files.
   2. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
      (Same names, so they replace the old ones.)
-  3. Commit message: "v5.2.11: Kumkum & Sandal colours; today's pañcāṅgam beside the steps on computers".
+  3. Commit message: "v5.2.13: both dates for times that cross midnight (+ 5.2.12: star finder, saved stars locked, pāda 'Not needed', fixes)".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER

@@ -1,4 +1,37 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.13
+Updated: 2026-10-17
+================================================================================
+  ✓ Fix: times that cross midnight show both dates ("from 16 Oct, 6:47 AM
+    till 17 Oct, 9:46 AM") – WhatsApp text, day box, panel, Calendar.
+  ✓ Outside India and Sri Lanka: Tirukkaṇita recommended (asked once);
+    time zone named on all times; Rāhu kālam, Yamagaṇḍam, Kuḷigai and
+    Gowri from the city's own sunrise and sunset.
+  ✓ "Use my location": exact place and phone time zone ("📍 My location").
+  ✓ Tarpaṇam days marked (home, day box, WhatsApp first line).
+  ✓ WhatsApp pañcāṅgam in English by default.
+  ✓ "What this app does – and for whom"; Vākya/Tirukkaṇita in two lines;
+    "Quick Help" (one button); "Full form" only where it helps.
+  ✓ Unchanged: saṅkalpam, tarpaṇam, India/Sri Lanka times, daily emails of
+    existing subscribers.
+
+================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.12
+Updated: 2026-10-14
+================================================================================
+  ✓ Star finder: green box with star · rāśi · pāda and "Use this star ›",
+    back to where you were; also for each family member.
+  ✓ Saved stars locked; "Change star…" warns first.
+  ✓ Pāda "Not needed" for everyone whose star lies in one rāśi.
+  ✓ Home: one button; "Saṅkalpam for <date>" with "Back to today".
+  ✓ Colombo treated like India (IST, Vākya without the outside-India note).
+  ✓ Fixes: family Meṣa rāśi kept; chat gotra asks "Did you mean…?";
+    kāruṇika gotra/name checked; Devanagari-only name boxes; clean shared
+    text; welcome steps 1–4, focus, Esc; small-phone header; spellings.
+  ✓ Header of the saṅkalpam/email: name as recited, AM/PM end times.
+    Recited text unchanged.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.11
 Updated: 2026-10-13
 ================================================================================
