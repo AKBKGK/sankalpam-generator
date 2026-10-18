@@ -1,4 +1,29 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.14
+Updated: 2026-10-18
+================================================================================
+  ✓ Tarpaṇam checked against the printed booklet (Yajurveda Amāvāsya
+    Tarpaṇam) – all types except Mahālaya: अस्मत् in every tarpaṇa line,
+    āvāhanam and yathāsthānam; अक्षन् पितरः (2-B); 1 kūrcham:
+    ज्ञाताज्ञात … (3×) and अस्मत् वर्गद्वय पितृभ्यो नमः with sesame;
+    येषां … न बन्धुः … कुशोदकैः, then the kūrcham down with the water.
+  ✓ 2 kūrchams: Ṛk mantras for the mātāmaha varga (as before), 8-B ends
+    अक्षन् (मातुः) पितरः. 1 kūrcham: no Ṛk mantras there (3× each).
+  ✓ Time of tarpaṇam: choose the time slot – the saṅkalpam follows its
+    tithi, star, yoga and karaṇa (Amāvāsyā always अमावास्यायां;
+    Mahālaya unchanged).
+  ✓ Tithi and star with from–to times and dates in the tarpaṇam table.
+  ✓ Pavitram behind the ear for the last ācamanam, then removed.
+  ✓ English letters easy to read: no marks, च = ch, श/ष = sh, ṛ = ru;
+    names and gotra with a capital (saṅkalpam and tarpaṇam).
+  ✓ Name spellings: Venkatasubramanian, Sivasankaran, Muthumeenakshi,
+    Anandavalli, Abhirami, Sivasankari, Seethalakshmi.
+  ✓ PDF: no "Which day?" box; footer kept on one page; top vādhyār line
+    removed (footer line kept).
+  ✓ Unchanged: Mahālaya wording, all calculations, Tamil / Telugu /
+    Kannada / Devanagari saṅkalpam.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.13
 Updated: 2026-10-17
 ================================================================================

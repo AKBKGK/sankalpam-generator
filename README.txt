@@ -1,6 +1,6 @@
 ================================================================================
-SAṄKALPAM GENERATOR v5.2.13
-Updated: 2026-10-17
+SAṄKALPAM GENERATOR v5.2.14
+Updated: 2026-10-18
 ================================================================================
 
 FILES IN THIS FOLDER
@@ -14,7 +14,52 @@ FILES IN THIS FOLDER
   (icons: apple-touch-icon.png, icon-192.png, icon-512.png – unchanged)
 
 ================================================================================
-WHAT'S NEW IN 5.2.13
+WHAT'S NEW IN 5.2.14
+  • TARPAṆAM CHECKED AGAINST THE PRINTED BOOKLET (Yajurveda Amāvāsya
+    Tarpaṇam) – for Amāvāsyā, Māsa pirappu and grahaṇa (Mahālaya unchanged):
+    – अस्मत् in every tarpaṇa line: "वसुरूपान् अस्मत् पितॄन् …" (pp. 18–29),
+      in āvāhanam and in yathāsthānam (pp. 17, 33);
+    – 2-B ends "अक्षन् पितरः" (p. 20); with 2 kūrchams 8-B ends
+      "अक्षन् (मातुः) पितरः" (p. 26);
+    – 1 kūrcham: "ज्ञाताज्ञात अस्मत् वर्गद्वय पितॄन् स्वधा नमस्तर्पयामि" (3×)
+      after the women (p. 29); after pradakṣiṇam "अस्मत् वर्गद्वय पितृभ्यो
+      नमः" with sesame on the kūrcham (p. 32);
+    – "येषां न माता न पिता न भ्राता न बन्धुः …" without तृप्यत, then the
+      kūrcham down with the water (p. 33);
+    – pradakṣiṇam three times, abhivādaye and namaskāram in one or two lines;
+    – 1 kūrcham: no Ṛk mantras for the mātāmaha varga (each line 3×), as in
+      5.2.13. VĀDHYĀR TO CONFIRM: booklet p. 17 says pp. 18 onward are for
+      1 kūrcham, and pp. 23–28 give those mantras.
+  • SAMĀPANAM (all tarpaṇams): keep the pavitram behind the ear for ācamanam,
+    then remove it.
+  • TIME OF TARPAṆAM – when the tithi, star, yoga or karaṇa changes between
+    sunrise and sunset, choose the time slot (opens on the sunrise slot); the
+    saṅkalpam follows it. Example, 18 Oct 2026, Vākya: sunrise–7:14 AM
+    Saptamī · Pūrvāṣāḍhā; 7:14 AM–12:25 PM Aṣṭamī · Pūrvāṣāḍhā; after
+    12:25 PM Aṣṭamī · Uttarāṣāḍhā. Amāvāsyā always says अमावास्यायां.
+    Not for Mahālaya (sunrise values, as before).
+  • TARPAṆAM TABLE: tithi and star with from–to times and dates.
+  • ENGLISH LETTERS EASY TO READ (replaces IAST): no marks, च = ch,
+    श/ष = sh, ṛ = ru ("kayena vacha", "Vadhulagotran
+    Chidambareshvarasharmanah vasurupan asmat pitrun"); names and gotra with a
+    capital; headings, table and instructions without marks too. Saṅkalpam,
+    tarpaṇam and the daily email (after refreshEngine).
+  • NAME SPELLINGS: Venkatasubramanian → वेङ्कटसुब्रह्मण्य, Sivasankaran →
+    शिवशङ्कर, Muthumeenakshi → मुत्तुमीनाक्षी, Anandavalli → आनन्दवल्ली,
+    Abhirami → अभिरामी, Sivasankari → शिवशङ्करी, Seethalakshmi → सीतालक्ष्मी.
+  • PDF: the "Which day?" box no longer prints at the top; footer, table,
+    tarpaṇa lines and headings kept together on a page; the top "Please have
+    your vādhyār check this text before use" line removed (footer line kept).
+NOT CHANGED: Mahālaya wording; all calculations; the Devanagari, Tamil,
+Telugu and Kannada saṅkalpam. TESTED: 114 PDFs (saṅkalpam and all five
+tarpaṇams, 5 scripts, 1 and 2 kūrchams, normal and compact, Drik) – nothing
+missing, nothing past the margins, footer on the last page; wording EVAL
+48/48.
+  • DAILY EMAIL: run refreshEngine() once after uploading. English emails then
+    use the easy letters too (not tested here – the email script is private).
+
+================================================================================
+EARLIER – 5.2.13
   • FIX (reported by a user, 17 Oct 2026): when a tithi or star runs across
     midnight, both dates are now shown. Before: "Moolam · from 16 Oct, 6:47 AM
     till 9:46 AM" – the end was on 17 Oct but read as 16 Oct. Now: "from
@@ -392,7 +437,7 @@ OPTION A – GITHUB PAGES  (when you decide to upload)
   1. Open the repository → Add file → Upload files.
   2. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
      (Same names, so they replace the old ones.)
-  3. Commit message: "v5.2.13: both dates for times that cross midnight (+ 5.2.12: star finder, saved stars locked, pāda 'Not needed', fixes)".
+  3. Commit message: "v5.2.14: tarpaṇam as in the booklet (asmat, akṣan, jñātājñāta, yeṣāṃ), time of tarpaṇam, easy English letters, name spellings, PDF fixes".
   4. Commit changes. The site updates in about a minute.
 
 OPTION B – HOSTINGER
