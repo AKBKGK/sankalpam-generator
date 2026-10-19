@@ -1,4 +1,23 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.15
+Updated: 2026-10-19
+================================================================================
+  ✓ Calendar on phones: a short code inside each coloured square –
+    AM Amāvāsyā, PU Pūrṇimā, EK Ekādaśī, PR Pradoṣam, CA Caturthī,
+    SC Saṅkaṭahara Caturthī, SV Śivarātri, ★ festival – in the letters
+    chosen at the top. Up to 2 codes a day; legend with the codes; full
+    name on tap. Non-English codes: native readers to confirm.
+  ✓ Computer screens: the day's cards under the month grid in three
+    columns – good time | avoid + yoga · karaṇa | śrāddha + Chandrāṣṭamam.
+  ✓ Shorter "Time of tarpaṇam" and birth-star notes.
+  ✓ "Beta" label beside the app name (under it on phones).
+  ✓ Anonymous counts (needs email script v11): app opened, users per
+    day, new phones, WhatsApp share taps. No names, details or email.
+    Owner's phone: open once with ?nocount=1 (?nocount=0 to undo).
+  ✓ Unchanged: all calculations, festival days, saṅkalpam and tarpaṇam
+    texts and PDFs, daily emails.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.14
 Updated: 2026-10-18
 ================================================================================

@@ -65,6 +65,7 @@ body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 var(--lat)}
 .top .in{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:14px}
 .top .logo{flex:0 0 auto;width:60px;height:60px;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.35)}.top .logo svg{width:100%;height:100%;display:block}
 .top h1{margin:0;font-size:1.55rem;font-weight:700;letter-spacing:.2px}
+.top h1 .sg-beta{display:inline-block;margin-left:8px;padding:0 7px;border:1px solid currentColor;border-radius:999px;font:700 .58rem/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.08em;text-transform:uppercase;vertical-align:.35em;opacity:.85;white-space:nowrap}
 .top p{margin:2px 0 0;font-size:.9rem;opacity:.85}
 .wrap{max-width:980px;margin:0 auto;padding:18px 16px 110px}
 .tabs{display:flex;gap:6px;margin:0 0 16px;border-bottom:1px solid var(--line)}
@@ -209,7 +210,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <div class="sg-side" id="sgSide">
 <div class="top"><div class="in">
   <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="A Brahmin doing saṅkalpam"> <defs> <linearGradient id="hbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6d2d0c"/><stop offset="1" stop-color="#9a4515"/></linearGradient> <radialGradient id="hsun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffcf6b"/><stop offset="1" stop-color="#e8871e"/></radialGradient> </defs> <rect width="512" height="512" fill="url(#hbg)"/> <circle cx="256" cy="240" r="170" fill="url(#hsun)" opacity=".9"/> <rect x="0" y="440" width="512" height="94" fill="#5a240a"/> <g transform="translate(256 300) scale(1.18) translate(-256 -300)"> <g fill="#e0a96d" stroke="#5a240a" stroke-width="6" stroke-linejoin="round"> <path fill="#fffaf0" d="M118 420 Q120 352 200 345 L312 345 Q392 352 394 420 Z"/> <path d="M196 232 Q256 214 316 232 Q332 238 334 262 L320 350 L192 350 L178 262 Q180 238 196 232 Z"/> <g fill="none" stroke-linecap="round" stroke-linejoin="round"> <path d="M322 256 Q344 312 318 346 Q280 374 226 372" stroke="#5a240a" stroke-width="36"/> <path d="M322 256 Q344 312 318 346 Q280 374 226 372" stroke="#e0a96d" stroke-width="24"/> <path d="M190 256 Q164 312 176 346 Q186 362 204 362" stroke="#5a240a" stroke-width="36"/> <path d="M190 256 Q164 312 176 346 Q186 362 204 362" stroke="#e0a96d" stroke-width="24"/> </g> <ellipse cx="206" cy="378" rx="34" ry="14"/> <ellipse cx="200" cy="366" rx="32" ry="14"/> <path d="M178 366 h40 M180 372 h34" stroke="#5a240a" stroke-width="3" fill="none"/> <rect x="240" y="196" width="32" height="34" rx="8"/> <circle cx="256" cy="158" r="50"/> <circle cx="256" cy="100" r="15" fill="#2b1206"/> </g> <g stroke="#fbfbf5" stroke-width="6" stroke-linecap="round"> <line x1="230" y1="134" x2="282" y2="134"/><line x1="228" y1="144" x2="284" y2="144"/><line x1="230" y1="154" x2="282" y2="154"/> </g> <circle cx="256" cy="165" r="5.5" fill="#c0221a"/> <g stroke="#5a240a" stroke-width="4" fill="none" stroke-linecap="round"> <path d="M232 176 q8 5 16 0"/><path d="M264 176 q8 5 16 0"/> </g> <path d="M306 234 Q270 300 206 346" stroke="#fffaf0" stroke-width="6" fill="none"/> </g> <g stroke="#5a240a" stroke-width="5" fill="#f3c969"> <path d="M400 392 L452 392 L445 440 L407 440 Z"/> <line x1="440" y1="398" x2="464" y2="356" stroke-linecap="round"/> </g> </svg></div>
-  <div><h1>Saṅkalpam<span class="sg-gen"> Generator</span></h1><p><span class="d-only">Prepare a complete saṅkalpam with today's pañcāṅgam, your details and the pārāyaṇams you intend to chant.</span><span class="m-only">Choose your date, details and chants.</span></p></div>
+  <div><h1>Saṅkalpam<span class="sg-gen"> Generator</span><span class="sg-beta" title="Still being checked – please have your vādhyār confirm the text">Beta</span></h1><p><span class="d-only">Prepare a complete saṅkalpam with today's pañcāṅgam, your details and the pārāyaṇams you intend to chant.</span><span class="m-only">Choose your date, details and chants.</span></p></div>
   <div class="langsel"><label for="script"><span class="d-only">🌐 Choose the saṅkalpam language</span><span class="m-only">Saṅkalpam language</span></label>
     <select id="script">
       <option value="sa" selected>Sanskrit · देवनागरी</option>
@@ -437,7 +438,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <div id="gotraOtherBox" class="hide"><label class="req" for="gotraOther">Your Gotra (English)</label><input type="text" id="gotraOther" placeholder="e.g. kaapi"></div>
     <div><label class="req" for="gotraD">Gotra (Devanagari)</label><input type="text" id="gotraD" class="deva" placeholder="गोत्र"></div>
     <div><label class="req" for="nak">Birth Nakṣatra</label><select id="nak" class="deva"></select>
-      <p class="hint">Please confirm your birth star (janma nakṣatra) – it is recited in the saṅkalpam. If unsure, check your horoscope or ask your elders.</p><input type="hidden" id="nakSrc" value=""><input type="hidden" id="myLoc" value="">
+      <p class="hint">Confirm your janma nakṣatra – it is recited. Not sure? Check your horoscope or ask elders.</p><input type="hidden" id="nakSrc" value=""><input type="hidden" id="myLoc" value="">
       <p class="hint"><button type="button" class="link" id="nakFindLink">Don't know your star? Find it from your date of birth ›</button></p>
       <p class="hint hide" id="nakLockP">✓ Your saved star. <button type="button" class="link" id="nakEdit">Change star…</button></p><div class="note hide" id="nakWarn" role="alert"></div></div>
     <div><label for="gender">Gender</label><select id="gender"><option value="m" selected>Male</option><option value="f">Female</option></select></div>
@@ -624,7 +625,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <p class="lead">Uses the <b>date, city and calendar from step 1</b> and your <b>gotra from step 2</b> of the Saṅkalpam tab. The text appears in the language chosen at the top.</p>
   <div class="grid"><div><label class="req" for="t-date">Date of tarpaṇam</label><input type="date" id="t-date"></div>
     <div id="t-slotBox" class="hide"><label for="t-slot">Time of tarpaṇam</label><select id="t-slot"></select>
-    <span class="hint">The tithi or nakṣatra changes during the day. Choose when you will do the tarpaṇam; the saṅkalpam follows it.</span></div></div>
+    <span class="hint">Tithi or star changes today – pick your time; the saṅkalpam follows it.</span></div></div>
   <p class="note" id="tFor" style="margin-top:10px"></p>
   <div id="tFemNote" class="note hide">ℹ️ Tarpaṇam is traditionally performed by men. Please ask your vādhyār.</div>
   <div class="grid">
@@ -728,6 +729,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     #calendar .pc-up li{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:.86rem}
     #calendar .pc-up li span.when{color:var(--soft);font-size:.78rem}
     #calendar .pc-legend{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:0 0 8px;font-size:.8rem;color:var(--soft)}
+    #calendar .pc-legend .pc-hint{font-size:.74rem;color:var(--soft)}
     #calendar .pc-c{display:inline-block;font-style:normal;font-size:.68rem;font-weight:700;padding:1px 6px;border-radius:4px;line-height:1.45;white-space:nowrap}
     #calendar .pc-big.ek,#calendar .pc-c.ek{background:#fdf0d5;color:#9a5b00}
     #calendar .pc-big.pr,#calendar .pc-c.pr{background:#fbe1dd;color:#a5281b}
@@ -740,7 +742,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     #calendar .pc-evbox .k{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);font-weight:700;margin-bottom:4px}
     #calendar .pc-evbox ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
     #calendar .pc-evbox li{display:flex;gap:8px;align-items:baseline;font-weight:700;font-size:.92rem;line-height:1.4;color:var(--ink)}
-    #calendar .pc-evbox .pc-dot{flex:none;width:10px;height:10px;padding:0;border-radius:3px;font-size:0;border:1px solid currentColor;position:relative;top:1px}
+    #calendar .pc-evbox .pc-dot{flex:none;min-width:24px;text-align:center;padding:0 4px;border-radius:4px;font-size:.7rem;font-weight:800;border:1px solid currentColor;line-height:1.5}
     #calendar .pc-find select{width:100%}
     #calendar .pc-big.am,#calendar .pc-c.am{background:#e2e7ee;color:#2c3e50}
     #calendar .pc-big.pu,#calendar .pc-c.pu{background:#dff0f5;color:#14607a}
@@ -761,6 +763,10 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     #calendar .pc-t{font-size:.7rem;color:var(--soft);line-height:1.25}
     #calendar .pc-chips{display:flex;flex-wrap:wrap;gap:2px;max-width:100%}
     #calendar .pc-chips .pc-c{max-width:100%;white-space:normal;font-size:.62rem;line-height:1.3}
+    #calendar .pc-k{font-style:normal;font-weight:800}
+    #calendar .pc-chips .pc-k{display:none}
+    #calendar .pc-chips .pc-2,#calendar .pc-chips .pc-mP{display:none}
+    #calendar .pc-legend .pc-c .pc-k{margin-right:4px}
     #calendar .pc-note{font-size:.78rem;color:var(--soft);line-height:1.5;margin:10px 0 0}
     #calendar .pc-busy{font-size:.85rem;color:var(--soft);padding:10px 0}
     #calendar .pc-main{display:grid;gap:14px;grid-template-areas:"cal" "day"}
@@ -775,16 +781,31 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
       #calendar .pc-main .pc-up ul{grid-template-columns:1fr}
       #calendar .pc-main .pc-tile{padding:7px 10px}
       #calendar .pc-d{min-height:74px}
+      #calendar .pc-main{grid-template-areas:"cal day" "xt xt"}
+      #calendar .pc-xt{grid-area:xt;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;align-items:start}
+      #calendar .pc-xt:empty{display:none}
+      #calendar .pc-xt .pc-tile{padding:9px 11px}
+      #calendar .pc-stk{display:grid;gap:8px;align-content:start;min-width:0}
     }
+    @media (max-width:899.98px){#calendar .pc-xt{display:none}}
     @media (max-width:640px){
       #calendar .pc-grid{border-spacing:2px}
       #calendar .pc-d{min-height:56px;padding:4px 3px;border-radius:6px}
       #calendar .pc-t{display:none}
-      #calendar .pc-chips .pc-c{font-size:0;width:9px;height:9px;padding:0;border-radius:3px;border:1px solid currentColor}
+      #calendar .pc-chips .pc-c{font-size:.62rem;line-height:1.3;padding:0 3px;border-radius:3px;border:1px solid currentColor;white-space:nowrap;overflow:hidden;max-width:100%}
+      #calendar .pc-chips .pc-l{display:none}
+      #calendar .pc-chips .pc-k{display:inline}
+      #calendar .pc-chips .pc-2{display:inline-block}
+      #calendar .pc-chips .pc-mD{display:none}
+      #calendar .pc-chips .pc-mP{display:inline}
       #calendar .pc-tiles{grid-template-columns:1fr}
       #calendar .pc-nav{width:100%}
       #calendar .pc-nav select{flex:1 1 120px}
       #calendar .pc-city{max-width:none;flex-basis:100%}
+    }
+    @media (max-width:360px){
+      #calendar .pc-d{padding:4px 2px}
+      #calendar .pc-chips .pc-c{padding:0 1px;font-size:.58rem;letter-spacing:-.02em}
     }
   </style>
   <div class="card">
@@ -812,7 +833,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <div class="pc-dayw"><section class="pc-day" id="pc-day" aria-live="polite"><div class="pc-busy">Calculating…</div></section><button type="button" class="btn sg-dayBtn" id="sgDayBtn">Saṅkalpam for this day ›</button></div>
     <div class="pc-left">
     <div class="pc-find"><label for="pc-fest">Festivals in <span id="pc-festY"></span></label><select id="pc-fest"><option value="">Choose a festival…</option></select></div>
-    <div class="pc-legend">
+    <div class="pc-legend" id="pc-legend">
       <span class="pc-c ml">Mahālaya Pakṣa (pink days)</span>
       <span class="pc-c am">Amāvāsyā</span>
       <span class="pc-c pu">Pūrṇimā</span>
@@ -829,6 +850,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
       </table>
     </div>
     </div>
+    <div class="pc-xt" id="pc-xt"></div>
     <div class="pc-up" id="pc-up"></div>
     </div>
     <p class="pc-note">Rāhu kālam, Yamagaṇḍam and Kuḷigai: for India and Sri Lanka, the fixed weekday timings printed in Tamil calendars (6 AM sunrise convention); for cities elsewhere, worked out from that city's own sunrise and sunset. Festival days use the common rules – Ekādaśī at sunrise, Pradoṣam at sunset, Vināyaka Caturthī at midday, Saṅkaṭahara Caturthī at moonrise, Amāvāsyā and the śrāddha tithi by the afternoon (aparāhṇa) rule. Observances can differ by family and sampradāya, so please confirm with your pañcāṅgam or vādhyār.</p>
@@ -850,7 +872,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <details><summary>Good time and yogam</summary><p><b>Good time</b> is the Gowri nalla neram: the day and the night each in 8 parts. For India and Sri Lanka it is as printed in Tamil calendars (parts of 1½ hours from 6 AM); for cities elsewhere the parts run from that city's own sunrise to sunset, and sunset to the next sunrise – the same for Rāhu kālam, Yamagaṇḍam and Kuḷigai. Uthi, Amirtham, Labham, Dhanam and Sugam are good; Rogam, Soram and Visham are not. <b>Yogam</b> (Amṛta, Siddha or Maraṇa) comes from the weekday and the day's star – Amṛta and Siddha are good days, Maraṇa is avoided for new beginnings. Your city's actual sunrise may shift the times a little. For a wedding or upanayanam, a muhūrtam is fixed by your jyotiṣa.</p></details>
   <details><summary>Which day for tarpaṇam?</summary><p>Tarpaṇam tab → "Which day?" finds the day by the afternoon (aparāhṇa) rule for Amāvāsyā, Māsa pirappu and Mahālaya.</p></details>
   <details><summary>Sharing on WhatsApp, PDF and the daily email</summary><p><b>Share</b> sends your saṅkalpam in the letters you chose – Sanskrit, Tamil, Telugu, Kannada or English – to WhatsApp or any app. On a computer, WhatsApp opens with the text ready (it is copied too). "Share on WhatsApp" under the day's pañcāṅgam, and "Share this day on WhatsApp" in the Calendar, send that day's pañcāṅgam – in Tamil, or the language you chose. Print / PDF saves a copy. The daily email brings your saṅkalpam every evening.</p></details>
-  <details><summary>Where are my details kept?</summary><p>Only on this phone, in this browser – another phone, computer or browser does not see them. Ancestors' names are never sent anywhere. If you subscribe to the email, your email and details are kept in a private Google Sheet only to send it; every email has Unsubscribe.</p></details>
+  <details><summary>Where are my details kept?</summary><p>Only on this phone, in this browser – another phone, computer or browser does not see them. Ancestors' names are never sent anywhere. If you subscribe to the email, your email and details are kept in a private Google Sheet only to send it; every email has Unsubscribe. To know how many people use the app, it sends anonymous counts (app opened, WhatsApp share, PDF) – never your name, details or email.</p></details>
   <details><summary>How do I get the newest version?</summary><p>The app checks by itself. When you see "Update now", tap it.</p></details>
 </div>
 <div class="card v4wn" id="wnCard"><h2>What's new</h2><div id="wnList"></div></div>
@@ -2339,7 +2361,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.14';
+const APP_VERSION = 'v5.2.15';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2506,11 +2528,35 @@ function pdfName(kind) {
   const tt = $('t-type').value, head = kind === 'tarp' ? (TP_TYPES[tt] ? TP_TYPES[tt].file : 'Tarpanam') + (tt === 'masa' ? '-' + ascii(cap(RS[+$('t-rasi').value][0])) : '') : 'Sankalpam';
   return head + '_' + pad2(d) + '-' + MONTHS_EN[m - 1].slice(0, 3) + '-' + y + '_' + ascii(tl);
 }
+// v5.2.15: anonymous usage count sent to the owner's Google script – only the event name (e.g. 'open', 'wa'), never names, details or email.
+// Not sent by automated browsers, or on a phone where the owner opened the app once with ?nocount=1 (?nocount=0 turns counting back on).
+function sgUse(ev, detail) {
+  try {
+    if (!SUBSCRIBE_URL || navigator.webdriver || localStorage.getItem('sankalpam.noCount') === '1') return;
+  } catch (e) {}
+  try { fetch(SUBSCRIBE_URL, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain;charset=utf-8'},
+          body: JSON.stringify({action: 'logUse', ev: ev, detail: detail || ''})}).catch(() => {}); } catch (e) {}
+}
+// once per opening of the app: 'day1' = first opening on this phone today (India date) → users per day; 'new' = first ever on this phone
+function sgCountOpen() {
+  let first = true, isNew = false;
+  try {
+    const today = new Date(Date.now() + 330 * 6e4).toISOString().slice(0, 10);
+    first = localStorage.getItem('sankalpam.useDay') !== today;
+    isNew = !localStorage.getItem('sankalpam.useSeen') && !localStorage.getItem('sankalpam.v3') && !localStorage.getItem('sankalpam.wzDone');
+    localStorage.setItem('sankalpam.useDay', today); localStorage.setItem('sankalpam.useSeen', '1');
+  } catch (e) {}
+  sgUse('open', [first ? 'day1' : '', isNew ? 'new' : ''].filter(Boolean).join(' '));
+}
+if (typeof document !== 'undefined' && typeof window !== 'undefined') { try { const q = new URLSearchParams(location.search).get('nocount');   // read at once: the app tidies the address later
+    if (q === '1') localStorage.setItem('sankalpam.noCount', '1'); else if (q === '0') localStorage.removeItem('sankalpam.noCount'); } catch (e) {}
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(sgCountOpen, 2500)); else setTimeout(sgCountOpen, 2500); }   // not on the email server
 function printDoc(kind, compact) {
   // Count PDF downloads (only the kind of document and the button – no names or details).
   // v5.2.3: sent as plain text, like Subscribe – a JSON request is stopped by the browser's cross-site check before it reaches Apps Script.
   const action = compact ? 'CompactPDF' : 'PrintPDF';
-  if (SUBSCRIBE_URL) try {
+  let noCount = false; try { noCount = localStorage.getItem('sankalpam.noCount') === '1'; } catch (e) {}   // v5.2.15: owner's phone (?nocount=1) not counted
+  if (SUBSCRIBE_URL && !noCount) try {
     fetch(SUBSCRIBE_URL, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain;charset=utf-8'},
       body: JSON.stringify({action: 'logPdfDownload', docType: kind, downloadAction: action})}).catch(e => console.warn('Could not count download: ' + e));
   } catch (e) {}
@@ -3310,6 +3356,7 @@ function v53Setup() {
 // Share: the phone's share sheet (WhatsApp, Telegram, SMS …). Where there is none (most computers), WhatsApp opens
 // with the text ready, and the text is copied too. The text is in the letters chosen (Sanskrit, Tamil, Telugu, Kannada, English).
 function waShare(title, text, s) {
+  sgUse('wa', {'Saṅkalpam': 'sank', 'Pañcāṅgam': 'panch', 'Saṅkalpam Generator': 'app'}[title] || 'other');   // v5.2.15: anonymous count
   const say = t => { if (s) s.textContent = t; };
   if (navigator.share) {
     // v5.2.10: text only – with a title some apps sent only the title (an English word) instead of the message
@@ -4753,6 +4800,29 @@ details.sg-more>.grid{margin-top:8px}
     avani:      {label: 'Āvaṇi Avittam', long: 'Āvaṇi Avittam – Yajur Veda Upākarma (Śrāvaṇa Pūrṇimā); confirm with your vādhyār'}
   };
   const evOf = x => EV[x] || (FEST[x] ? Object.assign({cls: 'fe'}, FEST[x]) : {label: x, long: x, cls: 'fe'});
+  // v5.2.15: a short code inside each coloured square (user request), in the letters chosen at the top. Festivals: ★.
+  // Tamil / Telugu / Kannada / Devanagari codes – native readers to confirm.
+  const PC_CODE = {
+    amavasya:  {en: 'AM', sa: 'अमा', ta: 'அமா', te: 'అమా', kn: 'ಅಮಾ'},
+    pournami:  {en: 'PU', sa: 'पू', ta: 'பௌ', te: 'పౌ', kn: 'ಹು'},
+    ekadasi:   {en: 'EK', sa: 'एका', ta: 'ஏகா', te: 'ఏకా', kn: 'ಏಕಾ'},
+    pradosham: {en: 'PR', sa: 'प्र', ta: 'பிர', te: 'ప్ర', kn: 'ಪ್ರ'},
+    caturthi:  {en: 'CA', sa: 'च', ta: 'சது', te: 'చ', kn: 'ಚ'},
+    sankata:   {en: 'SC', sa: 'सं', ta: 'சங்', te: 'సం', kn: 'ಸಂ'},
+    masaShiv:  {en: 'SV', sa: 'शि', ta: 'சிவ', te: 'శి', kn: 'ಶಿ'}
+  };
+  PC_CODE.mahalayaAma = PC_CODE.amavasya;
+  const pcScript = () => { const v = (el('script') || {}).value; return ['sa', 'ta', 'te', 'kn', 'en'].indexOf(v) >= 0 ? v : 'en'; };
+  const pcCode = x => PC_CODE[x] ? PC_CODE[x][pcScript()] : '★';
+  function renderLegend() {
+    const box = el('pc-legend'); if (!box) return;
+    let ml = true; try { ml = mahalayaSeason(); } catch (e) {}
+    const item = (x, cls, label) => '<span class="pc-c ' + cls + '"><b class="pc-k">' + pcCode(x) + '</b>' + label + '</span>';
+    box.innerHTML = (ml ? '<span class="pc-c ml">Mahālaya Pakṣa (pink days)</span>' : '') +
+      item('amavasya', 'am', 'Amāvāsyā') + item('pournami', 'pu', 'Pūrṇimā') + item('ekadasi', 'ek', 'Ekādaśī') + item('pradosham', 'pr', 'Pradoṣam') +
+      item('caturthi', 'ch', 'Caturthī') + item('sankata', 'ch', 'Saṅkaṭahara Caturthī') + item('masaShiv', 'sv', 'Śivarātri') + item('fest', 'fe', 'Festival') +
+      '<span class="pc-hint">Tap a day for the full name.</span>';
+  }
   const sunAt = (ds, f) => tdfSunSid(sys(), ds, f);
   const spanDays = d => d.system === 'drik' ? d._span / 864e5 : 1;
   // Tamil month (0 = Chithirai … 11 = Paṅguni) of a day: the rāśi of the Sun at sunset
@@ -4899,8 +4969,9 @@ details.sg-more>.grid{margin-top:8px}
         const cls = ['pc-d', ds.slice(0, 7) !== ym ? 'out' : '', e.ml ? 'ml' : '', ds === t ? 'today' : '', ds === sel ? 'sel' : ''].filter(Boolean).join(' ');
         const RANK = x => FEST[x] ? 0 : ({mahalayaAma: 1, amavasya: 2, pournami: 3, ekadasi: 4, pradosham: 5, masaShiv: 6, caturthi: 7, sankata: 8}[x] || 9);
         const shownEv = e.list.filter(x => x !== 'mahalaya').sort((a, b) => RANK(a) - RANK(b));
-        const chips = shownEv.slice(0, 1).map(x => '<i class="pc-c ' + evOf(x).cls + '" title="' + esc(shownEv.map(y => evOf(y).label).join(', ')) + '">' + (evOf(x).short || evOf(x).label) + '</i>').join('') +
-                      (shownEv.length > 1 ? '<i class="pc-more" aria-hidden="true">+' + (shownEv.length - 1) + '</i>' : '');
+        const chips = shownEv.slice(0, 2).map((x, i) => '<i class="pc-c ' + evOf(x).cls + (i ? ' pc-2' : '') + '" title="' + esc(shownEv.map(y => evOf(y).label).join(', ')) + '"><b class="pc-k">' + pcCode(x) + '</b><span class="pc-l">' + (evOf(x).short || evOf(x).label) + '</span></i>').join('') +
+                      (shownEv.length > 1 ? '<i class="pc-more pc-mD" aria-hidden="true">+' + (shownEv.length - 1) + '</i>' : '') +
+                      (shownEv.length > 2 ? '<i class="pc-more pc-mP" aria-hidden="true">+' + (shownEv.length - 2) + '</i>' : '');   // v5.2.15: phones show 2 codes
         const DUP = {ekadasi: [10, 25], amavasya: [29], mahalayaAma: [29], pournami: [14], caturthi: [3], vaikuntha: [10], chitra: [14], guru: [14], vinayakaC: [3]};
         const sameAsChip = e.list.some(x => DUP[x] && DUP[x].includes(e.rise));
         const lbl = longD(ds) + ', ' + tName(e.rise) + (e.list.length ? ', ' + e.list.map(x => evOf(x).label).join(', ') : '');
@@ -4912,7 +4983,10 @@ details.sg-more>.grid{margin-top:8px}
     el('pc-body').innerHTML = h;
   }
 
+  const PC_WIDE = '(min-width:900px)';   // v5.2.15: same width as the two-column calendar
   function renderDay() {
+    let wide = false; try { wide = window.matchMedia(PC_WIDE).matches; } catch (e) {}
+    let xt = '';
     const ds = sel, d = dayOf(ds, true), e = eventsOf(ds), c = city(), wd = wdOf(ds), ryk = rykFor(wd, ds, c);
     const shr = aparahnaTithi(d), drik = d.system === 'drik';
     let st = {rise: '', set: ''}; try { st = sunTimes(ds, c); } catch (err) {}
@@ -4921,11 +4995,12 @@ details.sg-more>.grid{margin-top:8px}
     let td = ''; try { if (V('cal') === 'ta') { const t = tamilDate(sys(), ds, c); if (t) td = ' · ' + MASA_TA[t.masa] + ' ' + t.day; } } catch (err) {}
     let h = '<div class="pc-date">' + longD(ds) + td + '</div><div class="pc-sub">City: ' + esc(c[0]) + ' · Method: ' + (TDF_LABEL[sys()] || '') + sun + '</div>';
     if (e.list.length) h += '<div class="pc-evbox"><div class="k">Observances · ' + shortD(ds) + '</div><ul>' +
-      e.list.map(x => '<li><i class="pc-c pc-dot ' + evOf(x).cls + '" aria-hidden="true"></i><span>' + evOf(x).long + '</span></li>').join('') + '</ul></div>';
+      e.list.map(x => '<li><i class="pc-c pc-dot ' + evOf(x).cls + '" aria-hidden="true">' + (x === 'mahalaya' ? '' : pcCode(x)) + '</i><span>' + evOf(x).long + '</span></li>').join('') + '</ul></div>';
     h += '<div class="pc-tiles">';
     h += '<div class="pc-tile hl"><div class="k">Tithi</div>' + spanLines(ds, 'T') + '</div>';
     h += '<div class="pc-tile hl"><div class="k">Nakṣatra</div>' + spanLines(ds, 'N') + '</div>';
     const amr = amritadiText(wd, spans(ds, 'N').map(s => ({index: s.index, till: s.to && s.to.ds === ds ? s.to.clock : s.to ? fmtAbs(s.to, ds) : ''})), 'en', t => 'till ' + t, ', then ');
+    const h0 = h; h = '';   // v5.2.15: from here, the cards that go under the grid on a computer
     h += '<div class="pc-tile good"><div class="k">' + WDAY[wd] + ' – good time (Gowri)</div>' +
          '<div class="row"><span>Day</span><b>' + gowriFor(wd, false, ds, c).join('<br>') + '</b></div>' +
          '<div class="row"><span>Night</span><b>' + gowriFor(wd, true, ds, c).join('<br>') + '</b></div>' +
@@ -4949,8 +5024,9 @@ details.sg-more>.grid{margin-top:8px}
     h += '<div class="pc-tile"><div class="k">Chandrāṣṭamam (by rāśi)</div>' + cp.map((p, i) => '<div class="v"' + (i ? ' style="margin-top:4px"' : '') + '>' + (i ? 'then ' : '') + esc(cap(RS[p.rasi][0])) + ' rāśi' +
          (p.till ? ' <span class="s">till ' + esc(p.till.ds === ds ? p.till.clock : shortD(p.till.ds) + ', ' + p.till.clock) + '</span>' : '') + '</div><div class="s">' + esc(rasiStarsText(p.rasi, nkS)) + '</div>').join('') +
          '<div class="s">For those born in this rāśi: the Moon is in their 8th rāśi.</div></div>';
-    h += '<button type="button" class="btn ghost dx-share" data-share-cal="' + ds + '">Share this day on WhatsApp</button>';
-    h += '</div>';
+    const share = '<button type="button" class="btn ghost dx-share" data-share-cal="' + ds + '">Share this day on WhatsApp</button>';
+    if (wide) { const T = h.split(/(?=<div class="pc-tile)/), stk = a => '<div class="pc-stk">' + a.map(i => T[i] || '').join('') + '</div>';
+                xt = T.length === 5 ? stk([0]) + stk([1, 3]) + stk([2, 4]) : h; h = h0 + share + '</div>'; } else h = h0 + h + share + '</div>';
     // next 16 days from the selected date
     const up = [];
     for (let k = 1; k <= 16; k++) {
@@ -4963,6 +5039,7 @@ details.sg-more>.grid{margin-top:8px}
       return '<li><span class="pc-c ' + ev.cls + '">' + ev.label + '</span><b>' + shortD(u.x) + '</b><span class="when">' + (u.k === 1 ? 'next day' : 'in ' + u.k + ' days') + '</span></li>'; }).join('') + '</ul>'
       : '<div class="pc-sub">No listed festivals in this period.</div>';
     el('pc-day').innerHTML = h;
+    { const x = el('pc-xt'); if (x) x.innerHTML = xt; }
     const sb = el('pc-day').querySelector('[data-share-cal]');
     if (sb) sb.addEventListener('click', () => { let s2 = sb.nextElementSibling; if (!s2 || !s2.classList.contains('okmsg')) { s2 = document.createElement('span'); s2.className = 'okmsg'; sb.after(s2); }
       try { waShare('Pañcāṅgam', panchangShareText(ds, c, V('cal') || 'ta', V('method'), V('script')), s2); } catch (err) { s2.textContent = 'Sorry – could not prepare the text.'; } });
@@ -4973,7 +5050,7 @@ details.sg-more>.grid{margin-top:8px}
     el('pc-mon').value = String(+ym.slice(5));
     el('pc-year').value = ym.slice(0, 4);
     el('pc-method').innerHTML = 'Method: <b>' + (TDF_LABEL[sys()] || '') + '</b>' + (sys() === 'drik' ? ' (Drik, for the city chosen)' : ' (traditional, computed for Tamil Nadu)') + ' – change it in step 1 of the Saṅkalpam tab.';
-    try { renderGrid(); renderDay(); yearList(); }
+    try { renderLegend(); renderGrid(); renderDay(); yearList(); }
     catch (err) { console.error('Calendar:', err); el('pc-day').innerHTML = '<div class="pc-busy">Sorry – the pañcāṅgam could not be calculated for this date (' + esc(String(err && err.message || err)) + ').</div>'; }
   }
   // "Festivals in <year>" dropdown, filled month by month in the background
@@ -5021,6 +5098,8 @@ details.sg-more>.grid{margin-top:8px}
     el('pc-mon').addEventListener('change', () => setMonth(+el('pc-year').value, +el('pc-mon').value));
     el('pc-year').addEventListener('change', () => setMonth(+el('pc-year').value, +el('pc-mon').value));
     el('pc-city').addEventListener('change', later);
+    const scr = el('script'); if (scr) scr.addEventListener('change', () => { if (shown) later(); });   // v5.2.15: codes in the chosen letters
+    try { const mq = window.matchMedia(PC_WIDE); const f = () => { if (shown) render(); }; mq.addEventListener ? mq.addEventListener('change', f) : mq.addListener(f); } catch (e) {}
     el('pc-fest').addEventListener('change', () => { const v = el('pc-fest').value; if (!v) return; sel = v; ym = v.slice(0, 7); later(); });
     const meth = el('method'); if (meth) meth.addEventListener('change', () => { if (shown) later(); });
     el('pc-body').addEventListener('click', ev => {
@@ -5226,6 +5305,7 @@ body.has-home #sgIntro{display:none}
 .mine{margin:14px 0 0}.mine-b{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.mine-b .btn{min-height:42px;margin:0;border-radius:21px;font-size:.9rem;padding:6px 14px}
 .wz-h:focus{outline:none}
 .home-up a span:last-child{white-space:nowrap}
+@media screen and (max-width:760px){.top h1 .sg-beta{display:block;width:max-content;margin:3px 0 0;font-size:.5rem;line-height:1.5;vertical-align:baseline}}   /* v5.2.15 */
 @media screen and (max-width:760px){.langsel select{max-width:52vw;font-size:.8rem;padding-right:24px}}
 @media screen and (max-width:374px){.langsel select{max-width:44vw;font-size:.74rem}}   /* v5.2.12 */
 #mobile-tab-email{display:none!important}
@@ -5840,6 +5920,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [               // v: used only to pick what is new for this phone – never shown
+    {v: '5.2.15', items: ['Calendar: a short code in each coloured square (AM Amāvāsyā, EK Ekādaśī …), in the letters you chose', 'On a computer: the day\'s cards under the calendar', 'Shorter notes', '"Beta" until the vādhyār checks are done', 'Anonymous use counts (no names, no details) – see Help']},
     {v: '5.2.14', items: ['Tarpaṇam as in the booklet: अस्मत्, अक्षन् पितरः, ज्ञाताज्ञात, sesame after pradakṣiṇam, येषां न माता …', 'Choose the time of tarpaṇam – the saṅkalpam follows that tithi and star', 'Tithi and star from–to times with dates', 'English letters easy to read (no marks)', 'Name spellings: Venkatasubramanian, Muthumeenakshi, Anandavalli, Seethalakshmi …', 'PDF: no "Which day?" box, footer kept on one page']},
     {v: '5.2.13', items: ['Outside India: Tirukkaṇita recommended for your city, times in your local time', 'Times that cross midnight show both dates', '"What this app does" on the first screen', '"Quick chat" is now "Quick Help"', 'Rāhu kālam and good times from your own sunrise outside India', '"Use my location" uses your exact place', 'Tarpaṇam days highlighted']},
     {v: '5.2.12', items: ['Find a star, then \'Use this star\' – also for family', 'Saved stars locked: \'Change star…\' asks first', 'Pāda: \'Not needed\' when not needed']},
