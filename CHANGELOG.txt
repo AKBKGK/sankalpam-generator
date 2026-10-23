@@ -1,4 +1,35 @@
 ================================================================================
+SAṄKALPAM GENERATOR - VERSION 5.2.16
+Updated: 2026-10-23
+================================================================================
+  ✓ Vākya times closer to the printed almanacs: a small correction for the
+    Moon and the season, fitted to every tithi and nakṣatra ending printed
+    from 14 Apr 2026 to 13 Apr 2027. Average difference now about 1–1.5
+    minutes (before about 2), all within 5 minutes (before up to 7).
+    Tithi and star names, saṅkrānti and Tamil month starts unchanged.
+  ✓ Calendar: "Compare Vākya and Tirukkaṇita" for any day – tithi, star,
+    yoga and karaṇa with end times and the difference.
+  ✓ Festivals (owner's choices): Sarasvatī Pūjā 20 Oct and Vijayadaśamī
+    21 Oct 2026 (Vaiṣṇava – Daśamī at sunrise); Śrī Jayantī 4 Sep 2026
+    (Rohiṇī at sunrise when it is not there at midnight); Ugādi added
+    (7 Apr 2027); labels: Navarātri begins (temple), Ekādaśī (Smārta;
+    Vaiṣṇava and Mādhva dates can differ), Amāvāsyā (Bodhāyana note).
+    Varalakṣmī Vratam unchanged (21 Aug 2026).
+  ✓ Tarpaṇam: when the date does not suit the chosen tarpaṇam, the text is
+    prepared only after "My pañcāṅgam gives this date – continue".
+  ✓ Tirukkaṇita: one Lahiri ayanāṁśa everywhere (star and yoga times move
+    by under a minute; no day changed in 2026–27).
+  ✓ Help: one consistent note – the two methods are often about two hours
+    apart, and on about one day in ten differ at sunrise.
+  ✓ No publication names in the code; version text updated.
+  ✓ Use counts: once a day, the city chosen in the app (a custom location only
+    as "My location") and the phone's time zone – no GPS, IP, name or email.
+    Needs email script v12 (also adds 'Last 7 days' and 'Since …' to the
+    daily usage email). Help text updated.
+  ✓ Tested offline: all 365 days; calendar entries changed only where
+    listed above; śrāddha days unchanged; 0 page errors.
+
+================================================================================
 SAṄKALPAM GENERATOR - VERSION 5.2.15
 Updated: 2026-10-19
 ================================================================================
@@ -363,7 +394,7 @@ NEW IN 5.0.2 – 5.0.4
   ✓ Calendar tab: any month and year; Ekādaśī, Pradoṣam, Caturthī, Amāvāsyā,
     Pūrṇimā and Mahālaya Pakṣa calculated from the tithi; daily śrāddha tithi;
     tithi and nakṣatra from–to times; Rāhu kālam, Yamagaṇḍam, Kuḷigai; next 16 days.
-  ✓ Checked against the Sringeri Mutt Vākya pañcāṅgam, January 2027.
+  ✓ Checked against a printed Vākya pañcāṅgam, January 2027.
   FILES CHANGED: index.html, CHANGELOG.md, CHANGELOG.txt, README.md, README.txt.
 
 ================================================================================

@@ -1,11 +1,11 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.9  |  Updated: 2026-10-12
+  Version: 5.2.16  |  Updated: 2026-10-23 (review build, not deployed)
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
   Pañcāṅgam is calculated in the browser for the chosen date and city (local
-  sunrise, Lahiri ayanāṁśa, low-precision Sun/Moon theory). Calendars: Tamil
+  sunrise, Lahiri ayanāṁśa, Astronomy Engine v2.1.19). Calendars: Tamil
   (solar, sauramāna) and Telugu / Kannada (lunar amānta, cāndramāna, with
   adhika māsa). Needs internet to open; once open, it works without a
   signal. Web fonts load only when online (system fonts are used otherwise).
@@ -92,6 +92,8 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(138,59,18,.25);bo
 .upd button{margin-left:10px;background:#fff;color:#d9480f;border:0;border-radius:6px;padding:6px 14px;font-weight:700;cursor:pointer}
 .ttip{margin:10px 0 0;font-size:.9rem;background:#fff8e6;border:1px solid #f0d9b8;border-radius:8px;padding:8px 12px}
 .twarn{background:#fff4dc;border-left:4px solid #d98b00;padding:8px 12px;margin:0 0 12px;font-family:var(--lat);font-size:.9rem;color:#5b3a00}
+.pc-cmp summary{cursor:pointer}.pc-cmpt{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:6px}.pc-cmpt th,.pc-cmpt td{text-align:left;vertical-align:top;padding:4px 6px;border-top:1px solid #ecd6b3}
+.pc-cmpt tr.pc-cmpdiff td{background:#fff4dc}
 @media print{.upd{display:none!important}}
 .namecheck{background:#fff8e1;border:2px solid var(--gold);border-radius:10px;padding:10px 14px;margin:12px 0 0;font-size:.9rem}
 .nbig{font-size:1.6rem;font-weight:700;color:#8b1a1a;margin:0 6px}.nbig2{font-size:1.15rem;color:#6d2d0c}
@@ -248,7 +250,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
    <div class="wz-cal"><div class="wz-cal-h"><b id="wzCalL">Your pañcāṅgam</b><span>you can change it later</span></div>
     <div class="chips3" role="group" aria-labelledby="wzCalL"><button type="button" data-cal="ta" aria-pressed="true">Tamil<small>solar months</small></button><button type="button" data-cal="te" aria-pressed="false">Telugu<small>lunar · Ugādi</small></button><button type="button" data-cal="kn" aria-pressed="false">Kannada<small>lunar · Ugādi</small></button></div>
     <div class="chips2" role="group" aria-label="Method"><button type="button" data-meth="vakya" aria-pressed="true">Vākya<small>traditional</small></button><button type="button" data-meth="drik" aria-pressed="false">Tirukkaṇita<small>modern</small></button></div>
-    <p class="meth-diff"><b>Vākya</b> – traditional, as in printed Tamil pañcāṅgams; worked out for India (Indian time).<br><b>Tirukkaṇita</b> – modern astronomy, worked out for the sunrise and clock of your city. The two can differ by some minutes, and on a few days by a tithi or star.</p></div>
+    <p class="meth-diff"><b>Vākya</b> – traditional, as in printed Tamil pañcāṅgams; worked out for India (Indian time).<br><b>Tirukkaṇita</b> – modern astronomy, worked out for the sunrise and clock of your city. Their times are often about two hours apart, and on about one day in ten the tithi or star at sunrise differs.</p></div>
    <button type="button" class="btn wz-go" data-next="2">Make my saṅkalpam ›</button>
    <p class="wz-small">3 more quick steps · free · no sign-up · your details stay on your phone</p>
    <details class="wz-todayd"><summary>See today's pañcāṅgam</summary><div class="dx-card" id="wzToday"></div></details>
@@ -389,7 +391,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <p class="cb-note"><b>Tamil</b>: solar months (Chithirai, Vaikāsi …), new year in mid-April. <b>Telugu / Kannada</b>: lunar months (Caitra, Vaiśākha …), new year at Ugādi, with adhika māsa. The calendar changes the year and month in your saṅkalpam; the language at the top changes only the letters.</p>
     <span class="cb-l" id="methLbl">Method</span>
     <div class="chips2" role="group" aria-labelledby="methLbl"><button type="button" data-meth="vakya" aria-pressed="true">Vākya<small>traditional</small></button><button type="button" data-meth="drik" aria-pressed="false">Tirukkaṇita<small>modern</small></button></div>
-    <p class="meth-diff"><b>Vākya</b> – traditional, as in printed Tamil pañcāṅgams; worked out for India (Indian time).<br><b>Tirukkaṇita</b> – modern astronomy, worked out for the sunrise and clock of your city. The two can differ by some minutes, and on a few days by a tithi or star.</p>
+    <p class="meth-diff"><b>Vākya</b> – traditional, as in printed Tamil pañcāṅgams; worked out for India (Indian time).<br><b>Tirukkaṇita</b> – modern astronomy, worked out for the sunrise and clock of your city. Their times are often about two hours apart, and on about one day in ten the tithi or star at sunrise differs.</p>
     <p class="cb-mnote" id="methNote">Follow the pañcāṅgam your family uses.</p>
   </div>
   <div class="sg-pbox" id="sgPbox">
@@ -418,7 +420,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <div><label for="p-karana">Karaṇa</label><select id="p-karana" class="deva"></select></div>
   </div>
   <p class="hint" id="p-info"></p>
-<p class="hint" id="methodFoot"><span id="methodNow" style="background:#fff1c7;padding:1px 6px;border-radius:4px;font-weight:700"></span><br>* <b>Vākya or Tirukkaṇita?</b> Tirukkaṇita (Drik) uses modern astronomy and matches the sky most closely. Vākya follows the traditional Vākyakaraṇa tables, used mainly in Tamil Nadu; its times can differ by 30–60 minutes or more, and occasionally by a day. Choose the one your family follows.</p>
+<p class="hint" id="methodFoot"><span id="methodNow" style="background:#fff1c7;padding:1px 6px;border-radius:4px;font-weight:700"></span><br>* <b>Vākya or Tirukkaṇita?</b> Tirukkaṇita (Drik) uses modern astronomy and matches the sky most closely. Vākya follows the traditional Vākyakaraṇa tables, used mainly in Tamil Nadu. The two methods' tithi and star times are often about two hours apart (up to about six hours), and on roughly one day in ten the tithi or star at sunrise is different. Choose the one your family follows.</p>
   <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:.88rem;margin-top:8px;cursor:pointer">
     <input type="checkbox" id="p-unlock" style="width:auto"> 🔒 Details are locked to the date. Tick to correct them manually (only if your pañcāṅgam differs).</label>
     </details>
@@ -865,14 +867,14 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <p><b>Bhagavad Gītā 7.21</b> – with form (saguṇa)<span class="deva ff-v">यो यो यां यां तनुं भक्तः श्रद्धयार्चितुमिच्छति ।<br>तस्य तस्याचलां श्रद्धां तामेव विदधाम्यहम् ॥</span>“Whatever form a devotee worships with faith, I make that faith firm.”</p>
     <p><b>Bhagavad Gītā 12.3–4</b> – the formless too reaches Him<span class="deva ff-v">ये त्वक्षरमनिर्देश्यमव्यक्तं पर्युपासते …<br>ते प्राप्नुवन्ति मामेव सर्वभूतहिते रताः ॥</span>“Those who worship the imperishable, formless, unmanifest … they too reach Me.”</p></div></details>
   <details><summary>Language or calendar – what's the difference?</summary><p>The <b>language</b> changes only the letters of your saṅkalpam (Sanskrit, Tamil, Telugu, Kannada or English). The <b>calendar</b> (Tamil, Telugu or Kannada) changes the year and month in it. Choosing the Telugu or Kannada calendar also switches the letters – you can undo it.</p></details>
-  <details><summary>Vākya or Tirukkaṇita?</summary><p><b>Vākya</b> is the traditional method of printed Tamil pañcāṅgams, worked out for India; its times are Indian time. <b>Tirukkaṇita</b> is modern astronomy, worked out for the sunrise and clock of the city you choose. They can differ by some minutes, and on a few days by a tithi or star. In India and Sri Lanka, follow the pañcāṅgam your family uses. Outside India, Tirukkaṇita is recommended because it follows your own sunrise; Vākya is still there if your family follows an Indian Vākya pañcāṅgam. Vākya is the traditional method of Tamil Nadu pañcāṅgams; Tirukkaṇita is modern astronomy for your city. They can differ by up to an hour, and now and then by a day. Use the one your family pañcāṅgam follows.</p></details>
+  <details><summary>Vākya or Tirukkaṇita?</summary><p><b>Vākya</b> is the traditional method of printed Tamil pañcāṅgams, worked out for India; its times are Indian time. <b>Tirukkaṇita</b> is modern astronomy, worked out for the sunrise and clock of the city you choose. Their tithi and star times are often about two hours apart (up to about six hours), and on roughly one day in ten the tithi or star at sunrise is different. In India and Sri Lanka, follow the pañcāṅgam your family uses. Outside India, Tirukkaṇita is recommended because it follows your own sunrise; Vākya is still there if your family follows an Indian Vākya pañcāṅgam. The Calendar tab shows both side by side for any day.</p></details>
   <details><summary>Name ending – Śarmā, Varmā, Gupta, Dāsa</summary><p>These are the traditional endings given in the Viṣṇu Purāṇa (3.10.9). <b>None (नाम्नः)</b> means “of the one named …” and suits everyone. Choose the one your family uses; tap “Why?” next to Name ending for the verse. For women the saṅkalpam uses नाम्न्याः.</p></details>
   <details><summary>I don't know my gotra</summary><p>Choose "I don't know my gotra" in the first steps, or "Not known (use Kāśyapa)" in the full form – Kāśyapa is used. Ask your elders when you can.</p></details>
   <details><summary>I don't know my birth star</summary><p>Tap "I don't know my star" in the first steps, or "Don't know your star?" under Birth Nakṣatra in the full form, and give your date, place and time of birth. Without the time, choose from that day's stars; the printout notes it. Check the star shown, then tap <b>Use this star</b> to go back. For a family member, tap "Don't know? Find the star" under their birth star. Once saved, a star is locked – tap <b>Change star…</b> to change it.</p></details>
   <details><summary>Good time and yogam</summary><p><b>Good time</b> is the Gowri nalla neram: the day and the night each in 8 parts. For India and Sri Lanka it is as printed in Tamil calendars (parts of 1½ hours from 6 AM); for cities elsewhere the parts run from that city's own sunrise to sunset, and sunset to the next sunrise – the same for Rāhu kālam, Yamagaṇḍam and Kuḷigai. Uthi, Amirtham, Labham, Dhanam and Sugam are good; Rogam, Soram and Visham are not. <b>Yogam</b> (Amṛta, Siddha or Maraṇa) comes from the weekday and the day's star – Amṛta and Siddha are good days, Maraṇa is avoided for new beginnings. Your city's actual sunrise may shift the times a little. For a wedding or upanayanam, a muhūrtam is fixed by your jyotiṣa.</p></details>
   <details><summary>Which day for tarpaṇam?</summary><p>Tarpaṇam tab → "Which day?" finds the day by the afternoon (aparāhṇa) rule for Amāvāsyā, Māsa pirappu and Mahālaya.</p></details>
   <details><summary>Sharing on WhatsApp, PDF and the daily email</summary><p><b>Share</b> sends your saṅkalpam in the letters you chose – Sanskrit, Tamil, Telugu, Kannada or English – to WhatsApp or any app. On a computer, WhatsApp opens with the text ready (it is copied too). "Share on WhatsApp" under the day's pañcāṅgam, and "Share this day on WhatsApp" in the Calendar, send that day's pañcāṅgam – in Tamil, or the language you chose. Print / PDF saves a copy. The daily email brings your saṅkalpam every evening.</p></details>
-  <details><summary>Where are my details kept?</summary><p>Only on this phone, in this browser – another phone, computer or browser does not see them. Ancestors' names are never sent anywhere. If you subscribe to the email, your email and details are kept in a private Google Sheet only to send it; every email has Unsubscribe. To know how many people use the app, it sends anonymous counts (app opened, WhatsApp share, PDF) – never your name, details or email.</p></details>
+  <details><summary>Where are my details kept?</summary><p>Only on this phone, in this browser – another phone, computer or browser does not see them. Ancestors' names are never sent anywhere. If you subscribe to the email, your email and details are kept in a private Google Sheet only to send it; every email has Unsubscribe. To know how many people use the app, it sends anonymous counts (app opened, WhatsApp share, PDF) and, once a day, the city chosen in the app (a custom location only as "My location") and the phone's time zone – never your name, details, email or exact location.</p></details>
   <details><summary>How do I get the newest version?</summary><p>The app checks by itself. When you see "Update now", tap it.</p></details>
 </div>
 <div class="card v4wn" id="wnCard"><h2>What's new</h2><div id="wnList"></div></div>
@@ -1994,7 +1996,7 @@ function panchangInfo(v, c, cal, method) {
   let vakyaMonthNote = '';
   const meth = method == null ? V('method') : method;
   if (cal === 'ta' && /^vakya/.test(meth || '') && typeof tamilDate === 'function') {
-    try { const t = tamilDate(meth === 'vakya-sringeri' ? 'sringeri' : 'pambu', v);
+    try { const t = tamilDate(meth === 'vakya-alt' ? 'vakya2' : 'vakya', v);
       if (t && t.masa !== p.masa) {
         const dm = p.masa, m = t.masa, gm = +v.slice(5, 7), gy = +v.slice(0, 4);
         p.masa = m; p.rtu = Math.floor(m / 2); p.ayana = (m >= 9 || m <= 2) ? 0 : 1;
@@ -2361,7 +2363,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.15';
+const APP_VERSION = 'v5.2.16';
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2376,7 +2378,7 @@ function getPanchangaNote() {
   return '<b style="background:#fff1c7;padding:1px 6px;border-radius:4px">Calculation used: ' + (method === 'drik' ? 'Tirukkaṇita (modern astronomical)' : 'Vākya (traditional)') + '</b> ' + getPanchangaNote0(method);
 }
 function getPanchangaNote0(method) {
-  if (method === 'vakya' || method === 'vakya-sringeri') {
+  if (method === 'vakya' || method === 'vakya-alt') {
     return 'Pañcāṅgam calculated by the traditional Vākya method (Vākyakaraṇa), calibrated to printed Vākya pañcāṅgams, for Tamil Nadu (about 11–13°N). Tirukkaṇita (Drik) pañcāṅgams may differ on some days; follow your family\'s pañcāṅgam and, if in doubt, your vādhyār.';
   } else {
     return 'Pañcāṅgam calculated by the Tirukkaṇita (dṛk-gaṇita) method: modern astronomical positions of the Sun and Moon with Lahiri ayanāṁśa, for local sunrise at the selected city. Vākya pañcāṅgams may differ on some days; follow your family\'s pañcāṅgam and, if in doubt, your vādhyār.';
@@ -2530,12 +2532,12 @@ function pdfName(kind) {
 }
 // v5.2.15: anonymous usage count sent to the owner's Google script – only the event name (e.g. 'open', 'wa'), never names, details or email.
 // Not sent by automated browsers, or on a phone where the owner opened the app once with ?nocount=1 (?nocount=0 turns counting back on).
-function sgUse(ev, detail) {
+function sgUse(ev, detail, extra) {
   try {
     if (!SUBSCRIBE_URL || navigator.webdriver || localStorage.getItem('sankalpam.noCount') === '1') return;
   } catch (e) {}
   try { fetch(SUBSCRIBE_URL, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain;charset=utf-8'},
-          body: JSON.stringify({action: 'logUse', ev: ev, detail: detail || ''})}).catch(() => {}); } catch (e) {}
+          body: JSON.stringify(Object.assign({action: 'logUse', ev: ev, detail: detail || ''}, extra || {}))}).catch(() => {}); } catch (e) {}
 }
 // once per opening of the app: 'day1' = first opening on this phone today (India date) → users per day; 'new' = first ever on this phone
 function sgCountOpen() {
@@ -2546,7 +2548,12 @@ function sgCountOpen() {
     isNew = !localStorage.getItem('sankalpam.useSeen') && !localStorage.getItem('sankalpam.v3') && !localStorage.getItem('sankalpam.wzDone');
     localStorage.setItem('sankalpam.useDay', today); localStorage.setItem('sankalpam.useSeen', '1');
   } catch (e) {}
-  sgUse('open', [first ? 'day1' : '', isNew ? 'new' : ''].filter(Boolean).join(' '));
+  // v5.2.16: with the first opening of the day only – the city chosen in the app (a custom location is sent only as 'My location',
+  // never its coordinates) and the phone's time zone. No GPS, no IP, no name.
+  let extra = null;
+  if (first) try { const i = +V('city'), c = CITY_FLAT[i];
+    extra = {place: i === CITY_LIST_N ? 'My location' : (i < CITY_LISTED && c ? c[0] : ''), tz: Intl.DateTimeFormat().resolvedOptions().timeZone || ''}; } catch (e) {}
+  sgUse('open', [first ? 'day1' : '', isNew ? 'new' : ''].filter(Boolean).join(' '), extra);
 }
 if (typeof document !== 'undefined' && typeof window !== 'undefined') { try { const q = new URLSearchParams(location.search).get('nocount');   // read at once: the app tidies the address later
     if (q === '1') localStorage.setItem('sankalpam.noCount', '1'); else if (q === '0') localStorage.removeItem('sankalpam.noCount'); } catch (e) {}
@@ -2634,7 +2641,7 @@ function sunRasiAt(dateStr, c) {
   // v5.2.10: with Vākya, the Tamil month (and so Māsa pirappu) follows the Vākya saṅkrānti, like the saṅkalpam's month
   const meth = V('method');
   if (/^vakya/.test(meth || '') && typeof tamilDate === 'function') {
-    try { const t = tamilDate(meth === 'vakya-sringeri' ? 'sringeri' : 'pambu', dateStr); if (t) return {rasi: t.masa, first: t.day === 1}; } catch (e) {}
+    try { const t = tamilDate(meth === 'vakya-alt' ? 'vakya2' : 'vakya', dateStr); if (t) return {rasi: t.masa, first: t.day === 1}; } catch (e) {}
   }
   const [y, m, d] = dateStr.split('-').map(Number), pv = new Date(Date.UTC(y, m - 1, d - 1));
   const now = Math.floor(sunSid(sunEvent(y, m, d, c[1], c[2], c[3], false)) / 30);
@@ -3237,6 +3244,14 @@ function generateTarpanam(quiet) {
   const o = {type: $('t-type').value, mlday: $('t-mlday').value, rasi: +$('t-rasi').value, script: $('script').value, cal, city: curCity(), date: $('date').value, gotraD: $('gotraD').value.trim(), mgotraD: tMgotraD().trim(),
              alive: tAlive(), kurcha: $('t-kurcha').value, names, unknown, suffix: $('suffix').value, abhi: ABHI_ENABLED && $('ab-pravara').value.trim() ? tAbhi() : null, karuRelations: karuRelations, slot: slotTxt, spans};
   const dw = tDateWarn(o.date, o.city).split('<br>').filter(x => x.indexOf('⚠️') === 0).join(' ');
+  // v5.2.16: do not print a full procedure for a day that does not fit unless the user confirms it (VAK-002)
+  const okKey = o.type + '|' + o.date + '|' + o.city[0];
+  if (dw && window.tDateOk !== okKey) {
+    $('tOut').classList.add('hide'); if (quiet === true) return;
+    st.innerHTML = '<div class="twarn">' + dw + '</div>If your own pañcāṅgam or vādhyār gives this date, you can still prepare the text: ' +
+      '<button type="button" class="btn ghost" id="tDateOkBtn" style="margin:6px 0 0">My pañcāṅgam gives this date – continue</button>';
+    $('tDateOkBtn').addEventListener('click', () => { window.tDateOk = okKey; generateTarpanam(); });
+    return; }
   const r = $('tResult'); r.innerHTML = (dw ? '<div class="twarn">' + (o.script === 'en' ? easyLatin(dw) : dw) + '</div>' : '') + composeTarpanam(P, o, 'Generated ' + genStamp()); r.dataset.script = o.script; r.lang = o.script === 'en' ? 'sa-Latn' : 'sa';
   $('tCopyStatus').textContent = ''; $('tOut').classList.remove('hide'); tSave();
   if (quiet !== true) $('tOut').scrollIntoView({behavior: 'smooth'});
@@ -3503,7 +3518,7 @@ function updateSetup() {
 if (typeof document !== 'undefined') init();
 </script>
 <script>
-/* Panchanga engine: Vakya (Chennai / Sringeri tables, calibrated) + Drik.
+/* Panchanga engine: Vakya (two calibrations to printed Tamil Vakya almanacs) + Drik.
    Vakya: Vakyakarana day count, Vararuci-model Chandravakyas, bhupa solar table,
    calibrated to printed almanacs (true sunrise via chara + bhujantara).
    Drik: needs global `Astronomy` (astronomy-engine). */
@@ -3567,8 +3582,8 @@ if (typeof document !== 'undefined') init();
     return Math.asin(Math.tan(lat * R) * Math.tan(dec)) * D * 4; }           // minutes, + = sunrise earlier
   function bhujantara(A) { const d = sinceMesha(A); return mod(vSun(A) - d * 360 / 365.25875 + 180, 360) * 4 - 720; } // minutes
   const PROFILES = {
-    pambu:    { label: 'Vakya · Chennai',    T: [2.19, 3.55, 121.6], N: [2.02, 3.01, 108.8] },
-    sringeri: { label: 'Vakya · Sringeri', T: [2.19, 3.55, 116.2], N: [2.02, 3.01, 108.5] }
+    vakya:    { label: 'Vakya',             T: [2.19, 3.55, 121.7], N: [2.02, 3.01, 109.9] },
+    vakya2:   { label: 'Vakya (alternate)', T: [2.19, 3.55, 115.7], N: [2.02, 3.01, 108.7] }
   };
   const calibFor = (p, anga) => PROFILES[p][anga === 'K' ? 'T' : (anga === 'Y' || anga === 'R') ? 'N' : anga];
   function vValues(A) { const S = vSun(A), M = vMoon(A); return { T: mod(M - S, 360), N: M, Y: mod(M + S, 360), K: mod(M - S, 360), R: M }; }
@@ -3580,9 +3595,21 @@ if (typeof document !== 'undefined') init();
     const corr = (ca * chara(A) - cb * bhujantara(A) - cc) / 3600;           // days
     const out = []; let i = Math.floor(a0 / sp);
     while ((i + 1) * sp <= a1 && out.length < 4) { const f = ((i + 1) * sp - a0) / (a1 - a0);
-      out.push({ index: mod(i, ANGA[anga].count), t: A + f + corr }); i++; }
+      out.push({ index: mod(i, ANGA[anga].count), t: A + f + corr + calib2(A, f, a1 - a0, profile) }); i++; }
     return out;
   }
+  /* v5.2.16 calibration (offline audit, Oct 2026). Residual term fitted to the 14 Apr 2026 - 13 Apr 2027 printed
+     tithi/nakshatra endings: s = annual time term (minutes; sin/cos of the Vakya Sun longitude); m = Moon term
+     (minutes x deg/day; sin/cos of the lunar anomaly at the event) divided by the anga's daily motion.
+     Both reference calibrations give the same Moon term (about 1.5 arc-minutes). Re-check against each new year's print. */
+  const CAL2 = {
+    vakya: { s: [-0.950, 0.924], m: [-4.106, 36.244] },
+    vakya2: { s: [-0.750, 0.799], m: [-4.879, 36.905] }
+  };
+  function anomDay(A) { const n = A - 1600984; let rem = n - Math.floor(n / 12372) * 12372; rem -= Math.floor(rem / 3031) * 3031; return rem - Math.floor(rem / 248) * 248; }
+  function calib2(A, f, rate, profile) { const k = CAL2[profile]; if (!k) return 0;
+    const S = vSun(A) * R, a = (anomDay(A) + f) * MA * R;
+    return -(k.s[0] * Math.sin(S) + k.s[1] * Math.cos(S) + (k.m[0] * Math.sin(a) + k.m[1] * Math.cos(a)) / rate) / 1440; }
   const dayLenNaz = A => 30 + 2 * chara(A, 11.0) / 24;                      // matches the printed ahas (day length) within 1 vināḍi                      // ahas in nazhigai
 
   /* Vākya saṅkrāntis (Vākyakaraṇa 1.3–5: śrīr-guṇa-mitra offsets from Meṣa, mod 7, in days–nāzhigai–vināḍi) */
@@ -3604,7 +3631,8 @@ if (typeof document !== 'undefined') init();
 
   /* =============== DRIK =============== */
   const AST = () => root.Astronomy;
-  function lahiri(date) { const jd = date.getTime() / 864e5 + 2440587.5; return 23.8532 + 0.0139663 * (jd - 2451545) / 365.25; }
+  function lahiri(date) { const jd = date.getTime() / 864e5 + 2440587.5, pA = T => 5028.796195 * T + 1.1054348 * T * T;   // v5.2.16: same mean Lahiri as lahiriMean()
+    return 23.245524743 + (pA((jd - 2451545) / 36525) - pA((2435553.5 - 2451545) / 36525)) / 3600; }
   function dValues(date) { const A = AST(); const ay = lahiri(date);
     const S = mod(A.SunPosition(date).elon - ay, 360), M = mod(A.EclipticGeoMoon(date).lon - ay, 360);
     return { T: mod(M - S, 360), N: M, Y: mod(M + S, 360), K: mod(M - S, 360), R: M }; }
@@ -3698,8 +3726,8 @@ function tdfTzMin(dateStr, tzName) {
     const [md, hm] = s.split(', '); const [mm, dd, yy] = md.split('/').map(Number); let [H, M] = hm.split(':').map(Number); if (H === 24) H = 0;
     return (Date.UTC(yy, mm - 1, dd, H, M) - t.getTime()) / 6e4; } catch (e) { return 330; }
 }
-function tdfProfile() { const m = $('method').value; return m === 'drik' ? 'drik' : m === 'vakya-sringeri' ? 'sringeri' : 'pambu'; }
-const TDF_LABEL = {pambu: 'Vākya', sringeri: 'Vākya', drik: 'Tirukkaṇita'};
+function tdfProfile() { const m = $('method').value; return m === 'drik' ? 'drik' : m === 'vakya-alt' ? 'vakya2' : 'vakya'; }
+const TDF_LABEL = {vakya: 'Vākya', vakya2: 'Vākya', drik: 'Tirukkaṇita'};
 const tdfCache = new Map();
 function tdfDay(sys, dateStr, angas) {
   const c = curCity(); const key = sys + '|' + dateStr + '|' + (sys === 'drik' ? c[0] : '') + '|' + (angas || 'all');
@@ -3734,7 +3762,7 @@ function vakyaOverride(v, c) {
 function tdfLong(s) { const [y, m, d] = s.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-IN', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'}); }
 function tdfShort(s) { const [y, m, d] = s.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-IN', {weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC'}); }
 function tdfFn(sys) { return ds => tdfDay(sys, ds, 'T'); }
-const TDF_CLOSE = {drik: 10, pambu: 15, sringeri: 15};
+const TDF_CLOSE = {drik: 10, vakya: 15, vakya2: 15};
 function tdfNextAma(sys, from) {
   for (let k = 0; k < 32; k++) { const ds = Panchanga.addDays(from, k);
     if (Panchanga.segments(tdfDay(sys, ds, 'T'), 'T').some(s => s.index === 29)) return Panchanga.pitruDay(tdfFn(sys), ds, 29, TDF_CLOSE[sys]); }
@@ -3765,13 +3793,13 @@ function tdfRibbon(d) {
 const TDF_RASI = ['Meṣa (Chithirai)','Vṛṣabha (Vaikāsi)','Mithuna (Āni)','Karkaṭaka (Āḍi)','Siṃha (Āvaṇi)','Kanyā (Puraṭṭāsi)','Tulā (Aippasi)','Vṛścika (Kārttigai)','Dhanus (Mārgazhi)','Makara (Thai)','Kumbha (Māsi)','Mīna (Paṅguni)'];
 function tdfSunSid(sys, ds, frac) {
   if (sys === 'drik') { const d = tdfDay(sys, ds, 'T'); const t = new Date(+d._t0 + frac * d._span), jd = t.getTime() / 864e5 + 2440587.5;
-    return ((Astronomy.SunPosition(t).elon - (23.8532 + 0.0139663 * (jd - 2451545) / 365.25)) % 360 + 360) % 360; }
+    return ((Astronomy.SunPosition(t).elon - lahiriMean(jd)) % 360 + 360) % 360; }
   const I = Panchanga._internal, A = Math.floor(I.jd0(...ds.split('-').map(Number)) - I.EPOCH); const s0 = I.vSun(A), s1 = I.vSun(A + 1);
   return ((s0 + ((s1 < s0 ? s1 + 360 : s1) - s0) * frac) % 360 + 360) % 360;
 }
 function tdfSidQuick(sys, ds) {          // Sun at about sunrise, for scanning
   if (sys === 'drik') { const [y, m, d] = ds.split('-').map(Number), t = new Date(Date.UTC(y, m - 1, d, 0, 30)), jd = t.getTime() / 864e5 + 2440587.5;
-    return ((Astronomy.SunPosition(t).elon - (23.8532 + 0.0139663 * (jd - 2451545) / 365.25)) % 360 + 360) % 360; }
+    return ((Astronomy.SunPosition(t).elon - lahiriMean(jd)) % 360 + 360) % 360; }
   return tdfSunSid(sys, ds, 0);
 }
 function tdfSankrantiOn(sys, ds) {      // saṅkrānti during this day (sunrise to sunrise), or null
@@ -3823,7 +3851,7 @@ function tdfRender() {
   const out = $('tdf-out'); if (!out || !window.Panchanga) return;
   const base = $('date').value || new Date().toISOString().slice(0, 10), tt = $('t-type').value, mode = tt === 'mahalaya' ? 'maha' : tt === 'amavasya' ? 'ama' : tt === 'masa' ? 'masa' : 'other';
   if (mode === 'other') { out.innerHTML = '<p class="hint">The day finder covers Mahālaya, Amāvāsyā and Māsa pirappu tarpaṇam. For this tarpaṇam, choose the date in the box below; if unsure of the day, please ask your vādhyār.</p>'; return; }
-  const main = tdfProfile(), systems = $('tdf-sys').value === 'all' ? [main, ...['pambu', 'drik'].filter(x => x !== main)] : [main];
+  const main = tdfProfile(), systems = $('tdf-sys').value === 'all' ? [main, ...['vakya', 'drik'].filter(x => x !== main)] : [main];
   if (tt === 'masa') { tdfMasa(out, base, main, systems); return; }
   const cityTag = s => s === 'drik' ? ' · ' + curCity()[0] : '';
   try {
@@ -3922,7 +3950,7 @@ function ptClock(d, f, prof, ds, c) {
   return clock12(q.H, q.M) + (day > ds ? ' (next day)' : '');
 }
 // ---- v5.2.10: shared day helpers (pure – the app, the owner's page and the email server use the same code) ----
-const ptProf = method => method === 'drik' ? 'drik' : method === 'vakya-sringeri' ? 'sringeri' : 'pambu';
+const ptProf = method => method === 'drik' ? 'drik' : method === 'vakya-alt' ? 'vakya2' : 'vakya';
 function ptDay(prof, ds, c, angas) {
   return prof === 'drik' ? Panchanga.drikDay(ds, c[1], c[2], tdfTzMin(ds, c[3]), angas) : Panchanga.vakyaDay(ds, prof, angas);
 }
@@ -4681,9 +4709,9 @@ details.sg-more>.grid{margin-top:8px}
   const EV = {
     mahalaya:    {label: 'Mahālaya Pakṣa', long: 'Mahālaya Pakṣa – Pitṛ Pakṣa', cls: 'ml'},
     mahalayaAma: {label: 'Mahālaya Amāvāsyā', short: 'Mahālaya Amā.', long: 'Mahālaya Amāvāsyā – tarpaṇam for Pitṛs', cls: 'am'},
-    amavasya:    {label: 'Amāvāsyā', long: 'Amāvāsyā – tarpaṇam for Pitṛs', cls: 'am'},
+    amavasya:    {label: 'Amāvāsyā', long: 'Amāvāsyā – tarpaṇam for Pitṛs (some, e.g. Bodhāyana, observe a different day; follow your pañcāṅgam)', cls: 'am'},
     pournami:    {label: 'Pūrṇimā', long: 'Pūrṇimā', cls: 'pu'},
-    ekadasi:     {label: 'Ekādaśī', long: 'Ekādaśī', cls: 'ek'},
+    ekadasi:     {label: 'Ekādaśī', long: 'Ekādaśī (Smārta; Vaiṣṇava and Mādhva dates can differ)', cls: 'ek'},
     pradosham:   {label: 'Pradoṣam', long: 'Pradoṣam (evening)', cls: 'pr'},
     caturthi:    {label: 'Caturthī', long: 'Caturthī (Śukla) – Vināyaka worship', cls: 'ch'},
     masaShiv:    {label: 'Māsa Śivarātri', short: 'Śivarātri', long: 'Māsa Śivarātri – Kṛṣṇa Caturdaśī at midnight', cls: 'sv'},
@@ -4772,9 +4800,10 @@ details.sg-more>.grid{margin-top:8px}
     gokul:      {label: 'Gokulāṣṭamī (smārta)', short: 'Gokulāṣṭamī', long: 'Kṛṣṇa Jayantī – Gokulāṣṭamī (smārta): Śrāvaṇa Kṛṣṇa Aṣṭamī at midnight'},
     sriJayanti: {label: 'Śrī Jayantī (Vaiṣṇava)', short: 'Śrī Jayantī', long: 'Śrī Jayantī (Vaiṣṇava) – Rohiṇī at midnight in Āvaṇi'},
     ramaNav:    {label: 'Śrī Rāma Navamī', long: 'Śrī Rāma Navamī – Caitra Śukla Navamī at midday'},
-    navaratri:  {label: 'Navarātri begins', long: 'Navarātri begins – Āśvina Śukla Prathamā'},
-    sarasvati:  {label: 'Sarasvatī Pūjā', long: 'Sarasvatī Pūjā · Āyudha Pūjā – Mahānavamī, the day before Vijayadaśamī'},
-    vijaya:     {label: 'Vijayadaśamī', long: 'Vijayadaśamī – Āśvina Śukla Daśamī (afternoon)'},
+    ugadi:      {label: 'Ugādi', long: 'Ugādi – Telugu / Kannada New Year (Caitra Śukla Prathamā)'},
+    navaratri:  {label: 'Navarātri begins (temple)', short: 'Navarātri', long: 'Navarātri begins (temple pūjā) – Āśvina Śukla Prathamā. Household pūjā may begin on a different day; follow your family custom.'},
+    sarasvati:  {label: 'Sarasvatī Pūjā', long: 'Sarasvatī Pūjā · Āyudha Pūjā (Vaiṣṇava) – Mahānavamī, the day before Vijayadaśamī. Smārta calendars may give the previous day.'},
+    vijaya:     {label: 'Vijayadaśamī', long: 'Vijayadaśamī (Vaiṣṇava) – Āśvina Śukla Daśamī at sunrise. Smārta calendars may give the previous day.'},
     dipavali:   {label: 'Dīpāvalī', long: 'Dīpāvalī – Naraka Caturdaśī before sunrise'},
     skanda:     {label: 'Skanda Ṣaṣṭhī', long: 'Skanda Ṣaṣṭhī · Sūra Saṃhāram – Aippasi Śukla Ṣaṣṭhī'},
     karthigai:  {label: 'Kārttikai Dīpam', long: 'Kārttikai Dīpam – Kṛttikā at sunset in Kārttikai'},
@@ -4867,6 +4896,8 @@ details.sg-more>.grid{margin-top:8px}
       const cand = [];
       for (let k = 0; k < 32; k++) { const x = add(start, k); if (tamilMonth(x) !== month) break;
         const f = d => ref(fullDay(d)); if (nakAt(x, f(x)) === N && nakAt(add(x, -1), f(add(x, -1))) !== N) cand.push(x); }
+      if (!cand.length)       // v5.2.16: not present at the reference moment on any day → the day it prevails at sunrise (as pick() does)
+        for (let k = 0; k < 32; k++) { const x = add(start, k); if (tamilMonth(x) !== month) break; if (nakAt(x, 0) === N && nakAt(add(x, -1), 0) !== N) { cand.push(x); break; } }
       if (!cand.length)       // kṣaya at sunrise: the day it begins and ends
         for (let k = 0; k < 32; k++) { const x = add(start, k); if (tamilMonth(x) !== month) break; if (segs(fullDay(x), 'N').some(s => s.index === N)) { cand.push(x); break; } }
       const dist = x => { const t = segs(dayOf(x), 'T')[0].index; return Math.min(Math.abs(t - 14), 30 - Math.abs(t - 14)); };
@@ -4890,9 +4921,10 @@ details.sg-more>.grid{margin-top:8px}
     if (pick(ds, 3, REF.midday) && inLunar(ds, 5, 3)) T('vinayakaC');
     if (pick(ds, 22, REF.nishitha) && inLunar(ds, 4)) T('gokul');
     if (pick(ds, 8, REF.midday) && inLunar(ds, 0, 8)) T('ramaNav');
+    if (pick(ds, 0, REF.sunrise) && inLunar(ds, 0, 0)) T('ugadi');
     if (pick(ds, 0, REF.sunrise) && inLunar(ds, 6, 0)) T('navaratri');
-    if (pick(add(ds, 1), 9, REF.aparahna) && inLunar(add(ds, 1), 6, 9)) T('sarasvati');   // Tamil custom: the day before Vijayadaśamī
-    if (pick(ds, 9, REF.aparahna) && inLunar(ds, 6, 9)) T('vijaya');
+    if (pick(add(ds, 1), 9, REF.sunrise) && inLunar(add(ds, 1), 6, 9)) T('sarasvati');   // the day before Vijayadaśamī
+    if (pick(ds, 9, REF.sunrise) && inLunar(ds, 6, 9)) T('vijaya');                       // v5.2.16 owner choice: Vaiṣṇava (Daśamī at sunrise)
     if (dipavaliOn(ds) && inLunar(ds, 6)) T('dipavali');
     if (pick(ds, 6, REF.sunrise) && inLunar(ds, 10, 6)) T('ratha');
     if (pick(ds, 2, REF.midday) && inLunar(ds, 1, 2)) T('akshaya');
@@ -4983,6 +5015,34 @@ details.sg-more>.grid{margin-top:8px}
     el('pc-body').innerHTML = h;
   }
 
+  /* v5.2.16: Vākya and Tirukkaṇita for the same day and city. Vākya instants: 06:00 Indian time + nāzhigai;
+     Tirukkaṇita: true sunrise at the chosen city. Differences are shown to the minute. */
+  function cmpTile(ds) {
+    try {
+      const c = city(), vp = sys() === 'drik' ? 'vakya' : sys(), [y, m, dd] = ds.split('-').map(Number);
+      const vAbs = (x, f) => { const [Y, M, D] = x.date.split('-').map(Number); return Date.UTC(Y, M - 1, D, 0, 30) + f * 864e5; };
+      const kAbs = (x, f) => +x._t0 + f * x._span;
+      const vDay = k => Panchanga.vakyaDay(add(ds, k), vp), kDay = k => Panchanga.drikDay(add(ds, k), c[1], c[2], tdfTzMin(add(ds, k), c[3]));
+      const V = [-1, 0, 1].map(vDay), K = [-1, 0, 1].map(kDay);
+      const endOf = (days, abs, g, idx) => { for (const x of days) { const e = x.events[g].find(q => q.index === idx); if (e && abs(x, e.f) > abs(days[0], 0)) return abs(x, e.f); } return null; };
+      const loc = (t, tz) => { const q = new Date(Math.round(t / 6e4) * 6e4 + tdfTzMin(ds, tz) * 6e4); const H = q.getUTCHours(), Mi = q.getUTCMinutes(), dsx = q.toISOString().slice(0, 10);
+        return ((H % 12) || 12) + ':' + p2(Mi) + ' ' + (H < 12 ? 'AM' : 'PM') + (dsx !== ds ? ' (' + shortD(dsx) + ')' : ''); };
+      const diffTxt = (a, b) => { if (a === null || b === null) return '–'; const d = Math.round((a - b) / 6e4);
+        if (d === 0) return 'same minute'; const h = Math.floor(Math.abs(d) / 60), mi = Math.abs(d) % 60;
+        return 'Vākya ' + (h ? h + ' h ' : '') + mi + ' min ' + (d > 0 ? 'later' : 'earlier'); };
+      const rows = [['T', 'Tithi'], ['N', 'Nakṣatra'], ['Y', 'Yoga'], ['K', 'Karaṇa']].map(([g, lab]) => {
+        const vi = Panchanga.segments(V[1], g)[0].index, ki = Panchanga.segments(K[1], g)[0].index;
+        const ve = endOf(V.slice(1), vAbs, g, vi), ke = endOf(K.slice(1), kAbs, g, ki), same = vi === ki;
+        const keSame = same ? ke : endOf(K, kAbs, g, vi);
+        return '<tr' + (same ? '' : ' class="pc-cmpdiff"') + '><td>' + lab + '</td><td>' + esc(NAME[g](vi)) + '<br><span class="s">upto ' + (ve ? loc(ve, 'Asia/Kolkata') : '…') + '</span></td>' +
+          '<td>' + esc(NAME[g](ki)) + '<br><span class="s">upto ' + (ke ? loc(ke, c[3]) : '…') + '</span></td>' +
+          '<td>' + (same ? diffTxt(ve, ke) : '<b>Different at sunrise</b><br><span class="s">' + esc(NAME[g](vi)) + ': ' + diffTxt(ve, keSame) + '</span>') + '</td></tr>';
+      }).join('');
+      return '<details class="pc-tile pc-cmp"><summary class="k">Compare Vākya and Tirukkaṇita</summary>' +
+        '<table class="pc-cmpt"><thead><tr><th></th><th>Vākya</th><th>Tirukkaṇita · ' + esc(c[0]) + '</th><th>Difference</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        '<div class="s">Vākya times: 6:00 AM + nāzhigai (Indian time). Tirukkaṇita: modern astronomy for the true sunrise at ' + esc(c[0]) + '. The two methods are often about two hours apart. Follow the pañcāṅgam your family uses.</div></details>';
+    } catch (err) { return ''; }
+  }
   const PC_WIDE = '(min-width:900px)';   // v5.2.15: same width as the two-column calendar
   function renderDay() {
     let wide = false; try { wide = window.matchMedia(PC_WIDE).matches; } catch (e) {}
@@ -5024,6 +5084,7 @@ details.sg-more>.grid{margin-top:8px}
     h += '<div class="pc-tile"><div class="k">Chandrāṣṭamam (by rāśi)</div>' + cp.map((p, i) => '<div class="v"' + (i ? ' style="margin-top:4px"' : '') + '>' + (i ? 'then ' : '') + esc(cap(RS[p.rasi][0])) + ' rāśi' +
          (p.till ? ' <span class="s">till ' + esc(p.till.ds === ds ? p.till.clock : shortD(p.till.ds) + ', ' + p.till.clock) + '</span>' : '') + '</div><div class="s">' + esc(rasiStarsText(p.rasi, nkS)) + '</div>').join('') +
          '<div class="s">For those born in this rāśi: the Moon is in their 8th rāśi.</div></div>';
+    h += cmpTile(ds);   // v5.2.16: Vākya and Tirukkaṇita side by side
     const share = '<button type="button" class="btn ghost dx-share" data-share-cal="' + ds + '">Share this day on WhatsApp</button>';
     if (wide) { const T = h.split(/(?=<div class="pc-tile)/), stk = a => '<div class="pc-stk">' + a.map(i => T[i] || '').join('') + '</div>';
                 xt = T.length === 5 ? stk([0]) + stk([1, 3]) + stk([2, 4]) : h; h = h0 + share + '</div>'; } else h = h0 + h + share + '</div>';
@@ -5920,6 +5981,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [               // v: used only to pick what is new for this phone – never shown
+    {v: '5.2.16', items: ['Vākya times closer to the printed pañcāṅgam', 'Calendar: compare Vākya and Tirukkaṇita for any day', 'Festival days and labels as chosen (Sarasvatī Pūjā, Vijayadaśamī, Śrī Jayantī, Ugādi)', 'Tarpaṇam on a day that does not suit it asks you first', 'Use counts now include the city chosen in the app – see Help']},
     {v: '5.2.15', items: ['Calendar: a short code in each coloured square (AM Amāvāsyā, EK Ekādaśī …), in the letters you chose', 'On a computer: the day\'s cards under the calendar', 'Shorter notes', '"Beta" until the vādhyār checks are done', 'Anonymous use counts (no names, no details) – see Help']},
     {v: '5.2.14', items: ['Tarpaṇam as in the booklet: अस्मत्, अक्षन् पितरः, ज्ञाताज्ञात, sesame after pradakṣiṇam, येषां न माता …', 'Choose the time of tarpaṇam – the saṅkalpam follows that tithi and star', 'Tithi and star from–to times with dates', 'English letters easy to read (no marks)', 'Name spellings: Venkatasubramanian, Muthumeenakshi, Anandavalli, Seethalakshmi …', 'PDF: no "Which day?" box, footer kept on one page']},
     {v: '5.2.13', items: ['Outside India: Tirukkaṇita recommended for your city, times in your local time', 'Times that cross midnight show both dates', '"What this app does" on the first screen', '"Quick chat" is now "Quick Help"', 'Rāhu kālam and good times from your own sunrise outside India', '"Use my location" uses your exact place', 'Tarpaṇam days highlighted']},

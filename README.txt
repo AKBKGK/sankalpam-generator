@@ -1,4 +1,61 @@
 ================================================================================
+SAṄKALPAM GENERATOR v5.2.16
+Updated: 2026-10-23
+================================================================================
+
+FILES IN THIS FOLDER
+────────────────────
+  index.html            → the app (everything is inside this one file) – CHANGED
+  manifest.webmanifest  → app name and icons (unchanged – do not upload)
+  README.md             → project description (shown on GitHub) – CHANGED
+  README.txt            → this file – CHANGED
+  CHANGELOG.md / .txt   → version history – CHANGED
+  sankam-mobile.html    → old v5.0.4 edition – unchanged (not linked; consider
+                          removing it later)
+
+WHAT CHANGED IN 5.2.16 (details in CHANGELOG.txt)
+  • Vākya times closer to print (about 1–1.5 min average, all within 5 min).
+  • Calendar: Compare Vākya and Tirukkaṇita for any day.
+  • Festivals: Sarasvatī Pūjā 20 Oct, Vijayadaśamī 21 Oct, Śrī Jayantī 4 Sep
+    2026, Ugādi 7 Apr 2027; tradition labels.
+  • Tarpaṇam on a date that does not suit it: asks you to confirm first.
+  • One Lahiri ayanāṁśa; one consistent method note; no publication names.
+
+FIRST – EMAIL SCRIPT v12 (before uploading index.html)
+  The old script (v11) cannot read the new app's Vākya profile, so Vākya
+  daily emails would stop. v12 works with both 5.2.15 and 5.2.16.
+  1. Apps Script editor → replace all of Code.gs with the v12 file → Save.
+  2. Deploy → Manage deployments → Edit (pencil) → Version: New version →
+     Deploy (the web-app address stays the same).
+  3. Run sampleEmailToMe() – a sample saṅkalpam email should arrive.
+
+UPLOAD (GITHUB PAGES)
+  1. Keep a copy of your current 5.2.15 files.
+  2. Repository → Add file → Upload files.
+  3. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
+  4. Commit message: "v5.2.16: Vākya times closer to print, compare Vākya and
+     Tirukkaṇita, festival choices, tarpaṇam date check".
+  5. Commit changes. The site updates in about a minute.
+
+AFTER UPLOAD
+  1. Open sankalpam.live on your phone and reload: "Update now" → v5.2.16.
+  2. Calendar → 8 Nov 2026 → "Compare Vākya and Tirukkaṇita" opens a table.
+  3. Calendar → 20 Oct 2026: Sarasvatī Pūjā; 21 Oct: Vijayadaśamī;
+     4 Sep: Gokulāṣṭamī and Śrī Jayantī; 7 Apr 2027: Ugādi.
+  4. Tarpaṇam → Amāvāsyā on 23 Oct 2026: a warning and a "continue" button;
+     on 8 Nov 2026 the text appears directly.
+  5. Apps Script editor → run refreshEngine() once; run ownerRefresh() in the
+     private WhatsApp page project. Check the next daily email.
+     If the private owner page uses the old internal Vākya profile names,
+     change them to 'vakya' and 'vakya2' (renamed in 5.2.16).
+  6. Next morning's usage email: three columns (that day, last 7 days, since
+     counting began) and, from the first new openings, "Places".
+  7. If anything is wrong: restore index.html from the previous commit (v12
+     keeps working with the old app).
+
+================================================================================
+EARLIER NOTES (v5.2.14 and before)
+================================================================================
 SAṄKALPAM GENERATOR v5.2.14
 Updated: 2026-10-18
 ================================================================================
