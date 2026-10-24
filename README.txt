@@ -15,7 +15,6 @@ FILES IN THIS FOLDER
 
 WHAT CHANGED IN 5.2.16 (details in CHANGELOG.txt)
   • Vākya times closer to print (about 1–1.5 min average, all within 5 min).
-  • Calendar: Compare Vākya and Tirukkaṇita for any day.
   • Festivals: Sarasvatī Pūjā 20 Oct, Vijayadaśamī 21 Oct, Śrī Jayantī 4 Sep
     2026, Ugādi 7 Apr 2027; tradition labels.
   • Tarpaṇam on a date that does not suit it: asks you to confirm first.
@@ -33,13 +32,13 @@ UPLOAD (GITHUB PAGES)
   1. Keep a copy of your current 5.2.15 files.
   2. Repository → Add file → Upload files.
   3. Drag in: index.html, README.md, README.txt, CHANGELOG.md, CHANGELOG.txt.
-  4. Commit message: "v5.2.16: Vākya times closer to print, compare Vākya and
-     Tirukkaṇita, festival choices, tarpaṇam date check".
+  4. Commit message: "v5.2.16: Vākya times closer to print, layout fixes,
+     festival choices, tarpaṇam date check".
   5. Commit changes. The site updates in about a minute.
 
 AFTER UPLOAD
   1. Open sankalpam.live on your phone and reload: "Update now" → v5.2.16.
-  2. Calendar → 8 Nov 2026 → "Compare Vākya and Tirukkaṇita" opens a table.
+  2. Calendar → 8 Nov 2026: Amāvāsyā and Dīpāvalī, with tithi and star times.
   3. Calendar → 20 Oct 2026: Sarasvatī Pūjā; 21 Oct: Vijayadaśamī;
      4 Sep: Gokulāṣṭamī and Śrī Jayantī; 7 Apr 2027: Ugādi.
   4. Tarpaṇam → Amāvāsyā on 23 Oct 2026: a warning and a "continue" button;

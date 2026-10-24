@@ -7,8 +7,6 @@ Updated: 2026-10-23
     from 14 Apr 2026 to 13 Apr 2027. Average difference now about 1–1.5
     minutes (before about 2), all within 5 minutes (before up to 7).
     Tithi and star names, saṅkrānti and Tamil month starts unchanged.
-  ✓ Calendar: "Compare Vākya and Tirukkaṇita" for any day – tithi, star,
-    yoga and karaṇa with end times and the difference.
   ✓ Festivals (owner's choices): Sarasvatī Pūjā 20 Oct and Vijayadaśamī
     21 Oct 2026 (Vaiṣṇava – Daśamī at sunrise); Śrī Jayantī 4 Sep 2026
     (Rohiṇī at sunrise when it is not there at midnight); Ugādi added
@@ -26,6 +24,16 @@ Updated: 2026-10-23
     as "My location") and the phone's time zone – no GPS, IP, name or email.
     Needs email script v12 (also adds 'Last 7 days' and 'Since …' to the
     daily usage email). Help text updated.
+  ✓ Layout: family-member fields line up (birth star no longer pushes the
+    row down); full star names, time of tarpaṇam and completion choices
+    get a wider box on tablets and computers; shorter labels so the name
+    boxes line up; smaller note under the birth star; family labels easier
+    to read on computers.
+  ✓ Family names: a note explains that the Tamil ending -āḷ is not used in
+    Sanskrit (Girigujambal → गिरिगुजम्बा) and can be corrected.
+  ✓ Calendar: long festival names stay inside the day box; the month name
+    fits on small phones. "Which day?": sunrise and sunset marked (Vākya)
+    when they follow the 6 AM convention.
   ✓ Tested offline: all 365 days; calendar entries changed only where
     listed above; śrāddha days unchanged; 0 page errors.
 

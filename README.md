@@ -34,7 +34,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 - **Tirukkaṇita (Drik)** calculates the Sun and Moon with modern astronomy ([Astronomy Engine](https://github.com/cosinekitty/astronomy), Lahiri ayanāṁśa) for the true sunrise at your city.
 - **Vākya** follows the traditional Vākyakaraṇa method (Vararuci's 248 candravākyas and the Vākya Sun table), used mainly in Tamil Nadu. It is computed, not copied, and calibrated to printed Vākya pañcāṅgams for Tamil Nadu (about 11–13°N). Clock times follow the printed convention: 6:00 AM + nāzhigai × 24 minutes.
 - **Tested against print (14 Apr 2026 – 13 Apr 2027, every day):** tithi and nakṣatra names all match; since v5.2.16 the end times average about 1–1.5 minutes from the printed times, all within 5 minutes; saṅkrānti within a minute; all Tamil month starts match.
-- Vākya and Tirukkaṇita times are often about two hours apart (up to about six hours), and on roughly one day in ten the tithi or star at sunrise is different. The **Calendar** shows both side by side for any day. **Follow the pañcāṅgam your family uses; if in doubt, ask your vādhyār.**
+- Vākya and Tirukkaṇita times are often about two hours apart (up to about six hours), and on roughly one day in ten the tithi or star at sunrise is different. **Follow the pañcāṅgam your family uses; if in doubt, ask your vādhyār.**
 - **Outside India and Sri Lanka**, Tirukkaṇita is recommended (the app asks once), and every time shown names its time zone.
 - This app is independent and is not affiliated with or endorsed by any pañcāṅgam publisher or maṭha.
 
