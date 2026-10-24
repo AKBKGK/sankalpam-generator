@@ -15,6 +15,10 @@ Updated: 2026-10-23
     Varalakṣmī Vratam unchanged (21 Aug 2026).
   ✓ Tarpaṇam: when the date does not suit the chosen tarpaṇam, the text is
     prepared only after "My pañcāṅgam gives this date – continue".
+  ✓ Outside India and Sri Lanka: Tirukkaṇita is used automatically (step 1
+    and the Calendar), with a short note; a user who picked Vākya keeps it.
+  ✓ "Update now" also appears when index.html is re-uploaded with the same
+    version (hidden build stamp APP_BUILD).
   ✓ Tirukkaṇita: one Lahiri ayanāṁśa everywhere (star and yoga times move
     by under a minute; no day changed in 2026–27).
   ✓ Help: one consistent note – the two methods are often about two hours

@@ -867,7 +867,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <p><b>Bhagavad Gītā 7.21</b> – with form (saguṇa)<span class="deva ff-v">यो यो यां यां तनुं भक्तः श्रद्धयार्चितुमिच्छति ।<br>तस्य तस्याचलां श्रद्धां तामेव विदधाम्यहम् ॥</span>“Whatever form a devotee worships with faith, I make that faith firm.”</p>
     <p><b>Bhagavad Gītā 12.3–4</b> – the formless too reaches Him<span class="deva ff-v">ये त्वक्षरमनिर्देश्यमव्यक्तं पर्युपासते …<br>ते प्राप्नुवन्ति मामेव सर्वभूतहिते रताः ॥</span>“Those who worship the imperishable, formless, unmanifest … they too reach Me.”</p></div></details>
   <details><summary>Language or calendar – what's the difference?</summary><p>The <b>language</b> changes only the letters of your saṅkalpam (Sanskrit, Tamil, Telugu, Kannada or English). The <b>calendar</b> (Tamil, Telugu or Kannada) changes the year and month in it. Choosing the Telugu or Kannada calendar also switches the letters – you can undo it.</p></details>
-  <details><summary>Vākya or Tirukkaṇita?</summary><p><b>Vākya</b> is the traditional method of printed Tamil pañcāṅgams, worked out for India; its times are Indian time. <b>Tirukkaṇita</b> is modern astronomy, worked out for the sunrise and clock of the city you choose. Their tithi and star times are often about two hours apart (up to about six hours), and on roughly one day in ten the tithi or star at sunrise is different. In India and Sri Lanka, follow the pañcāṅgam your family uses. Outside India, Tirukkaṇita is recommended because it follows your own sunrise; Vākya is still there if your family follows an Indian Vākya pañcāṅgam. Use the one your family pañcāṅgam follows.</p></details>
+  <details><summary>Vākya or Tirukkaṇita?</summary><p><b>Vākya</b> is the traditional method of printed Tamil pañcāṅgams, worked out for India; its times are Indian time. <b>Tirukkaṇita</b> is modern astronomy, worked out for the sunrise and clock of the city you choose. Their tithi and star times are often about two hours apart (up to about six hours), and on roughly one day in ten the tithi or star at sunrise is different. In India and Sri Lanka, follow the pañcāṅgam your family uses. Outside India and Sri Lanka the app uses Tirukkaṇita automatically, because it follows your own sunrise; you can still choose Vākya if your family follows an Indian Vākya pañcāṅgam.</p></details>
   <details><summary>Name ending – Śarmā, Varmā, Gupta, Dāsa</summary><p>These are the traditional endings given in the Viṣṇu Purāṇa (3.10.9). <b>None (नाम्नः)</b> means “of the one named …” and suits everyone. Choose the one your family uses; tap “Why?” next to Name ending for the verse. For women the saṅkalpam uses नाम्न्याः.</p></details>
   <details><summary>I don't know my gotra</summary><p>Choose "I don't know my gotra" in the first steps, or "Not known (use Kāśyapa)" in the full form – Kāśyapa is used. Ask your elders when you can.</p></details>
   <details><summary>I don't know my birth star</summary><p>Tap "I don't know my star" in the first steps, or "Don't know your star?" under Birth Nakṣatra in the full form, and give your date, place and time of birth. Without the time, choose from that day's stars; the printout notes it. Check the star shown, then tap <b>Use this star</b> to go back. For a family member, tap "Don't know? Find the star" under their birth star. Once saved, a star is locked – tap <b>Change star…</b> to change it.</p></details>
@@ -2069,6 +2069,9 @@ function setVal(id, v) { $(id).value = String(v); }
 function fill(id, list, fmt) { $(id).innerHTML = list.map((x, i) => '<option value="' + i + '">' + fmt(x, i) + '</option>').join(''); }
 // v5.2.13: a city outside India and Sri Lanka; the short name of its time zone (EDT, BST, GST …)
 function sgOverseas(c) { return sgAbroad(c); }
+// v5.2.16: has the user picked the method with their own tap (Vākya / Tirukkaṇita buttons)? Then the app never changes it.
+function sgMethUser() { try { return localStorage.getItem('sankalpam.methUser') === '1'; } catch (e) { return false; } }
+document.addEventListener('click', e => { if (!e.isTrusted) return; if (e.target.closest && e.target.closest('[data-m],[data-meth],[data-os]')) { try { localStorage.setItem('sankalpam.methUser', '1'); } catch (x) {} } }, true);
 function sgMasaName(cal) { return cal === 'ta' ? 'Māsa pirappu (first day of the Tamil month)' : 'Saṅkramaṇam (the Sun enters a new rāśi)'; }
 function sgTpName(tpk, cal) { return tpk === 'masa' ? sgMasaName(cal) : {amavasya: 'Amāvāsyā', mahalaya: 'Mahālaya pakṣam', surya: 'Solar eclipse', chandra: 'Lunar eclipse'}[tpk] || ''; }
 // v5.2.13: which clock the times are in. Tirukkaṇita abroad: all local. Vākya abroad: tithi/star in IST, sunrise etc. local.
@@ -2366,6 +2369,7 @@ function composeSankalpam(P, date, stamp) {
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
 const APP_VERSION = 'v5.2.16';
+const APP_BUILD = '2026-10-24 11:52';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -3496,7 +3500,8 @@ function updateSetup() {
       const text = await response.text();
       const match = text.match(/\bconst\s+APP_VERSION\s*=\s*(['"])([^'"]+)\1/);
       if (!match) throw new Error('Version missing');
-      if (match[2] !== APP_VERSION) showUpdate();
+      const bm = text.match(/\bconst\s+APP_BUILD\s*=\s*(['"])([^'"]+)\1/);   // v5.2.16: also a new build of the same version
+      if (match[2] !== APP_VERSION || (bm && typeof APP_BUILD !== 'undefined' && bm[2] !== APP_BUILD)) showUpdate();
       else if (!available) {
         status.textContent = 'You have the latest version.';
         status.dataset.state = 'current';
@@ -4731,7 +4736,9 @@ details.sg-more>.grid{margin-top:8px}
   let sel = todayStr(), ym = sel.slice(0, 7), shown = false;
   const cache = new Map();
   const city = () => CITY_FLAT[+el('pc-city').value] || CITY_FLAT[0];
-  const sys = () => { try { return tdfProfile(); } catch (e) { return 'drik'; } };
+  // v5.2.16: a calendar city outside India / Sri Lanka uses Tirukkaṇita, unless the user chose Vākya themselves
+  const sysAuto = () => { try { const p = tdfProfile(); return p !== 'drik' && sgOverseas(city()) && !sgMethUser(); } catch (e) { return false; } };
+  const sys = () => { try { return sysAuto() ? 'drik' : tdfProfile(); } catch (e) { return 'drik'; } };
   const ckey = () => sys() + '|' + city()[0];
 
   // Day model (sunrise to next sunrise). full=false → tithi only (enough for the grid).
@@ -5085,7 +5092,7 @@ details.sg-more>.grid{margin-top:8px}
   function render() {
     el('pc-mon').value = String(+ym.slice(5));
     el('pc-year').value = ym.slice(0, 4);
-    el('pc-method').innerHTML = 'Method: <b>' + (TDF_LABEL[sys()] || '') + '</b>' + (sys() === 'drik' ? ' (Drik, for the city chosen)' : ' (traditional, computed for Tamil Nadu)') + ' – change it in step 1 of the Saṅkalpam tab.';
+    el('pc-method').innerHTML = 'Method: <b>' + (TDF_LABEL[sys()] || '') + '</b>' + (sysAuto() ? ' (for ' + esc(city()[0]) + ': used automatically outside India and Sri Lanka, as it follows the local sunrise)' : sys() === 'drik' ? ' (Drik, for the city chosen)' : ' (traditional, computed for Tamil Nadu)') + ' – change it in step 1 of the Saṅkalpam tab.';
     try { renderLegend(); renderGrid(); renderDay(); yearList(); }
     catch (err) { console.error('Calendar:', err); el('pc-day').innerHTML = '<div class="pc-busy">Sorry – the pañcāṅgam could not be calculated for this date (' + esc(String(err && err.message || err)) + ').</div>'; }
   }
@@ -5918,8 +5925,12 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
   });
   $i('cal').addEventListener('change', sync); $i('method').addEventListener('change', sync);
   // v5.2.13: city outside India and Sri Lanka – ask once per city: Tirukkaṇita (recommended) or Vākya
+  // v5.2.16: no question any more – switch to Tirukkanita automatically, unless the user has chosen the method themselves
   const osAsk = () => {
     const c = curCity(); if (!sgOverseas(c)) return;
+    if (window.sgMethUser && window.sgMethUser()) { sync(); return; }        // the user's own choice wins
+    if ($i('method').value !== 'drik') { setMethod('drik'); toast('Switched to Tirukkaṇita for ' + c[0] + ' – it follows the local sunrise and time (' + sgTz(c[3]) + '). If your family follows a Vākya pañcāṅgam, tap Vākya under Method.', null); }
+    LS.set('sankalpam.osAsked', c[0]); return;
     $i('osCity').textContent = c[0] + ' – outside India';
     document.querySelectorAll('#osDlg .os-c').forEach(x => { x.textContent = c[0]; }); document.querySelectorAll('#osDlg .os-z').forEach(x => { x.textContent = sgTz(c[3]); });
     $i('osDlg').classList.remove('hide'); $i('osDlg').querySelector('[data-os="drik"]').focus(); LS.set('sankalpam.osAsked', c[0]);
@@ -5956,7 +5967,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [               // v: used only to pick what is new for this phone – never shown
-    {v: '5.2.16', items: ['Vākya times closer to the printed pañcāṅgam', 'Festival days and labels as chosen (Sarasvatī Pūjā, Vijayadaśamī, Śrī Jayantī, Ugādi)', 'Tarpaṇam on a day that does not suit it asks you first', 'Use counts now include the city chosen in the app – see Help']},
+    {v: '5.2.16', items: ['Vākya times closer to the printed pañcāṅgam', 'Festival days and labels as chosen (Sarasvatī Pūjā, Vijayadaśamī, Śrī Jayantī, Ugādi)', 'Tarpaṇam on a day that does not suit it asks you first', 'Outside India and Sri Lanka: Tirukkaṇita automatically (you can still choose Vākya)', 'Use counts now include the city chosen in the app – see Help']},
     {v: '5.2.15', items: ['Calendar: a short code in each coloured square (AM Amāvāsyā, EK Ekādaśī …), in the letters you chose', 'On a computer: the day\'s cards under the calendar', 'Shorter notes', '"Beta" until the vādhyār checks are done', 'Anonymous use counts (no names, no details) – see Help']},
     {v: '5.2.14', items: ['Tarpaṇam as in the booklet: अस्मत्, अक्षन् पितरः, ज्ञाताज्ञात, sesame after pradakṣiṇam, येषां न माता …', 'Choose the time of tarpaṇam – the saṅkalpam follows that tithi and star', 'Tithi and star from–to times with dates', 'English letters easy to read (no marks)', 'Name spellings: Venkatasubramanian, Muthumeenakshi, Anandavalli, Seethalakshmi …', 'PDF: no "Which day?" box, footer kept on one page']},
     {v: '5.2.13', items: ['Outside India: Tirukkaṇita recommended for your city, times in your local time', 'Times that cross midnight show both dates', '"What this app does" on the first screen', '"Quick chat" is now "Quick Help"', 'Rāhu kālam and good times from your own sunrise outside India', '"Use my location" uses your exact place', 'Tarpaṇam days highlighted']},

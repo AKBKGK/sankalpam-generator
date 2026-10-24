@@ -18,6 +18,8 @@ WHAT CHANGED IN 5.2.16 (details in CHANGELOG.txt)
   • Festivals: Sarasvatī Pūjā 20 Oct, Vijayadaśamī 21 Oct, Śrī Jayantī 4 Sep
     2026, Ugādi 7 Apr 2027; tradition labels.
   • Tarpaṇam on a date that does not suit it: asks you to confirm first.
+  • Outside India and Sri Lanka: Tirukkaṇita automatically (Vākya still
+    selectable).
   • One Lahiri ayanāṁśa; one consistent method note; no publication names.
 
 FIRST – EMAIL SCRIPT v12 (before uploading index.html)
@@ -51,6 +53,12 @@ AFTER UPLOAD
      counting began) and, from the first new openings, "Places".
   7. If anything is wrong: restore index.html from the previous commit (v12
      keeps working with the old app).
+
+RE-UPLOADING WITHOUT A NEW VERSION NUMBER
+  index.html has a line  const APP_BUILD = '2026-10-24 11:52';
+  Change the date/time in that line whenever you upload a changed index.html
+  but keep the same version. Phones that have the app open then show
+  "Update now" (on opening, on returning to the app, or every 30 minutes).
 
 ================================================================================
 EARLIER NOTES (v5.2.14 and before)
