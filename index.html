@@ -902,13 +902,6 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
     <div class="actions"><button class="btn" id="fbSend" type="button">Send feedback</button><span class="okmsg" id="fbStatus"></span></div>
     <p class="hint" id="fbHint">Your message is sent anonymously – no email or sign-in is needed. If you would like a reply, include your email in the message.</p>
   </div>
-  <div class="card hide" id="phCard">
-    <h2>Usage statistics</h2>
-    <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:.92rem;color:var(--ink);cursor:pointer">
-      <input type="checkbox" id="phOn" style="width:auto;margin-top:4px" checked> Share anonymous usage counts to help improve the app</label>
-    <p class="hint">The app counts which features are used – for example "Generate", "Share" or "Print / PDF" – using PostHog. Your name, gotra, star, birth details, places, email and the saṅkalpam text are never sent. Turn this off at any time; the app works the same.</p>
-    <p class="okmsg" id="phStatus" role="status"></p>
-  </div>
 </div>
 <aside class="today-aside" id="todayAside" aria-label="Today's pañcāṅgam"></aside>
 </div>
@@ -2285,7 +2278,6 @@ function generateSankalpam() {
   $('copyStatus').textContent = '';
   saveDetails();
   $('resultContainer').classList.remove('hide'); $('noResult').classList.add('hide');
-  phAttempt = phNewId(); phTrack('sankalpam_generated', {script, calendar: $('cal').value, method: $('method').value, attempt: phAttempt});
   switchTab('output');
 }
 // Family members with a name need a gotra (where required) and a birth star (v5.2.2). Returns true and flags the field if one is missing.
@@ -2376,7 +2368,7 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.17';
+const APP_VERSION = 'v5.2.16';
 const APP_BUILD = '2026-10-24 11:52';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
@@ -2428,7 +2420,6 @@ async function subscribe() {
   try {
     const r = await fetch(SUBSCRIBE_URL, {method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(payload)});
     const j = await r.json();
-    if (j.ok) phTrack('email_subscribed', {mode: String(mode || '')});
     out.style.color = j.ok ? '#2e6b2e' : '#a33';
     out.textContent = j.message || (j.ok ? 'Done.' : 'Something went wrong – please try again later.');
   } catch (e) {
@@ -2461,8 +2452,6 @@ async function emailPdfOnce(docType) {
 }
 
 async function generateAndSendPdf(docType, email, statusEl) {
-  const phD = {doc: docType === 'sank' ? 'sank' : 'tarp'};
-  phTrack('pdf_email_requested', phD);
   try {
     if (!window.html2pdf) {
       statusEl.textContent = '⏳ Loading PDF library...';
@@ -2509,7 +2498,6 @@ async function generateAndSendPdf(docType, email, statusEl) {
     
     const result = await response.json();
     
-    phTrack(result.ok ? 'pdf_email_succeeded' : 'pdf_email_failed', result.ok ? phD : Object.assign({code: 'server'}, phD));
     if (result.ok) {
       statusEl.textContent = '✓ PDF sent to ' + email;
       statusEl.style.color = '#2e6b2e';
@@ -2520,7 +2508,6 @@ async function generateAndSendPdf(docType, email, statusEl) {
     }
   } catch (err) {
     console.error('PDF generation error:', err);
-    phTrack('pdf_email_failed', Object.assign({code: /PDF tool could not be loaded/.test(String(err && err.message)) ? 'pdf_library' : 'error'}, phD));
     statusEl.textContent = '✗ Error: ' + err.message.slice(0, 160);
     statusEl.style.color = '#a33';
   }
@@ -2535,7 +2522,6 @@ async function sendFeedback() {
   $('fbSend').disabled = true; out.style.color = 'var(--soft)'; out.textContent = 'Sending…';
   try {
     await fetch(FEEDBACK_URL, {method: 'POST', mode: 'no-cors', body: new URLSearchParams({'entry.1320409022': txt.slice(0, 500) + ' [' + APP_VERSION + ']'})});
-    phTrack('feedback_sent');
     out.style.color = '#2e6b2e'; out.textContent = '🙏 Thank you – your feedback has been sent.'; $('fbText').value = ''; $('fbCount').textContent = '0';
   } catch (e) { out.style.color = '#a33'; out.textContent = 'Could not send – please check your connection and try again.'; }
   $('fbSend').disabled = false;
@@ -2578,82 +2564,6 @@ function sgCountOpen() {
 if (typeof document !== 'undefined' && typeof window !== 'undefined') { try { const q = new URLSearchParams(location.search).get('nocount');   // read at once: the app tidies the address later
     if (q === '1') localStorage.setItem('sankalpam.noCount', '1'); else if (q === '0') localStorage.removeItem('sankalpam.noCount'); } catch (e) {}
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(sgCountOpen, 2500)); else setTimeout(sgCountOpen, 2500); }   // not on the email server
-// ---------- v5.2.17: PostHog usage analytics ----------
-// Counts which features are used, so the app can be improved. Only fixed event names and a few fixed choices are sent
-// (for example 'pdf_print_opened', script 'ta', calendar 'te'). Never sent: names, gotra, stars, rāśi, birth details,
-// places typed, email addresses, feedback text, or the saṅkalpam / tarpaṇam text. Addresses are cut to the page path.
-// On by default; the visitor can turn it off in More → Usage statistics. Not sent with ?nocount=1, Do Not Track or
-// automated browsers. If PostHog is blocked or down, the app works exactly as before.
-const PH_KEY  = 'phc_rVjVMyi8XEXL3ANiXtcANXS4JdFTXe6TN9397dK6G5PZ';   // PostHog → Project settings → Project API key (public, write-only)
-const PH_HOST = 'https://us.i.posthog.com';           // EU Cloud: 'https://eu.i.posthog.com'
-const PH_LIB  = 'https://cdn.jsdelivr.net/npm/posthog-js@1.438.7/dist/array.no-external.js';
-const PH_OFF  = 'sankalpam.phOff';
-let phQueue = [], phState = 'idle', phAttempt = '';   // phState: idle → loading → ready | failed
-const phConfigured = () => /^phc_[A-Za-z0-9]{20,}$/.test(PH_KEY);
-function phAllowed() {
-  if (!phConfigured()) return false;
-  try { if (navigator.webdriver || localStorage.getItem('sankalpam.noCount') === '1' || localStorage.getItem(PH_OFF) === '1') return false; } catch (e) {}
-  return true;
-}
-const phNewId = () => Math.random().toString(36).slice(2, 10);
-function phCleanUrl(v, originOnly) {
-  if (typeof v !== 'string' || !/^https?:\/\//i.test(v)) return v;
-  try { const u = new URL(v); return originOnly ? u.origin : u.origin + u.pathname; } catch (e) { return ''; }
-}
-function phClean(ev) {
-  if (!ev) return ev;
-  const fix = o => { if (!o || typeof o !== 'object') return;
-    Object.keys(o).forEach(k => { if (typeof o[k] === 'string' && /^https?:\/\//i.test(o[k])) o[k] = phCleanUrl(o[k], /referr/i.test(k)); }); };
-  fix(ev.properties); fix(ev.$set); fix(ev.$set_once); if (ev.properties) { fix(ev.properties.$set); fix(ev.properties.$set_once); }
-  if (ev.properties) delete ev.properties.title;   // the page title holds the date and tithi while printing
-  return ev;
-}
-function phTrack(event, props) {
-  if (!phAllowed() || phState === 'failed') return;
-  try {
-    if (phState === 'ready' && window.posthog && window.posthog.capture) window.posthog.capture(event, props || {});
-    else if (phQueue.length < 50) phQueue.push([event, props || {}]);
-  } catch (e) {}
-}
-function phLoad() {
-  if (phState !== 'idle' || !phAllowed()) return;
-  phState = 'loading';
-  const sc = document.createElement('script'); sc.async = true; sc.src = PH_LIB; sc.crossOrigin = 'anonymous';
-  sc.onerror = () => { phState = 'failed'; phQueue = []; sc.remove(); };
-  sc.onload = () => { try {
-    window.posthog.init(PH_KEY, {
-      api_host: PH_HOST, persistence: 'localStorage', person_profiles: 'identified_only',
-      autocapture: false, capture_pageview: true, capture_pageleave: false, capture_performance: false,
-      disable_session_recording: true, disable_surveys: true, advanced_disable_flags: true,
-      mask_all_text: true, mask_all_element_attributes: true, respect_dnt: true,
-      before_send: phClean,
-      loaded: ph => {
-        ph.register({app_version: APP_VERSION, surface: matchMedia('(max-width:760px)').matches ? 'mobile' : 'desktop',
-                     installed: matchMedia('(display-mode: standalone)').matches});
-        phState = 'ready'; const q = phQueue; phQueue = []; q.forEach(([e, p]) => { try { ph.capture(e, p); } catch (x) {} });
-      }
-    });
-  } catch (e) { phState = 'failed'; phQueue = []; } };
-  document.head.appendChild(sc);
-}
-function phSetAllowed(on) {
-  try { if (on) localStorage.removeItem(PH_OFF); else localStorage.setItem(PH_OFF, '1'); } catch (e) {}
-  try { if (window.posthog && window.posthog.opt_out_capturing) { if (on) window.posthog.opt_in_capturing(); else window.posthog.opt_out_capturing(); } } catch (e) {}
-  if (!on) phQueue = []; else phLoad();
-}
-function phSetup() {
-  const card = $('phCard'), box = $('phOn');
-  if (card) card.classList.toggle('hide', !phConfigured());
-  if (box) { let off = false; try { off = localStorage.getItem(PH_OFF) === '1'; } catch (e) {}
-    box.checked = !off; box.addEventListener('change', () => { phSetAllowed(box.checked); $('phStatus').textContent = box.checked ? '✓ Usage statistics on.' : '✓ Usage statistics off.'; }); }
-  document.addEventListener('click', e => { const t = e.target;
-    const tab = t.closest && t.closest('.tab-btn'); if (tab && tab.dataset.tab) phTrack('tab_opened', {tab: tab.dataset.tab});
-    if (t.closest && t.closest('[data-qc-open]')) phTrack('quick_help_opened');
-    if (t.closest && t.closest('#tCopy')) phTrack('copy_tapped', {doc: 'tarp'}); }, true);
-  setTimeout(phLoad, 1500);
-}
-if (typeof document !== 'undefined' && typeof window !== 'undefined') {
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', phSetup); else phSetup(); }
 function printDoc(kind, compact) {
   // Count PDF downloads (only the kind of document and the button – no names or details).
   // v5.2.3: sent as plain text, like Subscribe – a JSON request is stopped by the browser's cross-site check before it reaches Apps Script.
@@ -2664,18 +2574,14 @@ function printDoc(kind, compact) {
       body: JSON.stringify({action: 'logPdfDownload', docType: kind, downloadAction: action})}).catch(e => console.warn('Could not count download: ' + e));
   } catch (e) {}
   
-  const phP = {doc: kind, format: compact ? 'compact' : 'print', attempt: phAttempt || 'none'}, phT0 = Date.now();
-  phTrack('pdf_print_opened', phP);   // the print dialog opens; the app cannot see whether a PDF is saved
   const old = document.title;
   document.title = pdfName(kind);
   document.body.classList.toggle('compact', !!compact);
-  const done = () => { document.title = old; document.body.classList.remove('compact'); window.removeEventListener('afterprint', done);
-    phTrack('pdf_print_closed', Object.assign({seconds: Math.round((Date.now() - phT0) / 1000)}, phP)); };   // closed – saved, printed or cancelled
+  const done = () => { document.title = old; document.body.classList.remove('compact'); window.removeEventListener('afterprint', done); };
   window.addEventListener('afterprint', done);
   window.print();
 }
 function copySankalpam() {
-  phTrack('copy_tapped', {doc: 'sank'});
   const s = $('copyStatus');
   navigator.clipboard.writeText(docText($('result'))).then(() => { s.textContent = '✓ Copied'; },
     () => { s.textContent = 'Could not copy – please select the text and copy it manually.'; });
@@ -3354,7 +3260,6 @@ function generateTarpanam(quiet) {
     return; }
   const r = $('tResult'); r.innerHTML = (dw ? '<div class="twarn">' + (o.script === 'en' ? easyLatin(dw) : dw) + '</div>' : '') + composeTarpanam(P, o, 'Generated ' + genStamp()); r.dataset.script = o.script; r.lang = o.script === 'en' ? 'sa-Latn' : 'sa';
   $('tCopyStatus').textContent = ''; $('tOut').classList.remove('hide'); tSave();
-  if (quiet !== true) { phAttempt = phNewId(); phTrack('tarpanam_generated', {tarpanam: $('t-type').value, script: $('script').value, attempt: phAttempt}); }
   if (quiet !== true) $('tOut').scrollIntoView({behavior: 'smooth'});
 }
 
@@ -3473,7 +3378,6 @@ function v53Setup() {
 // with the text ready, and the text is copied too. The text is in the letters chosen (Sanskrit, Tamil, Telugu, Kannada, English).
 function waShare(title, text, s) {
   sgUse('wa', {'Saṅkalpam': 'sank', 'Pañcāṅgam': 'panch', 'Saṅkalpam Generator': 'app'}[title] || 'other');   // v5.2.15: anonymous count
-  phTrack('share_tapped', {what: {'Saṅkalpam': 'sank', 'Pañcāṅgam': 'panch', 'Saṅkalpam Generator': 'app'}[title] || 'other', method: navigator.share ? 'share_sheet' : 'whatsapp_web'});
   const say = t => { if (s) s.textContent = t; };
   if (navigator.share) {
     // v5.2.10: text only – with a title some apps sent only the title (an English word) instead of the message
