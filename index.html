@@ -208,7 +208,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 </style>
 </head>
 <body data-mobile-tab="form">
-<div id="updBar" class="upd hide" role="alert">🔄 A new version of the app is available. <button type="button" id="updBtn">Update now</button></div>
+<div id="updBar" class="upd hide" role="alert"><span class="upd-t">A new version of the app is available.</span><button type="button" id="updBtn">🔄 Update</button></div>
 <div class="sg-side" id="sgSide">
 <div class="top"><div class="in">
   <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="A Brahmin doing saṅkalpam"> <defs> <linearGradient id="hbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6d2d0c"/><stop offset="1" stop-color="#9a4515"/></linearGradient> <radialGradient id="hsun" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffcf6b"/><stop offset="1" stop-color="#e8871e"/></radialGradient> </defs> <rect width="512" height="512" fill="url(#hbg)"/> <circle cx="256" cy="240" r="170" fill="url(#hsun)" opacity=".9"/> <rect x="0" y="440" width="512" height="94" fill="#5a240a"/> <g transform="translate(256 300) scale(1.18) translate(-256 -300)"> <g fill="#e0a96d" stroke="#5a240a" stroke-width="6" stroke-linejoin="round"> <path fill="#fffaf0" d="M118 420 Q120 352 200 345 L312 345 Q392 352 394 420 Z"/> <path d="M196 232 Q256 214 316 232 Q332 238 334 262 L320 350 L192 350 L178 262 Q180 238 196 232 Z"/> <g fill="none" stroke-linecap="round" stroke-linejoin="round"> <path d="M322 256 Q344 312 318 346 Q280 374 226 372" stroke="#5a240a" stroke-width="36"/> <path d="M322 256 Q344 312 318 346 Q280 374 226 372" stroke="#e0a96d" stroke-width="24"/> <path d="M190 256 Q164 312 176 346 Q186 362 204 362" stroke="#5a240a" stroke-width="36"/> <path d="M190 256 Q164 312 176 346 Q186 362 204 362" stroke="#e0a96d" stroke-width="24"/> </g> <ellipse cx="206" cy="378" rx="34" ry="14"/> <ellipse cx="200" cy="366" rx="32" ry="14"/> <path d="M178 366 h40 M180 372 h34" stroke="#5a240a" stroke-width="3" fill="none"/> <rect x="240" y="196" width="32" height="34" rx="8"/> <circle cx="256" cy="158" r="50"/> <circle cx="256" cy="100" r="15" fill="#2b1206"/> </g> <g stroke="#fbfbf5" stroke-width="6" stroke-linecap="round"> <line x1="230" y1="134" x2="282" y2="134"/><line x1="228" y1="144" x2="284" y2="144"/><line x1="230" y1="154" x2="282" y2="154"/> </g> <circle cx="256" cy="165" r="5.5" fill="#c0221a"/> <g stroke="#5a240a" stroke-width="4" fill="none" stroke-linecap="round"> <path d="M232 176 q8 5 16 0"/><path d="M264 176 q8 5 16 0"/> </g> <path d="M306 234 Q270 300 206 346" stroke="#fffaf0" stroke-width="6" fill="none"/> </g> <g stroke="#5a240a" stroke-width="5" fill="#f3c969"> <path d="M400 392 L452 392 L445 440 L407 440 Z"/> <line x1="440" y1="398" x2="464" y2="356" stroke-linecap="round"/> </g> </svg></div>
@@ -331,6 +331,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 
 <div id="form" class="tab-content active" role="tabpanel" aria-labelledby="mobile-tab-form">
 <!-- ===== v5.2.3: returning user ===== -->
+<div class="v4new hide" id="v4New" role="status"><div class="v4new-h"><b id="v4NewT">Updated</b><button type="button" id="v4NewX" aria-label="Close">×</button></div><ul id="v4NewL"></ul><button type="button" class="link" id="v4NewGo">What's new ›</button></div>
 <section class="home hide" id="home" aria-labelledby="homeT">
  <div class="home-hd"><div class="home-hdr"><div><div class="home-d" id="homeD"></div><h2 id="homeT">Namaste</h2></div><button type="button" class="qc-open qc-hd" data-qc-open aria-label="Quick Help">Quick Help</button></div></div>
  <div class="home-c">
@@ -351,7 +352,6 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
  </div>
  <div class="home-up hide" id="homeUpBox"><b>Coming up</b><div id="homeUp"></div></div>
 </section>
-<div class="v4new hide" id="v4New" role="status"><div class="v4new-h"><b id="v4NewT">Updated</b><button type="button" id="v4NewX" aria-label="Close">×</button></div><ul id="v4NewL"></ul><button type="button" class="link" id="v4NewGo">See what's new ›</button></div>
 <section class="sg-intro" id="sgIntro" aria-labelledby="sgIntroT">
   <div class="sg-intro-full">
     <h2 class="sg-intro-t" id="sgIntroT">Your daily saṅkalpam, ready in a minute.</h2>
@@ -904,10 +904,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   </div>
   <div class="card hide" id="phCard">
     <h2>Usage statistics</h2>
-    <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:.92rem;color:var(--ink);cursor:pointer">
-      <input type="checkbox" id="phOn" style="width:auto;margin-top:4px" checked> Share anonymous usage counts to help improve the app</label>
-    <p class="hint">The app counts which features are used – for example "Generate", "Share" or "Print / PDF" – using PostHog. Your name, gotra, star, birth details, places, email and the saṅkalpam text are never sent. Turn this off at any time; the app works the same.</p>
-    <p class="okmsg" id="phStatus" role="status"></p>
+    <p class="hint">To improve the app, it counts which features are used – for example "Generate", "Share" or "Print / PDF" – anonymously, using PostHog. Your name, gotra, star, birth details, places, email and the saṅkalpam text are never sent.</p>
   </div>
 </div>
 <aside class="today-aside" id="todayAside" aria-label="Today's pañcāṅgam"></aside>
@@ -2376,8 +2373,8 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.17';
-const APP_BUILD = '2026-10-24 11:52';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
+const APP_VERSION = 'v5.2.18';
+const APP_BUILD = '2026-10-26 20:15';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2582,8 +2579,8 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') { try { co
 // Counts which features are used, so the app can be improved. Only fixed event names and a few fixed choices are sent
 // (for example 'pdf_print_opened', script 'ta', calendar 'te'). Never sent: names, gotra, stars, rāśi, birth details,
 // places typed, email addresses, feedback text, or the saṅkalpam / tarpaṇam text. Addresses are cut to the page path.
-// On by default; the visitor can turn it off in More → Usage statistics. Not sent with ?nocount=1, Do Not Track or
-// automated browsers. If PostHog is blocked or down, the app works exactly as before.
+// Always on (v5.2.18: no switch; a short note in More). Not sent with ?nocount=1 (owner's phone), Do Not Track,
+// automated browsers, or where the visitor turned it off in v5.2.17. If PostHog is blocked or down, the app works exactly as before.
 const PH_KEY  = 'phc_rVjVMyi8XEXL3ANiXtcANXS4JdFTXe6TN9397dK6G5PZ';   // PostHog → Project settings → Project API key (public, write-only)
 const PH_HOST = 'https://us.i.posthog.com';           // EU Cloud: 'https://eu.i.posthog.com'
 const PH_LIB  = 'https://cdn.jsdelivr.net/npm/posthog-js@1.438.7/dist/array.no-external.js';
@@ -2636,16 +2633,9 @@ function phLoad() {
   } catch (e) { phState = 'failed'; phQueue = []; } };
   document.head.appendChild(sc);
 }
-function phSetAllowed(on) {
-  try { if (on) localStorage.removeItem(PH_OFF); else localStorage.setItem(PH_OFF, '1'); } catch (e) {}
-  try { if (window.posthog && window.posthog.opt_out_capturing) { if (on) window.posthog.opt_in_capturing(); else window.posthog.opt_out_capturing(); } } catch (e) {}
-  if (!on) phQueue = []; else phLoad();
-}
 function phSetup() {
-  const card = $('phCard'), box = $('phOn');
+  const card = $('phCard');
   if (card) card.classList.toggle('hide', !phConfigured());
-  if (box) { let off = false; try { off = localStorage.getItem(PH_OFF) === '1'; } catch (e) {}
-    box.checked = !off; box.addEventListener('change', () => { phSetAllowed(box.checked); $('phStatus').textContent = box.checked ? '✓ Usage statistics on.' : '✓ Usage statistics off.'; }); }
   document.addEventListener('click', e => { const t = e.target;
     const tab = t.closest && t.closest('.tab-btn'); if (tab && tab.dataset.tab) phTrack('tab_opened', {tab: tab.dataset.tab});
     if (t.closest && t.closest('[data-qc-open]')) phTrack('quick_help_opened');
@@ -3490,7 +3480,10 @@ const SHARE_LABEL = () => 'Share on WhatsApp';      // v5.2.10: one name everywh
 // v5.2.12: plain text of a saṅkalpam / tarpaṇam for Copy and Share – without the colour legend, with the table as "Label: value"
 function docText(el) {
   const c = el.cloneNode(true);
+  // v5.2.18: the pañcāṅgam table (Saṁvatsara … Kartā) stays on screen and in Print / PDF, but not in Copy text or Share –
+  // the saṅkalpam / tarpaṇam text already says it, and a shorter message suits WhatsApp
   c.querySelectorAll('.legend, .twarn button').forEach(x => x.remove());
+  c.querySelectorAll('.ptable').forEach(t => t.replaceWith(document.createElement('p')));   // empty paragraph keeps the blank line
   c.querySelectorAll('table').forEach(t => {
     const lines = [...t.rows].map(r => { const td = [...r.cells].map(x => { x.querySelectorAll('br').forEach(b => b.replaceWith(' ')); return x.textContent.replace(/\s+/g, ' ').trim(); });
       const out = []; for (let i = 0; i + 1 < td.length; i += 2) if (td[i]) out.push(td[i] + ': ' + td[i + 1]); return out.join(' · '); }).filter(Boolean);
@@ -3559,7 +3552,7 @@ function updateSetup() {
   $('mobileVersion').textContent = APP_VERSION;
   let checking = false, available = false;
   const updateOffset = () => {
-    document.documentElement.style.setProperty('--mobile-update-height', banner.classList.contains('hide') ? '0px' : banner.offsetHeight + 'px');
+    document.documentElement.style.setProperty('--mobile-update-height', '0px');   // v5.2.18: the Update button floats – it takes no space
   };
   const reloadApp = () => {
     const next = new URL(location.href);
@@ -5864,10 +5857,10 @@ body.has-home #sgIntro{display:none}
 .v4ask{position:fixed;left:12px;right:12px;bottom:84px;z-index:260;max-width:520px;margin:0 auto;padding:16px;border-radius:16px;background:#fff;border:2px solid var(--kum);box-shadow:0 10px 30px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:10px}
 .v4ask h2{margin:0;font-size:1.1rem;color:var(--kum-d)}.v4ask p{margin:0;font-size:.9rem;line-height:1.5}
 .v4ask .v4b{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v4ask .btn{margin:0;min-height:48px;white-space:normal}
-.v4new{margin:0 0 14px;padding:12px 14px;border-radius:14px;background:#eef6ee;border:1px solid #b9dcbc;display:flex;flex-direction:column;gap:6px}
-.v4new-h{display:flex;justify-content:space-between;align-items:center;gap:8px}.v4new-h b{color:#1c5c2e}
-.v4new-h button{width:44px;height:44px;margin:-8px -8px -8px 0;border:0;background:transparent;color:#1c5c2e;font:700 1.3rem var(--lat);cursor:pointer}
-.v4new ul{margin:0;padding-left:18px;font-size:.9rem;line-height:1.55}
+.v4new{margin:0 0 14px;padding:14px 16px;border-radius:14px;background:#fff4e6;border:2px solid #d9480f;box-shadow:0 3px 12px rgba(217,72,15,.18);display:flex;flex-direction:column;gap:8px}
+.v4new-h{display:flex;justify-content:space-between;align-items:center;gap:8px}.v4new-h b{color:#b33c0c;font-size:1.08rem}
+.v4new-h button{width:44px;height:44px;margin:-8px -8px -8px 0;border:0;background:transparent;color:#b33c0c;font:700 1.3rem var(--lat);cursor:pointer}
+.v4new ul{margin:0;padding-left:18px;font-size:.95rem;line-height:1.55;color:var(--ink)}
 .v4new .link{align-self:flex-start;min-height:40px;font-size:.92rem;font-weight:700}
 .v4help details{border-top:1px solid #efe4d3;padding:6px 0}.v4help summary{min-height:36px;display:flex;align-items:center;font-weight:600;cursor:pointer}
 .v4help details p{margin:4px 0 6px;font-size:.9rem;line-height:1.55;color:#3b2f26}
@@ -6063,6 +6056,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [               // v: used only to pick what is new for this phone – never shown
+    {v: '5.2.18', items: ['Copy text and WhatsApp now send just your saṅkalpam or tarpaṇam – the pañcāṅgam table stays on screen and in the PDF', 'Share pañcāṅgam still sends the full pañcāṅgam']},
     {v: '5.2.16', items: ['Vākya times closer to the printed pañcāṅgam', 'Festival days and labels as chosen (Sarasvatī Pūjā, Vijayadaśamī, Śrī Jayantī, Ugādi)', 'Tarpaṇam on a day that does not suit it asks you first', 'Outside India and Sri Lanka: Tirukkaṇita automatically (you can still choose Vākya)', 'Use counts now include the city chosen in the app – see Help']},
     {v: '5.2.15', items: ['Calendar: a short code in each coloured square (AM Amāvāsyā, EK Ekādaśī …), in the letters you chose', 'On a computer: the day\'s cards under the calendar', 'Shorter notes', '"Beta" until the vādhyār checks are done', 'Anonymous use counts (no names, no details) – see Help']},
     {v: '5.2.14', items: ['Tarpaṇam as in the booklet: अस्मत्, अक्षन् पितरः, ज्ञाताज्ञात, sesame after pradakṣiṇam, येषां न माता …', 'Choose the time of tarpaṇam – the saṅkalpam follows that tithi and star', 'Tithi and star from–to times with dates', 'English letters easy to read (no marks)', 'Name spellings: Venkatasubramanian, Muthumeenakshi, Anandavalli, Seethalakshmi …', 'PDF: no "Which day?" box, footer kept on one page']},
@@ -6086,7 +6080,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
   const fresh = cur ? WN.filter(w => cmp(w.v, seen) > 0 && cmp(w.v, cur) <= 0) : [];
   const done = () => { LS.set('sankalpam.seenVer', cur); $i('v4New').classList.add('hide'); };
   if (fresh.length) {
-    $i('v4NewT').textContent = 'The app has been updated';
+    $i('v4NewT').textContent = '✓ Updated to ' + (typeof APP_VERSION === 'string' ? APP_VERSION : '');
     $i('v4NewL').innerHTML = fresh.flatMap(w => w.items).slice(0, 3).map(x => '<li>' + esc(x) + '</li>').join('');
     $i('v4New').classList.remove('hide');
   }
@@ -6457,11 +6451,25 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
   body[data-mobile-tab="form"] #dxBox{display:none}        /* the panel shows the same – no repeat */
   body[data-mobile-tab="form"] .bar .in{max-width:1220px}
   body[data-mobile-tab="form"] #mobile-completion .grid{grid-template-columns:1fr}
-  body:has(#updBar:not(.hide)) .today-aside{top:60px;max-height:calc(100vh - 154px)}
 }
 @media screen and (max-width:760px){.card>h2{margin:-20px -18px 14px;border-radius:19px 19px 0 0}}
 @media screen and (max-width:479px){.card>h2{margin:-19px -16px 14px}}
 @media print{.today-aside{display:none!important}}
+
+/* v5.2.18: compact update notices */
+.upd{position:fixed!important;top:calc(64px + env(safe-area-inset-top,0px))!important;left:50%!important;right:auto!important;transform:translateX(-50%);
+  background:transparent!important;padding:0!important;box-shadow:none!important;z-index:1000!important;width:auto!important}
+.upd .upd-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.upd button{margin:0!important;background:#d9480f!important;color:#fff!important;border:2px solid #fff!important;border-radius:999px!important;
+  padding:8px 18px!important;min-height:44px;font:700 .95rem var(--ui,system-ui)!important;box-shadow:0 4px 14px rgba(0,0,0,.3)!important;cursor:pointer}
+@media screen and (min-width:761px){.upd{top:14px!important}}
+.v4new{flex-direction:row!important;flex-wrap:wrap;align-items:center;gap:4px 12px!important;padding:6px 6px 6px 14px!important;
+  background:#fff4e6!important;border:1.5px solid #d9480f!important;box-shadow:none!important;border-radius:12px!important}
+.v4new .v4new-h{display:contents}
+.v4new #v4NewT{order:1;font-size:.95rem!important;color:#b33c0c}
+.v4new #v4NewGo{order:2;min-height:36px;font-size:.92rem}
+.v4new #v4NewX{order:3;margin:0 0 0 auto!important;width:40px;height:40px}
+.v4new ul{display:none!important}
 </style>
 </body>
 </html>

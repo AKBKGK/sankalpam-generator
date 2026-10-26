@@ -1,4 +1,4 @@
-# Usage analytics (PostHog) – v5.2.17
+# Usage analytics (PostHog) – from v5.2.17
 
 Anonymous usage counts so the app can be improved. **Key added (US Cloud)** in `index.html`
 (`PH_KEY`; `PH_HOST` is `https://us.i.posthog.com`, or `https://eu.i.posthog.com` for EU Cloud).
@@ -29,7 +29,7 @@ The library is pinned: `posthog-js@1.438.7` (`array.no-external.js`, loads no fu
 
 - Never sent: names, gotra, star, rāśi, birth details, places typed, email addresses, feedback text, saṅkalpam/tarpaṇam text, page title.
 - No cookies (browser storage only), no person profiles, no autocapture, no session recording, no surveys, no feature flags, no performance capture.
-- Not sent with `?nocount=1` (owner's phone), Do Not Track, automated browsers, or after the visitor turns it off in **More → Usage statistics**.
+- Always on from v5.2.18 (no switch; a short note in **More → Usage statistics** says what is counted). Not sent with `?nocount=1` (owner's phone), Do Not Track, automated browsers, or on a phone where the visitor turned it off in v5.2.17.
 - In PostHog → Project settings, turn on **Discard client IP data** and set the data retention you want.
 - If PostHog is blocked or down, the app works exactly as before.
 - The Apps Script counter (opens, WhatsApp shares, PDF taps) is unchanged and runs alongside.
