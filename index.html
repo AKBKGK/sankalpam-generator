@@ -15,6 +15,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script defer src="posthog-config.js"></script>
+<script defer src="sankalpam-posthog.js"></script>
 <script>
 /* v5.0.2 – the app now lives at sankalpam.live.
    Old address (akbkgk.github.io): go to sankalpam.live, keep ?date=… links, and carry the details saved on this device
@@ -874,7 +876,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <details><summary>Good time and yogam</summary><p><b>Good time</b> is the Gowri nalla neram: the day and the night each in 8 parts. For India and Sri Lanka it is as printed in Tamil calendars (parts of 1½ hours from 6 AM); for cities elsewhere the parts run from that city's own sunrise to sunset, and sunset to the next sunrise – the same for Rāhu kālam, Yamagaṇḍam and Kuḷigai. Uthi, Amirtham, Labham, Dhanam and Sugam are good; Rogam, Soram and Visham are not. <b>Yogam</b> (Amṛta, Siddha or Maraṇa) comes from the weekday and the day's star – Amṛta and Siddha are good days, Maraṇa is avoided for new beginnings. Your city's actual sunrise may shift the times a little. For a wedding or upanayanam, a muhūrtam is fixed by your jyotiṣa.</p></details>
   <details><summary>Which day for tarpaṇam?</summary><p>Tarpaṇam tab → "Which day?" finds the day by the afternoon (aparāhṇa) rule for Amāvāsyā, Māsa pirappu and Mahālaya.</p></details>
   <details><summary>Sharing on WhatsApp, PDF and the daily email</summary><p><b>Share</b> sends your saṅkalpam in the letters you chose – Sanskrit, Tamil, Telugu, Kannada or English – to WhatsApp or any app. On a computer, WhatsApp opens with the text ready (it is copied too). "Share on WhatsApp" under the day's pañcāṅgam, and "Share this day on WhatsApp" in the Calendar, send that day's pañcāṅgam – in Tamil, or the language you chose. Print / PDF saves a copy. The daily email brings your saṅkalpam every evening.</p></details>
-  <details><summary>Where are my details kept?</summary><p>Only on this phone, in this browser – another phone, computer or browser does not see them. Ancestors' names are never sent anywhere. If you subscribe to the email, your email and details are kept in a private Google Sheet only to send it; every email has Unsubscribe. To know how many people use the app, it sends anonymous counts (app opened, WhatsApp share, PDF) and, once a day, the city chosen in the app (a custom location only as "My location") and the phone's time zone – never your name, details, email or exact location.</p></details>
+  <details><summary>Where are my details kept?</summary><p>Only on this phone, in this browser – another phone, computer or browser does not see them. Ancestors' names are never sent anywhere. If you subscribe to the email, your email and details are kept in a private Google Sheet only to send it; every email has Unsubscribe. To know how many people use the app, it sends anonymous counts (app opened, WhatsApp share, PDF) and, once a day, the city chosen in the app (a custom location only as "My location") and the phone's time zone – never your name, details, email or exact location.</p><p>When analytics is enabled, PostHog receives pseudonymous page views, feature actions and PDF requests. Names, emails, gotra, birth details, form values and generated documents are excluded from analytics events. Session replay, when enabled, masks text and inputs and blocks generated documents. The analytics dashboard is private to the owner.</p></details>
   <details><summary>How do I get the newest version?</summary><p>The app checks by itself. When you see "Update now", tap it.</p></details>
 </div>
 <div class="card v4wn" id="wnCard"><h2>What's new</h2><div id="wnList"></div></div>
@@ -2255,7 +2257,16 @@ function buildSidhyartha(vedic) {
 }
 
 // ================= Generate =================
+// Analytics is optional: missing or blocked scripts never affect the application.
+function sgTrack(event, properties) {
+  try { if (typeof window !== 'undefined' && window.SGAnalytics) window.SGAnalytics.capture(event, properties); } catch (e) {}
+}
+function sgPdfAttempt(kind, mode) {
+  try { if (typeof window !== 'undefined' && window.SGAnalytics) return window.SGAnalytics.beginPdf(kind, mode); } catch (e) {}
+  return {document_type: kind, output_mode: mode};
+}
 function generateSankalpam() {
+  sgTrack('document_generation_requested', {document_type: 'sank'});
   const st = $('status'); st.textContent = '';
   const date = $('date').value, name = $('name').value.trim(), nameD = esc($('nameD').value.trim()), gotraD = esc($('gotraD').value.trim());
   const script = $('script').value;
@@ -2279,6 +2290,7 @@ function generateSankalpam() {
   saveDetails();
   $('resultContainer').classList.remove('hide'); $('noResult').classList.add('hide');
   switchTab('output');
+  sgTrack('document_generated', {document_type: 'sank'});
 }
 // Family members with a name need a gotra (where required) and a birth star (v5.2.2). Returns true and flags the field if one is missing.
 function famCheck(st) {
@@ -2296,6 +2308,7 @@ function famCheck(st) {
 }
 // Outline the missing fields in red, open their group / tab, scroll to the first one and focus it.
 function flagInvalid(els) {
+  sgTrack('form_validation_failed');
   document.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
   els = els.filter(Boolean); if (!els.length) return;
   els.forEach(e => (e.type === 'checkbox' ? e.parentElement : e).classList.add('invalid'));
@@ -2369,7 +2382,7 @@ function composeSankalpam(P, date, stamp) {
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
 const APP_VERSION = 'v5.2.16';
-const APP_BUILD = '2026-10-24 11:52';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
+const APP_BUILD = '2026-10-26 posthog-review';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2452,6 +2465,9 @@ async function emailPdfOnce(docType) {
 }
 
 async function generateAndSendPdf(docType, email, statusEl) {
+  const analyticsAttempt = sgPdfAttempt(docType, 'email_pdf');
+  let analyticsStage = 'pdf_library';
+  sgTrack('pdf_generation_requested', analyticsAttempt);
   try {
     if (!window.html2pdf) {
       statusEl.textContent = '⏳ Loading PDF library...';
@@ -2471,6 +2487,7 @@ async function generateAndSendPdf(docType, email, statusEl) {
     // Create a clone to avoid modifying the original
     const clone = container.cloneNode(true);
     
+    analyticsStage = 'pdf_generation';
     // Generate PDF as Base64
     const pdf = await html2pdf().set({
       margin: 5,
@@ -2482,6 +2499,9 @@ async function generateAndSendPdf(docType, email, statusEl) {
     
     // Extract Base64 string (remove "data:application/pdf;base64," prefix)
     const pdfBase64 = pdf.split(',')[1];
+    if (!/^data:application\/pdf[^,]*;base64,/.test(pdf) || !pdfBase64) throw new Error('The PDF could not be generated.');
+    sgTrack('pdf_generation_succeeded', analyticsAttempt);
+    analyticsStage = 'email_service';
     
     // Send to backend
     const response = await fetch(SUBSCRIBE_URL, {
@@ -2499,14 +2519,18 @@ async function generateAndSendPdf(docType, email, statusEl) {
     const result = await response.json();
     
     if (result.ok) {
+      sgTrack('pdf_email_succeeded', analyticsAttempt);
       statusEl.textContent = '✓ PDF sent to ' + email;
       statusEl.style.color = '#2e6b2e';
       setTimeout(() => { statusEl.textContent = ''; }, 4000);
     } else {
+      sgTrack('pdf_email_failed', Object.assign({}, analyticsAttempt, {failure_code: 'email_rejected'}));
       statusEl.textContent = '✗ ' + (result.message || 'Failed to send');
       statusEl.style.color = '#a33';
     }
   } catch (err) {
+    sgTrack(analyticsStage === 'email_service' ? 'pdf_email_failed' : 'pdf_generation_failed',
+      Object.assign({}, analyticsAttempt, {failure_code: analyticsStage}));
     console.error('PDF generation error:', err);
     statusEl.textContent = '✗ Error: ' + err.message.slice(0, 160);
     statusEl.style.color = '#a33';
@@ -2565,6 +2589,7 @@ if (typeof document !== 'undefined' && typeof window !== 'undefined') { try { co
     if (q === '1') localStorage.setItem('sankalpam.noCount', '1'); else if (q === '0') localStorage.removeItem('sankalpam.noCount'); } catch (e) {}
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(sgCountOpen, 2500)); else setTimeout(sgCountOpen, 2500); }   // not on the email server
 function printDoc(kind, compact) {
+  const analyticsAttempt = sgPdfAttempt(kind, compact ? 'compact_print' : 'print');
   // Count PDF downloads (only the kind of document and the button – no names or details).
   // v5.2.3: sent as plain text, like Subscribe – a JSON request is stopped by the browser's cross-site check before it reaches Apps Script.
   const action = compact ? 'CompactPDF' : 'PrintPDF';
@@ -2575,11 +2600,22 @@ function printDoc(kind, compact) {
   } catch (e) {}
   
   const old = document.title;
-  document.title = pdfName(kind);
+  try { document.title = pdfName(kind); } catch (err) {
+    sgTrack('pdf_generation_failed', Object.assign({}, analyticsAttempt, {failure_code: 'print_unavailable'}));
+    throw err;
+  }
   document.body.classList.toggle('compact', !!compact);
-  const done = () => { document.title = old; document.body.classList.remove('compact'); window.removeEventListener('afterprint', done); };
+  const done = () => {
+    document.title = old; document.body.classList.remove('compact'); window.removeEventListener('afterprint', done);
+    sgTrack('pdf_print_dialog_closed', analyticsAttempt);
+  };
   window.addEventListener('afterprint', done);
-  window.print();
+  sgTrack('pdf_print_requested', analyticsAttempt);
+  try { window.print(); } catch (err) {
+    document.title = old; document.body.classList.remove('compact'); window.removeEventListener('afterprint', done);
+    sgTrack('pdf_generation_failed', Object.assign({}, analyticsAttempt, {failure_code: 'print_unavailable'}));
+    throw err;
+  }
 }
 function copySankalpam() {
   const s = $('copyStatus');
@@ -3224,6 +3260,7 @@ function tProblems() {        // returns [message, fields to outline] or ['', []
   return ['', []];
 }
 function generateTarpanam(quiet) {
+  if (quiet !== true) sgTrack('document_generation_requested', {document_type: 'tarp'});
   const st = $('tStatus'); st.textContent = '';
   if (!$('date').value) { st.textContent = 'Please choose the date of tarpaṇam.'; flagInvalid([$('t-date')]); return; }
   if (!$('gotraD').value.trim()) { st.textContent = 'Please choose your gotra in step 2 of the Saṅkalpam tab (marked in red).'; switchTab('form'); flagInvalid([$('gotra'), $('gotraD')]); return; }
@@ -3260,7 +3297,10 @@ function generateTarpanam(quiet) {
     return; }
   const r = $('tResult'); r.innerHTML = (dw ? '<div class="twarn">' + (o.script === 'en' ? easyLatin(dw) : dw) + '</div>' : '') + composeTarpanam(P, o, 'Generated ' + genStamp()); r.dataset.script = o.script; r.lang = o.script === 'en' ? 'sa-Latn' : 'sa';
   $('tCopyStatus').textContent = ''; $('tOut').classList.remove('hide'); tSave();
-  if (quiet !== true) $('tOut').scrollIntoView({behavior: 'smooth'});
+  if (quiet !== true) {
+    sgTrack('document_generated', {document_type: 'tarp'});
+    $('tOut').scrollIntoView({behavior: 'smooth'});
+  }
 }
 
 // ================= Init =================
@@ -6304,6 +6344,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
     }
     // someone else: composed once from a copy of the details – nothing saved, the form is not changed
     function makeOther() {
+      sgTrack('document_generation_requested', {document_type: 'sank'});
       setToday();
       const st = readState(); Object.assign(st, P, {family: []}); delete st.gotraNK;
       Object.keys(st).forEach(k => { if (/^pp-/.test(k)) delete st[k]; }); st.otherD = '';   // standard wording, not the owner's prayers
@@ -6316,6 +6357,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
       if (!h) { say('Sorry – something went wrong. Please try the form.'); more(); return; }
       const res = $i('result'), sc = $i('script').value;
       res.innerHTML = h; res.dataset.script = sc; res.lang = sc === 'en' ? 'sa-Latn' : 'sa';
+      sgTrack('document_generated', {document_type: 'sank'});
       $i('copyStatus').textContent = ''; $i('resultContainer').classList.remove('hide'); $i('noResult').classList.add('hide');
       const nm = capF(devaTo(P.nameD, 'en'));
       $i('readyT').textContent = 'Saṅkalpam for ' + nm; $i('readyD').textContent = longDate($i('date').value) + ' · ' + curCity()[0]; $i('readyHd').classList.remove('hide');
@@ -6369,3 +6411,4 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
 </style>
 </body>
 </html>
+

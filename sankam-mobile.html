@@ -16,6 +16,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script defer src="posthog-config.js"></script>
+<script defer src="sankalpam-posthog.js"></script>
 <script>
 /* v5.0.2 – the app now lives at sankalpam.live.
    Old address (akbkgk.github.io): go to sankalpam.live, keep ?date=… links, and carry the details saved on this device
@@ -488,6 +490,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 </div>
 </div>
 <div id="feedback" class="tab-content" role="tabpanel" aria-labelledby="mobile-tab-feedback">
+<p class="hint">When analytics is enabled, PostHog receives pseudonymous page views, feature actions and PDF requests. Personal form values and generated documents are excluded from events. Replays mask text and inputs and block generated documents. The dashboard is private to the owner.</p>
   <div class="card">
     <h2>Share Your Feedback</h2>
     <p class="lead">Your opinion and suggestions are most welcome. 🙏</p>
@@ -1577,7 +1580,16 @@ function buildSidhyartha(vedic) {
 }
 
 // ================= Generate =================
+// Analytics is optional: missing or blocked scripts never affect the application.
+function sgTrack(event, properties) {
+  try { if (typeof window !== 'undefined' && window.SGAnalytics) window.SGAnalytics.capture(event, properties); } catch (e) {}
+}
+function sgPdfAttempt(kind, mode) {
+  try { if (typeof window !== 'undefined' && window.SGAnalytics) return window.SGAnalytics.beginPdf(kind, mode); } catch (e) {}
+  return {document_type: kind, output_mode: mode};
+}
 function generateSankalpam() {
+  sgTrack('document_generation_requested', {document_type: 'sank'});
   const st = $('status'); st.textContent = '';
   const date = $('date').value, name = $('name').value.trim(), nameD = esc($('nameD').value.trim()), gotraD = esc($('gotraD').value.trim());
   const script = $('script').value;
@@ -1601,9 +1613,11 @@ function generateSankalpam() {
   saveDetails();
   $('resultContainer').classList.remove('hide'); $('noResult').classList.add('hide');
   switchTab('output');
+  sgTrack('document_generated', {document_type: 'sank'});
 }
 // Outline the missing fields in red, open their group / tab, scroll to the first one and focus it.
 function flagInvalid(els) {
+  sgTrack('form_validation_failed');
   document.querySelectorAll('.invalid').forEach(e => e.classList.remove('invalid'));
   els = els.filter(Boolean); if (!els.length) return;
   els.forEach(e => (e.type === 'checkbox' ? e.parentElement : e).classList.add('invalid'));
@@ -1730,6 +1744,9 @@ async function emailPdfOnce(docType) {
 }
 
 async function generateAndSendPdf(docType, email, statusEl) {
+  const analyticsAttempt = sgPdfAttempt(docType, 'email_pdf');
+  let analyticsStage = 'pdf_library';
+  sgTrack('pdf_generation_requested', analyticsAttempt);
   try {
     if (!window.html2pdf) {
       statusEl.textContent = '⏳ Loading PDF library...';
@@ -1749,6 +1766,7 @@ async function generateAndSendPdf(docType, email, statusEl) {
     // Create a clone to avoid modifying the original
     const clone = container.cloneNode(true);
     
+    analyticsStage = 'pdf_generation';
     // Generate PDF as Base64
     const pdf = await html2pdf().set({
       margin: 5,
@@ -1760,6 +1778,9 @@ async function generateAndSendPdf(docType, email, statusEl) {
     
     // Extract Base64 string (remove "data:application/pdf;base64," prefix)
     const pdfBase64 = pdf.split(',')[1];
+    if (!/^data:application\/pdf[^,]*;base64,/.test(pdf) || !pdfBase64) throw new Error('The PDF could not be generated.');
+    sgTrack('pdf_generation_succeeded', analyticsAttempt);
+    analyticsStage = 'email_service';
     
     // Send to backend
     const response = await fetch(SUBSCRIBE_URL, {
@@ -1777,14 +1798,18 @@ async function generateAndSendPdf(docType, email, statusEl) {
     const result = await response.json();
     
     if (result.ok) {
+      sgTrack('pdf_email_succeeded', analyticsAttempt);
       statusEl.textContent = '✓ PDF sent to ' + email;
       statusEl.style.color = '#2e6b2e';
       setTimeout(() => { statusEl.textContent = ''; }, 4000);
     } else {
+      sgTrack('pdf_email_failed', Object.assign({}, analyticsAttempt, {failure_code: 'email_rejected'}));
       statusEl.textContent = '✗ ' + (result.message || 'Failed to send');
       statusEl.style.color = '#a33';
     }
   } catch (err) {
+    sgTrack(analyticsStage === 'email_service' ? 'pdf_email_failed' : 'pdf_generation_failed',
+      Object.assign({}, analyticsAttempt, {failure_code: analyticsStage}));
     console.error('PDF generation error:', err);
     statusEl.textContent = '✗ Error: ' + err.message.slice(0, 160);
     statusEl.style.color = '#a33';
@@ -1815,6 +1840,7 @@ function pdfName(kind) {
   return head + '_' + pad2(d) + '-' + MONTHS_EN[m - 1].slice(0, 3) + '-' + y + '_' + ascii(tl);
 }
 function printDoc(kind, compact) {
+  const analyticsAttempt = sgPdfAttempt(kind, compact ? 'compact_print' : 'print');
   // Track PDF download for analytics
   const action = compact ? 'CompactPDF' : 'PrintPDF';
   fetch(SUBSCRIBE_URL, {
@@ -1824,11 +1850,22 @@ function printDoc(kind, compact) {
   }).catch(e => console.warn('Could not log download: ' + e));
   
   const old = document.title;
-  document.title = pdfName(kind);
+  try { document.title = pdfName(kind); } catch (err) {
+    sgTrack('pdf_generation_failed', Object.assign({}, analyticsAttempt, {failure_code: 'print_unavailable'}));
+    throw err;
+  }
   document.body.classList.toggle('compact', !!compact);
-  const done = () => { document.title = old; document.body.classList.remove('compact'); window.removeEventListener('afterprint', done); };
+  const done = () => {
+    document.title = old; document.body.classList.remove('compact'); window.removeEventListener('afterprint', done);
+    sgTrack('pdf_print_dialog_closed', analyticsAttempt);
+  };
   window.addEventListener('afterprint', done);
-  window.print();
+  sgTrack('pdf_print_requested', analyticsAttempt);
+  try { window.print(); } catch (err) {
+    document.title = old; document.body.classList.remove('compact'); window.removeEventListener('afterprint', done);
+    sgTrack('pdf_generation_failed', Object.assign({}, analyticsAttempt, {failure_code: 'print_unavailable'}));
+    throw err;
+  }
 }
 function copySankalpam() {
   const s = $('copyStatus');
@@ -2392,6 +2429,7 @@ function tProblems() {        // returns [message, fields to outline] or ['', []
   return ['', []];
 }
 function generateTarpanam(quiet) {
+  if (quiet !== true) sgTrack('document_generation_requested', {document_type: 'tarp'});
   const st = $('tStatus'); st.textContent = '';
   if (!$('date').value) { st.textContent = 'Please choose the date of tarpaṇam.'; flagInvalid([$('t-date')]); return; }
   if (!$('gotraD').value.trim()) { st.textContent = 'Please choose your gotra in step 2 of the Generator tab (marked in red).'; switchTab('form'); flagInvalid([$('gotra'), $('gotraD')]); return; }
@@ -2409,7 +2447,10 @@ function generateTarpanam(quiet) {
   const dw = tDateWarn(o.date, o.city).split('<br>').filter(x => x.indexOf('⚠️') === 0).join(' ');
   const r = $('tResult'); r.innerHTML = (dw ? '<div class="twarn">' + dw + '</div>' : '') + composeTarpanam(P, o, 'Generated ' + genStamp()); r.dataset.script = o.script; r.lang = o.script === 'en' ? 'sa-Latn' : 'sa';
   $('tCopyStatus').textContent = ''; $('tOut').classList.remove('hide'); tSave();
-  if (quiet !== true) $('tOut').scrollIntoView({behavior: 'smooth'});
+  if (quiet !== true) {
+    sgTrack('document_generated', {document_type: 'tarp'});
+    $('tOut').scrollIntoView({behavior: 'smooth'});
+  }
 }
 
 // ================= Init =================
@@ -3352,3 +3393,4 @@ $('method').addEventListener('change', tdfMethodNow); tdfMethodNow();
 </script>
 </body>
 </html>
+
