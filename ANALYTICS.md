@@ -1,4 +1,4 @@
-# Usage analytics (PostHog) – from v5.2.17, more events in v5.2.19
+# Usage analytics (PostHog) – from v5.2.17, more events in v5.2.19, share tags in v5.2.20
 
 Anonymous usage counts so the app can be improved. **Key added (US Cloud)** in `index.html`
 (`PH_KEY`; `PH_HOST` is `https://us.i.posthog.com`, or `https://eu.i.posthog.com` for EU Cloud).
@@ -50,7 +50,10 @@ email – also `email`, `consent`, `family_consent`, `time`; tarpaṇam – `dat
 The app reads `utm_source`, `utm_medium` and `utm_campaign` from the address it was opened with (before it tidies the address bar)
 and sends them with `$pageview`. Only short plain words are kept (letters, digits, `_ . -`, up to 40). Never put a person's name in a tag – a plain word cannot be told apart from a name. Example for your own posts:
 `https://sankalpam.live/?utm_source=whatsapp&utm_medium=group&utm_campaign=diwali`.
-The app's own Share text is **not** tagged yet – waiting for your decision.
+**From v5.2.20 the app's own Share messages are tagged:** the sankalpam.live link in a shared saṅkalpam, pañcāṅgam or "Share the app" message ends with
+`?utm_source=share&utm_medium=sankalpam` / `panchang` / `app` (`?features&utm_source=share&utm_medium=app` for the features page).
+In PostHog, filter `$pageview` by `utm_source = share` and break down by `utm_medium` to see visits that came from shares.
+The text on screen, Copy text and the PDF are unchanged; links already forwarded before v5.2.20 stay untagged.
 
 ## Privacy
 
@@ -81,7 +84,7 @@ PostHog: first 1 million events a month free; then $0.00005 per event, falling t
 
 | Item | Status |
 |---|---|
-| Source tag on the app's own Share links | Waiting for the owner's decision (changes the shared text) |
+| Source tag on the app's own Share links | Done in v5.2.20 (long form, read by PostHog directly) |
 | Country only, or also city, from the IP | Owner to decide; PostHog setting, no code |
 | Retire the Apps Script counter | After four weeks of running both |
 | Check that retention works on anonymous events | Once, in PostHog |

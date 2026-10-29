@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.19  |  Updated: 2026-10-27
+  Version: 5.2.20  |  Updated: 2026-10-29
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -2374,8 +2374,8 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.19';
-const APP_BUILD = '2026-10-27 15:30';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
+const APP_VERSION = 'v5.2.20';
+const APP_BUILD = '2026-10-29 18:30';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2481,13 +2481,19 @@ async function generateAndSendPdf(docType, email, statusEl) {
     const clone = container.cloneNode(true);
     
     // Generate PDF as Base64
-    const pdf = await html2pdf().set({
+    const worker = html2pdf().set({
       margin: 5,
       filename: fileName + '.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
+      html2canvas: { scale: 2, scrollX: 0, scrollY: 0 },   // v5.2.20: not blank when the page is scrolled down
+      pagebreak: { mode: ['css'], avoid: ['p', 'h3', 'h4', 'tr', '.ins', '.meta', '.twarn', '.legend', '.foot'] },   // v5.2.20: no line cut in half at a page break
       jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
-    }).from(clone).outputPdf('datauristring');
+    }).from(clone).toPdf();
+    // v5.2.20: drop a last page that holds only the bottom edge of the border (a few pixels spilling over)
+    try { const doc = await worker.get('pdf'), cv = await worker.get('canvas'), ps = await worker.get('pageSize');
+      const ph = Math.floor(cv.width * ps.inner.ratio), n = doc.internal.getNumberOfPages(), rest = cv.height - (n - 1) * ph;
+      if (n > 1 && rest > 0 && rest < ph * 0.04) doc.deletePage(n); } catch (e) {}
+    const pdf = await worker.outputPdf('datauristring');
     
     // Extract Base64 string (remove "data:application/pdf;base64," prefix)
     const pdfBase64 = pdf.split(',')[1];
@@ -3481,6 +3487,9 @@ function v53Setup() {
 // Share: the phone's share sheet (WhatsApp, Telegram, SMS …). Where there is none (most computers), WhatsApp opens
 // with the text ready, and the text is copied too. The text is in the letters chosen (Sanskrit, Tamil, Telugu, Kannada, English).
 function waShare(title, text, s) {
+  // v5.2.20: tag the app link in a shared message, so visits from shares show their source (screen and Copy text are unchanged)
+  { const med = {'Saṅkalpam': 'sankalpam', 'Pañcāṅgam': 'panchang', 'Saṅkalpam Generator': 'app'}[title] || 'other';
+    text = String(text).replace(/https:\/\/sankalpam\.live\/(\?features)?(?![\w?&=#%-])/g, (u, f) => 'https://sankalpam.live/?' + (f ? 'features&' : '') + 'utm_source=share&utm_medium=' + med); }
   sgUse('wa', {'Saṅkalpam': 'sank', 'Pañcāṅgam': 'panch', 'Saṅkalpam Generator': 'app'}[title] || 'other');   // v5.2.15: anonymous count
   phTrack('share_tapped', {what: {'Saṅkalpam': 'sank', 'Pañcāṅgam': 'panch', 'Saṅkalpam Generator': 'app'}[title] || 'other', method: navigator.share ? 'share_sheet' : 'whatsapp_web'});
   const say = t => { if (s) s.textContent = t; };
@@ -5453,6 +5462,7 @@ body.wz-open .wz,body.qc-on .qc{top:var(--mobile-update-height,0px)}
 .home-up a+a{background:#eef1f4;color:#2f3e4e}
 body.has-home #sgIntro{display:none}
 /* ready header and Make it yours */
+.ready>svg{flex:none}.ready>div{min-width:0}#readyT,#readyD,.home-hd h2{overflow-wrap:break-word}.home-hdr{flex-wrap:wrap}.home-hdr>div{flex:1 1 0%;max-width:100%}.home-hdr>.qc-hd{margin-left:auto}   /* v5.2.20: a very long name wraps (Quick Help moves below it) instead of running off small phones */
 .ready{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:14px 16px;border-radius:14px;background:var(--kum-d);color:#fff}
 .ready b{font-family:var(--lat);font-size:1.2rem}.ready div div{font-size:.85rem;color:#f3d9c0}
 .mine{margin:14px 0 0}.mine-b{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.mine-b .btn{min-height:42px;margin:0;border-radius:21px;font-size:.9rem;padding:6px 14px}
@@ -6083,6 +6093,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [               // v: used only to pick what is new for this phone – never shown
+    {v: '5.2.20', items: ['Long names now fit on small phones']},
     {v: '5.2.19', items: ['Better anonymous usage counts, to see which steps people find hard – still no names or details']},
     {v: '5.2.18', items: ['Copy text and WhatsApp now send just your saṅkalpam or tarpaṇam – the pañcāṅgam table stays on screen and in the PDF', 'Share pañcāṅgam still sends the full pañcāṅgam']},
     {v: '5.2.16', items: ['Vākya times closer to the printed pañcāṅgam', 'Festival days and labels as chosen (Sarasvatī Pūjā, Vijayadaśamī, Śrī Jayantī, Ugādi)', 'Tarpaṇam on a day that does not suit it asks you first', 'Outside India and Sri Lanka: Tirukkaṇita automatically (you can still choose Vākya)', 'Use counts now include the city chosen in the app – see Help']},
