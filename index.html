@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.16  |  Updated: 2026-10-23 (review build, not deployed)
+  Version: 5.2.20  |  Updated: 2026-10-29
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -2269,9 +2269,10 @@ function generateSankalpam() {
   if (!nameD) miss.push($('nameD'));
   if (!gotraD) miss.push($('gotra').value === 'other' ? $('gotraOther') : $('gotra'), $('gotraD'));
   if ($('nak').value === '') miss.push($('nak'));
-  if (miss.length) { st.textContent = 'Please fill in the fields marked in red (' + (!date ? 'date' : !name || !nameD ? 'name' : !gotraD ? 'gotra' : 'birth star') + ').'; flagInvalid(miss); return; }
-  if (notDeva($('nameD').value) || notDeva($('gotraD').value)) { st.textContent = 'Please type the Devanagari boxes in Devanagari letters only (no English letters, numbers or signs).'; flagInvalid([notDeva($('nameD').value) ? $('nameD') : $('gotraD')]); return; }
-  if (famCheck(st)) return;
+  if (miss.length) { st.textContent = 'Please fill in the fields marked in red (' + (!date ? 'date' : !name || !nameD ? 'name' : !gotraD ? 'gotra' : 'birth star') + ').'; flagInvalid(miss);
+    phBlocked('sank', !date ? 'date' : !name || !nameD ? 'name' : !gotraD ? 'gotra' : 'star'); return; }
+  if (notDeva($('nameD').value) || notDeva($('gotraD').value)) { st.textContent = 'Please type the Devanagari boxes in Devanagari letters only (no English letters, numbers or signs).'; flagInvalid([notDeva($('nameD').value) ? $('nameD') : $('gotraD')]); phBlocked('sank', 'devanagari'); return; }
+  if (famCheck(st)) { phBlocked('sank', famCheck.last); return; }
 
   const cal = $('cal').value;
   const P = {samv: +$('p-samv').value, ayana: +$('p-ayana').value, rtu: +$('p-rtu').value, masa: +$('p-masa').value, adhika: cal === 'ta' ? 0 : +$('p-adhika').value,
@@ -2289,13 +2290,13 @@ function generateSankalpam() {
 function famCheck(st) {
   const famAll = famData(), rows = document.querySelectorAll('#famList .fam');
   const gBad = famAll.find(m => m.nameD && ((OWN_GOTRA[m.rel] === 'req' && m.gotra === '') || (m.gotra === 'other' && !m.gother)));
-  if (gBad) { st.textContent = 'Please choose the gotra for ' + (gBad.nameD ? (s => s.charAt(0).toUpperCase() + s.slice(1))(devaTo(gBad.nameD, 'en')) : gBad.name || relById(gBad.rel)[1]) + '.';
+  if (gBad) { famCheck.last = 'family_gotra'; st.textContent = 'Please choose the gotra for ' + (gBad.nameD ? (s => s.charAt(0).toUpperCase() + s.slice(1))(devaTo(gBad.nameD, 'en')) : gBad.name || relById(gBad.rel)[1]) + '.';
     const row = rows[famAll.indexOf(gBad)]; switchTab('form'); flagInvalid([row && row.querySelector(gBad.gotra === 'other' ? '.f-gother' : '.f-gotra')]); return true; }
   const dBad = famAll.find(m => notDeva(m.nameD));
-  if (dBad) { st.textContent = 'Please type the name of ' + (dBad.name || relById(dBad.rel)[1]) + ' in Devanagari letters only.';
+  if (dBad) { famCheck.last = 'family_devanagari'; st.textContent = 'Please type the name of ' + (dBad.name || relById(dBad.rel)[1]) + ' in Devanagari letters only.';
     const row = rows[famAll.indexOf(dBad)]; switchTab('form'); flagInvalid([row && row.querySelector('.f-nameD')]); return true; }
   const nBad = famAll.find(m => m.nameD && m.nak === '');
-  if (nBad) { st.textContent = 'Please choose the birth star for ' + (nBad.nameD ? (s => s.charAt(0).toUpperCase() + s.slice(1))(devaTo(nBad.nameD, 'en')) : nBad.name || relById(nBad.rel)[1]) + '.';
+  if (nBad) { famCheck.last = 'family_star'; st.textContent = 'Please choose the birth star for ' + (nBad.nameD ? (s => s.charAt(0).toUpperCase() + s.slice(1))(devaTo(nBad.nameD, 'en')) : nBad.name || relById(nBad.rel)[1]) + '.';
     const row = rows[famAll.indexOf(nBad)]; switchTab('form'); flagInvalid([row && row.querySelector('.f-nak')]); return true; }
   return false;
 }
@@ -2373,8 +2374,8 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.18';
-const APP_BUILD = '2026-10-26 20:15';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
+const APP_VERSION = 'v5.2.20';
+const APP_BUILD = '2026-10-29 19:45';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2410,16 +2411,16 @@ function readState() {
 async function subscribe() {
   const out = $('subStatus'), email = $('subEmail').value.trim();
   out.style.color = '#a33';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { out.textContent = 'Please enter a valid email address.'; flagInvalid([$('subEmail')]); return; }
-  if (!$('subConsent').checked) { out.textContent = 'Please tick the consent box.'; flagInvalid([$('subConsent')]); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { out.textContent = 'Please enter a valid email address.'; flagInvalid([$('subEmail')]); phBlocked('email', 'email'); return; }
+  if (!$('subConsent').checked) { out.textContent = 'Please tick the consent box.'; flagInvalid([$('subConsent')]); phBlocked('email', 'consent'); return; }
   if (!$('name').value.trim() || !$('nameD').value.trim() || !$('gotraD').value.trim()) { out.textContent = 'Please fill in your name and gotra in step 2 first.';
-    flagInvalid([!$('name').value.trim() && $('name'), !$('nameD').value.trim() && $('nameD'), !$('gotraD').value.trim() && $('gotra'), !$('gotraD').value.trim() && $('gotraD')]); return; }
-  if ($('nak').value === '') { out.textContent = $('status').textContent = 'Please choose your birth star in step 2 first.'; switchTab('form'); flagInvalid([$('nak')]); return; }
-  if (famCheck($('status'))) { out.textContent = $('status').textContent; return; }
+    flagInvalid([!$('name').value.trim() && $('name'), !$('nameD').value.trim() && $('nameD'), !$('gotraD').value.trim() && $('gotra'), !$('gotraD').value.trim() && $('gotraD')]); phBlocked('email', !$('name').value.trim() || !$('nameD').value.trim() ? 'name' : 'gotra'); return; }
+  if ($('nak').value === '') { out.textContent = $('status').textContent = 'Please choose your birth star in step 2 first.'; switchTab('form'); flagInvalid([$('nak')]); phBlocked('email', 'star'); return; }
+  if (famCheck($('status'))) { out.textContent = $('status').textContent; phBlocked('email', famCheck.last); return; }
   const famOn = famData().some(m => m.nameD);
-  if (famOn && !$('subFamConsent').checked) { out.textContent = 'Please confirm that your family members agree (tick the second box), or remove them in step 2.'; flagInvalid([$('subFamConsent')]); return; }
+  if (famOn && !$('subFamConsent').checked) { out.textContent = 'Please confirm that your family members agree (tick the second box), or remove them in step 2.'; flagInvalid([$('subFamConsent')]); phBlocked('email', 'family_consent'); return; }
   const mode = $('subMode').value, time = $('subTime').value;
-  if (mode === 'time' && !/^\d\d:\d\d$/.test(time)) { out.textContent = 'Please choose a time.'; return; }
+  if (mode === 'time' && !/^\d\d:\d\d$/.test(time)) { out.textContent = 'Please choose a time.'; phBlocked('email', 'time'); return; }
   const payload = {action: 'subscribe', email, mode, time, website: $('subWebsite').value, familyConsent: famOn, state: readState()};
   $('subBtn').disabled = true; out.style.color = 'var(--soft)'; out.textContent = 'Sending…';
   try {
@@ -2480,13 +2481,19 @@ async function generateAndSendPdf(docType, email, statusEl) {
     const clone = container.cloneNode(true);
     
     // Generate PDF as Base64
-    const pdf = await html2pdf().set({
+    const worker = html2pdf().set({
       margin: 5,
       filename: fileName + '.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
+      html2canvas: { scale: 2, scrollX: 0, scrollY: 0 },   // v5.2.20: not blank when the page is scrolled down
+      pagebreak: { mode: ['css'], avoid: ['p', 'h3', 'h4', 'tr', '.ins', '.meta', '.twarn', '.legend', '.foot'] },   // v5.2.20: no line cut in half at a page break
       jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
-    }).from(clone).outputPdf('datauristring');
+    }).from(clone).toPdf();
+    // v5.2.20: drop a last page that holds only the bottom edge of the border (a few pixels spilling over)
+    try { const doc = await worker.get('pdf'), cv = await worker.get('canvas'), ps = await worker.get('pageSize');
+      const ph = Math.floor(cv.width * ps.inner.ratio), n = doc.internal.getNumberOfPages(), rest = cv.height - (n - 1) * ph;
+      if (n > 1 && rest > 0 && rest < ph * 0.04) doc.deletePage(n); } catch (e) {}
+    const pdf = await worker.outputPdf('datauristring');
     
     // Extract Base64 string (remove "data:application/pdf;base64," prefix)
     const pdfBase64 = pdf.split(',')[1];
@@ -2585,7 +2592,7 @@ const PH_KEY  = 'phc_rVjVMyi8XEXL3ANiXtcANXS4JdFTXe6TN9397dK6G5PZ';   // PostHog
 const PH_HOST = 'https://us.i.posthog.com';           // EU Cloud: 'https://eu.i.posthog.com'
 const PH_LIB  = 'https://cdn.jsdelivr.net/npm/posthog-js@1.438.7/dist/array.no-external.js';
 const PH_OFF  = 'sankalpam.phOff';
-let phQueue = [], phState = 'idle', phAttempt = '';   // phState: idle → loading → ready | failed
+let phQueue = [], phState = 'idle', phAttempt = '', phTap = 0, phUndo = 0;   // phState: idle → loading → ready | failed
 const phConfigured = () => /^phc_[A-Za-z0-9]{20,}$/.test(PH_KEY);
 function phAllowed() {
   if (!phConfigured()) return false;
@@ -2605,6 +2612,17 @@ function phClean(ev) {
   if (ev.properties) delete ev.properties.title;   // the page title holds the date and tithi while printing
   return ev;
 }
+// v5.2.19: a source tag on the link that opened the app (e.g. ?utm_source=whatsapp&utm_medium=share). Read from the address as
+// it was opened (SG_QS), because the app tidies the address bar before PostHog loads. Only short plain words are kept.
+function phUtm() {
+  const out = {};
+  try { const q = new URLSearchParams(window.SG_QS || '');
+    ['utm_source', 'utm_medium', 'utm_campaign'].forEach(k => { const v = (q.get(k) || '').trim().toLowerCase();
+      if (/^[a-z0-9_.-]{1,40}$/.test(v)) out[k] = v; }); } catch (e) {}
+  return out;
+}
+// v5.2.19: a Generate / Subscribe / Tarpaṇam attempt stopped by a missing or wrong field – only the field's fixed name is sent
+function phBlocked(doc, field) { phTrack('generate_blocked', {doc: doc, field: field || 'other'}); }
 function phTrack(event, props) {
   if (!phAllowed() || phState === 'failed') return;
   try {
@@ -2620,13 +2638,14 @@ function phLoad() {
   sc.onload = () => { try {
     window.posthog.init(PH_KEY, {
       api_host: PH_HOST, persistence: 'localStorage', person_profiles: 'identified_only',
-      autocapture: false, capture_pageview: true, capture_pageleave: false, capture_performance: false,
+      autocapture: false, capture_pageview: false, capture_pageleave: false, capture_performance: false,
       disable_session_recording: true, disable_surveys: true, advanced_disable_flags: true,
       mask_all_text: true, mask_all_element_attributes: true, respect_dnt: true,
       before_send: phClean,
       loaded: ph => {
         ph.register({app_version: APP_VERSION, surface: matchMedia('(max-width:760px)').matches ? 'mobile' : 'desktop',
                      installed: matchMedia('(display-mode: standalone)').matches});
+        try { ph.capture('$pageview', phUtm()); } catch (x) {}   // v5.2.19: sent here (not automatically) so the source tag goes with it
         phState = 'ready'; const q = phQueue; phQueue = []; q.forEach(([e, p]) => { try { ph.capture(e, p); } catch (x) {} });
       }
     });
@@ -2639,7 +2658,13 @@ function phSetup() {
   document.addEventListener('click', e => { const t = e.target;
     const tab = t.closest && t.closest('.tab-btn'); if (tab && tab.dataset.tab) phTrack('tab_opened', {tab: tab.dataset.tab});
     if (t.closest && t.closest('[data-qc-open]')) phTrack('quick_help_opened');
-    if (t.closest && t.closest('#tCopy')) phTrack('copy_tapped', {doc: 'tarp'}); }, true);
+    if (t.closest && t.closest('#tCopy')) phTrack('copy_tapped', {doc: 'tarp'});
+    if (e.isTrusted && t.closest && t.closest('[data-cal],[data-meth],[data-m],#v4Yes')) phTap = Date.now();
+    if (e.isTrusted && t.closest && t.closest('#v4Undo')) phUndo = Date.now(); }, true);
+  // v5.2.19: language, calendar or method changed – 'auto' when the app changed it (letters follow the calendar, Tirukkaṇita abroad)
+  [['script', 'language'], ['cal', 'calendar'], ['method', 'method']].forEach(([id, name]) => { const el = $(id); if (!el) return;
+    el.addEventListener('change', e => phTrack('setting_changed', {setting: name, to: el.value,
+      auto: (id === 'script' ? e.isTrusted || Date.now() - phUndo < 1000 : Date.now() - phTap < 1000) ? 'no' : 'yes'})); });
   setTimeout(phLoad, 1500);
 }
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
@@ -3282,43 +3307,43 @@ function showAbhivadaye() {
 // Checks before generating; returns an error message or ''.
 const capFirst0 = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 const notDeva = s => /[A-Za-z0-9@#$%^&*_=+<>{}\[\]|\\/?!:;"~`]/.test(s || '');   // v5.2.12
-function tProblems() {        // returns [message, fields to outline] or ['', []]
+function tProblems() {        // returns [message, fields to outline, short code for the usage count] or ['', []]
   const alive = tAlive(), miss = [], els = [];
   for (const k of Object.keys(TP_LINES)) {
     const pk = tpPick(k, alive);
-    if (!pk) return ['Only one person in "' + TP_LINES[k].en + '" can be marked alive.', []];
+    if (!pk) return ['Only one person in "' + TP_LINES[k].en + '" can be marked alive.', [], 'alive'];
     pk.forEach(x => { if (!$('tnd-' + x.id).value.trim() && !$('tu-' + x.id).checked) { miss.push(TP_LINES[k].gens.find(g => g[0] === x.id)[1]); els.push($('tn-' + x.id)); } });
   }
-  if (!tMgotraD()) return ['Please choose your mother\'s gotra' + (TP_CONFIRM.kasyapa ? ', or tick "Not known".' : '.'), [$('t-mgotra').value === 'other' ? $('t-mgotraOther') : $('t-mgotra')]];
+  if (!tMgotraD()) return ['Please choose your mother\'s gotra' + (TP_CONFIRM.kasyapa ? ', or tick "Not known".' : '.'), [$('t-mgotra').value === 'other' ? $('t-mgotraOther') : $('t-mgotra')], 'mother_gotra'];
   const badN = TP_ALL.find(id => notDeva($('tnd-' + id).value));
-  if (badN) return ['Please type the names in Devanagari letters only (no English letters, numbers or signs).', [$('tnd-' + badN)]];
+  if (badN) return ['Please type the names in Devanagari letters only (no English letters, numbers or signs).', [$('tnd-' + badN)], 'devanagari'];
   { let kr = []; try { kr = JSON.parse($('karuList').dataset.relations || '[]'); } catch (e) {}
-    const k = kr.findIndex(r => notDeva(r.nameD)); if (k >= 0 && $('t-type').value === 'mahalaya') return ['Kāruṇika pitṛs: please type the name in Devanagari letters only.', [document.querySelector('#karuList .karu-nameD[data-i="' + k + '"]')].filter(Boolean)]; }
-  if (miss.length) return ['Please enter the names marked in red, or tick "Not known": ' + miss.join(', ') + '.', els];
+    const k = kr.findIndex(r => notDeva(r.nameD)); if (k >= 0 && $('t-type').value === 'mahalaya') return ['Kāruṇika pitṛs: please type the name in Devanagari letters only.', [document.querySelector('#karuList .karu-nameD[data-i="' + k + '"]')].filter(Boolean), 'karunika']; }
+  if (miss.length) return ['Please enter the names marked in red, or tick "Not known": ' + miss.join(', ') + '.', els, 'ancestor_names'];
   if ($('t-type').value === 'mahalaya') {          // v5.2.12: a kāruṇika pitṛ needs a relationship and a gotra
     let rels = []; try { rels = JSON.parse($('karuList').dataset.relations || '[]'); } catch (e) {}
     const e = rels.findIndex(r => (r.name || '').trim() && !(r.nameD || '').trim());
     if (e >= 0) { const row = document.querySelector('#karuList .karu-row[data-i="' + e + '"]');
-      return ['Kāruṇika pitṛs: please type the name of ' + capFirst0(rels[e].name.trim()) + ' in Devanagari too.', row ? [row.querySelector('.karu-nameD')] : []]; }
+      return ['Kāruṇika pitṛs: please type the name of ' + capFirst0(rels[e].name.trim()) + ' in Devanagari too.', row ? [row.querySelector('.karu-nameD')] : [], 'karunika']; }
     const i = rels.findIndex(r => (r.nameD || '').trim() && (!r.rel || !(r.gotra || '').trim()));
     if (i >= 0) { const r = rels[i], row = document.querySelector('#karuList .karu-row[data-i="' + i + '"]');
       return ['Kāruṇika pitṛs: please choose the ' + (!r.rel ? 'relationship' : 'gotra') + ' for ' + (r.name ? capFirst0(r.name) : (r.nameD || '').trim()) + '.',
-              row ? [row.querySelector(!r.rel ? '.karu-relation' : '.karu-gsel')] : []]; }
+              row ? [row.querySelector(!r.rel ? '.karu-relation' : '.karu-gsel')] : [], 'karunika']; }
   }
   return ['', []];
 }
 function generateTarpanam(quiet) {
   const st = $('tStatus'); st.textContent = '';
-  if (!$('date').value) { st.textContent = 'Please choose the date of tarpaṇam.'; flagInvalid([$('t-date')]); return; }
-  if (!$('gotraD').value.trim()) { st.textContent = 'Please choose your gotra in step 2 of the Saṅkalpam tab (marked in red).'; switchTab('form'); flagInvalid([$('gotra'), $('gotraD')]); return; }
+  if (!$('date').value) { st.textContent = 'Please choose the date of tarpaṇam.'; flagInvalid([$('t-date')]); if (quiet !== true) phBlocked('tarp', 'date'); return; }
+  if (!$('gotraD').value.trim()) { st.textContent = 'Please choose your gotra in step 2 of the Saṅkalpam tab (marked in red).'; switchTab('form'); flagInvalid([$('gotra'), $('gotraD')]); if (quiet !== true) phBlocked('tarp', 'gotra'); return; }
   if ($('t-father').value === 'alive') return;
   if (!TP_CONFIRM.suffixes && $('suffix').value !== 'sharma' && $('gender').value !== 'f') {
     if (quiet === true) return;
     st.innerHTML = 'The tarpaṇam text is ready only for the Śarmā name ending (other endings are awaiting confirmation by a vādhyār). If your family uses Śarmā: ' +
       '<button type="button" class="btn ghost" id="tUseSharma" style="margin:6px 0 0">Use Śarmā and continue</button>';
     $('tUseSharma').addEventListener('click', () => { $('suffix').value = 'sharma'; $('suffix').dispatchEvent(new Event('change', {bubbles: true})); generateTarpanam(); });
-    return; }
-  const [pr, prEls] = tProblems(); if (pr) { st.textContent = pr; flagInvalid(prEls); return; }
+    phBlocked('tarp', 'name_ending'); return; }
+  const [pr, prEls, prCode] = tProblems(); if (pr) { st.textContent = pr; flagInvalid(prEls); if (quiet !== true) phBlocked('tarp', prCode); return; }
   const cal = $('cal').value;
   const P = {samv: +$('p-samv').value, ayana: +$('p-ayana').value, rtu: +$('p-rtu').value, masa: +$('p-masa').value, adhika: cal === 'ta' ? 0 : +$('p-adhika').value,
              tithi: +$('p-tithi').value, vara: +$('p-vara').value, nak: +$('p-nak').value, yoga: +$('p-yoga').value, karana: +$('p-karana').value};
@@ -3340,8 +3365,8 @@ function generateTarpanam(quiet) {
     $('tOut').classList.add('hide'); if (quiet === true) return;
     st.innerHTML = '<div class="twarn">' + dw + '</div>If your own pañcāṅgam or vādhyār gives this date, you can still prepare the text: ' +
       '<button type="button" class="btn ghost" id="tDateOkBtn" style="margin:6px 0 0">My pañcāṅgam gives this date – continue</button>';
-    $('tDateOkBtn').addEventListener('click', () => { window.tDateOk = okKey; generateTarpanam(); });
-    return; }
+    $('tDateOkBtn').addEventListener('click', () => { window.tDateOk = okKey; phTrack('tarpanam_date_confirmed', {tarpanam: o.type}); generateTarpanam(); });
+    phBlocked('tarp', 'date_not_suited'); return; }
   const r = $('tResult'); r.innerHTML = (dw ? '<div class="twarn">' + (o.script === 'en' ? easyLatin(dw) : dw) + '</div>' : '') + composeTarpanam(P, o, 'Generated ' + genStamp()); r.dataset.script = o.script; r.lang = o.script === 'en' ? 'sa-Latn' : 'sa';
   $('tCopyStatus').textContent = ''; $('tOut').classList.remove('hide'); tSave();
   if (quiet !== true) { phAttempt = phNewId(); phTrack('tarpanam_generated', {tarpanam: $('t-type').value, script: $('script').value, attempt: phAttempt}); }
@@ -3462,6 +3487,9 @@ function v53Setup() {
 // Share: the phone's share sheet (WhatsApp, Telegram, SMS …). Where there is none (most computers), WhatsApp opens
 // with the text ready, and the text is copied too. The text is in the letters chosen (Sanskrit, Tamil, Telugu, Kannada, English).
 function waShare(title, text, s) {
+  // v5.2.20: tag the app link in a shared message, so visits from shares show their source (screen and Copy text are unchanged)
+  { const med = {'Saṅkalpam': 'sankalpam', 'Pañcāṅgam': 'panchang', 'Saṅkalpam Generator': 'app'}[title] || 'other';
+    text = String(text).replace(/https:\/\/sankalpam\.live\/(\?features)?(?![\w?&=#%-])/g, (u, f) => 'https://sankalpam.live/?' + (f ? 'features&' : '') + 'utm_source=share&utm_medium=' + med); }
   sgUse('wa', {'Saṅkalpam': 'sank', 'Pañcāṅgam': 'panch', 'Saṅkalpam Generator': 'app'}[title] || 'other');   // v5.2.15: anonymous count
   phTrack('share_tapped', {what: {'Saṅkalpam': 'sank', 'Pañcāṅgam': 'panch', 'Saṅkalpam Generator': 'app'}[title] || 'other', method: navigator.share ? 'share_sheet' : 'whatsapp_web'});
   const say = t => { if (s) s.textContent = t; };
@@ -3938,6 +3966,7 @@ function tdfMasa(out, base, main, systems) {
 }
 function tdfUse(date, type) {
   const keep = $('t-type').value;
+  phTrack('which_day_used', {tarpanam: keep});
   $('t-date').value = date; $('t-date').dispatchEvent(new Event('change'));
   if ($('t-type').value !== keep) { $('t-type').value = keep; $('t-type').dispatchEvent(new Event('change', {bubbles: true})); }
   if (typeof type === 'number' && $('t-rasi')) { $('t-rasi').value = String(type); $('t-rasi').dispatchEvent(new Event('change', {bubbles: true})); }
@@ -5173,7 +5202,7 @@ details.sg-more>.grid{margin-top:8px}
     el('pc-day').innerHTML = h;
     { const x = el('pc-xt'); if (x) x.innerHTML = xt; }
     const sb = el('pc-day').querySelector('[data-share-cal]');
-    if (sb) sb.addEventListener('click', () => { let s2 = sb.nextElementSibling; if (!s2 || !s2.classList.contains('okmsg')) { s2 = document.createElement('span'); s2.className = 'okmsg'; sb.after(s2); }
+    if (sb) sb.addEventListener('click', () => { phTrack('calendar_action', {action: 'share_day'}); let s2 = sb.nextElementSibling; if (!s2 || !s2.classList.contains('okmsg')) { s2 = document.createElement('span'); s2.className = 'okmsg'; sb.after(s2); }
       try { waShare('Pañcāṅgam', panchangShareText(ds, c, V('cal') || 'ta', V('method'), V('script')), s2); } catch (err) { s2.textContent = 'Sorry – could not prepare the text.'; } });
     el('pc-up').innerHTML = u;
   }
@@ -5232,7 +5261,7 @@ details.sg-more>.grid{margin-top:8px}
     el('pc-city').addEventListener('change', later);
     const scr = el('script'); if (scr) scr.addEventListener('change', () => { if (shown) later(); });   // v5.2.15: codes in the chosen letters
     try { const mq = window.matchMedia(PC_WIDE); const f = () => { if (shown) render(); }; mq.addEventListener ? mq.addEventListener('change', f) : mq.addListener(f); } catch (e) {}
-    el('pc-fest').addEventListener('change', () => { const v = el('pc-fest').value; if (!v) return; sel = v; ym = v.slice(0, 7); later(); });
+    el('pc-fest').addEventListener('change', () => { const v = el('pc-fest').value; if (!v) return; phTrack('calendar_action', {action: 'festival'}); sel = v; ym = v.slice(0, 7); later(); });
     const meth = el('method'); if (meth) meth.addEventListener('change', () => { if (shown) later(); });
     el('pc-body').addEventListener('click', ev => {
       const b = ev.target.closest('button[data-date]'); if (!b) return;
@@ -5327,6 +5356,7 @@ details.sg-more>.grid{margin-top:8px}
   new MutationObserver(labelDayBtn).observe($id('pc-day'), {childList: true});
   dayBtn.addEventListener('click', () => {
     const ds = selDay(); if (!ds) return;
+    phTrack('calendar_action', {action: 'sankalpam_for_day'});
     const d = $id('date'); d.value = ds; d.dispatchEvent(new Event('change', {bubbles: true}));
     switchTab('form');
   });
@@ -5432,6 +5462,7 @@ body.wz-open .wz,body.qc-on .qc{top:var(--mobile-update-height,0px)}
 .home-up a+a{background:#eef1f4;color:#2f3e4e}
 body.has-home #sgIntro{display:none}
 /* ready header and Make it yours */
+.ready>div{min-width:0}#readyT,#readyD,.home-hd h2{overflow-wrap:break-word}.home-hdr{flex-wrap:wrap}.home-hdr>div{flex:1 1 0%;max-width:100%}.home-hdr>.qc-hd{margin-left:auto}   /* v5.2.20: a very long name wraps (Quick Help moves below it) instead of running off small phones */
 .ready{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:14px 16px;border-radius:14px;background:var(--kum-d);color:#fff}
 .ready b{font-family:var(--lat);font-size:1.2rem}.ready div div{font-size:.85rem;color:#f3d9c0}
 .mine{margin:14px 0 0}.mine-b{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.mine-b .btn{min-height:42px;margin:0;border-radius:21px;font-size:.9rem;padding:6px 14px}
@@ -5566,6 +5597,8 @@ body.has-home #sgIntro{display:none}
     if (n === 3) { renderGotras(); syncLines(); }
     if (n === 4) { syncStar(); }
     const h = document.querySelector('#wz .wz-p[data-s="' + n + '"] .wz-h'); if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({preventScroll: true}); } catch (e) {} }
+    setTimeout(() => { const b = document.body.classList;   // v5.2.19: after the caller has marked a family / form star search
+      if (!$i('wz').classList.contains('hide')) phTrack('welcome_step_viewed', {step: n, for: b.contains('wz-fam') ? 'family' : b.contains('wz-form') ? 'form' : 'self'}); }, 0);
   }
   function openWz(n) { if (window.sgFinderReset) window.sgFinderReset(); $i('wz').classList.remove('hide'); document.body.classList.add('wz-open'); show(n || 1); }
   function closeWz() { $i('wz').classList.add('hide'); document.body.classList.remove('wz-open', 'wz-fam', 'wz-form'); if (window.sgFinderReset) window.sgFinderReset(); try { localStorage.setItem('sankalpam.wzDone', '1'); } catch (e) {} }
@@ -5696,8 +5729,9 @@ body.has-home #sgIntro{display:none}
       const one = Math.floor(n * 4 / 9) === Math.floor((n * 4 + 3) / 9);
       out.innerHTML = '<button type="button" class="wz-opt" aria-pressed="true" data-n="' + n + '" data-p="' + p + '" data-src="calc"><b>' + esc(nkName(n)) + ' · <span class="deva">' + NK[n][1] + '</span></b><span>' + (one ? 'Pāda not needed' : 'Pāda ' + p) + ' · born ' + esc(clock12(H, M)) + ', ' + esc(c[0]) + '</span></button>' +
         '<p class="wz-small">Calculated with the modern (Tirukkaṇita) method. Please confirm with your horoscope.</p>';
-      pickStar(n, p, 'calc'); return;
+      pickStar(n, p, 'calc'); phTrack('star_finder_used', {with_time: 'yes', for: finderFor && finderFor.row ? 'family' : finderFor === 'form' ? 'form' : 'self'}); return;
     }
+    phTrack('star_finder_used', {with_time: 'no', for: finderFor && finderFor.row ? 'family' : finderFor === 'form' ? 'form' : 'self'});
     $i('wzTobMsg').classList.remove('hide');
     // the stars of that civil day (12 midnight to 12 midnight, local time)
     const t0 = localMs(ds, 0, 0, c[3]), t1 = localMs(addD(ds, 1), 0, 0, c[3]), segs = [];
@@ -5722,7 +5756,10 @@ body.has-home #sgIntro{display:none}
   document.querySelectorAll('#wz [data-next]').forEach(b => b.addEventListener('click', () => show(+b.dataset.next)));
   $i('wzBack').addEventListener('click', () => show(Math.max(1, step - 1)));
   $i('wzSkip').addEventListener('click', () => { closeWz(); refreshHome(); });
-  $i('wzDone').addEventListener('click', () => { closeWz(); saveDetails(); refreshHome(); window.generateSankalpam(); });
+  $i('wzDone').addEventListener('click', () => {
+    phTrack('welcome_completed', {gotra_known: $i('gotraNkNote').classList.contains('hide') ? 'yes' : 'no',
+                                  star_from: {calc: 'finder_time', chosen: 'finder_day'}[$i('nakSrc').value] || 'list'});
+    closeWz(); saveDetails(); refreshHome(); window.generateSankalpam(); });
 
   // ---------- "ready" header after generating ----------
   const gen0 = window.generateSankalpam;
@@ -6056,6 +6093,8 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [               // v: used only to pick what is new for this phone – never shown
+    {v: '5.2.20', items: ['Long names now fit on small phones']},
+    {v: '5.2.19', items: ['Better anonymous usage counts, to see which steps people find hard – still no names or details']},
     {v: '5.2.18', items: ['Copy text and WhatsApp now send just your saṅkalpam or tarpaṇam – the pañcāṅgam table stays on screen and in the PDF', 'Share pañcāṅgam still sends the full pañcāṅgam']},
     {v: '5.2.16', items: ['Vākya times closer to the printed pañcāṅgam', 'Festival days and labels as chosen (Sarasvatī Pūjā, Vijayadaśamī, Śrī Jayantī, Ugādi)', 'Tarpaṇam on a day that does not suit it asks you first', 'Outside India and Sri Lanka: Tirukkaṇita automatically (you can still choose Vākya)', 'Use counts now include the city chosen in the app – see Help']},
     {v: '5.2.15', items: ['Calendar: a short code in each coloured square (AM Amāvāsyā, EK Ekādaśī …), in the letters you chose', 'On a computer: the day\'s cards under the calendar', 'Shorter notes', '"Beta" until the vādhyār checks are done', 'Anonymous use counts (no names, no details) – see Help']},
@@ -6076,6 +6115,8 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
   $i('wnList').innerHTML = '<ul>' + WN.slice(0, 2).flatMap(w => w.items).map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>';
   let seen = LS.get('sankalpam.seenVer');
   const returning = ['sankalpam.v3', 'sankalpam.wzDone', 'sankalpam.introSeen'].some(k => (window.SG_KEYS0 || []).indexOf(k) >= 0);
+  { const lastV = LS.get('sankalpam.lastVer') || (returning ? 'older' : '');   // v5.2.19: one count per phone per update
+    if (cur && lastV && lastV !== cur) phTrack('app_updated', {from: String(lastV).slice(0, 12), to: cur}); if (cur) LS.set('sankalpam.lastVer', cur); }
   if (!seen) { if (returning) seen = '5.2.2'; else { seen = cur; LS.set('sankalpam.seenVer', cur); } }
   const fresh = cur ? WN.filter(w => cmp(w.v, seen) > 0 && cmp(w.v, cur) <= 0) : [];
   const done = () => { LS.set('sankalpam.seenVer', cur); $i('v4New').classList.add('hide'); };
@@ -6246,12 +6287,14 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
 
   // ---------- pañcāṅgam, good time, coming days ----------
   function panchang(ds) {
+    phTrack('quick_help_answer', {topic: 'panchang'});
     let t = ''; try { t = panchangShareText(ds, curCity(), $i('cal').value, $i('method').value, $i('script').value); } catch (e) { say('Sorry – the pañcāṅgam could not be worked out for this date.'); more(); return; }
     const b = say('<pre>' + esc(t.replace(/\n\n[^\n]*(\n_[^\n]*_)?$/, '')) + '</pre>' + ctxLine() + '<span class="qc-ok" role="status"></span>');
     more([[SHARE_LABEL(), () => { waShare('Pañcāṅgam', t, b.querySelector('.qc-ok')); more([['Tomorrow', () => panchang(plusDays(ds, 1))]]); }, true],
           [ds === today() ? 'Tomorrow' : 'Next day', () => panchang(plusDays(ds, 1))]]);
   }
   function goodTime(ds) {
+    phTrack('quick_help_answer', {topic: 'good_time'});
     const c = curCity(), prof = tdfProfile(), d = tdfDay(prof, ds), N = Panchanga.segments(d, 'N'), wd = new Date(ds + 'T12:00:00Z').getUTCDay(), r = rykFor(wd, ds, c);
     const amr = amritadiText(wd, N.map(s => ({index: s.index, till: s.open ? '' : ptClock(d, s.f1, prof, ds, c)})), 'en', t => 'till ' + t, ', then ');
     say('<b>' + esc(longDate(ds)) + '</b><br>' + esc(amr) + '<br><b>Good time:</b> ' + gowriFor(wd, false, ds, c).join(', ') + '<br><b>Night:</b> ' + gowriFor(wd, true, ds, c).join(', ') +
@@ -6260,6 +6303,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
     more([[ds === today() ? 'Tomorrow' : 'Next day', () => goodTime(plusDays(ds, 1))]]);
   }
   function nextDays() {
+    phTrack('quick_help_answer', {topic: 'next_days'});
     const sys = tdfProfile(), t0 = today(); let msg = '';
     try { const a = tdfNextAma(sys, t0); if (a) msg += '<b>Amāvāsyā tarpaṇam:</b> ' + esc(longDate(a.date)) + (a.close ? ' <i>(close call – please check your pañcāṅgam)</i>' : ''); } catch (e) {}
     try { const m = tdfNextSankrantis(sys, t0, 1)[0]; if (m) msg += '<br><b>Māsa pirappu:</b> ' + esc(longDate(m.monthDay)) + ' – ' + esc(TDF_RASI[m.rasi]); } catch (e) {}
@@ -6269,6 +6313,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
 
   // ---------- saṅkalpam ----------
   function sankalpam() {
+    phTrack('quick_help_answer', {topic: 'sankalpam'});
     const s = saved();
     if (s && s.nameD) { say('Saṅkalpam for <b>' + esc(myName()) + '</b>?'); chips([['Yes', makeMine, true], ['Someone else', () => person(false)]]); return; }
     say('Let\'s set up your details once – they stay on this phone.');
@@ -6362,6 +6407,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
       function time() {
         say('Time of birth?');
         ask('time', 'time of birth', v => { const [H, M] = v.split(':').map(Number), [n, p] = moonNak(localMs(B.ds, H, M, B.c[3]));
+          phTrack('star_finder_used', {with_time: 'yes', for: 'quick_help'});
           say('The star is <b>' + esc(nkName(n)) + '</b>, pāda ' + p + ' <span class="qc-ctx">Modern (Tirukkaṇita) method – please confirm with the horoscope.</span>');
           chips([['Yes, use it', () => setStar(n, p, 'calc'), true], ['Choose from the list', star]]); },
           [['I don\'t know the time', noTime]]);
@@ -6371,6 +6417,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
         let cur = moonNak(t0)[0], f = t0;
         for (let t = t0 + 6e5; t <= t1; t += 6e5) { const n = moonNak(t)[0]; if (n !== cur) { let a = t - 6e5, b = t; while (b - a > 3e4) { const mid = (a + b) / 2; if (moonNak(mid)[0] === cur) a = mid; else b = mid; } segs.push({n: cur, from: f, to: b}); cur = n; f = b; } }
         segs.push({n: cur, from: f, to: t1});
+        phTrack('star_finder_used', {with_time: 'no', for: 'quick_help'});
         const clk = ms => { const q = localParts(ms + 3e4, B.c[3]); return clock12(q.H, q.M); };
         if (segs.length === 1) { say('The Moon was in <b>' + esc(nkName(segs[0].n)) + '</b> that whole day – this is the star.'); setStar(segs[0].n, 0, ''); return; }
         say('That day the star changed. Please choose (the printout will note "Birth star chosen by the user").');
