@@ -876,7 +876,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <details><summary>Good time and yogam</summary><p><b>Good time</b> is the Gowri nalla neram: the day and the night each in 8 parts. For India and Sri Lanka it is as printed in Tamil calendars (parts of 1½ hours from 6 AM); for cities elsewhere the parts run from that city's own sunrise to sunset, and sunset to the next sunrise – the same for Rāhu kālam, Yamagaṇḍam and Kuḷigai. Uthi, Amirtham, Labham, Dhanam and Sugam are good; Rogam, Soram and Visham are not. <b>Yogam</b> (Amṛta, Siddha or Maraṇa) comes from the weekday and the day's star – Amṛta and Siddha are good days, Maraṇa is avoided for new beginnings. Your city's actual sunrise may shift the times a little. For a wedding or upanayanam, a muhūrtam is fixed by your jyotiṣa.</p></details>
   <details><summary>Which day for tarpaṇam?</summary><p>Tarpaṇam tab → "Which day?" finds the day by the afternoon (aparāhṇa) rule for Amāvāsyā, Māsa pirappu and Mahālaya.</p></details>
   <details><summary>Sharing on WhatsApp, PDF and the daily email</summary><p><b>Share</b> sends your saṅkalpam in the letters you chose – Sanskrit, Tamil, Telugu, Kannada or English – to WhatsApp or any app. On a computer, WhatsApp opens with the text ready (it is copied too). "Share on WhatsApp" under the day's pañcāṅgam, and "Share this day on WhatsApp" in the Calendar, send that day's pañcāṅgam – in Tamil, or the language you chose. Print / PDF saves a copy. The daily email brings your saṅkalpam every evening.</p></details>
-  <details><summary>Where are my details kept?</summary><p>Only on this phone, in this browser. Ancestors' names are never sent anywhere. If you subscribe to the daily email, your email and details are kept privately, only to send it – every email has Unsubscribe. To count how many people use the app, it sends anonymous counts, the city chosen in the app (a custom location only as "My location") and the phone's time zone – never your name, details, email or exact location.</p></details>
+  <details><summary>Where are my details kept?</summary><p>Only on this phone, in this browser. Ancestors' names are never sent anywhere. If you subscribe to the daily email, your email and details are kept privately, only to send it – every email has Unsubscribe. To count how many people use the app, it sends anonymous counts, the city chosen in the app (for "Use my location", only the nearest city in the app's list, within 150 km) and the phone's time zone – never your name, details, email or exact location.</p></details>
   <details><summary>How do I get the newest version?</summary><p>The app checks by itself. When you see "🔄 Update" (or "Update now" in More), tap it.</p></details>
 </div>
 <div class="card v4wn" id="wnCard"><h2>What's new</h2><div id="wnList"></div></div>
@@ -2376,8 +2376,8 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.21';
-const APP_BUILD = '2026-10-30 13:10';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
+const APP_VERSION = 'v5.2.22';
+const APP_BUILD = '2026-10-30 13:40';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2574,11 +2574,11 @@ function sgCountOpen() {
     isNew = !localStorage.getItem('sankalpam.useSeen') && !localStorage.getItem('sankalpam.v3') && !localStorage.getItem('sankalpam.wzDone');
     localStorage.setItem('sankalpam.useDay', today); localStorage.setItem('sankalpam.useSeen', '1');
   } catch (e) {}
-  // v5.2.16: with the first opening of the day only – the city chosen in the app (a custom location is sent only as 'My location',
-  // never its coordinates) and the phone's time zone. No GPS, no IP, no name.
+  // v5.2.16: with the first opening of the day only – the city chosen in the app (v5.2.22: for "Use my location" only the nearest
+  // city in the list within 150 km, else 'My location' – never its coordinates) and the phone's time zone. No GPS, no IP, no name.
   let extra = null;
-  if (first) try { const i = +V('city'), c = CITY_FLAT[i];
-    extra = {place: i === CITY_LIST_N ? 'My location' : (i < CITY_LISTED && c ? c[0] : ''), tz: Intl.DateTimeFormat().resolvedOptions().timeZone || ''}; } catch (e) {}
+  if (first) try {
+    extra = {place: sgCountCity(+V('city')), tz: Intl.DateTimeFormat().resolvedOptions().timeZone || ''}; } catch (e) {}
   sgUse('open', [first ? 'day1' : '', isNew ? 'new' : ''].filter(Boolean).join(' '), extra);
 }
 if (typeof document !== 'undefined' && typeof window !== 'undefined') { try { const q = new URLSearchParams(location.search).get('nocount');   // read at once: the app tidies the address later
@@ -2624,8 +2624,22 @@ function phUtm() {
   return out;
 }
 // v5.2.19: a Generate / Subscribe / Tarpaṇam attempt stopped by a missing or wrong field – only the field's fixed name is sent
-// v5.2.21: the city chosen in the app – a name from the app's own list; a custom place only as 'My location' (never its name or coordinates)
-function phCity() { try { const i = +V('city'), c = CITY_FLAT[i]; return i === CITY_LIST_N ? 'My location' : (i < CITY_LISTED && c ? c[0] : ''); } catch (e) { return ''; } }
+// v5.2.21: the city chosen in the app – a name from the app's own list.
+// v5.2.22: for "Use my location", only the nearest city in the app's list, as "near <city>" when it is within 150 km,
+// otherwise 'My location' – never the coordinates or the name the user typed for the place.
+function sgCountCity(i) {
+  const c = CITY_FLAT[i];
+  if (i === CITY_LIST_N) {
+    if (!c) return 'My location';
+    const rad = x => x * Math.PI / 180; let best = '', bestKm = Infinity;
+    CITY_FLAT.slice(0, CITY_LISTED).forEach(t => { const dLa = rad(t[1] - c[1]), dLo = rad(t[2] - c[2]);
+      const d = 2 * 6371 * Math.asin(Math.sqrt(Math.sin(dLa / 2) ** 2 + Math.cos(rad(c[1])) * Math.cos(rad(t[1])) * Math.sin(dLo / 2) ** 2));
+      if (d < bestKm) { bestKm = d; best = t[0]; } });
+    return best && bestKm <= 150 ? 'near ' + best : 'My location';
+  }
+  return i < CITY_LISTED && c ? c[0] : '';
+}
+function phCity() { try { return sgCountCity(+V('city')); } catch (e) { return ''; } }
 function phBlocked(doc, field) { phTrack('generate_blocked', {doc: doc, field: field || 'other'}); }
 function phTrack(event, props) {
   if (!phAllowed() || phState === 'failed') return;
@@ -3533,6 +3547,7 @@ function shareSankalpam() {
 // "Use my location": asks the browser only when the button is pressed. v5.2.13: the place (rounded to 2 decimals, about 1 km)
 // and the phone's time zone are kept on this device as "My location"; they go to the server only if the user signs up for
 // the daily email (as part of the saved details). If refused, the city list is used as before.
+// v5.2.22: usage counts get only the nearest city in the list ("near <city>", within 150 km) – see sgCountCity().
 function geoNameSetup() {
   $('myLocName').addEventListener('input', () => { const c = sgMyLoc($('myLoc').value); if (!c) return;
     const nm = $('myLocName').value.replace(/[<>&"'`]/g, '').replace(/\s+/g, ' ').trim().slice(0, 40) || 'My location';
@@ -3561,7 +3576,7 @@ function geoSetup() {
       const city = $('city'); city.value = String(CITY_LIST_N); city.dispatchEvent(new Event('change', {bubbles: true}));
       let rise = ''; try { rise = sunTimes($('date').value, CITY_FLAT[CITY_LIST_N]).rise; } catch (e) {}
       say('Using your location (' + Math.abs(la).toFixed(2) + '°' + (la >= 0 ? 'N' : 'S') + ', ' + Math.abs(lo).toFixed(2) + '°' + (lo >= 0 ? 'E' : 'W') + ', ' + (typeof sgTz === 'function' ? sgTz(tz) : tz) + ')' +
-          (rise ? ' – sunrise ' + rise : '') + '. Saved on this device; sent only if you sign up for the daily email.');
+          (rise ? ' – sunrise ' + rise : '') + '. Saved on this device; sent only if you sign up for the daily email (usage counts get only the nearest city in the app\'s list).');
       $('myLocNameBox').classList.remove('hide'); $('myLocName').value = nm === 'My location' ? '' : nm;
     }, err => {
       say(err && err.code === 1 ? 'Location not allowed – please choose your city from the list. (You can allow it later in your browser settings.)'
@@ -6100,6 +6115,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
 
   // ---------- What's new: shown once to people who used an older version ----------
   const WN = [               // v: used only to pick what is new for this phone – never shown
+    {v: '5.2.22', items: ['Usage counts: with "Use my location", only the nearest city in the app\'s list (within 150 km) – never your exact place', 'PDF from Quick Help no longer cut short; the PDF footer never sits alone on a page; the language box fits small phones']},
     {v: '5.2.21', items: ['Don\'t know the mantras? The app prepares them for you – and why it was made', 'Usage counts now include the city chosen in the app']},
     {v: '5.2.20', items: ['Long names now fit on small phones']},
     {v: '5.2.19', items: ['Better anonymous usage counts, to see which steps people find hard – still no names or details']},
