@@ -42,7 +42,7 @@ A free, single-page app that prepares a complete, correctly worded **saṅkalpam
 
 - The app runs in your browser. No sign-in is needed.
 - Your details are saved only on your own device. **Ancestors' names and Kāruṇika pitṛs stay only on your device and are never sent anywhere.**
-- **Use my location** asks only when you tap it. The place (rounded to about 1 km) and your phone's time zone are saved on your device, and sent only if you sign up for the daily email.
+- **Use my location** asks only when you tap it. The place (rounded to about 1 km) and your phone's time zone are saved on your device, and sent only if you sign up for the daily email. Anonymous usage counts get only the nearest city in the app's list ("near Pune", within 150 km; otherwise "My location") – never your exact place.
 - **Feedback** is sent anonymously through a Google Form.
 - **PDF count:** when you tap Print / PDF or Compact PDF, the app counts it – only whether it was a saṅkalpam or tarpaṇam and which button. No names or other details are sent.
 - **Optional daily email:** if you subscribe, your email address and the details you entered are stored in a private Google Sheet, used only to send you the daily saṅkalpam. You confirm by email first, and every email has an **Unsubscribe** link that deletes your details.

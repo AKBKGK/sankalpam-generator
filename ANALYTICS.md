@@ -1,4 +1,4 @@
-# Usage analytics (PostHog) – from v5.2.17, more events in v5.2.19, share tags in v5.2.20, city in v5.2.21
+# Usage analytics (PostHog) – from v5.2.17, more events in v5.2.19, share tags in v5.2.20, city in v5.2.21, nearest city for "Use my location" in v5.2.22
 
 Anonymous usage counts so the app can be improved. **Key added (US Cloud)** in `index.html`
 (`PH_KEY`; `PH_HOST` is `https://us.i.posthog.com`, or `https://eu.i.posthog.com` for EU Cloud).
@@ -39,7 +39,7 @@ Every event also carries `app_version`, `surface` (mobile/desktop) and `installe
 email – also `email`, `consent`, `family_consent`, `time`; tarpaṇam – `date`, `gotra`, `name_ending`, `alive`, `mother_gotra`, `devanagari`,
 `karunika`, `ancestor_names`, `date_not_suited`.
 
-`city` (v5.2.21) is the city chosen in the app, from its own list (e.g. Chennai, New York); a custom "Use my location" place is sent only as `My location` – never its name or coordinates. It is the user's chosen city, more reliable than PostHog's guess from the internet address.
+`city` (v5.2.21) is the city chosen in the app, from its own list (e.g. Chennai, New York); for a "Use my location" place, from v5.2.22 the nearest city in the app's list is sent as `near <city>` (e.g. `near Pune`) when it is within 150 km, otherwise `My location` – never its coordinates or the name the user typed (up to v5.2.21: always `My location`). It is the user's chosen city, more reliable than PostHog's guess from the internet address.
 
 `attempt` is a short random code that links one generated saṅkalpam/tarpaṇam to its PDF taps.
 
