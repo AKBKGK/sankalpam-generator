@@ -191,6 +191,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 @media print{
   .top,.tabs,#form,.bar,.actions,#noResult,.screen-note,#subCard,.credit,.a2hs,.tform,#tdf{display:none!important}
   body{background:#fff}.wrap{padding:0}
+  html,body{overflow:visible!important;height:auto!important}
   @page{margin:10mm}
   body.compact .doc{padding:5mm 6mm}
   body.compact .doc h3{font-size:1.15rem;margin:0 0 2px} body.compact .doc .meta{font-size:.7rem;margin:0 0 6px}
@@ -6336,7 +6337,7 @@ body.wz-fam #wz [data-s="4"] .wz-two,body.wz-fam #wzFind,body.wz-fam #wz [data-s
   function ready(nm) {
     const b = say('✓ <b>Saṅkalpam for ' + esc(nm) + '</b> – ' + esc(longDate($i('date').value)) + ' is ready.' + ctxLine() + '<span class="qc-ok" role="status"></span>');
     more([[SHARE_LABEL(), () => { shareSankalpam(); b.querySelector('.qc-ok').textContent = navigator.share ? '' : 'The text is copied. If WhatsApp didn\'t open, open it and paste the copied text.'; more([['See it', seeIt]]); }, true],
-          ['See it', seeIt], ['PDF', () => { printDoc('sank', false); more([['See it', seeIt]]); }]]);
+          ['See it', seeIt], ['PDF', () => { close(); printDoc('sank', false); more([['See it', seeIt]]); }]]);
   }
   const seeIt = () => { close(); switchTab('output'); };
 
