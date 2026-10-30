@@ -1,4 +1,4 @@
-# Usage analytics (PostHog) – from v5.2.17, more events in v5.2.19, share tags in v5.2.20
+# Usage analytics (PostHog) – from v5.2.17, more events in v5.2.19, share tags in v5.2.20, city in v5.2.21
 
 Anonymous usage counts so the app can be improved. **Key added (US Cloud)** in `index.html`
 (`PH_KEY`; `PH_HOST` is `https://us.i.posthog.com`, or `https://eu.i.posthog.com` for EU Cloud).
@@ -19,8 +19,8 @@ Every event also carries `app_version`, `surface` (mobile/desktop) and `installe
 | `welcome_step_viewed` | Each welcome step shown – counts views, also on Back/Next and repeat opens; count unique users for the funnel | `step` (1–4), `for` (self, family, form) | v5.2.19 |
 | `welcome_completed` | "See my saṅkalpam" in the welcome steps | `gotra_known` (yes/no), `star_from` (list, finder_time, finder_day) | v5.2.19 |
 | `star_finder_used` | Star finder shows a result | `with_time` (yes/no), `for` (self, family, form, quick_help) | v5.2.19 |
-| `sankalpam_generated` | Generate Saṅkalpam succeeds | `script`, `calendar`, `method`, `attempt` | v5.2.17 |
-| `tarpanam_generated` | Tarpaṇam text shown (not automatic refreshes) | `tarpanam`, `script`, `attempt` | v5.2.17 |
+| `sankalpam_generated` | Generate Saṅkalpam succeeds | `script`, `calendar`, `method`, `city`, `attempt` | v5.2.17 (`city` v5.2.21) |
+| `tarpanam_generated` | Tarpaṇam text shown (not automatic refreshes) | `tarpanam`, `script`, `city`, `attempt` | v5.2.17 (`city` v5.2.21) |
 | `generate_blocked` | Generate, Subscribe or Tarpaṇam stopped by a missing or wrong field (not automatic refreshes) | `doc` (sank, tarp, email); `field` – see below | v5.2.19 |
 | `tarpanam_date_confirmed` | "My pañcāṅgam gives this date – continue" tapped | `tarpanam` | v5.2.19 |
 | `which_day_used` | "Use" tapped in "Which day?" | `tarpanam` | v5.2.19 |
@@ -38,6 +38,8 @@ Every event also carries `app_version`, `surface` (mobile/desktop) and `installe
 **`generate_blocked` fields:** saṅkalpam – `date`, `name`, `gotra`, `star`, `devanagari`, `family_gotra`, `family_devanagari`, `family_star`;
 email – also `email`, `consent`, `family_consent`, `time`; tarpaṇam – `date`, `gotra`, `name_ending`, `alive`, `mother_gotra`, `devanagari`,
 `karunika`, `ancestor_names`, `date_not_suited`.
+
+`city` (v5.2.21) is the city chosen in the app, from its own list (e.g. Chennai, New York); a custom "Use my location" place is sent only as `My location` – never its name or coordinates. It is the user's chosen city, more reliable than PostHog's guess from the internet address.
 
 `attempt` is a short random code that links one generated saṅkalpam/tarpaṇam to its PDF taps.
 
