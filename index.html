@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.21  |  Updated: 2026-10-29
+  Version: 5.2.23  |  Updated: 2026-10-31
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -2376,8 +2376,8 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.22';
-const APP_BUILD = '2026-10-30 13:40';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
+const APP_VERSION = 'v5.2.23';
+const APP_BUILD = '2026-10-31 21:30';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2556,11 +2556,13 @@ function pdfName(kind) {
   const tt = $('t-type').value, head = kind === 'tarp' ? (TP_TYPES[tt] ? TP_TYPES[tt].file : 'Tarpanam') + (tt === 'masa' ? '-' + ascii(cap(RS[+$('t-rasi').value][0])) : '') : 'Sankalpam';
   return head + '_' + pad2(d) + '-' + MONTHS_EN[m - 1].slice(0, 3) + '-' + y + '_' + ascii(tl);
 }
+// v5.2.23: nothing is counted on the private test site (test.sankalpam.live) – neither here nor in PostHog – so only real use is counted.
+const SG_TEST_SITE = (() => { try { return /^test\./i.test(location.hostname); } catch (e) { return false; } })();
 // v5.2.15: anonymous usage count sent to the owner's Google script – only the event name (e.g. 'open', 'wa'), never names, details or email.
 // Not sent by automated browsers, or on a phone where the owner opened the app once with ?nocount=1 (?nocount=0 turns counting back on).
 function sgUse(ev, detail, extra) {
   try {
-    if (!SUBSCRIBE_URL || navigator.webdriver || localStorage.getItem('sankalpam.noCount') === '1') return;
+    if (!SUBSCRIBE_URL || SG_TEST_SITE || navigator.webdriver || localStorage.getItem('sankalpam.noCount') === '1') return;
   } catch (e) {}
   try { fetch(SUBSCRIBE_URL, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain;charset=utf-8'},
           body: JSON.stringify(Object.assign({action: 'logUse', ev: ev, detail: detail || ''}, extra || {}))}).catch(() => {}); } catch (e) {}
@@ -2597,7 +2599,7 @@ const PH_OFF  = 'sankalpam.phOff';
 let phQueue = [], phState = 'idle', phAttempt = '', phTap = 0, phUndo = 0;   // phState: idle → loading → ready | failed
 const phConfigured = () => /^phc_[A-Za-z0-9]{20,}$/.test(PH_KEY);
 function phAllowed() {
-  if (!phConfigured()) return false;
+  if (!phConfigured() || SG_TEST_SITE) return false;   // v5.2.23: not on the test site
   try { if (navigator.webdriver || localStorage.getItem('sankalpam.noCount') === '1' || localStorage.getItem(PH_OFF) === '1') return false; } catch (e) {}
   return true;
 }
@@ -2692,7 +2694,7 @@ function printDoc(kind, compact) {
   // v5.2.3: sent as plain text, like Subscribe – a JSON request is stopped by the browser's cross-site check before it reaches Apps Script.
   const action = compact ? 'CompactPDF' : 'PrintPDF';
   let noCount = false; try { noCount = localStorage.getItem('sankalpam.noCount') === '1'; } catch (e) {}   // v5.2.15: owner's phone (?nocount=1) not counted
-  if (SUBSCRIBE_URL && !noCount) try {
+  if (SUBSCRIBE_URL && !noCount && !SG_TEST_SITE) try {
     fetch(SUBSCRIBE_URL, {method: 'POST', mode: 'no-cors', keepalive: true, headers: {'Content-Type': 'text/plain;charset=utf-8'},
       body: JSON.stringify({action: 'logPdfDownload', docType: kind, downloadAction: action})}).catch(e => console.warn('Could not count download: ' + e));
   } catch (e) {}

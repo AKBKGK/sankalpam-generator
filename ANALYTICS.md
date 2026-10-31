@@ -1,4 +1,4 @@
-# Usage analytics (PostHog) – from v5.2.17, more events in v5.2.19, share tags in v5.2.20, city in v5.2.21, nearest city for "Use my location" in v5.2.22
+# Usage analytics (PostHog) – from v5.2.17, more events in v5.2.19, share tags in v5.2.20, city in v5.2.21, nearest city for "Use my location" in v5.2.22, test site not counted from v5.2.23
 
 Anonymous usage counts so the app can be improved. **Key added (US Cloud)** in `index.html`
 (`PH_KEY`; `PH_HOST` is `https://us.i.posthog.com`, or `https://eu.i.posthog.com` for EU Cloud).
@@ -62,7 +62,7 @@ The text on screen, Copy text and the PDF are unchanged; links already forwarded
 - Never sent: names, gotra, star, rāśi, birth details, places typed, email addresses, feedback text, saṅkalpam/tarpaṇam text, page title.
 - Every property is a short fixed word or number (checked in the v5.2.19 tests).
 - No cookies (browser storage only), no person profiles, no autocapture, no session recording, no surveys, no feature flags, no performance capture.
-- Always on from v5.2.18 (no switch; a short note in **More → Usage statistics** says what is counted). Not sent with `?nocount=1` (owner's phone), Do Not Track, automated browsers, or on a phone where the visitor turned it off in v5.2.17.
+- Always on from v5.2.18 (no switch; a short note in **More → Usage statistics** says what is counted). Not sent on the test site test.sankalpam.live (v5.2.23), with `?nocount=1` (owner's phone), Do Not Track, automated browsers, or on a phone where the visitor turned it off in v5.2.17.
 - In PostHog → Project settings, turn on **Discard client IP data** and set the data retention you want.
 - **Location:** even with client IP discarded, PostHog works out a location from the IP before dropping it ([PostHog docs](https://posthog.com/docs/privacy/data-storage)). Decide whether to keep country only (remove city with PostHog's property filter) and say so in Help.
 - If PostHog is blocked or down, the app works exactly as before.
