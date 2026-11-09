@@ -1,0 +1,4 @@
+# Send www.sankalpam.live to the main address https://sankalpam.live (permanent 301)
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.sankalpam\.live$ [NC]
+RewriteRule ^(.*)$ https://sankalpam.live/$1 [L,R=301]
