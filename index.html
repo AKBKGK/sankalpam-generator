@@ -2387,7 +2387,7 @@ function composeSankalpam(P, date, stamp) {
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
 const APP_VERSION = 'v5.2.22';
-const APP_BUILD = '2026-10-30 13:40';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
+const APP_BUILD = '2026-11-11 19:20';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -4048,14 +4048,14 @@ const PT_WORDS = {
        till: t => 'till ' + t, allDay: 'all day', nextDay: '(next day)', tail: 'Your own saṅkalpam, free', vakya: 'Vākya', drik: 'Tirukkaṇita',
        good: 'Good time (Gowri)', then: ', then ',
        night: 'Good time (Gowri) · night', city: 'City', method: 'Method', ist: '(Vākya times are Indian time)', from: t => 'from ' + t, shr: 'Śrāddha tithi',
-       chandraBy: 'Chandrāṣṭamam (by rāśi)', sunNote: '(changes by city)', other: '_Also in தமிழ், తెలుగు, ಕನ್ನಡ: sankalpam.live_',
+       chandraBy: 'Chandrāṣṭamam (by rāśi)', sunNote: '(changes by city)', other: '_Also in देवनागरी, தமிழ், తెలుగు, ಕನ್ನಡ: sankalpam.live_',
        mon: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']},
   ta: {head: 'பஞ்சாங்கம்', year: 'வருடம்', ayana: 'அயனம்', rtu: 'ருது', month: 'மாதம்', tithi: 'திதி', star: 'நட்சத்திரம்', yoga: 'யோகம்', karana: 'கரணம்',
        rise: 'சூரிய உதயம்', set: 'அஸ்தமனம்', rahu: 'ராகு காலம்', yama: 'எமகண்டம்', kuli: 'குளிகை', chandra: 'சந்திராஷ்டமம்',
        till: t => t + ' வரை', allDay: 'நாள் முழுவதும்', nextDay: '(மறுநாள்)', tail: 'உங்கள் சங்கல்பம், இலவசம்', vakya: 'வாக்கியம்', drik: 'திருக்கணிதம்',
        good: 'கௌரி நல்ல நேரம்', then: ', பின் ',
        night: 'கௌரி நல்ல நேரம் (இரவு)', city: 'நகரம்', method: 'முறை', ist: '(வாக்கிய நேரங்கள் இந்திய நேரம்)', from: t => t + ' முதல்', shr: 'சிராத்த திதி',
-       chandraBy: 'சந்திராஷ்டமம் (ராசிப்படி)', sunNote: '(ஊருக்கு ஊர் மாறும்)', other: '_English, తెలుగు, ಕನ್ನಡ மொழிகளில்: sankalpam.live_',
+       chandraBy: 'சந்திராஷ்டமம் (ராசிப்படி)', sunNote: '(ஊருக்கு ஊர் மாறும்)', other: '_English, देवनागरी, తెలుగు, ಕನ್ನಡ மொழிகளில்: sankalpam.live_',
        days: ['ஞாயிறு', 'திங்கள்', 'செவ்வாய்', 'புதன்', 'வியாழன்', 'வெள்ளி', 'சனி'],
        months: ['ஜனவரி', 'பிப்ரவரி', 'மார்ச்', 'ஏப்ரல்', 'மே', 'ஜூன்', 'ஜூலை', 'ஆகஸ்ட்', 'செப்டம்பர்', 'அக்டோபர்', 'நவம்பர்', 'டிசம்பர்']},
   te: {head: 'పంచాంగం', year: 'సంవత్సరం', ayana: 'అయనం', rtu: 'ఋతువు', month: 'మాసం', tithi: 'తిథి', star: 'నక్షత్రం', yoga: 'యోగం', karana: 'కరణం',
@@ -4063,7 +4063,7 @@ const PT_WORDS = {
        till: t => t + ' వరకు', allDay: 'రోజంతా', nextDay: '(మరుసటి రోజు)', tail: 'మీ సంకల్పం, ఉచితంగా', vakya: 'వాక్యం', drik: 'దృక్',
        good: 'గౌరీ మంచి సమయం', then: ', తర్వాత ',
        night: 'గౌరీ మంచి సమయం (రాత్రి)', city: 'నగరం', method: 'విధానం', ist: '(వాక్య సమయాలు భారత కాలమానం)', from: t => t + ' నుండి', shr: 'శ్రాద్ధ తిథి',
-       chandraBy: 'చంద్రాష్టమం (రాశి ప్రకారం)', sunNote: '(ఊరును బట్టి మారుతుంది)', other: '_English, தமிழ், ಕನ್ನಡ భాషల్లో: sankalpam.live_',
+       chandraBy: 'చంద్రాష్టమం (రాశి ప్రకారం)', sunNote: '(ఊరును బట్టి మారుతుంది)', other: '_English, देवनागरी, தமிழ், ಕನ್ನಡ భాషల్లో: sankalpam.live_',
        days: ['ఆదివారం', 'సోమవారం', 'మంగళవారం', 'బుధవారం', 'గురువారం', 'శుక్రవారం', 'శనివారం'],
        months: ['జనవరి', 'ఫిబ్రవరి', 'మార్చి', 'ఏప్రిల్', 'మే', 'జూన్', 'జులై', 'ఆగస్టు', 'సెప్టెంబర్', 'అక్టోబర్', 'నవంబర్', 'డిసెంబర్']},
   kn: {head: 'ಪಂಚಾಂಗ', year: 'ಸಂವತ್ಸರ', ayana: 'ಅಯನ', rtu: 'ಋತು', month: 'ಮಾಸ', tithi: 'ತಿಥಿ', star: 'ನಕ್ಷತ್ರ', yoga: 'ಯೋಗ', karana: 'ಕರಣ',
@@ -4071,7 +4071,7 @@ const PT_WORDS = {
        till: t => t + ' ರವರೆಗೆ', allDay: 'ದಿನವಿಡೀ', nextDay: '(ಮರುದಿನ)', tail: 'ನಿಮ್ಮ ಸಂಕಲ್ಪ, ಉಚಿತ', vakya: 'ವಾಕ್ಯ', drik: 'ದೃಕ್',
        good: 'ಗೌರಿ ಶುಭ ಸಮಯ', then: ', ನಂತರ ',
        night: 'ಗೌರಿ ಶುಭ ಸಮಯ (ರಾತ್ರಿ)', city: 'ನಗರ', method: 'ವಿಧಾನ', ist: '(ವಾಕ್ಯ ಸಮಯಗಳು ಭಾರತೀಯ ಕಾಲಮಾನ)', from: t => t + ' ರಿಂದ', shr: 'ಶ್ರಾದ್ಧ ತಿಥಿ',
-       chandraBy: 'ಚಂದ್ರಾಷ್ಟಮ (ರಾಶಿ ಪ್ರಕಾರ)', sunNote: '(ಊರಿನಿಂದ ಊರಿಗೆ ಬದಲಾಗುತ್ತದೆ)', other: '_English, தமிழ், తెలుగు ಭಾಷೆಗಳಲ್ಲಿ: sankalpam.live_',
+       chandraBy: 'ಚಂದ್ರಾಷ್ಟಮ (ರಾಶಿ ಪ್ರಕಾರ)', sunNote: '(ಊರಿನಿಂದ ಊರಿಗೆ ಬದಲಾಗುತ್ತದೆ)', other: '_English, देवनागरी, தமிழ், తెలుగు ಭಾಷೆಗಳಲ್ಲಿ: sankalpam.live_',
        days: ['ಭಾನುವಾರ', 'ಸೋಮವಾರ', 'ಮಂಗಳವಾರ', 'ಬುಧವಾರ', 'ಗುರುವಾರ', 'ಶುಕ್ರವಾರ', 'ಶನಿವಾರ'],
        months: ['ಜನವರಿ', 'ಫೆಬ್ರವರಿ', 'ಮಾರ್ಚ್', 'ಏಪ್ರಿಲ್', 'ಮೇ', 'ಜೂನ್', 'ಜುಲೈ', 'ಆಗಸ್ಟ್', 'ಸೆಪ್ಟೆಂಬರ್', 'ಅಕ್ಟೋಬರ್', 'ನವೆಂಬರ್', 'ಡಿಸೆಂಬರ್']}
 };
