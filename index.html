@@ -2383,7 +2383,7 @@ function composeSankalpam(P, date, stamp) {
     h += '<p>ॐ तत्सत् ब्रह्मार्पणमस्तु ॥</p>';
   }
   const nakNote = V('nakSrc') === 'chosen' ? '<br>Birth star chosen by the user (time of birth not known).' : '';
-  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + '</div>';
+  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + (typeof GRACE === 'string' ? '<br><i>' + GRACE + '</i>' : '') + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
 const APP_VERSION = 'v5.2.22';
@@ -2397,6 +2397,7 @@ const DATA_OWNER = 'the Saṅkalpam Generator app';
 const DATA_CONTACT = String.fromCharCode(115,110,118,97,115,49,51,50,64,103,109,97,105,108,46,99,111,109);   // snvas132@gmail.com
 const DEVELOPER = 'Saṅkalpam Generator';
 const COPYRIGHT = '© 2026 Saṅkalpam Generator';
+const GRACE = 'Grace divine, errors mine.';   // v5.2.23: humility footnote – PDF footers (italic) and WhatsApp shares (_italic_)
 function getPanchangaNote() {
   const method = $('method') ? $('method').value : 'vakya';
   return '<b style="background:#fff1c7;padding:1px 6px;border-radius:4px">Calculation used: ' + (method === 'drik' ? 'Tirukkaṇita (modern astronomical)' : 'Vākya (traditional)') + '</b> ' + getPanchangaNote0(method);
@@ -3031,7 +3032,7 @@ function composeTarpanam(P, o, stamp) {
        (ML ? '' : ins('Then put the kūrcham' + (two ? 's' : '') + ' down with the water.'));   // booklet p. 33
   h += '<h4>Samāpanam</h4>' + ins('Upavītī. Keep the pavitram behind your ear and do ācamanam; then remove the pavitram. Take water in the hand, say this, and let it go.') +
     '<p>' + C.kayena + (ML ? (o.mlday === 'once' ? ' अद्य महालयतिलतर्पणाख्यं कर्म' : ' अद्य दिनपक्षीय महालयतिलतर्पणाख्यं कर्म') : ' अद्य ' + TP_CLOSE[type] + 'तिलतर्पणाख्यं कर्म') + ' ॐ तत्सत् ब्रह्मार्पणमस्तु ॥</p>';
-  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + ' · Please have your vādhyār check this text.<br>' + getPanchangaNote() + '</div>';
+  h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + ' · Please have your vādhyār check this text.<br>' + getPanchangaNote() + (typeof GRACE === 'string' ? '<br><i>' + GRACE + '</i>' : '') + '</div>';
   return devaTo(h, o.script);
 }
 // ---------- Tarpaṇam page ----------
@@ -3552,7 +3553,7 @@ function docText(el) {
 function shareSankalpam() {
   const text = docText($('result'));
   if (!text) return;
-  waShare('Saṅkalpam', text.replace(/Saṅkalpam Generator v\d+(\.\d+)+/g, 'Saṅkalpam Generator') + '\n\nPrepared with sankalpam.live – https://sankalpam.live/', $('copyStatus'));
+  waShare('Saṅkalpam', text.replace(/Saṅkalpam Generator v\d+(\.\d+)+/g, 'Saṅkalpam Generator').replace(GRACE, '_' + GRACE + '_') + '\n\nPrepared with sankalpam.live – https://sankalpam.live/', $('copyStatus'));
 }
 // "Use my location": asks the browser only when the button is pressed. v5.2.13: the place (rounded to 2 decimals, about 1 km)
 // and the phone's time zone are kept on this device as "My location"; they go to the server only if the user signs up for
@@ -4225,7 +4226,7 @@ function panchangShareText(ds, c, cal, method, script) {
     W.rahu + ' ' + ryk[0] + ' · ' + W.yama + ' ' + ryk[1] + ' · ' + W.kuli + ' ' + ryk[2] + '\n' +
     soolamText(wd, lang) + '\n' +
     (chandra ? W.chandraBy + ': ' + chandra + '\n' : '') + '\n' +
-    W.tail + ': https://sankalpam.live/\n' + W.other;
+    W.tail + ': https://sankalpam.live/\n' + W.other + (typeof GRACE === 'string' ? '\n_' + GRACE + '_' : '');
 }
 (function tdfInit() {
   ['date', 'method', 'city'].forEach(id => $(id) && $(id).addEventListener('change', () => { tdfCache.clear(); try { tSync(); } catch (e) {} setTimeout(tdfRender, 30); }));
