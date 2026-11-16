@@ -1,6 +1,6 @@
 <!--
   Saṅkalpam Generator – For Others
-  Version: 5.2.21  |  Updated: 2026-10-29
+  Version: 5.2.23  |  Updated: 2026-11-16
   Copyright (c) 2026 Saṅkalpam Generator. Released under the MIT License (see LICENSE).
   Third-party code: Astronomy Engine (MIT License) – its notice is kept below.
   Vākya pañcāṅgam: Vākyakaraṇa method (Vararuci's candravākyas), calibrated to printed Vākya pañcāṅgams.
@@ -1759,7 +1759,19 @@ function lahiriMean(jd) {
   const pA = T => 5028.796195 * T + 1.1054348 * T * T;          // arc-seconds
   return 23.245524743 + (pA((jd - 2451545) / 36525) - pA((2435553.5 - 2451545) / 36525)) / 3600;
 }
-const ayanamsa = lahiriMean;
+// v5.2.23 – nutation removed from the sidereal longitudes. sunLongitude() and moonLongitude() are apparent longitudes
+// (true equinox of date, so they include the nutation in longitude, up to about ±17 arc-seconds), while the Lahiri value
+// above is measured from the mean equinox. Subtracting one from the other left the nutation in every sidereal longitude:
+// saṅkrāntis came 2–5 minutes early in 2026–27 and star / yoga end times 20–50 seconds early (checked against Swiss
+// Ephemeris, Lahiri, 14 Apr 2026 – 13 Apr 2027). The ayanāṁśa used is now the mean value plus the nutation, which is the
+// Swiss Ephemeris convention for sidereal positions. Tithi and karaṇa do not use the ayanāṁśa and are unchanged.
+// Nutation in longitude, degrees: the four largest terms (Meeus, Astronomical Algorithms, ch. 22), good to about 0.5".
+function nutationLon(jd) {
+  const T = (jd - 2451545) / 36525, O = (125.04452 - 1934.136261 * T) * rad, L = (280.4665 + 36000.7698 * T) * rad, M = (218.3165 + 481267.8813 * T) * rad;
+  return (-17.20 * Math.sin(O) - 1.32 * Math.sin(2 * L) - 0.23 * Math.sin(2 * M) + 0.21 * Math.sin(2 * O)) / 3600;
+}
+const lahiriTrue = jd => lahiriMean(jd) + nutationLon(jd);
+const ayanamsa = lahiriTrue;
 const elong = jd => { const T = TofJD(jd); return norm(moonLongitude(T) - sunLongitude(T)); };
 const sunSid = jd => norm(sunLongitude(TofJD(jd)) - ayanamsa(jd));
 // Sunrise (rise = true) or sunset on local date y-m-d at a place; returns JD (UT). Upper limb, refraction −0.833°.
@@ -2386,8 +2398,8 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + (typeof GRACE === 'string' ? '<br><i>' + GRACE + '</i>' : '') + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.22';
-const APP_BUILD = '2026-11-13 22:30';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
+const APP_VERSION = 'v5.2.23';
+const APP_BUILD = '2026-11-16 12:30';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -3785,8 +3797,10 @@ if (typeof document !== 'undefined') init();
 
   /* =============== DRIK =============== */
   const AST = () => root.Astronomy;
-  function lahiri(date) { const jd = date.getTime() / 864e5 + 2440587.5, pA = T => 5028.796195 * T + 1.1054348 * T * T;   // v5.2.16: same mean Lahiri as lahiriMean()
-    return 23.245524743 + (pA((jd - 2451545) / 36525) - pA((2435553.5 - 2451545) / 36525)) / 3600; }
+  function lahiri(date) { const jd = date.getTime() / 864e5 + 2440587.5, pA = T => 5028.796195 * T + 1.1054348 * T * T;   // v5.2.16: same Lahiri as the main app
+    return 23.245524743 + (pA((jd - 2451545) / 36525) - pA((2435553.5 - 2451545) / 36525)) / 3600 + nutLon(jd); }   // v5.2.23: plus nutation, as lahiriTrue()
+  function nutLon(jd) { const T = (jd - 2451545) / 36525, O = (125.04452 - 1934.136261 * T) * R, L = (280.4665 + 36000.7698 * T) * R, M = (218.3165 + 481267.8813 * T) * R;
+    return (-17.20 * Math.sin(O) - 1.32 * Math.sin(2 * L) - 0.23 * Math.sin(2 * M) + 0.21 * Math.sin(2 * O)) / 3600; }   // nutation in longitude, degrees
   function dValues(date) { const A = AST(); const ay = lahiri(date);
     const S = mod(A.SunPosition(date).elon - ay, 360), M = mod(A.EclipticGeoMoon(date).lon - ay, 360);
     return { T: mod(M - S, 360), N: M, Y: mod(M + S, 360), K: mod(M - S, 360), R: M }; }
@@ -3947,13 +3961,13 @@ function tdfRibbon(d) {
 const TDF_RASI = ['Meṣa (Chithirai)','Vṛṣabha (Vaikāsi)','Mithuna (Āni)','Karkaṭaka (Āḍi)','Siṃha (Āvaṇi)','Kanyā (Puraṭṭāsi)','Tulā (Aippasi)','Vṛścika (Kārttigai)','Dhanus (Mārgazhi)','Makara (Thai)','Kumbha (Māsi)','Mīna (Paṅguni)'];
 function tdfSunSid(sys, ds, frac) {
   if (sys === 'drik') { const d = tdfDay(sys, ds, 'T'); const t = new Date(+d._t0 + frac * d._span), jd = t.getTime() / 864e5 + 2440587.5;
-    return ((Astronomy.SunPosition(t).elon - lahiriMean(jd)) % 360 + 360) % 360; }
+    return ((Astronomy.SunPosition(t).elon - ayanamsa(jd)) % 360 + 360) % 360; }
   const I = Panchanga._internal, A = Math.floor(I.jd0(...ds.split('-').map(Number)) - I.EPOCH); const s0 = I.vSun(A), s1 = I.vSun(A + 1);
   return ((s0 + ((s1 < s0 ? s1 + 360 : s1) - s0) * frac) % 360 + 360) % 360;
 }
 function tdfSidQuick(sys, ds) {          // Sun at about sunrise, for scanning
   if (sys === 'drik') { const [y, m, d] = ds.split('-').map(Number), t = new Date(Date.UTC(y, m - 1, d, 0, 30)), jd = t.getTime() / 864e5 + 2440587.5;
-    return ((Astronomy.SunPosition(t).elon - lahiriMean(jd)) % 360 + 360) % 360; }
+    return ((Astronomy.SunPosition(t).elon - ayanamsa(jd)) % 360 + 360) % 360; }
   return tdfSunSid(sys, ds, 0);
 }
 function tdfSankrantiOn(sys, ds) {      // saṅkrānti during this day (sunrise to sunrise), or null
