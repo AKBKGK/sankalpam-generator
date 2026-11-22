@@ -347,6 +347,7 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
   <p class="home-vow">A saṅkalpam (सङ्कल्पः) is a vow, a firm resolve: before a pūjā you state when, where, who and why.</p>
   <details class="app-about aa-d"><summary><b class="aa-h">What this app does – and for whom ›</b></summary><span class="aa-who">For anyone who does a daily pūjā, sandhyā or tarpaṇam – in India or abroad.</span><span class="aa-mantra"><b>Don't know the mantras?</b> The app prepares the full saṅkalpam and tarpaṇam for you – with your name, gotra and star – so you can do your pūjā or tarpaṇam yourself, at home or while travelling.</span><ul><li>Your saṅkalpam with your name, gotra and star – ready in a minute</li><li>Today's pañcāṅgam: tithi, star, good time, Rāhu kālam, Chandrāṣṭamam</li><li>Tarpaṇam texts and the right day – Amāvāsyā, Māsa pirappu, Mahālaya</li><li>Calendar and festivals · Share on WhatsApp · free, no sign-up</li></ul><span class="aa-by"><b>Why I made this:</b> I wanted to do my own saṅkalpam and tarpaṇam, but found the mantras hard to get right. So I made this app for myself – and now share it, so that others can do the same. <i>– ArvindK</i></span><button type="button" class="link aa-more" data-feat-open>See all features ›</button></details>
   <div class="home-tp hide" id="homeTp">🪔 <b id="homeTpT"></b> <button type="button" class="link" data-tp-go>Prepare tarpaṇam ›</button></div>
+  <div class="dx-ob hide" id="homeOb"></div>
   <b id="homeReady">Today's saṅkalpam is ready</b> <button type="button" class="link hide" id="homeToday">Back to today ›</button>
   <p class="wz-line deva" id="homeLine"></p>
   <div class="home-b"><button type="button" class="btn ghost hide" id="homeShare">Share</button></div>
@@ -375,7 +376,8 @@ select.close{border:2px solid #d98b00!important;background:#fff4dc!important}
 <div class="sg-head" id="sgHead">
   <span class="sg-eyebrow" id="sgEyebrow"></span>
   <h2 class="sg-title" id="sgTitle">Today's saṅkalpam</h2>
-  <a href="#tarpanam" class="sg-fest hide" id="sgFest"><span id="sgFestText"></span><b>Prepare tarpaṇam ›</b></a>
+  <a href="#tarpanam" class="sg-fest hide" id="sgFest"><span id="sgFestText" style="font-weight:700"></span><b>Prepare tarpaṇam ›</b></a>
+  <div class="dx-ob sg-ob hide" id="sgObs"></div>
 </div>
 
 
@@ -2101,7 +2103,7 @@ function sgOverseas(c) { return sgAbroad(c); }
 function sgMethUser() { try { return localStorage.getItem('sankalpam.methUser') === '1'; } catch (e) { return false; } }
 document.addEventListener('click', e => { if (!e.isTrusted) return; if (e.target.closest && e.target.closest('[data-m],[data-meth],[data-os]')) { try { localStorage.setItem('sankalpam.methUser', '1'); } catch (x) {} } }, true);
 function sgMasaName(cal) { return cal === 'ta' ? 'Māsa pirappu (first day of the Tamil month)' : 'Saṅkramaṇam (the Sun enters a new rāśi)'; }
-function sgTpName(tpk, cal) { return tpk === 'masa' ? sgMasaName(cal) : {amavasya: 'Amāvāsyā', mahalaya: 'Mahālaya pakṣam', surya: 'Solar eclipse', chandra: 'Lunar eclipse'}[tpk] || ''; }
+function sgTpName(tpk, cal) { return tpk === 'masa' ? sgMasaName(cal) : {amavasya: 'Amāvāsyā', mahalaya: 'Mahālaya pakṣam', surya: 'Sūrya grahaṇam (solar eclipse)', chandra: 'Candra grahaṇam (lunar eclipse)'}[tpk] || ''; }
 // v5.2.13: which clock the times are in. Tirukkaṇita abroad: all local. Vākya abroad: tithi/star in IST, sunrise etc. local.
 function sgTimesNote(c, ds, prof) { const z = c[0] + ' time (' + sgTz(c[3], ds) + ')';
   return prof === 'drik' ? z : 'tithi and star in Indian time (IST); sunrise, Rāhu kālam and good time in ' + z; }
@@ -2398,8 +2400,8 @@ function composeSankalpam(P, date, stamp) {
   h += '<div class="foot">Saṅkalpam Generator ' + APP_VERSION + ' · ' + COPYRIGHT + ' · ' + stamp + nakNote + '<br>' + getPanchangaNote() + (typeof GRACE === 'string' ? '<br><i>' + GRACE + '</i>' : '') + '</div>';
   return devaTo(h, script);            // tags and English labels contain no Devanagari, so the whole string converts safely
 }
-const APP_VERSION = 'v5.2.23';
-const APP_BUILD = '2026-11-16 12:30';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
+const APP_VERSION = 'v5.2.24';
+const APP_BUILD = '2026-11-22 12:30';   // change this whenever index.html is re-uploaded without a new version – open phones then show "Update now"
 // ---------- Daily email subscription ----------
 // Web-app address of the Google Apps Script that stores subscriptions and sends the emails.
 // Leave empty to hide the subscription box.
@@ -2826,9 +2828,11 @@ function eclipseOn(dateStr, c, kind) {
       const e = Astronomy.SearchLocalSolarEclipse(new Date(t0 - 864e5), new Astronomy.Observer(c[1], c[2], 0)), pk = e.peak.time.date.getTime();
       return pk >= t0 && pk < t1 && e.peak.altitude > 0;
     }
-    // visible if the Moon is above the horizon at some time during the (partial, else penumbral) eclipse, on this local date
+    // visible if the Moon is above the horizon at some time during the partial (or total) phase, on this local date.
+    // v5.2.24: a penumbral-only eclipse is not a grahaṇam (Sringeri Vākya pañcāṅgam 2026-27, p. 11: 21.2.2027 "தெரியாது")
     const e = Astronomy.SearchLunarEclipse(new Date(t0 - 864e5)), ob = new Astronomy.Observer(c[1], c[2], 0);
-    const sd = (e.sd_partial > 0 ? e.sd_partial : e.sd_penum) * 6e4, pk = e.peak.date.getTime();
+    if (!(e.sd_partial > 0)) return false;
+    const sd = e.sd_partial * 6e4, pk = e.peak.date.getTime();
     for (let t = pk - sd; t <= pk + sd; t += Math.max(sd / 6, 6e4)) {
       if (t < t0 || t >= t1) continue;
       const eq = Astronomy.Equator('Moon', new Date(t), ob, true, true);
@@ -4167,11 +4171,54 @@ function ptShraddha(d) {
 // v5.2.13: English unless Tamil, Telugu or Kannada letters are chosen (owner, 17 Oct 2026; was the calendar's language).
 // v5.2.13: a tarpaṇam day named at the top of the shared pañcāṅgam (native readers to check the Telugu / Kannada words)
 const PT_TARP = {
-  en: {masa: 'Māsa pirappu', amavasya: 'Amāvāsyā', mahalaya: 'Mahālaya pakṣam', surya: 'Solar eclipse', chandra: 'Lunar eclipse', day: 'a tarpaṇam day'},
+  en: {masa: 'Māsa pirappu', amavasya: 'Amāvāsyā', mahalaya: 'Mahālaya pakṣam', surya: 'Sūrya grahaṇam (solar eclipse)', chandra: 'Candra grahaṇam (lunar eclipse)', day: 'a tarpaṇam day'},
   ta: {masa: 'மாசப் பிறப்பு', amavasya: 'அமாவாசை', mahalaya: 'மகாளய பட்சம்', surya: 'சூரிய கிரகணம்', chandra: 'சந்திர கிரகணம்', day: 'தர்ப்பண நாள்'},
   te: {masa: 'సంక్రమణం', amavasya: 'అమావాస్య', mahalaya: 'మహాలయ పక్షం', surya: 'సూర్య గ్రహణం', chandra: 'చంద్ర గ్రహణం', day: 'తర్పణ దినం'},
   kn: {masa: 'ಸಂಕ್ರಮಣ', amavasya: 'ಅಮಾವಾಸ್ಯೆ', mahalaya: 'ಮಹಾಲಯ ಪಕ್ಷ', surya: 'ಸೂರ್ಯ ಗ್ರಹಣ', chandra: 'ಚಂದ್ರ ಗ್ರಹಣ', day: 'ತರ್ಪಣ ದಿನ'}};
 function tarpDayOf(ds, c) { try { return typeof tSuggest === 'function' ? tSuggest(ds, c) || '' : ''; } catch (e) { return ''; } }
+// v5.2.24: Pradoṣam and Saṅkaṭahara Caturthī on day ds for city c and profile prof ('vakya' | 'vakya2' | 'drik').
+// Same rule as the calendar: the first day the tithi prevails at sunset (Trayodaśī) or at moonrise (Kṛṣṇa Caturthī).
+function obsDayOf(ds, c, prof) {
+  try {
+    const memo = {}, add = Panchanga.addDays, day = x => memo[x] || (memo[x] = ptDay(prof, x, c, ['T']));
+    const segs = d => Panchanga.segments(d, 'T');
+    const idxAt = (d, f) => { const S = segs(d); return (S.find(x => f >= x.f0 && f < x.f1) || S[S.length - 1]).index; };
+    const moonF = d => { try {
+      const A = Astronomy, ob = new A.Observer(c[1], c[2], 0); let t0, span;
+      if (d.system === 'drik') { t0 = d._t0; span = d._span; }
+      else { const [y, m, dd] = d.date.split('-').map(Number); t0 = new Date(Date.UTC(y, m - 1, dd, 6) - tdfTzMin(d.date, c[3]) * 6e4); span = 864e5; }
+      const r = A.SearchRiseSet(A.Body.Moon, ob, +1, t0, 1.05); if (!r) return null; const f = (r.date - t0) / span; return f >= 0 && f < 1 ? f : null;
+    } catch (e) { return null; } };
+    const sunset = d => d.dayFrac;
+    const atRef = (x, X, ref) => { const d = day(x); if (!segs(d).some(s => s.index === X)) return false; const f = ref(d); return f !== null && idxAt(d, f) === X; };
+    const pick = (X, ref) => { const S = segs(day(ds)), sg = S.find(s => s.index === X); if (!sg) return false;
+      if (atRef(ds, X, ref)) return !atRef(add(ds, -1), X, ref);
+      if (atRef(add(ds, -1), X, ref) || atRef(add(ds, 1), X, ref)) return false;
+      return S[0].index === X || (sg.f0 > 0 && !sg.open); };
+    const out = [];
+    if (pick(12, sunset) || pick(27, sunset)) out.push('pradosham');
+    if (pick(18, moonF)) out.push('sankata');
+    return out;
+  } catch (e) { return []; }
+}
+// v5.2.24: names for the shared pañcāṅgam and the app (native readers to check the Tamil / Telugu / Kannada words)
+const PT_OBS = {
+  en: {pradosham: 'Pradoṣam (evening)', sankata: 'Saṅkaṭahara Caturthī (at moonrise)'},
+  ta: {pradosham: 'பிரதோஷம்', sankata: 'சங்கடஹர சதுர்த்தி'},
+  te: {pradosham: 'ప్రదోషం', sankata: 'సంకష్టహర చతుర్థి'},
+  kn: {pradosham: 'ಪ್ರದೋಷ', sankata: 'ಸಂಕಷ್ಟಹರ ಚತುರ್ಥಿ'}};
+const OBS_ICON = {pradosham: '🔱', sankata: '🌙', karthigai: '🔥', pongal: '🌾', dipavali: '🎆', vinayakaC: '🙏'};
+// v5.2.24: festivals named on top (owner, 22 Nov 2026). Makara Saṅkrānti is the same day as Thai Pongal (Thai 1).
+const FEST_TOP = ['dipavali', 'karthigai', 'pongal', 'vinayakaC'];
+const PT_FEST = {
+  en: {karthigai: 'Kārttikai Dīpam', pongal: 'Thai Pongal · Makara Saṅkrānti', dipavali: 'Dīpāvalī', vinayakaC: 'Vināyaka (Gaṇeśa) Caturthī'},
+  ta: {karthigai: 'கார்த்திகை தீபம்', pongal: 'தைப் பொங்கல் · மகர சங்கராந்தி', dipavali: 'தீபாவளி', vinayakaC: 'விநாயகர் சதுர்த்தி'},
+  te: {karthigai: 'కార్తిగై దీపం', pongal: 'మకర సంక్రాంతి', dipavali: 'దీపావళి', vinayakaC: 'వినాయక చవితి'},
+  kn: {karthigai: 'ಕಾರ್ತಿಗೈ ದೀಪ', pongal: 'ಮಕರ ಸಂಕ್ರಾಂತಿ', dipavali: 'ದೀಪಾವಳಿ', vinayakaC: 'ಗಣೇಶ ಚತುರ್ಥಿ'}};
+const festDayOf = (ds, c, prof) => { try { return typeof window.sgFestOf === 'function' ? window.sgFestOf(ds, c, prof) : []; } catch (e) { return []; } };
+// the bold lines under the tarpaṇam line: festivals first, then Pradoṣam / Saṅkaṭahara
+const topDayOf = (ds, c, prof) => festDayOf(ds, c, prof).concat(obsDayOf(ds, c, prof));
+const topName = (k, lang) => ((PT_FEST[lang] || PT_FEST.en)[k] || (PT_OBS[lang] || PT_OBS.en)[k] || PT_FEST.en[k] || PT_OBS.en[k]);
 function panchangShareText(ds, c, cal, method, script) {
   const prof = ptProf(method), seg = g => Panchanga.segments(d, g);
   // the city passed in (not the form's) – the owner's page and the daily email have no form
@@ -4224,7 +4271,10 @@ function panchangShareText(ds, c, cal, method, script) {
   let chandra = ''; try { const parts = chandraParts(prof, ds, c);
     chandra = parts.map(x => rn(x.rasi) + ' (' + rasiStarsText(x.rasi, nk) + ')' + (x.till ? ' ' + W.till(absTxt(x.till)) : '')).join(W.then); } catch (e) {}
   const tpk = tarpDayOf(ds, c), TP = PT_TARP[lang] || PT_TARP.en;
-  return (tpk ? '🪔 ' + (tpk === 'masa' && lang === 'en' && cal !== 'ta' ? 'Saṅkramaṇam' : TP[tpk]) + ' – ' + TP.day + '\n' : '') + W.head + ' · ' + date + (td ? ' · ' + td : '') + '\n' +
+  // v5.2.24: the tarpaṇam day (Māsa pirappu, Amāvāsyā, grahaṇam …), Pradoṣam and Saṅkaṭahara Caturthī on top, in WhatsApp bold (owner, 21 Nov 2026)
+  const top = (tpk ? '🪔 *' + (tpk === 'masa' && lang === 'en' && cal !== 'ta' ? 'Saṅkramaṇam' : TP[tpk]) + ' – ' + TP.day + '*\n' : '') +
+    topDayOf(ds, c, prof).map(k => OBS_ICON[k] + ' *' + topName(k, lang) + '*\n').join('');
+  return top + W.head + ' · ' + date + (td ? ' · ' + td : '') + '\n' +
     W.city + ': ' + city + ' · ' + W.method + ': ' + meth + (prof !== 'drik' && sgAbroad(c) ? ' ' + W.ist + ' · ' + W.rise + ', ' + W.rahu + ': ' + sgTz(c[3], ds) : '') +
     (prof === 'drik' && sgAbroad(c) ? ' · ' + ({en: 'times in ', ta: 'நேரம்: ', te: 'సమయం: ', kn: 'ಸಮಯ: '}[lang] || 'times in ') + sgTz(c[3], ds) : '') + '\n' +
     W.year + ': ' + samv + ' · ' + W.ayana + ': ' + ayana + ' · ' + W.rtu + ': ' + rtu + '\n' +
@@ -4897,11 +4947,14 @@ details.sg-more>.grid{margin-top:8px}
 
   let sel = todayStr(), ym = sel.slice(0, 7), shown = false;
   const cache = new Map();
-  const city = () => CITY_FLAT[+el('pc-city').value] || CITY_FLAT[0];
+  let calOV = null;     // v5.2.24: {c, prof} while the share text / day box asks about its own city and method
+  const city = () => calOV ? calOV.c : CITY_FLAT[+el('pc-city').value] || CITY_FLAT[0];
   // v5.2.16: a calendar city outside India / Sri Lanka uses Tirukkaṇita, unless the user chose Vākya themselves
   const sysAuto = () => { try { const p = tdfProfile(); return p !== 'drik' && sgOverseas(city()) && !sgMethUser(); } catch (e) { return false; } };
-  const sys = () => { try { return sysAuto() ? 'drik' : tdfProfile(); } catch (e) { return 'drik'; } };
+  const sys = () => { if (calOV) return calOV.prof; try { return sysAuto() ? 'drik' : tdfProfile(); } catch (e) { return 'drik'; } };
   const ckey = () => sys() + '|' + city()[0];
+  // v5.2.24: the festivals shown on top of the shared pañcāṅgam and in the app (owner, 22 Nov 2026), by the calendar's own rules
+  window.sgFestOf = (ds, c, prof) => { calOV = {c, prof}; try { return eventsOf(ds).list.filter(x => FEST_TOP.indexOf(x) >= 0); } catch (e) { return []; } finally { calOV = null; } };
 
   // Day model (sunrise to next sunrise). full=false → tithi only (enough for the grid).
   function dayOf(ds, full) {
@@ -5346,8 +5399,8 @@ details.sg-more>.grid{margin-top:8px}
   }));
 
   const FEST = {mahalaya: 'Mahālaya pakṣa – a tarpaṇam day for the Pitṛs', amavasya: 'Amāvāsyā – a tarpaṇam day for the Pitṛs',
-                masa: 'Māsa pirappu (first day of the Tamil month) – a tarpaṇam day', surya: 'Solar eclipse (Sūrya grahaṇa) – a tarpaṇam day',
-                chandra: 'Lunar eclipse (Candra grahaṇa) – a tarpaṇam day'};
+                masa: 'Māsa pirappu (first day of the Tamil month) – a tarpaṇam day', surya: 'Sūrya grahaṇam (solar eclipse) – a tarpaṇam day',
+                chandra: 'Candra grahaṇam (lunar eclipse) – a tarpaṇam day'};
   function refresh() {
     const v = $id('date').value; if (!v) return;
     const c = curCity(), cal = $id('cal').value, today = todayISO(), isToday = v === today;
@@ -5356,6 +5409,8 @@ details.sg-more>.grid{margin-top:8px}
     $id('sgTitle').textContent = isToday ? 'Today\'s saṅkalpam' : v === Panchanga.addDays(today, 1) ? 'Tomorrow\'s saṅkalpam' : 'Saṅkalpam for ' + longDate(v).split(', ')[1];
     let tp = ''; try { tp = tSuggest(v, c) || ''; } catch (e) {}
     $id('sgFest').classList.toggle('hide', !FEST[tp]); $id('sgFestText').textContent = tp === 'masa' && cal !== 'ta' ? sgMasaName(cal) + ' – a tarpaṇam day' : FEST[tp] || '';
+    { const ob = topDayOf(v, c, ptProf($id('method').value));     // v5.2.24: festivals, Pradoṣam, Saṅkaṭahara Caturthī
+      $id('sgObs').classList.toggle('hide', !ob.length); $id('sgObs').innerHTML = ob.map(k => '<div>' + OBS_ICON[k] + ' <b>' + topName(k, 'en') + '</b></div>').join(''); }
     let rise = ''; try { rise = sunTimes(v, c).rise; } catch (e) {}                // v5.2.3: rounded to the nearest minute
     $id('sgPlabel').textContent = (isToday ? 'Today\'s pañcāṅgam' : 'Pañcāṅgam') + ' · ' + (drik ? 'Tirukkaṇita' : 'Vākya') + (rise ? ' · sunrise ' + rise + ' at ' + c[0] : '');
     const a = $id('p-adhika').value, masa = (cal !== 'ta' && a === '1' ? 'Adhika ' : cal !== 'ta' && a === '2' ? 'Nija ' : '') + lat('p-masa');
@@ -5605,7 +5660,8 @@ body.has-home #sgIntro{display:none}
   });
   function renderExtras() {
     let x; try { x = extras(dateNow()); } catch (err) { console.warn('Pañcāṅgam extras:', err); return; }
-    const tpk = tarpDayOf(x.ds, x.c), tpTxt = tpk ? '<div class="dx-tp">🪔 <b>' + sgTpName(tpk, $i('cal').value) + '</b> – a tarpaṇam day <button type="button" class="link" data-tp-go>Prepare tarpaṇam ›</button></div>' : '';
+    const tpk = tarpDayOf(x.ds, x.c), tpTxt = (tpk ? '<div class="dx-tp">🪔 <b>' + sgTpName(tpk, $i('cal').value) + ' – a tarpaṇam day</b> <button type="button" class="link" data-tp-go>Prepare tarpaṇam ›</button></div>' : '') +
+      topDayOf(x.ds, x.c, x.prof).map(k => '<div class="dx-ob">' + OBS_ICON[k] + ' <b>' + topName(k, 'en') + '</b></div>').join('');   // v5.2.24
     $i('dxBox').innerHTML = tpTxt + (sgOverseas(x.c) ? '<div class="dx-rows"><div><span>Times</span><b>' + esc(sgTimesNote(x.c, x.ds, x.prof)) + '</b></div></div>' : '') + (x.td ? '<div class="dx-rows"><div><span>Tamil date</span><b>' + esc(x.td) + '</b></div></div>' : '') + sunHTML(x) + '<div class="dx-rows"><div><span>Yogam · Karaṇam</span><b>' + esc(x.yoga) + ' · ' + esc(x.karanas.join(', ')) + '</b></div></div>' + rowsHTML(x) +
       '<button type="button" class="btn ghost dx-share" data-share-day>Share on WhatsApp</button>';
     if (!$i('wz').classList.contains('hide') && step === 1) $i('wzToday').innerHTML = todayCardHTML(x);
@@ -5839,7 +5895,10 @@ body.has-home #sgIntro{display:none}
     $i('homeLine').innerHTML = kLine();
     { const tpk = tarpDayOf(dateNow(), c);     // v5.2.13: tarpaṇam day on the home card
       $i('homeTp').classList.toggle('hide', !tpk);
-      if (tpk) $i('homeTpT').textContent = sgTpName(tpk, $i('cal').value) + ' – a tarpaṇam day'; }
+      if (tpk) $i('homeTpT').textContent = sgTpName(tpk, $i('cal').value) + ' – a tarpaṇam day';
+      const ob = topDayOf(dateNow(), c, ptProf($i('method').value));     // v5.2.24: festivals, Pradoṣam, Saṅkaṭahara Caturthī
+      $i('homeOb').classList.toggle('hide', !ob.length);
+      $i('homeOb').innerHTML = ob.map(k => '<div>' + OBS_ICON[k] + ' <b>' + topName(k, 'en') + '</b></div>').join(''); }
     { const isToday = dateNow() === localDateStr(Date.now(), c[3]);     // v5.2.12
       $i('homeReady').textContent = isToday ? 'Today\'s saṅkalpam is ready' : 'Saṅkalpam for ' + longDate(dateNow()) + ' is ready';
       $i('homeToday').classList.toggle('hide', isToday); }
@@ -5996,6 +6055,8 @@ body.wz-fam .wz-famh{display:block}
 .os-note{margin:4px 0 0;font-size:.85rem;color:var(--soft,#6b5d50)}
 .home-tp,.dx-tp{margin:0 0 10px;padding:10px 12px;border-radius:10px;background:#fce4ec;border:1px solid #f3b6c9;color:#6d1b3b;font-size:.95rem;line-height:1.45}
 .home-tp.hide{display:none}.home-tp .link,.dx-tp .link{font-weight:700;color:#8a1c4a}
+.dx-ob{margin:0 0 10px;padding:8px 12px;border-radius:10px;background:#fff4d6;border:1px solid #f0d58a;color:#5a3d00;font-size:.95rem;line-height:1.45}
+.dx-ob.hide{display:none}.dx-ob>div+div{margin-top:4px}.sg-ob{margin:8px 0 0}
 @media screen and (max-width:374px){#wzStepL .wz-lbl{display:none}.wz-skip{white-space:nowrap}}
 .wz-skip{display:none!important}body.wz-fam .wz-skip,body.wz-form .wz-skip{display:inline-flex!important}
 body.wz-form #wzBack,body.wz-form .wz-dots,body.wz-form #wzStepL{display:none!important}
